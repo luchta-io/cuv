@@ -11,7 +11,7 @@ import HelloWorld from "@/components/HelloWorld.vue"
       <HelloWorld msg="こんにちは！"/>
     </Variant>
     <Variant title="夜の挨拶">
-      <HelloWorld msg="こんにちは！"/>
+      <HelloWorld msg="こんばんは！"/>
     </Variant>
   </Story>
 </template>
