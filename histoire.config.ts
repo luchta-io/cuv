@@ -5,4 +5,5 @@ export default defineConfig({
     plugins: [
         HstVue(),
     ],
+    setupFile: '/src/histoire.setup.ts'
 })
