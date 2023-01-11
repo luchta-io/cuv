@@ -2,8 +2,18 @@
   "name": "jupiter",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
+  "files": ["dist"],
+  "main": "./dist/jupiter.umd.cjs",
+  "module": "./dist/jupiter.js",
+  "exports": {
+    ".": {
+      "import": "./dist/jupiter.js",
+      "require": "./dist/jupiter.umd.cjs"
+    }
+  },
   "scripts": {
-    "build": "run-p type-check build-only",
+    "build": "run-p type-check build-dts build-only",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
