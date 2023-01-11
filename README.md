@@ -4,7 +4,7 @@
 
 * 一般的な業務アプリケーションの画面構築に必要な基礎部品を提供します
 * [EveryLayout](https://every-layout.dev/) の考え方に基づいたレイアウト部品を提供します
-* [Tailwindcss](https://tailwindcss.com/) のスタイルをベースに、拡張可能
+* [Tailwindcss](https://tailwindcss.com/) の仕組みに基づきテーマをカスタマイズ可能にします
 
 ## ライブラリ利用者向け
 
