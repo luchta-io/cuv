@@ -12,7 +12,8 @@
 
 ## ライブラリ開発者向け
 
-VSCode or IntellijIDEA での開発を推奨します
+* VSCode or IntellijIDEA での開発を推奨します
+* ローカル開発環境のNode.jsのバージョン管理には [Volta](https://volta.sh/) の利用を推奨します
 
 ### 依存ライブラリのインストール
 
@@ -26,9 +27,7 @@ npm install
 npm run story:dev
 ```
 
-開発/ドキュメンテーションには以下のUIコンポーネントカタログツールを利用しています
-
-* [Histoire](https://histoire.dev/)
+開発/ドキュメンテーションには [Histoire](https://histoire.dev/) を利用しています
 
 ### 単体テストの実行
 
@@ -36,7 +35,4 @@ npm run story:dev
 npm run test:unit
 ```
 
-単体テストには以下のライブラリを利用しています
-
-* [Vitest](https://vitest.dev/)
-* [Vue Testing Library](https://testing-library.com/docs/vue-testing-library/intro/)
+単体テストには [Vitest](https://vitest.dev/) + [VueTestingLibrary](https://testing-library.com/docs/vue-testing-library/intro/) を利用しています
