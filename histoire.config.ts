@@ -7,8 +7,6 @@ export default defineConfig({
     ],
     setupFile: '/src/histoire.setup.ts',
     vite: {
-        build: {
-            assetsDir: './',
-        },
+        base: '/jupiter/'
     },
 })
