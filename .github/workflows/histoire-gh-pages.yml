@@ -1,4 +1,4 @@
-name: Deploy histoire with GitHub Pages dependencies preinstalled
+name: Deploy histoire with GitHub Pages
 
 on:
   # Runs on pushes targeting the default branch
