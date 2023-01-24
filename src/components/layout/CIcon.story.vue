@@ -12,7 +12,7 @@ import CCluster from '@/components/layout/CCluster.vue';
                     class="with-outline"
                 >
                     <svg>
-                    <use href="@/assets/style/icons.svg#cross" />
+                    <!-- <use href="@/assets/style/icons.svg#cross" /> -->
                     </svg>
                     with Button
                 </c-icon>
@@ -21,7 +21,7 @@ import CCluster from '@/components/layout/CCluster.vue';
                 class="with-outline"
                 >
                 <svg>
-                    <use href="@/assets/style/icons.svg#hamburger" />
+                    <!-- <use href="@/assets/style/icons.svg#hamburger" /> -->
                 </svg>
                 Icon only
                 </c-icon>

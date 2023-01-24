@@ -75,6 +75,6 @@ const data: {
 
 | Name     | Type                              | Default   | Description                    |
 | -------- | ----------------------------      | --------- | ------------------------------ |
-| padding  | "none" / "small"/"medium"/"large" | "medium"  | paddingの指定                   |
+| padding  | "none" / "small" / "medium" / "large" | "medium"  | paddingの指定                   |
 | border   | boolean                           | false     | borderを有効にするかどうか         |
 </docs>
