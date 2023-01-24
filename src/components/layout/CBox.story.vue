@@ -3,23 +3,15 @@ import CBox from '@/components/layout/CBox.vue';
 import { reactive } from 'vue';
 
 const data: {
-    padding: string;
-    borderWidth: string;
-    borderColor: string;
-    backgroundColor: string;
-    nestpadding: string;
-    nestborderWidth: string;
-    nestborderColor: string;
-    nestbackgroundColor: string;
+    padding: 'none'|'small'|'medium'|'large';
+    border: boolean;
+    nestpadding: 'none'|'small'|'medium'|'large';
+    nestborder: boolean;
 } = reactive({
-    padding: 'p-2',
-    borderWidth: 'border',
-    borderColor: 'border-black',
-    backgroundColor: 'bg-inherit',
-    nestpadding: 'p-2',
-    nestborderWidth: 'border',
-    nestborderColor: 'border-black',
-    nestbackgroundColor: 'bg-inherit',
+    padding: 'medium',
+    border: true,
+    nestpadding: 'medium',
+    nestborder: true,
 })
 
 </script>
@@ -28,31 +20,61 @@ const data: {
     <Story title="Layout / Box">
         <c-box
         :padding="data.padding"
-        :border-width="data.borderWidth"
-        :border-color="data.borderColor"
-        :background-color="data.backgroundColor"
+        :border="data.border"
         >
             BOX
             <c-box
             :padding="data.nestpadding"
-            :border-width="data.nestborderWidth"
-            :border-color="data.nestborderColor"
-            :background-color="data.nestbackgroundColor"
+            :border="data.nestborder"
             >
                 Nested BOX
             </c-box>
         </c-box>
         <template #controls>
-            <div class="text-lg font-bold">Box</div>
-            <HstText v-model="data.padding" title="padding" />
-            <HstText v-model="data.borderWidth" title="borderWidth" />
-            <HstText v-model="data.borderColor" title="borderColor" />
-            <HstText v-model="data.backgroundColor" title="backgroundColor" />
-            <h1 class="text-lg font-bold">Nested Box</h1>
-            <HstText v-model="data.nestpadding" title="padding" />
-            <HstText v-model="data.nestborderWidth" title="borderWidth" />
-            <HstText v-model="data.nestborderColor" title="borderColor" />
-            <HstText v-model="data.nestbackgroundColor" title="backgroundColor" />
+            <c-box>
+                <div class="text-lg font-bold">Box</div>
+                <HstSelect 
+                    v-model="data.padding"
+                    title="padding"
+                    :options="[
+                        {value: 'none', label: 'none (p-0)'},
+                        {value: 'small', label: 'small (p-2)'},
+                        {value: 'medium', label: 'medium (p-4)'},
+                        {value: 'large', label: 'large (p-8)'},
+                    ]"
+                />
+                <HstCheckbox 
+                    v-model="data.border"
+                    title="border"
+                />
+            </c-box>
+            <c-box>
+                <div class="text-lg font-bold">Nested Box</div>
+                <HstSelect 
+                    v-model="data.nestpadding"
+                    title="padding"
+                    :options="[
+                        {value: 'none', label: 'none'},
+                        {value: 'small', label: 'small'},
+                        {value: 'medium', label: 'medium'},
+                        {value: 'large', label: 'large'},
+                    ]"
+                />
+                <HstCheckbox 
+                    v-model="data.nestborder"
+                    title="border"
+                />
+            </c-box>
         </template>
     </Story>
 </template>
+<docs lang="md">
+# Box
+
+## Props
+
+| Name     | Type                              | Default   | Description                    |
+| -------- | ----------------------------      | --------- | ------------------------------ |
+| padding  | "none" / "small"/"medium"/"large" | "medium"  | paddingの指定                   |
+| border   | boolean                           | false     | borderを有効にするかどうか         |
+</docs>

@@ -2,25 +2,22 @@
 import { computed } from 'vue';
 
 const props = withDefaults(defineProps<{
-    padding?: string;
-    borderWidth?: string;
-    borderColor?: string;
-    backgroundColor?: string;
+    padding: 'none'|'small'|'medium'|'large';
+    border: boolean;
 }>(), {
-    padding: 'p-2',
-    borderWidth: 'border',
-    borderColor: 'border-black',
-    backgroundColor: 'bg-inherit',
+    padding: 'medium',
+    border: false,
 })
 
 const computedClass = computed(() => {
     const base = [
         'border-solid',
-        props.padding,
-        props.borderWidth,
-        props.borderColor,
-        props.backgroundColor,
+        props.border ? 'border border-black' : 'border-none',
     ]
+    if (props.padding === 'none') base.push('p-0')
+    if (props.padding === 'small') base.push('p-2')
+    if (props.padding === 'medium') base.push('p-4')
+    if (props.padding === 'large') base.push('p-8')
     return base
 })
 

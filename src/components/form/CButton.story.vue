@@ -4,15 +4,11 @@ import { logEvent } from "histoire/client";
 import CButton from "@/components/form/CButton.vue";
 
 const data: {
-    msg: string
     color: string
-    size: 'small' | 'medium' | 'large'
     outline: boolean
     disabled: boolean
 } = reactive({
-    msg: 'ボタン',
     color: 'light',
-    size: 'medium',
     outline: false,
     disabled: false,
 })
@@ -26,34 +22,28 @@ const data: {
         <Variant>
             <CButton 
             @click="logEvent('Click!!', $event)"
-            :msg="data.msg"
             :color="data.color"
-            :size="data.size"
             :outline="data.outline"
             :disabled="data.disabled"
-            />
+            >
+            ボタン
+            </CButton>
 
             <template #controls>
-                <HstText v-model="data.msg" title="msg" />
                 <HstSelect 
                     v-model="data.color"
                     title="Color"
                     :options="[
                         {value: 'white', label: 'white'},
+                        {value: 'black', label: 'black'},
                         {value: 'light', label: 'light'},
+                        {value: 'dark', label: 'dark'},
+                        {value: 'primary', label: 'primary'},
+                        {value: 'link', label: 'link'},
                         {value: 'success', label: 'success'},
                         {value: 'danger', label: 'danger'},
                         {value: 'warning', label: 'warning'},
                         {value: 'info', label: 'info'},
-                    ]"
-                />
-                <HstSelect 
-                    v-model="data.size"
-                    title="Size"
-                    :options="[
-                        {value: 'small', label: 'small'},
-                        {value: 'medium', label: 'medium'},
-                        {value: 'large', label: 'large'},
                     ]"
                 />
                 <HstCheckbox 
@@ -79,6 +69,6 @@ const data: {
 
 | Name     | Type                         | Default   | Description                    |
 | -------- | ---------------------------- | --------- | ------------------------------ |
-| size     | "small" / "medium" / "large" | "medium"  | ボタンのサイズ指定                |
-| disabled | boolean                      | false     | ボタンが無効かどうか              |
+| color    | "white" / "black" / "light" / "dark" / "primary" / "link" / "success" / "danger" / "warning" / "info" | "light"  | ボタンの色指定                |
+| outline  | boolean                      | false     | outlineを有効にするかどうか             |
 </docs>
