@@ -6,6 +6,15 @@ export default defineConfig({
         HstVue(),
     ],
     setupFile: '/src/histoire.setup.ts',
+    tree: {
+        groups: [
+            {
+                title: 'Components',
+                include: file => file.path.includes('components'),
+                
+            },
+        ],
+    },
     vite: {
         base: '/jupiter/'
     },
