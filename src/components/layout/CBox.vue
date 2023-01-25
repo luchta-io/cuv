@@ -2,8 +2,8 @@
 import { computed } from 'vue';
 
 const props = withDefaults(defineProps<{
-    padding: 'none'|'small'|'medium'|'large';
-    border: boolean;
+    padding?: 'none'|'small'|'medium'|'large';
+    border?: boolean;
 }>(), {
     padding: 'medium',
     border: false,
