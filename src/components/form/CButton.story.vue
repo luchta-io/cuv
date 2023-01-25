@@ -20,7 +20,7 @@ const data: {
             <CButton 
             @click="logEvent('Click!!', $event)"
             :color="data.color"
-            :outline="data.outline"
+            :outlined="data.outline"
             >
             ボタン
             </CButton>
