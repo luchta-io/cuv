@@ -6,13 +6,10 @@ import CButton from "@/components/form/CButton.vue";
 const data: {
     color: string
     outline: boolean
-    disabled: boolean
 } = reactive({
     color: 'light',
     outline: false,
-    disabled: false,
 })
-
 </script>
 
 <template>
@@ -24,7 +21,6 @@ const data: {
             @click="logEvent('Click!!', $event)"
             :color="data.color"
             :outline="data.outline"
-            :disabled="data.disabled"
             >
             ボタン
             </CButton>
@@ -50,12 +46,7 @@ const data: {
                     v-model="data.outline"
                     title="Outline"
                 />
-                <HstCheckbox 
-                    v-model="data.disabled"
-                    title="Disabled"
-                />
-
-            </template>            
+            </template>
         </Variant>
     </Story>
 </template>

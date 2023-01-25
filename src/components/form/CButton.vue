@@ -9,8 +9,6 @@ const props = withDefaults(defineProps<{
     outline: false,
 })
 
-defineEmits(['click'])
-
 const computedColor = computed(() => {
     if( props.color === 'white' ) return props.outline ? `text-black border-gray-300` : `bg-white text-black `
     if( props.color === 'black' ) return props.outline ? `text-black border-black` : `bg-black text-white border-black`
@@ -25,7 +23,6 @@ const computedColor = computed(() => {
     return 'bg-white text-black'
 })
 
-
 const computedClass = computed(() => {
     const base = [
         'p-2 border rounded',
@@ -33,13 +30,11 @@ const computedClass = computed(() => {
         computedColor.value,
     ]
     return base
-
 })
-
 </script>
 
 <template>
-    <button @click="$emit('click')" :class="computedClass">
+    <button :class="computedClass">
         <slot/>
     </button>
 </template>
