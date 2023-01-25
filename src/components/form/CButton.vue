@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
+type ColorType =
+    'white' | 'black' |
+    'light' | 'dark' |
+    'primary' | 'link' |
+    'success' | 'danger' | 'warning' | 'info'
+
 const props = withDefaults(defineProps<{
-    color: string
+    color: ColorType
     outlined: boolean
 }>(), {
     color: 'light',
