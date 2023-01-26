@@ -1,7 +1,16 @@
 {
   "name": "jupiter",
-  "version": "0.0.0",
-  "private": true,
+  "description": "Vue3向けのコンポーネントライブラリ",
+  "version": "0.0.1",
+  "files": ["dist"],
+  "module": "./dist/jupiter.mjs",
+  "main": "./dist/jupiter.umd.js",
+  "exports": {
+    ".": {
+      "import": "./dist/jupiter.mjs",
+      "require": "./dist/jupiter.umd.js"
+    }
+  },
   "scripts": {
     "build": "run-p type-check build-only",
     "build-only": "vite build",
