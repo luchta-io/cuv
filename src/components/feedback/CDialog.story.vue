@@ -7,17 +7,17 @@ import CBox from '@/components/layout/CBox.vue';
 const data: {
     type: 'alert'|'confirm';
     isActive: boolean;
-    overscroll: boolean;
     cancelText: string;
     confirmText: string;
-    confirmColor: string;
+    alertConfirmColor: 'white' | 'black' | 'light' | 'dark' | 'primary' | 'link' | 'success' | 'danger' | 'warning' | 'info'
+    confirmColor: 'white' | 'black' | 'light' | 'dark' | 'primary' | 'link' | 'success' | 'danger' | 'warning' | 'info'
 } = reactive({
     type: 'confirm',
     isActive: false,
-    overscroll: false,
     cancelText: 'キャンセル',
     confirmText: '確認',
-    confirmColor: '',
+    alertConfirmColor: 'danger',
+    confirmColor: 'success',
 })
 </script>
 <template>
@@ -26,11 +26,10 @@ const data: {
         <c-button @click="data.isActive=true" color="danger">Alertダイアログを表示</c-button>
         <c-dialog 
         type="alert" 
-        v-model="data.isActive" 
-        :overscroll="data.overscroll"
+        :is-active="data.isActive" 
         :cancel-text="data.cancelText"
         :confirm-text="data.confirmText"
-        :confirm-color="data.confirmColor"
+        :confirm-color="data.alertConfirmColor"
         @close="data.isActive=false"
         >
             <c-box>
@@ -65,10 +64,6 @@ const data: {
                 v-model="data.isActive"
                 title="isActive"
             />
-            <HstCheckbox 
-                v-model="data.overscroll"
-                title="overscroll"
-            />
             <HstText
                 v-model="data.confirmText"
                 title="confirmText"
@@ -78,7 +73,7 @@ const data: {
                 title="cancelText"
             />
             <HstSelect 
-                v-model="data.confirmColor"
+                v-model="data.alertConfirmColor"
                 title="confirmColor"
                 :options="[
                     {value: 'white', label: 'white'},
@@ -97,7 +92,7 @@ const data: {
     </Variant>
     <Variant title="Confirm">
         <c-button @click="data.isActive=true" color="success">Confirmダイアログを表示</c-button>
-        <c-dialog v-model="data.isActive" @close="data.isActive=false">
+        <c-dialog :is-active="data.isActive" @close="data.isActive=false">
             <c-box>
                 ダイアログの見本です。
             </c-box>
@@ -106,10 +101,6 @@ const data: {
             <HstCheckbox 
                 v-model="data.isActive"
                 title="isActive"
-            />
-            <HstCheckbox 
-                v-model="data.overscroll"
-                title="overscroll"
             />
             <HstText
                 v-model="data.confirmText"
@@ -151,8 +142,7 @@ const data: {
 | ----------  | ------------------- | ---------  | -------------------------------------------------- 
 | modelValue  | boolean             | false      | ダイアログを表示するかどうか                            
 | type        | "alert" / "confirm" | "confirm"  | ダイアログのタイプを選ぶ                               
-| overscroll  | boolean             | false      | モーダル内の表示が多い時にスクロールをするかどうか         
-| cancelText  | string              | "キャンセル" | 取り消す、無効にするボタンの表記                                                  
-| confirmText | string              | "確認"      | 承諾、確認のためのボタンの表記                                                   
+| cancelText  | string              | "キャンセル" | 取り消す、無効にするボタンのテキスト                                                  
+| confirmText | string              | "確認"      | 承諾、確認のためのボタンのテキスト                                            
 | confirmColor| string              | "success"  | 通知に対する承諾ボタンの色                                                   
 </docs>
