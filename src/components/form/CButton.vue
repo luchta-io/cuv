@@ -30,7 +30,7 @@ const computedColor = computed(() => {
 
 const computedClass = computed(() => {
     const base = [
-        'p-2 border rounded',
+        'px-2 py-1 border rounded',
         'disabled:bg-gray-100 disabled:border-gray-300 disabled:text-gray-400',
         computedColor.value,
     ]
