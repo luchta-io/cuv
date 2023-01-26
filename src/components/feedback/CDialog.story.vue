@@ -119,7 +119,7 @@ const data: {
 
 | Name        | Type                | Default    | Description                                        
 | ----------  | ------------------- | ---------  | -------------------------------------------------- 
-| modelValue  | boolean             | false      | ダイアログを表示するかどうか                            
+| isActive    | boolean             | false      | ダイアログを表示するかどうか                            
 | type        | "alert" / "confirm" | "confirm"  | ダイアログのタイプを選ぶ                               
 | cancelText  | string              | "キャンセル" | 取り消す、無効にするボタンのテキスト                                                  
 | confirmText | string              | "確認"      | 承諾、確認のためのボタンのテキスト                                            
