@@ -3,16 +3,16 @@ import { computed } from 'vue';
 
 const props = withDefaults(defineProps<{
     padding?: 'none'|'small'|'medium'|'large';
-    border?: boolean;
+    bordered?: boolean;
 }>(), {
     padding: 'medium',
-    border: false,
+    bordered: false,
 })
 
 const computedClass = computed(() => {
     const base = [
         'border-solid',
-        props.border ? 'border border-black' : 'border-none',
+        props.bordered ? 'border border-black' : 'border-none',
     ]
     if (props.padding === 'none') base.push('p-0')
     if (props.padding === 'small') base.push('p-2')
