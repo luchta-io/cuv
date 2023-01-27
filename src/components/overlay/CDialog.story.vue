@@ -124,6 +124,12 @@ const data: {
 | isActive | boolean                      | false    | ダイアログを表示するかどうか         |
 | size     | "small" / "medium" / "large" | "medium" | ダイアログの横幅のサイズを指定します |
 
+## Slots
+
+| Name | Props (if scoped) | Description |
+| --- | --- | --- |
+| default | - | ダイアログに表示するコンテンツを指定します |
+
 ## Events
 
 | Name  | Parameters | Description                                         |
