@@ -1,0 +1,12 @@
+:root {
+    --jupiter-whitewhite: rgb(255 255 255);
+    --jupiter-light: rgb(229 231 235);
+    --jupiter-dark: rgb(31 41 55);
+    --jupiter-black: rgb(0 0 0);
+    --jupiter-primary: rgb(147 51 234);;
+    --jupiter-link: rgb(29 78 216);
+    --jupiter-success: rgb(5 150 105);
+    --jupiter-danger: rgb(225 29 72);
+    --jupiter-warning: rgb(250 204 21);
+    --jupiter-info: rgb(14 165 233);
+}
