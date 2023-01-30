@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted } from 'vue';
+import { computed, watchEffect } from 'vue';
 
 const props = withDefaults(defineProps<{
     modelValue: boolean;
@@ -9,7 +9,10 @@ const props = withDefaults(defineProps<{
     size: 'medium',
 })
 
-const emits = defineEmits(['update:modelValue', 'close'])
+const emits = defineEmits<{
+    (e: 'update:modelValue', value: boolean): void
+    (e: 'close'): void
+}>()
 
 const maxWidthClass = computed(() => {
     if( props.size === 'small' ) return 'max-w-sm'
@@ -24,22 +27,18 @@ const close = () => {
 
 const escClose = (e:KeyboardEvent) => {
     if( props.modelValue && (e.key === 'Escape' || e.key === 'Esc')) {
-        emits('update:modelValue', false)
-        emits('close')
+        close()
     }
 }
 
-onMounted(() => {
-    document.addEventListener('keyup', escClose)
-})
-
-onUnmounted(() => {
-    document.removeEventListener('keyup', escClose)
+watchEffect(() => {
+    if(props.modelValue) document.addEventListener('keyup', escClose)
+    else document.removeEventListener('keyup', escClose)
 })
 </script>
 <template>
 <div
-v-show="modelValue" 
+v-if="modelValue" 
 @click.self="close"
 class="fixed top-0 left-0 z-50 inset-0 bg-gray-400/50 max-h-screen"
 >
