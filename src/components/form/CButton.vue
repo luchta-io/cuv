@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<{
 
 const computedColor = computed(() => {
   if (props.color === 'white') return props.outlined ? `text-black border-gray-300` : `bg-white text-black `
-  if (props.color === 'light') return props.outlined ? `text-gray-700 border-gray-200` : `bg-gray-100 text-black border-gray-200`
+  if (props.color === 'light') return props.outlined ? `text-gray-700 border-gray-200` : `bg-[var(--jupiter-light)] text-black border-gray-200`
   if (props.color === 'dark') return props.outlined ? `text-gray-800 border-gray-800` : `bg-gray-800 text-white border-gray-800`
   if (props.color === 'black') return props.outlined ? `text-black border-black` : `bg-black text-white border-black`
   if (props.color === 'primary') return props.outlined ? `text-purple-700 border-purple-700` : `bg-purple-700 text-white border-purple-700`
