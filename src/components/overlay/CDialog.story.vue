@@ -7,19 +7,27 @@ import CBox from "@/components/layout/CBox.vue";
 
 const data: {
     isActive: boolean;
-    isParentActive: boolean;
-    isChildActive: boolean;
-    isGrandActive: boolean;
-    isLongActive: boolean;
     size: "small" | "medium" | "large";
 } = reactive({
     isActive: false,
+    size: "medium",
+})
+
+const stackData: {
+    isParentActive: boolean;
+    isChildActive: boolean;
+    isGrandActive: boolean;
+} = reactive({
     isParentActive: false,
     isChildActive: false,
     isGrandActive: false,
+})
+
+const longData: {
+    isLongActive: boolean;
+} = reactive({
     isLongActive: false,
-    size: "medium",
-});
+})
 </script>
 <template>
     <Story title="Overlay / Dialog" :layout="{ type: 'grid', width: 200 }">
@@ -36,29 +44,29 @@ const data: {
             </c-dialog>
         </Variant>
         <Variant title="重なったコンテンツ">
-            <c-button @click="data.isParentActive = true">ダイアログを表示</c-button>
+            <c-button @click="stackData.isParentActive = true">ダイアログを表示</c-button>
             <c-dialog
-                v-model="data.isParentActive"
+                v-model="stackData.isParentActive"
                 :size="data.size"
                 @close="logEvent('close', $event)"
             >
                 <c-box>
                 <div>親ダイアログです。</div>
-                <c-button @click="data.isChildActive = true">子ダイアログを表示</c-button>
+                <c-button @click="stackData.isChildActive = true">子ダイアログを表示</c-button>
                 </c-box>
             </c-dialog>
             <c-dialog
-                v-model="data.isChildActive"
+                v-model="stackData.isChildActive"
                 size="large"
                 @close="logEvent('子ダイアログをClose', $event)"
             >
                 <c-box>
                     <div>子ダイアログです。サイズはLargeです</div>
-                    <c-button @click="data.isGrandActive = true">孫ダイアログを表示</c-button>
+                    <c-button @click="stackData.isGrandActive = true">孫ダイアログを表示</c-button>
                 </c-box>
             </c-dialog>
             <c-dialog
-                v-model="data.isGrandActive"
+                v-model="stackData.isGrandActive"
                 size="small"
                 @close="logEvent('孫ダイアログをClose', $event)"
             >
@@ -68,11 +76,11 @@ const data: {
             </c-dialog>
         </Variant>
         <Variant title="長いコンテンツ">
-            <c-button @click="data.isLongActive = true"
+            <c-button @click="longData.isLongActive = true"
                 >長いコンテンツを表示</c-button
             >
             <c-dialog
-                v-model="data.isLongActive"
+                v-model="longData.isLongActive"
                 :size="data.size"
                 @close="logEvent('長いコンテンツをClose', $event)"
             >
