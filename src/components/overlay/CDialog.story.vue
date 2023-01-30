@@ -43,7 +43,7 @@ const data: {
                 @close="logEvent('close', $event)"
             >
                 <c-box>
-                親ダイアログです。
+                <div>親ダイアログです。</div>
                 <c-button @click="data.isChildActive = true">子ダイアログを表示</c-button>
                 </c-box>
             </c-dialog>
@@ -53,7 +53,7 @@ const data: {
                 @close="logEvent('子ダイアログをClose', $event)"
             >
                 <c-box>
-                    子ダイアログです。サイズはLargeです
+                    <div>子ダイアログです。サイズはLargeです</div>
                     <c-button @click="data.isGrandActive = true">孫ダイアログを表示</c-button>
                 </c-box>
             </c-dialog>
@@ -63,7 +63,7 @@ const data: {
                 @close="logEvent('孫ダイアログをClose', $event)"
             >
                 <c-box>
-                    孫ダイアログです。サイズはSmallです。
+                    <div>孫ダイアログです。サイズはSmallです。</div>
                 </c-box>
             </c-dialog>
         </Variant>
