@@ -1,17 +1,15 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted, onUnmounted } from 'vue';
 
 const props = withDefaults(defineProps<{
-    isActive: boolean;
+    modelValue: boolean;
     size?: 'small'|'medium'|'large';
 }>(), {
-    isActive: false,
+    modelValue: false,
     size: 'medium',
 })
 
-defineEmits<{
-    (e: "close"):void,
-}>()
+const emits = defineEmits(['update:modelValue', 'close'])
 
 const maxWidthClass = computed(() => {
     if( props.size === 'small' ) return 'max-w-sm'
@@ -19,11 +17,30 @@ const maxWidthClass = computed(() => {
     return 'max-w-xl'
 })
 
+const close = () => {
+    emits('update:modelValue', false)
+    emits('close')
+}
+
+const escClose = (e:KeyboardEvent) => {
+    if( props.modelValue && (e.key === 'Escape' || e.key === 'Esc')) {
+        emits('update:modelValue', false)
+        emits('close')
+    }
+}
+
+onMounted(() => {
+    document.addEventListener('keyup', escClose)
+})
+
+onUnmounted(() => {
+    document.removeEventListener('keyup', escClose)
+})
 </script>
 <template>
 <div
-v-show="isActive" 
-@click.self="$emit('close')"
+v-show="modelValue" 
+@click.self="close"
 class="fixed top-0 left-0 z-50 inset-0 bg-gray-400/50 max-h-screen"
 >
     <div 
