@@ -1,5 +1,7 @@
 <script setup lang="ts">
-withDefaults(defineProps<{
+import { computed } from 'vue';
+
+const props = withDefaults(defineProps<{
     breakout?: boolean;
     margin?: string;
     fixed?: boolean;
@@ -8,35 +10,31 @@ withDefaults(defineProps<{
     margin: '0px',
     fixed: false
 })
+
+const computedClass = computed(() => {
+    const base = [
+        props.fixed ? 'fixed' : 'absolute',
+        'top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]',
+    ]
+    return base
+})
+
 </script>
 
 <template>
-    <div
-        :class="[
-        $style.imposter,
-        breakout ? '' : $style.contain,
-        fixed ? $style.fixed : ''
-        ]"
-    >
+    <div 
+    :class="[
+    computedClass,
+    breakout ? '' : $style.contain
+    ]">
         <slot />
     </div>
 </template>
 
 <style module>
-.imposter {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 .contain {
     max-width: calc(100% - (v-bind(margin) * 2));
     max-height: calc(100% - (v-bind(margin) * 2));
     overflow: auto
-}
-
-.fixed {
-    position: fixed
 }
 </style>

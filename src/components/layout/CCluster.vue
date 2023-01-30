@@ -1,30 +1,30 @@
 <script setup lang="ts">
 // refs. https://developer.mozilla.org/ja/docs/Web/CSS/justify-content
 // refs. https://developer.mozilla.org/ja/docs/Web/CSS/align-items
-withDefaults(defineProps<{
+import { computed } from 'vue';
+const props = withDefaults(defineProps<{
     justify?: string;
     align?: string;
     space?: string;
 }>(), {
-    justify: 'flex-start',
-    align: 'flex-start',
-    space: '1rem',
+    justify: 'justify-start',
+    align: 'items-start',
+    space: 'gap-4',
+})
+
+const computedClass = computed(() => {
+    const base = [
+        'flex flex-wrap',
+        props.justify,
+        props.align,
+        props.space
+    ]
+    return base
 })
 </script>
 
 <template>
-    <div :class="$style.cluster">
+    <div :class="computedClass">
         <slot />
     </div>
 </template>
-
-<style module>
-.cluster {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: v-bind(justify);
-    align-items: v-bind(align);
-    gap: v-bind(space);
-}
-</style>
-Footer
