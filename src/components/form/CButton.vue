@@ -15,16 +15,16 @@ const props = withDefaults(defineProps<{
 })
 
 const computedColor = computed(() => {
-    if (props.color === 'white') return props.outlined ? `text-black border-gray-300` : `bg-white text-black `
-    if (props.color === 'light') return props.outlined ? `text-gray-700 border-gray-200` : `bg-[var(--jupiter-light)] text-black border-gray-200`
-    if (props.color === 'dark') return props.outlined ? `text-gray-800 border-gray-800` : `bg-gray-800 text-white border-gray-800`
-    if (props.color === 'black') return props.outlined ? `text-black border-black` : `bg-black text-white border-black`
-    if (props.color === 'primary') return props.outlined ? `text-purple-700 border-purple-700` : `bg-purple-700 text-white border-purple-700`
-    if (props.color === 'link') return props.outlined ? `text-blue-700 border-blue-700` : `bg-blue-700 text-white border-blue-700`
-    if (props.color === 'success') return props.outlined ? `text-emerald-600 border-emerald-500` : `bg-emerald-500 text-white border-emerald-500`
-    if (props.color === 'danger') return props.outlined ? `text-rose-600 border-rose-600` : `bg-rose-600 text-white border-rose-600`
-    if (props.color === 'warning') return props.outlined ? `text-yellow-600 border-yellow-500` : `bg-yellow-400 text-black border-yellow-400`
-    if (props.color === 'info') return props.outlined ? `text-sky-500 border-sky-500` : `bg-sky-500 text-white border-sky-500`
+    if (props.color === 'white') return props.outlined ? `text-black border-gray-300` : `bg-[var(--jupiter-white)] text-black `
+    if (props.color === 'light') return props.outlined ? `text-gray-700 border-[var(--jupiter-light)]` : `bg-[var(--jupiter-light)] text-black border-[var(--jupiter-light)]`
+    if (props.color === 'dark') return props.outlined ? `text-[var(--jupiter-dark)] border-[var(--jupiter-dark)]` : `bg-[var(--jupiter-dark)] text-white border-[var(--jupiter-dark)]`
+    if (props.color === 'black') return props.outlined ? `text-[var(--jupiter-black)] border-[var(--jupiter-black)]` : `bg-[var(--jupiter-black)] text-white border-[var(--jupiter-black)]`
+    if (props.color === 'primary') return props.outlined ? `text-[var(--jupiter-primary)] border-[var(--jupiter-primary)]` : `bg-[var(--jupiter-primary)] text-white border-[var(--jupiter-primary)]`
+    if (props.color === 'link') return props.outlined ? `text-[var(--jupiter-link)] border-[var(--jupiter-link)]` : `bg-[var(--jupiter-link)] text-white border-[var(--jupiter-link)]`
+    if (props.color === 'success') return props.outlined ? `text-[var(--jupiter-success)] border-[var(--jupiter-success)]` : `bg-[var(--jupiter-success)] text-white border-[var(--jupiter-success)]`
+    if (props.color === 'danger') return props.outlined ? `text-[var(--jupiter-danger)] border-[var(--jupiter-danger)]` : `bg-[var(--jupiter-danger)] text-white border-[var(--jupiter-danger)]`
+    if (props.color === 'warning') return props.outlined ? `text-[var(--jupiter-warning)] border-[var(--jupiter-warning)]` : `bg-[var(--jupiter-warning)] text-black border-[var(--jupiter-warning)]`
+    if (props.color === 'info') return props.outlined ? `text-[var(--jupiter-info)] border-[var(--jupiter-info)]` : `bg-[var(--jupiter-info)] text-white border-[var(--jupiter-info)]`
     return 'bg-white text-black'
 })
 
