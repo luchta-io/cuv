@@ -63,7 +63,6 @@
     --jupiter-danger-outline-focus: #e11d48;
 
     /* warning */
-    --jupiter-warning: #f0c000;
     --jupiter-warning-background: #facc15;
     --jupiter-warning-background-hover: #f0c000;
     --jupiter-warning-background-focus: #facc15;
@@ -74,7 +73,6 @@
     --jupiter-warning-outline-focus: #facc15;
     
     /* info */
-    --jupiter-info: #0c94d3;
     --jupiter-info-background: #0ea5e9;
     --jupiter-info-background-hover: #0c94d3;
     --jupiter-info-background-focus: #0ea5e9;
