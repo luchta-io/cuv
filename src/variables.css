@@ -1,0 +1,84 @@
+:root {
+    --jupiter-white: #ffffff;
+    --jupiter-black: #000000;
+
+    /* light */
+    --jupiter-light-background: #f6f3f3;
+    --jupiter-light-background-hover: #ecebeb;
+    --jupiter-light-background-focus: #f6f3f3;
+    --jupiter-light-border: #f6f3f3;
+    --jupiter-light-text: #808080;
+    --jupiter-light-outline: #808080;
+    --jupiter-light-outline-hover: #636262;
+    --jupiter-light-outline-focus: #808080;
+
+    /* dark */
+    --jupiter-dark-background: #1d324f;
+    --jupiter-dark-background-hover: #090c10;
+    --jupiter-dark-background-focus: #1f2937;
+    --jupiter-dark-border: #1f2937;
+    --jupiter-dark-text: #1f2937;
+    --jupiter-dark-outline: #1f2937;
+    --jupiter-dark-outline-hover: #090c10;
+    --jupiter-dark-outline-focus: #1f2937;
+
+    /* primary */
+    --jupiter-primary-background: #9333ea;
+    --jupiter-primary-background-hover: #7627c1;
+    --jupiter-primary-background-focus: #9333ea;
+    --jupiter-primary-border: #9333ea;
+    --jupiter-primary-text: #9333ea;
+    --jupiter-primary-outline: #9333ea;
+    --jupiter-primary-outline-hover: #7627c1;
+    --jupiter-primary-outline-focus: #9333ea;
+
+    /* link */
+    --jupiter-link-background: #2563eb;
+    --jupiter-link-background-hover: #1e51be;
+    --jupiter-link-background-focus: #2563eb;
+    --jupiter-link-border: #2563eb;
+    --jupiter-link-text: #2563eb;
+    --jupiter-link-outline: #2563eb;
+    --jupiter-link-outline-hover: #1e51be;
+    --jupiter-link-outline-focus: #2563eb;
+
+    /* success */
+    --jupiter-success-background: #10b981;
+    --jupiter-success-background-hover: #028e5f;
+    --jupiter-success-background-focus: #10b981;
+    --jupiter-success-border: #10b981;
+    --jupiter-success-text: #10b981;
+    --jupiter-success-outline: #10b981;
+    --jupiter-success-outline-hover: #028e5f;
+    --jupiter-success-outline-focus: #10b981;
+
+    /* danger */
+    --jupiter-danger-background: #e11d48;
+    --jupiter-danger-background-hover: #c1173c;
+    --jupiter-danger-background-focus: #e11d48;
+    --jupiter-danger-border: #e11d48;
+    --jupiter-danger-text: #e11d48;
+    --jupiter-danger-outline: #e11d48;
+    --jupiter-danger-outline-hover: #c1173c;
+    --jupiter-danger-outline-focus: #e11d48;
+
+    /* warning */
+    --jupiter-warning-background: #facc15;
+    --jupiter-warning-background-hover: #f0c000;
+    --jupiter-warning-background-focus: #facc15;
+    --jupiter-warning-border: #facc15;
+    --jupiter-warning-text: #facc15;
+    --jupiter-warning-outline: #facc15;
+    --jupiter-warning-outline-hover: #f0c000;
+    --jupiter-warning-outline-focus: #facc15;
+    
+    /* info */
+    --jupiter-info-background: #0ea5e9;
+    --jupiter-info-background-hover: #0c94d3;
+    --jupiter-info-background-focus: #0ea5e9;
+    --jupiter-info-border: #0ea5e9;
+    --jupiter-info-text: #0ea5e9;
+    --jupiter-info-outline: #0ea5e9;
+    --jupiter-info-outline-hover: #0c94d3;
+    --jupiter-info-outline-focus: #0ea5e9;
+}

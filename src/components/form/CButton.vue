@@ -2,7 +2,7 @@
 import {computed} from 'vue';
 
 type ColorType =
-    'white' | 'light' | 'dark' | 'black' |
+    'white' | 'black' | 'light' | 'dark' | 
     'primary' | 'link' |
     'success' | 'danger' | 'warning' | 'info'
 
@@ -15,17 +15,34 @@ const props = withDefaults(defineProps<{
 })
 
 const computedColor = computed(() => {
-    if (props.color === 'white') return props.outlined ? `text-black border-gray-300` : `bg-white text-black `
-    if (props.color === 'light') return props.outlined ? `text-gray-700 border-gray-200` : `bg-gray-100 text-black border-gray-200`
-    if (props.color === 'dark') return props.outlined ? `text-gray-800 border-gray-800` : `bg-gray-800 text-white border-gray-800`
-    if (props.color === 'black') return props.outlined ? `text-black border-black` : `bg-black text-white border-black`
-    if (props.color === 'primary') return props.outlined ? `text-purple-700 border-purple-700` : `bg-purple-700 text-white border-purple-700`
-    if (props.color === 'link') return props.outlined ? `text-blue-700 border-blue-700` : `bg-blue-700 text-white border-blue-700`
-    if (props.color === 'success') return props.outlined ? `text-emerald-600 border-emerald-500` : `bg-emerald-500 text-white border-emerald-500`
-    if (props.color === 'danger') return props.outlined ? `text-rose-600 border-rose-600` : `bg-rose-600 text-white border-rose-600`
-    if (props.color === 'warning') return props.outlined ? `text-yellow-600 border-yellow-500` : `bg-yellow-400 text-black border-yellow-400`
-    if (props.color === 'info') return props.outlined ? `text-sky-500 border-sky-500` : `bg-sky-500 text-white border-sky-500`
-    return 'bg-white text-black'
+    if (props.color === 'white') return props.outlined ? `text-black` : `bg-[var(--jupiter-white)] text-black `
+    if (props.color === 'black') return props.outlined ? `text-[var(--jupiter-black)] border-[var(--jupiter-black)]` : `text-white bg-[var(--jupiter-black)] border-[var(--jupiter-black)]`
+    if (props.color === 'dark') return props.outlined 
+        ? `text-[var(--jupiter-dark-text)] border-[var(--jupiter-dark-outline)] hover:border-[var(--jupiter-dark-outline-hover)] focus:border-[var(--jupiter-dark-outline-focus)]] ` 
+        : `text-white bg-[var(--jupiter-dark-background)] hover:bg-[var(--jupiter-dark-background-hover)] focus:bg-[var(--jupiter-dark-background-focus)] border-[var(--jupiter-dark-border)]`
+    if (props.color === 'primary') return props.outlined 
+        ? `text-[var(--jupiter-primary-text)] border-[var(--jupiter-primary-outline)] hover:border-[var(--jupiter-primary-outline-hover)] focus:border-[var(--jupiter-primary-outline-focus)]] ` 
+        : `text-white bg-[var(--jupiter-primary-background)] hover:bg-[var(--jupiter-primary-background-hover)] focus:bg-[var(--jupiter-primary-background-focus)] border-[var(--jupiter-primary-border)]`
+    if (props.color === 'link') return props.outlined 
+        ? `text-[var(--jupiter-link-text)] border-[var(--jupiter-link-outline)] hover:border-[var(--jupiter-link-outline-hover)] focus:border-[var(--jupiter-link-outline-focus)]] ` 
+        : `text-white bg-[var(--jupiter-link-background)] hover:bg-[var(--jupiter-link-background-hover)] focus:bg-[var(--jupiter-link-background-focus)] border-[var(--jupiter-link-border)]`
+    if (props.color === 'success') return props.outlined 
+        ? `text-[var(--jupiter-success-text)] border-[var(--jupiter-success-outline)] hover:border-[var(--jupiter-success-outline-hover)] focus:border-[var(--jupiter-success-outline-focus)]] ` 
+        : `text-white bg-[var(--jupiter-success-background)] hover:bg-[var(--jupiter-success-background-hover)] focus:bg-[var(--jupiter-success-background-focus)] border-[var(--jupiter-success-border)]`
+    if (props.color === 'danger') return props.outlined 
+        ? `text-[var(--jupiter-danger-text)] border-[var(--jupiter-danger-outline)] hover:border-[var(--jupiter-danger-outline-hover)] focus:border-[var(--jupiter-danger-outline-focus)]] ` 
+        : `text-white bg-[var(--jupiter-danger-background)] hover:bg-[var(--jupiter-danger-background-hover)] focus:bg-[var(--jupiter-danger-background-focus)] border-[var(--jupiter-danger-border)]`
+    if (props.color === 'warning') return props.outlined 
+        ? `text-[var(--jupiter-warning-text)] border-[var(--jupiter-warning-outline)] hover:border-[var(--jupiter-warning-outline-hover)] focus:border-[var(--jupiter-warning-outline-focus)]] ` 
+        : `text-white bg-[var(--jupiter-warning-background)] hover:bg-[var(--jupiter-warning-background-hover)] focus:bg-[var(--jupiter-warning-background-focus)] border-[var(--jupiter-warning-border)]`
+    if (props.color === 'info') return props.outlined 
+        ? `text-[var(--jupiter-info-text)] border-[var(--jupiter-info-outline)] hover:border-[var(--jupiter-info-outline-hover)] focus:border-[var(--jupiter-info-outline-focus)]] ` 
+        : `text-white bg-[var(--jupiter-info-background)] hover:bg-[var(--jupiter-info-background-hover)] focus:bg-[var(--jupiter-info-background-focus)] border-[var(--jupiter-info-border)]`
+
+    return props.outlined 
+        ? `text-[var(--jupiter-light-text)] border-[var(--jupiter-light-outline)] hover:border-[var(--jupiter-light-outline-hover)] focus:border-[var(--jupiter-light-outline-focus)]] ` 
+        : `text-black bg-[var(--jupiter-light-background)] hover:bg-[var(--jupiter-light-background-hover)] focus:bg-[var(--jupiter-light-background-focus)] border-[var(--jupiter-light-border)]`
+
 })
 
 const computedClass = computed(() => {
