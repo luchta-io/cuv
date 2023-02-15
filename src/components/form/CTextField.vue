@@ -4,26 +4,16 @@ import {computed} from 'vue';
 const props = withDefaults(defineProps<{
     modelValue: string
     label?: string
-    id?: string
-    placeholder?: string
     variant?: 'filled'|'outlined'|'underlined'
-    disabled?: boolean
-    readonly?: boolean
     isError?: boolean
 }>(), {
     label: '',
-    id: 'textInputId',
-    placeholder: ' ',
     variant: 'filled',
-    disabled: false,
-    readonly: false,
     isError: false,
 })
 
 const emits = defineEmits<{
     (e: 'update:modelValue', value: string): void
-    (e: 'focus'): void
-    (e: 'blur'): void
 }>()
 
 const 入力値 = computed({
@@ -50,9 +40,8 @@ const labelClass = computed(() => {
     const base = [
         'absolute text-sm duration-300 transform scale-75 origin-[0] peer-placeholder-shown:scale-100 peer-focus:scale-75 whitespace-nowrap overflow-hidden',
     ]
-    if(props.readonly) base.push('text-gray-500')
     if(props.isError) base.push('text-[var(--jupiter-danger-text)]')
-    if(!props.isError && !props.readonly) base.push('text-gray-500 peer-focus:text-blue-600')
+    if(!props.isError) base.push('text-gray-500 read-only:text-gray-500 peer-focus:text-blue-600')
 
     if(props.variant === 'filled') base.push('-translate-y-4 top-4 z-10 left-2.5 peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-4')
     if(props.variant === 'outlined') base.push('-translate-y-4 top-4 z-10 px-2 peer-focus:px-2 peer-placeholder-shown:-translate-y-0 peer-focus:-translate-y-4 left-1 top-4')
@@ -66,17 +55,11 @@ const labelClass = computed(() => {
 <div class="relative z-0">
     <input 
         v-model="入力値"
-        @focus="emits('focus')"
-        @blur="emits('blur')"
+        v-bind="$attrs"
         type="text" 
-        :id="id" 
         :class="inputClass" 
-        :placeholder="placeholder" 
-        :disabled="disabled"
-        :readonly="readonly"
     />
     <label 
-        :for="id" 
         :class="labelClass"
     >
         {{ label }}

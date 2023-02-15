@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {reactive} from "vue";
-import {logEvent} from "histoire/client";
 import CTextField from "@/components/form/CTextField.vue";
 import CBox from "@/components/layout/CBox.vue";
 import CStack from "@/components/layout/CStack.vue";
@@ -9,36 +8,30 @@ const filled: {
     入力値: string
     ラベル: string
     placeholder: string
-    disabled: boolean
 } = reactive({
     入力値: '',
     ラベル: 'filledのラベル',
     placeholder: 'filledのplaceholder',
-    disabled: false,
 })
 
 const outline: {
     入力値: string
     ラベル: string
     placeholder: string
-    disabled: boolean
 } = reactive({
     入力値: '',
     ラベル: 'outlinedのラベル',
     placeholder: ' ',
-    disabled: false,
 })
 
 const underline: {
     入力値: string
     ラベル: string
     placeholder: string
-    disabled: boolean
 } = reactive({
     入力値: '',
     ラベル: 'underlinedのラベル',
     placeholder: ' ',
-    disabled: false,
 })
 
 const 非活性 : {
@@ -82,11 +75,8 @@ const 警告 : {
         <c-box padding="medium">
             <c-text-field 
                 v-model="filled.入力値"
-                @focus="logEvent('fire native focus event', $event)"
-                @blur="logEvent('fire native blur event', $event)"
                 :label="filled.ラベル"
                 :placeholder="filled.placeholder"
-                :disabled="filled.disabled"
                 id="filled"
             />
         </c-box>
@@ -94,7 +84,6 @@ const 警告 : {
             <HstText v-model="filled.入力値" title="modelValue"/>
             <HstText v-model="filled.ラベル" title="label"/>
             <HstText v-model="filled.placeholder" title="placeholder"/>
-            <HstCheckbox v-model="filled.disabled" title="disabled"/>
         </template>
     </Variant>
 
@@ -104,7 +93,6 @@ const 警告 : {
                 v-model="outline.入力値"
                 :label="outline.ラベル"
                 :placeholder="outline.placeholder"
-                :disabled="outline.disabled"
                 variant="outlined"
                 id="outlined"
             />
@@ -113,7 +101,6 @@ const 警告 : {
             <HstText v-model="outline.入力値" title="modelValue"/>
             <HstText v-model="outline.ラベル" title="label"/>
             <HstText v-model="outline.placeholder" title="placeholder"/>
-            <HstCheckbox v-model="outline.disabled" title="disabled"/>
         </template>
 
     </Variant>
@@ -123,7 +110,6 @@ const 警告 : {
                 v-model="underline.入力値"
                 :label="underline.ラベル"
                 :placeholder="underline.placeholder"
-                :disabled="underline.disabled"
                 variant="underlined"
                 id="underlined"
             />
@@ -132,7 +118,6 @@ const 警告 : {
             <HstText v-model="underline.入力値" title="modelValue"/>
             <HstText v-model="underline.ラベル" title="label"/>
             <HstText v-model="underline.placeholder" title="placeholder"/>
-            <HstCheckbox v-model="underline.disabled" title="disabled"/>
         </template>
 
     </Variant>
@@ -222,7 +207,7 @@ const 警告 : {
 </template>
 
 <docs lang="md">
-# TextInput
+# TextField
 
 ## Props
 
@@ -230,11 +215,7 @@ const 警告 : {
 | --- | --- | --- | --- |
 | modelValue | string | '' | コンポーネントのv-model値です |
 | label | string | '' | ラベルに設定するテキストを指定します |
-| id | string | 'textInputId' | idを指定します |
-| placeholder | string | ' ' | placeholderのテキストを指定します |
 | variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
-| disabled | boolean | false | コンポーネントを無効にします |
-| readonly | boolean | false | コンポーネントを読み取り専用にします |
 | isError | boolean | false | コンポーネントをエラー状態にします |
 
 ## Slots
@@ -248,7 +229,5 @@ const 警告 : {
 | Name | Parameters | Description |
 | --- | --- | --- |
 | update:modelValue | - | コンポーネントのv-modelが変更されたときに発行されるイベントです |
-| focus | - | inputにfocusされた時に発火します |
-| blur | - | inputからfocusが外れた時に発火します |
 
 </docs>
