@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {reactive} from "vue";
-import CTextInput from "@/components/form/CTextInput.vue";
+import {logEvent} from "histoire/client";
+import CTextField from "@/components/form/CTextField.vue";
 import CBox from "@/components/layout/CBox.vue";
 import CStack from "@/components/layout/CStack.vue";
 
@@ -79,8 +80,10 @@ const 警告 : {
 >
     <Variant title="filled" auto-props-disabled>
         <c-box padding="medium">
-            <c-text-input 
+            <c-text-field 
                 v-model="filled.入力値"
+                @focus="logEvent('fire native focus event', $event)"
+                @blur="logEvent('fire native blur event', $event)"
                 :label="filled.ラベル"
                 :placeholder="filled.placeholder"
                 :disabled="filled.disabled"
@@ -97,7 +100,7 @@ const 警告 : {
 
     <Variant title="outlined">
         <c-box padding="medium">
-            <c-text-input 
+            <c-text-field 
                 v-model="outline.入力値"
                 :label="outline.ラベル"
                 :placeholder="outline.placeholder"
@@ -116,7 +119,7 @@ const 警告 : {
     </Variant>
     <Variant title="underlined">
         <c-box padding="medium">
-            <c-text-input 
+            <c-text-field 
                 v-model="underline.入力値"
                 :label="underline.ラベル"
                 :placeholder="underline.placeholder"
@@ -136,18 +139,18 @@ const 警告 : {
     <Variant title="非活性">
         <c-box padding="medium">
             <c-stack>
-                <c-text-input 
+                <c-text-field 
                     v-model="非活性.入力値"
                     :label="非活性.ラベル"
                     disabled
                 />
-                <c-text-input 
+                <c-text-field 
                     v-model="非活性.入力値"
                     :label="非活性.ラベル"
                     variant="outlined"
                     disabled
                 />
-                <c-text-input 
+                <c-text-field 
                     v-model="非活性.入力値"
                     :label="非活性.ラベル"
                     variant="underlined"
@@ -160,18 +163,18 @@ const 警告 : {
     <Variant title="読み取り専用">
         <c-box padding="medium">
             <c-stack>
-                <c-text-input 
+                <c-text-field 
                     v-model="読み取り専用.入力値"
                     :label="読み取り専用.ラベル"
                     readonly
                 />
-                <c-text-input 
+                <c-text-field 
                     v-model="読み取り専用.入力値"
                     :label="読み取り専用.ラベル"
                     variant="outlined"
                     readonly
                 />
-                <c-text-input 
+                <c-text-field 
                     v-model="読み取り専用.入力値"
                     :label="読み取り専用.ラベル"
                     variant="underlined"
@@ -184,7 +187,7 @@ const 警告 : {
     <Variant title="警告">
         <c-box padding="medium">
             <c-stack>
-                <c-text-input 
+                <c-text-field 
                     v-model="警告.filled入力値"
                     :label="警告.ラベル"
                     :placeholder="警告.placeholder"
@@ -194,8 +197,8 @@ const 警告 : {
                     <template #errorMessage>
                         エラーメッセージを表示します
                     </template>
-                </c-text-input>
-                <c-text-input 
+                </c-text-field>
+                <c-text-field 
                     v-model="警告.outlined入力値"
                     :label="警告.ラベル"
                     :placeholder="警告.placeholder"
@@ -203,7 +206,7 @@ const 警告 : {
                     is-error
                     id="dangeroutlined"
                 />
-                <c-text-input 
+                <c-text-field 
                     v-model="警告.underlined入力値"
                     :label="警告.ラベル"
                     :placeholder="警告.placeholder"
