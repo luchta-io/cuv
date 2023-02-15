@@ -9,24 +9,24 @@ withDefaults(defineProps<{
     side: 'left',
     sideWidth: 'auto',
     contentMin: '50%',
-    space: '1rem',
+    space: 'var(--s0)',
     noStretch: false
 })
 </script>
 
 <template>
-    <div
-        :class="[
-        $style.withSidebar,
-        side === 'left' ? $style.left : $style.right
-        ]"
-    >
-        <slot />
-    </div>
+<div
+:class="[
+    $style.withSidebar,
+    side === 'left' ? $style.left : $style.right
+]"
+>
+    <slot />
+</div>
 </template>
 
 <style module>
-/* .withSidebar {
+.withSidebar {
     display: flex;
     flex-wrap: wrap;
     gap: v-bind(space);
@@ -44,5 +44,5 @@ withDefaults(defineProps<{
     flex-basis: 0;
     flex-grow: 999;
     min-width: v-bind(contentMin);
-} */
+}
 </style>

@@ -67,3 +67,17 @@ const data: {
         </Variant>
     </Story>
 </template>
+<docs lang="md">
+# CCluster
+要素のグループを水平にレイアウトし、左右または中央に整列させるレイアウト部品です。
+長さが異なり、折り返しが発生しやすい要素のグループに適しています。
+
+## Props
+
+| Name     | Type                                  | Default  | Description                 |
+| -------- | ------------------------------------- | -------- | --------------------------- |
+| justify | string | 'justify-start' | cssのjustify-contentの値 |
+| align | string | 'items-start' | cssのalign-itemの値 |
+| space | string | 'gap-4' | cssのgapの値。グループ化された子要素間にできる最小のスペースの値 |
+
+</docs>
