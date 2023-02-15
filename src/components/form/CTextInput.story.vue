@@ -245,5 +245,7 @@ const 警告 : {
 | Name | Parameters | Description |
 | --- | --- | --- |
 | update:modelValue | - | コンポーネントのv-modelが変更されたときに発行されるイベントです |
+| focus | - | inputにfocusされた時に発火します |
+| blur | - | inputからfocusが外れた時に発火します |
 
 </docs>
