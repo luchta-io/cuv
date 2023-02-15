@@ -22,6 +22,8 @@ const props = withDefaults(defineProps<{
 
 const emits = defineEmits<{
     (e: 'update:modelValue', value: string): void
+    (e: 'focus'): void
+    (e: 'blur'): void
 }>()
 
 const 入力値 = computed({
@@ -64,6 +66,8 @@ const labelClass = computed(() => {
 <div class="relative z-0">
     <input 
         v-model="入力値"
+        @focus="emits('focus')"
+        @blur="emits('blur')"
         type="text" 
         :id="id" 
         :class="inputClass" 

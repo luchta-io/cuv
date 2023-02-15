@@ -229,16 +229,16 @@ const 警告 : {
 | label | string | '' | ラベルに設定するテキストを指定します |
 | id | string | 'textInputId' | idを指定します |
 | placeholder | string | ' ' | placeholderのテキストを指定します |
-| variant | 'filled'|'outlined'|'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
+| variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
 | disabled | boolean | false | コンポーネントを無効にします |
 | readonly | boolean | false | コンポーネントを読み取り専用にします |
-| idError | boolean | false | コンポーネントをエラー状態にします |
+| isError | boolean | false | コンポーネントをエラー状態にします |
 
 ## Slots
 
 | Name | Props (if scoped) | Description |
 | --- | --- | --- |
-| - | - | このコンポーネント独自のslotはありません |
+| errorMessage | errorMessage | エラーの時のメッセージを表示する時に使用します |
 
 ## Events
 
