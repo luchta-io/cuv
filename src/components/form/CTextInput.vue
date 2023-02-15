@@ -77,6 +77,9 @@ const labelClass = computed(() => {
     >
         {{ label }}
     </label>
+    <div v-show="isError" class="text-xs text-[var(--jupiter-danger-text)] pt-1">
+        <slot name="errorMessage"/>
+    </div>
 </div>
 </template>
 <style>

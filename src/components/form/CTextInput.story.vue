@@ -190,7 +190,11 @@ const 警告 : {
                     :placeholder="警告.placeholder"
                     is-error
                     id="dangerfilled"
-                />
+                >
+                    <template #errorMessage>
+                        エラーメッセージを表示します
+                    </template>
+                </c-text-input>
                 <c-text-input 
                     v-model="警告.outlined入力値"
                     :label="警告.ラベル"
