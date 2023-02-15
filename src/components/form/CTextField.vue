@@ -16,7 +16,7 @@ const emits = defineEmits<{
     (e: 'update:modelValue', value: string): void
 }>()
 
-const 入力値 = computed({
+const inputValue = computed({
     get: () => props.modelValue,
     set: value => {
         emits('update:modelValue', value)
@@ -54,7 +54,7 @@ const labelClass = computed(() => {
 <template>
 <div class="relative z-0">
     <input 
-        v-model="入力値"
+        v-model="inputValue"
         v-bind="$attrs"
         type="text" 
         :class="inputClass" 
