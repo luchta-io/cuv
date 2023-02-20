@@ -7,8 +7,8 @@ type ColorType =
     'success' | 'danger' | 'warning' | 'info'
 
 const props = withDefaults(defineProps<{
-    color: ColorType
-    outlined: boolean
+    color?: ColorType
+    outlined?: boolean
 }>(), {
     color: 'light',
     outlined: false,
