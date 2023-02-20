@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  pull_request:
+    branches: [ '**' ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+      - name: Setup Node
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: '18'
+      - uses: actions/cache@v3.2.3
+        with:
+          path: ~/.npm
+          key: node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            node-
+      - name: Install, Lint, Test and Build
+        run: |
+          npm ci
+          npm run lint
+          npm run test:unit
+          npm run build
+          npm run story:build
