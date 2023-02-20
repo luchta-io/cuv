@@ -14,7 +14,8 @@ describe('CButton', () => {
                 default: 'WhiteOutlinedボタン'
             }
         });
-        result.getByText('WhiteOutlinedボタン')
+        // result.getByText('WhiteOutlinedボタン')
+        result.getByText('NG')
         result.unmount()
     })
     it('デフォルトのpropsが正常に動作すること', () => {
