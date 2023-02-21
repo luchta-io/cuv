@@ -3,8 +3,8 @@ withDefaults(defineProps<{
     space?: string;
     label?: string;
 }>(), {
-    space: '',
-    label: ''
+    space: '0px',
+    label: '',
 })
 </script>
 

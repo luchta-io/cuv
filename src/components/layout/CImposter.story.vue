@@ -17,9 +17,8 @@ const data: {
 <template>
     <Story 
     title="Layout / Imposter">
-        <Variant>
-            <div class="text-xl font-semibold py-10">Imposter</div>
-            <div class="relative bg-yellow-200">
+        <Variant auto-props-disabled>
+            <div class="relative bg-yellow-200 mt-20">
                 <h3>位置指定コンテナ</h3>
                 <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
@@ -58,3 +57,28 @@ const data: {
         </Variant>
     </Story>
 </template>
+<docs lang="md">
+# CImposter
+意図的にコンテンツを隠したい場合などに、コンテンツの上に重ねて表示することができるレイアウトコンポーネントです。
+
+## Props
+
+| Name     | Type                                  | Default  | Description                 |
+| -------- | ------------------------------------- | -------- | --------------------------- |
+| breakout | boolean | false | 位置指定コンテナから要素がはみ出しても良いか |
+| margin | string | "0px" | (breakoutが適用されていない場合に)要素が配置される位置指定コンテナの内側の縁と要素との間にできる最小の余白 |
+| fixed | boolean | false | 要素をビューポート基準に配置するかどうか |
+
+## Slots
+
+| Name | Props (if scoped) | Description |
+| --- | --- | --- |
+| default | - | CImposter内に表示するコンテンツを指定します |
+
+## Events
+
+| Name | Parameters | Description |
+| --- | --- | --- |
+| - | - | このコンポーネント独自のイベントはありません |
+
+</docs>

@@ -7,15 +7,18 @@ withDefaults(defineProps<{
 </script>
 
 <template>
-    <div :class="$style.frame">
-        <slot />
-    </div>
+<div 
+:class="$style.frame"
+:style="{
+    'padding-bottom': `calc(${ratio.split(':')[1]}/${ratio.split(':')[0]}*100% )`
+}">
+    <slot />
+</div>
 </template>
 
 <style module>
-/* .frame {
+.frame {
     position: relative;
-    padding-bottom: calc(v-bind("ratio.split(':')[1]") / v-bind("ratio.split(':')[0]") * 100%);
 }
 
 .frame > * {
@@ -35,5 +38,5 @@ withDefaults(defineProps<{
     width: 100%;
     height: 100%;
     object-fit: cover;
-} */
+    }
 </style>

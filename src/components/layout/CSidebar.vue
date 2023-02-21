@@ -1,5 +1,7 @@
 <script setup lang="ts">
-withDefaults(defineProps<{
+import { computed } from 'vue';
+
+const props = withDefaults(defineProps<{
     side?: 'left' | 'right';
     sideWidth?: string;
     contentMin?: string;
@@ -9,30 +11,34 @@ withDefaults(defineProps<{
     side: 'left',
     sideWidth: 'auto',
     contentMin: '50%',
-    space: 'var(--s0)',
+    space: '1rem',
     noStretch: false
 })
+
+const sidebarClass = computed(() => {
+    const base = [
+        'flex flex-wrap',
+        props.noStretch ? 'items-start' : 'items-stretch',
+    ]
+    return base
+}) 
 </script>
 
 <template>
 <div
 :class="[
-    $style.withSidebar,
+    sidebarClass,
     side === 'left' ? $style.left : $style.right
 ]"
+:style="{
+    gap: space,
+}"
 >
     <slot />
 </div>
 </template>
 
 <style module>
-.withSidebar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: v-bind(space);
-    align-items: v-bind("noStretch ? 'flex-start' : 'stretch'");
-}
-
 .left > :first-child,
 .right > :last-child {
     flex-basis: v-bind(sideWidth);

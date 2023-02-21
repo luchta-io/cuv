@@ -1,68 +1,63 @@
 <script setup lang="ts">
+import { reactive } from 'vue';
 import CBox from '@/components/layout/CBox.vue';
 import CCluster from '@/components/layout/CCluster.vue';
-import { reactive } from 'vue';
 
-const data: {
+const cluster: {
     justify: string;
     align: string;
     space: string
 } = reactive({
-    justify: 'justify-start',
-    align: 'items-start',
-    space: 'gap-4'
+    justify: 'start',
+    align: 'start',
+    space: '1rem'
+})
+
+const nestCluster: {
+    justify: string;
+    align: string;
+    space: string
+} = reactive({
+    justify: 'start',
+    align: 'start',
+    space: '1rem'
 })
 
 </script>
 
 <template>
     <Story title="Layout / Cluster">
-        <Variant>
+        <Variant auto-props-disabled>
             <c-cluster
-            :justify="data.justify"
-            :align="data.align"
-            :space="data.space"
+            :justify="cluster.justify"
+            :align="cluster.align"
+            :space="cluster.space"
             class="with-outline">
                 <p>あいうえお</p>
-                <c-box border>BOX</c-box>
-                <c-box border>BOX</c-box>
+                <c-box bordered>BOX</c-box>
+                <c-box bordered>BOX</c-box>
                 <c-cluster
-                :justify="data.justify"
-                :align="data.align"
-                :space="data.space"
+                :justify="nestCluster.justify"
+                :align="nestCluster.align"
+                :space="nestCluster.space"
                 class="with-outline">
                     <p>あいうえお</p>
-                    <c-box border>Nested Cluster BOX</c-box>
+                    <c-box bordered>Nested Cluster BOX</c-box>
                 </c-cluster>
             </c-cluster>
             <template #controls>
-                <HstSelect 
-                    v-model="data.justify"
-                    title="justify"
-                    :options="[
-                        {value: 'justify-start', label: 'justify-start'},
-                        {value: 'justify-end', label: 'justify-end'},
-                        {value: 'justify-center', label: 'justify-center'},
-                        {value: 'justify-between', label: 'justify-between'},
-                        {value: 'justify-around', label: 'justify-around'},
-                        {value: 'justify-evenly', label: 'justify-evenly'},
-                    ]"
-                />
-                <HstSelect 
-                    v-model="data.align"
-                    title="align"
-                    :options="[
-                        {value: 'items-start', label: 'items-start'},
-                        {value: 'items-end', label: 'items-end'},
-                        {value: 'items-center', label: 'items-center'},
-                        {value: 'items-baseline', label: 'items-baseline'},
-                        {value: 'items-stretch', label: 'items-stretch'},
-                    ]"
-                />
-                <!-- <HstText
-                v-model="data.space"
-                title="space"
-                />    -->
+                <c-box>
+                    <div class="text-lg font-bold">Cluster</div>
+                    <HstText v-model="cluster.justify" title="justify"/>
+                    <HstText v-model="cluster.align" title="align"/>
+                    <HstText v-model="cluster.space" title="space"/>
+                </c-box>
+                <c-box>
+                    <div class="text-lg font-bold">Nested Cluster</div>
+                    <HstText v-model="nestCluster.justify" title="justify"/>
+                    <HstText v-model="nestCluster.align" title="align"/>
+                    <HstText v-model="nestCluster.space" title="space"/>
+                </c-box>
             </template>
         </Variant>
     </Story>
@@ -76,8 +71,20 @@ const data: {
 
 | Name     | Type                                  | Default  | Description                 |
 | -------- | ------------------------------------- | -------- | --------------------------- |
-| justify | string | 'justify-start' | cssのjustify-contentの値 |
-| align | string | 'items-start' | cssのalign-itemの値 |
-| space | string | 'gap-4' | cssのgapの値。グループ化された子要素間にできる最小のスペースの値 |
+| justify | string | 'start' | cssのjustify-contentの値 |
+| align | string | 'start' | cssのalign-itemの値 |
+| space | string | '1rem' | cssのgapの値。グループ化された子要素間にできる最小のスペースの値 |
+
+## Slots
+
+| Name | Props (if scoped) | Description |
+| --- | --- | --- |
+| default | - | CCluster内に表示するコンテンツを指定します |
+
+## Events
+
+| Name | Parameters | Description |
+| --- | --- | --- |
+| - | - | このコンポーネント独自のイベントはありません |
 
 </docs>
