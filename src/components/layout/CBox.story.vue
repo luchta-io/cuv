@@ -52,7 +52,7 @@ const data: {
     </Story>
 </template>
 <docs lang="md">
-# Box
+# CBox
 コンテンツをグループ化するために使用するレイアウトコンポーネントです。
 
 ## Props
