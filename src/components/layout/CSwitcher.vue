@@ -4,7 +4,7 @@ withDefaults(defineProps<{
     space?: string;
     limit?: number; // now max 10
 }>(), {
-    threshold: 'var(--measure)',
+    threshold: '60ch',
     space: '1rem',
     limit: 4
 })

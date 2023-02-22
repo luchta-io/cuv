@@ -14,7 +14,7 @@ const data: {
 
 <template>
   <Story
-      title="Form / Button"
+      title="Form / CButton"
       :layout="{ type: 'grid', width: 200 }"
   >
 
@@ -68,7 +68,7 @@ const data: {
 </template>
 
 <docs lang="md">
-# Button
+# CButton
 
 基本的なボタン部品です。下記のProps/Eventsの他に、
 html標準のbutton要素と同様の属性/イベントを扱うことができます。

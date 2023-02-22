@@ -3,7 +3,7 @@ withDefaults(defineProps<{
     min?: string;
     space?: string;
 }>(), {
-    min: '100px',
+    min: '60ch',
     space: '1rem'
 })
 </script>
