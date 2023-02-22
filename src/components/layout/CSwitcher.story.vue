@@ -22,10 +22,9 @@ const data: {
         <Variant title="threshold" auto-props-disabled>
             <c-switcher
                 :threshold="data.threshold"
-                :limit="5"
                 class="with-outline"
             >
-                <c-box v-for="n in 5" :key="n" bordered>
+                <c-box v-for="n in 4" :key="n" bordered>
                     Box{{ n }}
                 </c-box>
             </c-switcher>
