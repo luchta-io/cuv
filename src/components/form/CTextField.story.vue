@@ -68,7 +68,7 @@ const 警告 : {
 
 <template>
 <Story
-    title="Form / Input"
+    title="Form / CTextField"
     :layout="{ type: 'grid', width: 500 }"
 >
     <Variant title="filled" auto-props-disabled>
@@ -207,7 +207,7 @@ const 警告 : {
 </template>
 
 <docs lang="md">
-# TextField
+# CTextField
 
 ## Props
 

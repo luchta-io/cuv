@@ -2,12 +2,12 @@
 // refs. https://developer.mozilla.org/ja/docs/Web/CSS/justify-content
 // refs. https://developer.mozilla.org/ja/docs/Web/CSS/align-items
 withDefaults(defineProps<{
-    justify?: string;
-    align?: string;
+    justify?: 'flex-start'|'flex-end'|'center'|'space-between'|'space-around'|'space-evenly';
+    align?: 'flex-start'|'flex-end'|'center'|'baseline'|'stretch';
     space?: string;
 }>(), {
-    justify: 'start',
-    align: 'start',
+    justify: 'flex-start',
+    align: 'flex-start',
     space: '1rem'
 })
 </script>

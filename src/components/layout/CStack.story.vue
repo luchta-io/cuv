@@ -9,36 +9,56 @@ const data: {
     splitAfter: number
 } = reactive({
     space: "1rem",
-    recursive: false,
+    recursive: true,
     splitAfter: 2,
 })
 
 </script>
 
 <template>
-    <Story title="Layout / Stack">
-        <Variant title="基本" auto-props-disabled>
+    <Story title="Layout / CStack">
+        <Variant title="space" auto-props-disabled>
             <c-stack
                 :space="data.space"
-                :recursive="data.recursive"
-                :split-after="data.splitAfter"
-                class="with-outline"
+                class="with-outline bg-yellow-200"
             >
-                <c-box bordered>BOX</c-box>
-                <c-box bordered>BOX</c-box>
-                <c-box bordered>BOX</c-box>
-                <c-box bordered>
-                    <c-box bordered>Nested BOX</c-box>
-                    <c-box bordered>Nested BOX</c-box>
+                <c-box v-for="n in 5" :key="n" bordered class="bg-white">
+                    BOX{{ n }}
                 </c-box>
-                <c-stack class="with-outline">
-                    <c-box bordered>Nested Stack BOX</c-box>
-                    <c-box bordered>Nested Stack BOX</c-box>
-                </c-stack>
             </c-stack>
             <template #controls>
                 <HstText v-model="data.space" title="space"/>
+            </template>
+        </Variant>
+        <Variant title="recursive" auto-props-disabled>
+            <c-stack
+                :recursive="data.recursive"
+                class="with-outline"
+            >
+                <c-box bordered>BOX</c-box>
+                <c-box bordered class="bg-yellow-200">
+                    Box
+                    <c-box bordered class="bg-white">Nested BOX</c-box>
+                    <c-box bordered class="bg-white">Nested BOX</c-box>
+                </c-box>
+                <c-box bordered>BOX</c-box>
+            </c-stack>
+            <template #controls>
                 <HstCheckbox v-model="data.recursive" title="recursive"/>
+            </template>
+        </Variant>
+        <Variant title="splitAfter" auto-props-disabled>
+            <div class="h-screen">
+                <c-stack
+                    :split-after="data.splitAfter"
+                    class="with-outline"
+                >
+                    <c-box v-for="n in 10" :key="n" bordered>
+                        BOX{{ n }}
+                    </c-box>
+                </c-stack>
+            </div>
+            <template #controls>
                 <HstNumber v-model="data.splitAfter" title="splitAfter"/>
             </template>
         </Variant>

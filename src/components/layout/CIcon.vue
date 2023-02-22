@@ -14,7 +14,7 @@ withDefaults(defineProps<{
         $style.withIcon,
         space ? $style.flex : ''
         ]"
-        :role="label ? 'img' : ''"
+        :role="label!=='' ? 'img' : ''"
         :aria-label="label"
     >
         <slot />

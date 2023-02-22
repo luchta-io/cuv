@@ -12,48 +12,65 @@ const data: {
     itemWidth: 'auto',
     space: '1rem',
     height: 'auto',
-    noBar: false,
+    noBar: true,
 })
 </script>
 
 <template>
-    <Story title="Layout / Reel" :layout="{ type: 'grid', width: '100%' }">
-        <Variant title="基本" auto-props-disabled>
+    <Story title="Layout / CReel" :layout="{ type: 'grid', width: '100%' }">
+        <Variant title="itemWidth" auto-props-disabled>
             <c-reel
                 :item-width="data.itemWidth"
-                :space="data.space"
-                :height="data.height"
-                :no-bar="data.noBar"
                 class="with-outline"
             >
-                <c-box
-                bordered
-                v-for="n of 10"
-                :key="n"
-                >
+                <c-box v-for="n of 10" :key="n" class="bg-yellow-200">
                 BOX {{ n }}
                 </c-box>
             </c-reel>
             <template #controls>
                 <HstText v-model="data.itemWidth" title="itemWidth"/>
-                <HstText v-model="data.space" title="space"/>
-                <HstText v-model="data.height" title="height"/>
-                <HstCheckbox v-model="data.noBar" title="noBar"/>
             </template>
         </Variant>
-        <Variant title="スクロールバー非表示">
+        <Variant title="space" auto-props-disabled>
             <c-reel
-                no-bar
-                class="with-outline"
+                :space="data.space"
+                class="with-outline bg-yellow-200"
             >
-                <c-box
-                bordered
-                v-for="n of 10"
-                :key="n"
-                >
-                BOX {{ n }}
+                <c-box v-for="n of 10" :key="n" class="bg-white">
+                    BOX {{ n }}
                 </c-box>
             </c-reel>
+            <template #controls>
+                <HstText v-model="data.space" title="space"/>
+            </template>
+        </Variant>
+        <Variant title="height" auto-props-disabled>
+            Reelの高さは、「{{ data.height }}」が指定されています
+
+            <c-reel
+                :height="data.height"
+                class="with-outline"
+            >
+                <c-box v-for="n of 10" :key="n" bordered>
+                    BOX {{ n }}
+                </c-box>
+            </c-reel>
+            <template #controls>
+                <HstText v-model="data.height" title="height"/>
+            </template>
+        </Variant>
+        <Variant title="noBar" auto-props-disabled>
+            <c-reel
+                :no-bar="data.noBar"
+                class="with-outline"
+            >
+                <c-box v-for="n of 10" :key="n" bordered>
+                    BOX {{ n }}
+                </c-box>
+            </c-reel>
+            <template #controls>
+                <HstCheckbox v-model="data.noBar" title="noBar"/>
+            </template>
         </Variant>
     </Story>
 </template>

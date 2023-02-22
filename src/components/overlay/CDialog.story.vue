@@ -30,7 +30,7 @@ const longData: {
 })
 </script>
 <template>
-    <Story title="Overlay / Dialog" :layout="{ type: 'grid', width: 200 }">
+    <Story title="Overlay / CDialog" :layout="{ type: 'grid', width: 200 }">
         <Variant title="基本">
             <c-button @click="data.isActive = true">ダイアログを表示</c-button>
             <c-dialog
@@ -160,7 +160,7 @@ const longData: {
     </Story>
 </template>
 <docs lang="md">
-# Dialog
+# CDialog
 
 基本的なダイアログ部品です。
 

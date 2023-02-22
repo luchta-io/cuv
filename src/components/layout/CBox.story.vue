@@ -1,60 +1,38 @@
 <script setup lang="ts">
+import { reactive } from "vue";
 import CBox from "@/components/layout/CBox.vue";
 import CGrid from "@/components/layout/CGrid.vue";
-import { reactive } from "vue";
 
 const data: {
     padding: 'none'|'small'|'medium'|'large';
     bordered: boolean;
-    nestpadding: 'none'|'small'|'medium'|'large';
-    nestbordered: boolean;
 } = reactive({
     padding: 'medium',
     bordered: true,
-    nestpadding: 'medium',
-    nestbordered: true,
 })
 
 </script>
 
 <template>
-    <Story title="Layout / Box" :layout="{ type: 'grid', width: '100%' }">
-        <Variant title="入れ子" auto-props-disabled>
-            <c-box :padding="data.padding" :bordered="data.bordered">
-                BOX
-                <c-box :padding="data.nestpadding" :bordered="data.nestbordered">
-                    Nested BOX
+    <Story title="Layout / CBox" :layout="{ type: 'grid', width: '100%' }">
+        <Variant title="基本" auto-props-disabled>
+            <c-box :padding="data.padding" :bordered="data.bordered" class="bg-yellow-200">
+                <c-box class="bg-white">
+                    BOX
                 </c-box>
             </c-box>
             <template #controls>
-                <c-box>
-                    <div class="text-lg font-bold">Box</div>
-                    <HstSelect
-                    v-model="data.padding"
-                    title="padding"
-                    :options="[
-                        { value: 'none', label: 'none (p-0)' },
-                        { value: 'small', label: 'small (p-2)' },
-                        { value: 'medium', label: 'medium (p-4)' },
-                        { value: 'large', label: 'large (p-8)' },
-                    ]"
-                    />
-                    <HstCheckbox v-model="data.bordered" title="border" />
-                </c-box>
-                <c-box>
-                    <div class="text-lg font-bold">Nested Box</div>
-                    <HstSelect
-                    v-model="data.nestpadding"
-                    title="padding"
-                    :options="[
-                        { value: 'none', label: 'none' },
-                        { value: 'small', label: 'small' },
-                        { value: 'medium', label: 'medium' },
-                        { value: 'large', label: 'large' },
-                    ]"
-                    />
-                    <HstCheckbox v-model="data.nestbordered" title="border" />
-                </c-box>
+                <HstSelect
+                v-model="data.padding"
+                title="padding"
+                :options="[
+                    { value: 'none', label: 'none (p-0)' },
+                    { value: 'small', label: 'small (p-2)' },
+                    { value: 'medium', label: 'medium (p-4)' },
+                    { value: 'large', label: 'large (p-8)' },
+                ]"
+                />
+                <HstCheckbox v-model="data.bordered" title="border" />
             </template>
         </Variant>
         <Variant title="Gird上に配置されるカード">

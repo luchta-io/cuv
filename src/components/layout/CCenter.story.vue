@@ -10,37 +10,65 @@ const data: {
     intrinsic: boolean
 } = reactive({
     max: '100%',
-    gutters: '5rem',
+    gutters: '1rem',
     andText: false,
     intrinsic: false,
 })
 </script>
 
 <template>
-    <Story title="Layout / Center" :layout="{ type: 'grid', width: '100%' }">
-        <Variant title="基本" auto-props-disabled>
-            <c-center
-            :max="data.max"
-            :gutters="data.gutters"
-            :and-text="data.andText"
-            :intrinsic="data.intrinsic"
-            class="with-outline">
-                <p>
-                    あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほ
-                </p>
-                <c-box bordered>
-                    BOX
-                </c-box>
-                <c-center class="with-outline">
-                    <c-box bordered>
-                        Nested Center BOX
-                    </c-box>
+    <Story title="Layout / CCenter" :layout="{ type: 'grid', width: '100%' }">
+        <Variant title="max" auto-props-disabled>
+            <c-box class="bg-gray-100" padding="none">
+                <c-center
+                :max="data.max"
+                gutters="0"
+                class="with-outline bg-white">
+                    <div class="py-4 text-center">
+                        cluster
+                    </div>
                 </c-center>
-            </c-center>
+
+            </c-box>
             <template #controls>
                 <HstText v-model="data.max" title="max"/>
+            </template>
+        </Variant>
+        <Variant title="gutters" auto-props-disabled>
+            <c-center
+            :gutters="data.gutters"
+            class="with-outline bg-yellow-200">
+                <c-box padding="medium" class="bg-white flex items-center justify-center">
+                    BOX
+                </c-box>
+            </c-center>
+            <template #controls>
                 <HstText v-model="data.gutters" title="gutters"/>
+            </template>
+        </Variant>
+        <Variant title="andText" auto-props-disabled>
+            <c-center
+            gutters="0"
+            :and-text="data.andText"
+            class="with-outline">
+                <p class="py-4">
+                    あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほ
+                </p>
+            </c-center>
+            <template #controls>
                 <HstCheckbox v-model="data.andText" title="andText"/>
+            </template>
+        </Variant>
+        <Variant title="intrinsic" auto-props-disabled>
+            <c-center
+            gutters="0"
+            :intrinsic="data.intrinsic"
+            class="with-outline">
+                <c-box class="bg-yellow-200 flex items-center justify-center">
+                    BOX
+                </c-box>
+            </c-center>
+            <template #controls>
                 <HstCheckbox v-model="data.intrinsic" title="intrinsic"/>
             </template>
         </Variant>

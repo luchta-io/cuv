@@ -2,7 +2,6 @@
 import { reactive } from 'vue';
 import CSidebar from '@/components/layout/CSidebar.vue';
 import CBox from '@/components/layout/CBox.vue';
-import CStack from '@/components/layout/CStack.vue';
 
 const data: {
     side: "left"|"right"
@@ -15,30 +14,22 @@ const data: {
     sideWidth: "auto",
     contentMin: "50%",
     space: "1rem",
-    noStretch: false,
+    noStretch: true,
 })
 </script>
 
 <template>
-    <Story title="Layout / Sidebar" :layout="{ type: 'grid', width: '100%' }">
-        <Variant title="基本" auto-props-disabled>
+    <Story title="Layout / CSidebar" :layout="{ type: 'grid', width: '100%' }">
+        <Variant title="side" auto-props-disabled>
             <c-sidebar
             :side="data.side"
-            :side-width="data.sideWidth"
-            :content-min="data.contentMin"
-            :space="data.space"
-            :no-stretch="data.noStretch"
             class="with-outline"
             >
                 <c-box bordered>
-                    Side Box
-                    <c-stack>
-                        <span>Stack item1</span>
-                        <span>Stack item2</span>
-                    </c-stack>
+                    BOX1
                 </c-box>
                 <c-box bordered>
-                    content Box
+                    BOX2
                 </c-box>
             </c-sidebar>
             <template #controls>
@@ -50,12 +41,73 @@ const data: {
                         {value: 'right', label: 'right'},
                     ]"
                 />
+            </template>
+        </Variant>
+        <Variant title="sideWidth" auto-props-disabled>
+            <c-sidebar
+            :side-width="data.sideWidth"
+            class="with-outline"
+            >
+                <c-box class="bg-yellow-200">
+                    Side Box
+                </c-box>
+                <c-box bordered>
+                    content Box
+                </c-box>
+            </c-sidebar>
+            <template #controls>
                 <HstText v-model="data.sideWidth" title="sideWidth"/>
+            </template>
+        </Variant>
+        <Variant title="contentMin" auto-props-disabled>
+            <c-sidebar
+            :content-min="data.contentMin"
+            class="with-outline"
+            >
+                <c-box bordered >
+                    Side Box
+                </c-box>
+                <c-box class="bg-yellow-200">
+                    content Box
+                </c-box>
+            </c-sidebar>
+            <template #controls>
                 <HstText v-model="data.contentMin" title="contentMin"/>
+            </template>
+        </Variant>
+        <Variant title="space" auto-props-disabled>
+            <c-sidebar
+            :space="data.space"
+            class="with-outline bg-yellow-200"
+            >
+                <c-box bordered class="bg-white">
+                    Side Box
+                </c-box>
+                <c-box bordered class="bg-white">
+                    content Box
+                </c-box>
+            </c-sidebar>
+            <template #controls>
                 <HstText v-model="data.space" title="space"/>
+            </template>
+        </Variant>
+        <Variant title="noStretch" auto-props-disabled>
+            <c-sidebar
+            :no-stretch="data.noStretch"
+            class="with-outline"
+            >
+                <c-box class="py-10 bg-yellow-200">
+                    Side Box
+                </c-box>
+                <c-box class="bg-yellow-200">
+                    content Box
+                </c-box>
+            </c-sidebar>
+            <template #controls>
                 <HstCheckbox v-model="data.noStretch" title="noStretch"/>
             </template>
         </Variant>
+
     </Story>
 </template>
 <docs lang="md">

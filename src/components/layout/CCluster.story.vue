@@ -4,62 +4,77 @@ import CBox from '@/components/layout/CBox.vue';
 import CCluster from '@/components/layout/CCluster.vue';
 
 const cluster: {
-    justify: string;
-    align: string;
+    justify: 'flex-start'|'flex-end'|'center'|'space-between'|'space-around'|'space-evenly';
+    align: 'flex-start'|'flex-end'|'center'|'baseline'|'stretch';
     space: string
 } = reactive({
-    justify: 'start',
-    align: 'start',
-    space: '1rem'
-})
-
-const nestCluster: {
-    justify: string;
-    align: string;
-    space: string
-} = reactive({
-    justify: 'start',
-    align: 'start',
+    justify: 'flex-start',
+    align: 'flex-start',
     space: '1rem'
 })
 
 </script>
 
 <template>
-    <Story title="Layout / Cluster">
-        <Variant auto-props-disabled>
+    <Story title="Layout / CCluster" :layout="{ type: 'grid', width: '100%' }">
+        <Variant title="justify" auto-props-disabled>
             <c-cluster
             :justify="cluster.justify"
-            :align="cluster.align"
-            :space="cluster.space"
             class="with-outline">
-                <p>あいうえお</p>
-                <c-box bordered>BOX</c-box>
-                <c-box bordered>BOX</c-box>
-                <c-cluster
-                :justify="nestCluster.justify"
-                :align="nestCluster.align"
-                :space="nestCluster.space"
-                class="with-outline">
-                    <p>あいうえお</p>
-                    <c-box bordered>Nested Cluster BOX</c-box>
-                </c-cluster>
+                <c-box v-for="n in 3" :key="n" class="bg-yellow-200" padding="large">
+                    BOX{{ n }}
+                </c-box>
             </c-cluster>
             <template #controls>
-                <c-box>
-                    <div class="text-lg font-bold">Cluster</div>
-                    <HstText v-model="cluster.justify" title="justify"/>
-                    <HstText v-model="cluster.align" title="align"/>
-                    <HstText v-model="cluster.space" title="space"/>
-                </c-box>
-                <c-box>
-                    <div class="text-lg font-bold">Nested Cluster</div>
-                    <HstText v-model="nestCluster.justify" title="justify"/>
-                    <HstText v-model="nestCluster.align" title="align"/>
-                    <HstText v-model="nestCluster.space" title="space"/>
-                </c-box>
+                <HstSelect
+                v-model="cluster.justify"
+                title="justify"
+                :options="[
+                    { value: 'flex-start', label: 'flex-start' },
+                    { value: 'flex-end', label: 'flex-end' },
+                    { value: 'center', label: 'center' },
+                    { value: 'space-between', label: 'space-between' },
+                    { value: 'space-around', label: 'space-around' },
+                    { value: 'space-evenly', label: 'space-evenly' },
+                ]"
+                />
             </template>
         </Variant>
+        <Variant title="align" auto-props-disabled>
+            <c-cluster
+            :align="cluster.align"
+            class="with-outline">
+                <c-box padding="large" class="py-4 bg-yellow-200 flex items-center justify-center flex-1">BOX1</c-box>
+                <c-box padding="large" class="py-12 bg-yellow-200 flex items-center justify-center flex-1">BOX2</c-box>
+                <c-box padding="large" class="py-8 bg-yellow-200 flex items-center justify-center flex-1">BOX3</c-box>
+            </c-cluster>
+            <template #controls>
+                <HstSelect
+                v-model="cluster.align"
+                title="align"
+                :options="[
+                    { value: 'flex-start', label: 'flex-start' },
+                    { value: 'flex-end', label: 'flex-end' },
+                    { value: 'center', label: 'center' },
+                    { value: 'baseline', label: 'baseline' },
+                    { value: 'stretch', label: 'stretch' },
+                ]"
+                />
+            </template>
+        </Variant>
+        <Variant title="space" auto-props-disabled>
+            <c-cluster
+            :space="cluster.space"
+            class="with-outline bg-yellow-200">
+                <c-box v-for="n in 3" :key="n" class="bg-white flex-1">
+                    BOX{{ n }}
+                </c-box>
+            </c-cluster>
+            <template #controls>
+                <HstText v-model="cluster.space" title="space"/>
+            </template>
+        </Variant>
+
     </Story>
 </template>
 <docs lang="md">
@@ -71,8 +86,8 @@ const nestCluster: {
 
 | Name     | Type                                  | Default  | Description                 |
 | -------- | ------------------------------------- | -------- | --------------------------- |
-| justify | string | 'start' | cssのjustify-contentの値 |
-| align | string | 'start' | cssのalign-itemの値 |
+| justify | 'flex-start'/'flex-end'/'center'/'space-between'/'space-around'/'space-evenly' | 'flex-start' | cssのjustify-contentの値 |
+| align | 'flex-start'/'flex-end'/'center'/'baseline'/'stretch' | 'flex-start' | cssのalign-itemの値 |
 | space | string | '1rem' | cssのgapの値。グループ化された子要素間にできる最小のスペースの値 |
 
 ## Slots

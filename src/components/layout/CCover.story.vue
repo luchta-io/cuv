@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
 import CCover from '@/components/layout/CCover.vue';
+import CStack from '@/components/layout/CStack.vue';
 
 const data: {
     centered: string
@@ -11,35 +12,76 @@ const data: {
     centered: "div",
     space: "1rem",
     minHeight: "100vh",
-    noPad: false,
+    noPad: true,
 })
 
 </script>
 
 <template>
-    <Story title="Layout / Cover">
-        <Variant auto-props-disabled>
-            <c-cover
-                :centered="data.centered"
-                :space="data.space"
-                :min-height="data.minHeight"
-                :no-pad="data.noPad"
-                class="with-outline"
-            >
-                <h1 class="text-3xl">H1</h1>
-                <h2 class="text-2xl">H2</h2>
-                <div>
-                Div
-                </div>
-                <h3 class="text-xl">H3</h3>
-                <p>
-                P
-                </p>
-            </c-cover>
+    <Story title="Layout / CCover">
+        <Variant title="centered" auto-props-disabled>
+            <div class="h-screen bg-gray-100">
+                <c-cover
+                    :centered="data.centered"
+                    class="with-outline bg-white"
+                >
+                    <h1 class="text-3xl">H1</h1>
+                    <h2 class="text-2xl">H2</h2>
+                    <div>Div</div>
+                    <h3 class="text-xl">H3</h3>
+                    <p>P</p>
+                </c-cover>
+            </div>
             <template #controls>
                 <HstText v-model="data.centered" title="centered"/>
+            </template>
+        </Variant>
+        <Variant title="space" auto-props-disabled>
+            <c-cover
+                :space="data.space"
+                class="with-outline bg-yellow-200"
+            >
+                <p class="bg-white text-2xl">セロ弾きのゴーシュ</p>
+                <p class="bg-white text-xl">宮沢賢治</p>
+                <p class="bg-white">かっこうは町はずれのきょろきょろ耳げへ児にする一心たらだ。ではちょっといいかげんじましというかっこうたでし。上手ましましのましはましすると棒のそれどころみちの上へもやっと愉快うでしが、おれまで下へつきあたっれことなかった。</p>
+                <p class="bg-white">とまっすぎみんなもぶんを白いたとこんどの子の療屋へ出し第一セロ手のかっかをなれて出しだた。楽隊は毎晩ちているん。</p>
+            </c-cover>
+            <template #controls>
                 <HstText v-model="data.space" title="space"/>
+            </template>
+        </Variant>
+        <Variant title="minHeight" auto-props-disabled>
+            <div class="h-screen bg-gray-100">
+                <c-cover
+                    :min-height="data.minHeight"
+                    class="with-outline bg-white"
+                >
+                    <p class="text-2xl">セロ弾きのゴーシュ</p>
+                    <p class="text-xl">宮沢賢治</p>
+                    <p class="">かっこうは町はずれのきょろきょろ耳げへ児にする一心たらだ。ではちょっといいかげんじましというかっこうたでし。上手ましましのましはましすると棒のそれどころみちの上へもやっと愉快うでしが、おれまで下へつきあたっれことなかった。</p>
+                    <p class="">とまっすぎみんなもぶんを白いたとこんどの子の療屋へ出し第一セロ手のかっかをなれて出しだた。楽隊は毎晩ちているん。</p>
+                </c-cover>
+            </div>
+            <template #controls>
                 <HstText v-model="data.minHeight" title="minHeight"/>
+            </template>
+        </Variant>
+        <Variant title="noPad" auto-props-disabled>
+            <div class="h-screen bg-gray-100">
+                <c-cover
+                    :no-pad="data.noPad"
+                    centered=""
+                    class="with-outline bg-yellow-200"
+                >
+                    <c-stack class="bg-white">
+                        <p class="bg-white text-2xl">セロ弾きのゴーシュ</p>
+                        <p class="bg-white text-xl">宮沢賢治</p>
+                        <p class="bg-white">かっこうは町はずれのきょろきょろ耳げへ児にする一心たらだ。ではちょっといいかげんじましというかっこうたでし。上手ましましのましはましすると棒のそれどころみちの上へもやっと愉快うでしが、おれまで下へつきあたっれことなかった。</p>
+                        <p class="bg-white">とまっすぎみんなもぶんを白いたとこんどの子の療屋へ出し第一セロ手のかっかをなれて出しだた。楽隊は毎晩ちているん。</p>
+                    </c-stack>
+                </c-cover>
+            </div>
+            <template #controls>
                 <HstCheckbox v-model="data.noPad" title="noPad"/>
             </template>
         </Variant>
