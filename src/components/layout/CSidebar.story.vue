@@ -80,10 +80,10 @@ const data: {
             :space="data.space"
             class="with-outline bg-yellow-200"
             >
-                <c-box bordered class="bg-white">
+                <c-box class="bg-white">
                     Side Box
                 </c-box>
-                <c-box bordered class="bg-white">
+                <c-box class="bg-white">
                     content Box
                 </c-box>
             </c-sidebar>

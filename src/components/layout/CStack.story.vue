@@ -10,7 +10,7 @@ const data: {
 } = reactive({
     space: "1rem",
     recursive: true,
-    splitAfter: 2,
+    splitAfter: 1,
 })
 
 </script>
@@ -22,7 +22,7 @@ const data: {
                 :space="data.space"
                 class="with-outline bg-yellow-200"
             >
-                <c-box v-for="n in 5" :key="n" bordered class="bg-white">
+                <c-box v-for="n in 5" :key="n" class="bg-white">
                     BOX{{ n }}
                 </c-box>
             </c-stack>
@@ -36,10 +36,12 @@ const data: {
                 class="with-outline"
             >
                 <c-box bordered>BOX</c-box>
-                <c-box bordered class="bg-yellow-200">
-                    Box
-                    <c-box bordered class="bg-white">Nested BOX</c-box>
-                    <c-box bordered class="bg-white">Nested BOX</c-box>
+                <c-box bordered>
+                    BOX
+                    <c-box padding="none" class="bg-yellow-200">
+                        <c-box bordered class="bg-white">Nested BOX</c-box>
+                        <c-box bordered class="bg-white">Nested BOX</c-box>
+                    </c-box>
                 </c-box>
                 <c-box bordered>BOX</c-box>
             </c-stack>

@@ -37,8 +37,8 @@ const data: {
                 :space="data.space"
                 class="with-outline bg-yellow-200"
             >
-                <c-box v-for="n in 3" :key="n" bordered class="bg-white">
-                    Box{{ n }}
+                <c-box v-for="n in 3" :key="n" class="bg-white">
+                    BOX{{ n }}
                 </c-box>
             </c-switcher>
             <template #controls>
@@ -47,7 +47,7 @@ const data: {
         </Variant>
         <Variant title="limit" auto-props-disabled>
             <c-box>
-                Boxの数：
+                BOXの数：
                 <c-button @click="data.boxes--">-</c-button>
                 {{ data.boxes }}
                 <c-button @click="data.boxes++">+</c-button>
@@ -57,7 +57,7 @@ const data: {
                 class="with-outline"
             >
                 <c-box v-for="n in data.boxes" :key="n" bordered>
-                    Box{{ n }}
+                    BOX{{ n }}
                 </c-box>
             </c-switcher>
             <template #controls>
