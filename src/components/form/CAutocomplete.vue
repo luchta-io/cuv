@@ -7,16 +7,17 @@ const props = withDefaults(defineProps<{
     modelValue: any
     items: Array<any>
     itemValue?: string
-    placeholder?: string
     filter: (item: any, searchText: string) => boolean
+    label?: string
+    variant?: 'filled'|'outlined'|'underlined'
     readonly?: boolean
-    disabled?: boolean
     isError?: boolean
     clearable?: boolean
 }>(), {
-    placeholder: '',
+    itemValue: 'value',
+    label: '',
+    variant: 'filled',
     readonly: false,
-    disabled: false,
     isError: false,
     clearable: false,
 })
@@ -36,12 +37,44 @@ const data: {
 })
 
 const fieldClass = computed(() => {
-    return [
-        'flex items-center bg-white whitespace-nowrap pl-3 pr-7 w-full border rounded focus:ring opacity-100 ',
-        props.disabled ? 'pr-3 bg-gray-100 border-none text-zinc-400 cursor-not-allowed': '',
-        props.isError ? 'border-red-700 text-red-700' : 'border-gray-400 text-gray-700',
+    const base = [
+        'group peer flex items-center w-full appearance-none focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100 border-gray-300',
+        props.label === '' ? 'placeholder:opacity-100': '',
+        props.readonly ? 'focus-within:border-gray-900' : 'focus-within:border-blue-600',
+        props.isError 
+        ? 'border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)] text-[var(--jupiter-danger-text)] placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' 
+        : 'placeholder:text-gray-400 placeholder:opacity-0 focus:placeholder:opacity-100',
         props.clearable ? 'pr-14' : '',
     ]
+    if(props.variant === 'filled') base.push('rounded-t-lg rounded-b-none px-2.5 bg-gray-50 border-0 border-b-2')
+    if(props.variant === 'outlined') base.push('px-2.5 bg-transparent rounded-lg border')
+    if(props.variant === 'underlined') base.push('rounded-none px-0 bg-transparent border-0 border-b-2')
+
+    return base
+})
+
+const inputClass = computed(() => {
+    return [
+        'peer w-full focus:outline-none opacity-100 bg-transparent',
+        props.label == '' ? 'placeholder:opacity-100': 'placeholder:opacity-0 focus:placeholder:opacity-100',
+        props.modelValue ? 'placeholder:opacity-0' : '',
+        props.variant === 'filled' ? 'pt-4 pb-1' : '',
+        props.variant === 'outlined' ? 'pt-4 pb-1.5' : '',
+        props.variant === 'underlined' ? 'pt-2.5 pb-1' : '',        
+    ]
+})
+
+const labelClass = computed(() => {
+    const base = [
+        'absolute text-sm duration-300 transform scale-75 origin-[0] peer-focus:scale-75 whitespace-nowrap overflow-hidden pointer-events-none',
+    ]
+    if(props.isError) base.push('text-[var(--jupiter-danger-text)]')
+    if(!props.isError) base.push('text-gray-500 peer-read-only:peer-focus:text-gray-900 peer-focus:text-blue-600')
+
+    if(props.variant === 'filled') base.push('-translate-y-4 top-4 z-10 left-2.5 peer-focus:-translate-y-4', !props.modelValue?'peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0':'')
+    if(props.variant === 'outlined') base.push('-translate-y-4 top-4 z-10 px-2 peer-focus:px-2 peer-focus:-translate-y-4 left-1 top-4', !props.modelValue?'peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0':'')
+    if(props.variant === 'underlined') base.push('-translate-y-5 top-3 z-10 peer-focus:left-0 peer-focus:-translate-y-5', !props.modelValue?'peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0':'')
+    return base
 })
 
 const dropdownListItems = computed(() => {
@@ -61,15 +94,7 @@ const selectionItem = computed(() => {
 })
 
 const clearIconDisplay = computed(() => {
-    return props.clearable && !props.disabled && !props.readonly && (data.inputText!=='' || Object.keys(selectionItem.value).length)
-})
-
-const dropdownIconDisplay = computed(() => {
-    return !props.disabled && !props.readonly
-})
-
-const dropdownListDisplay = computed(() => {
-    return data.isActive && !props.readonly
+    return props.clearable && (data.inputText!=='' || Object.keys(selectionItem.value).length)
 })
 
 const selectionSlotDisplay = computed(() => {
@@ -116,32 +141,44 @@ watchEffect(() => {
 </script>
 <template>
 <div @mouseover="data.isHover = true" @mouseleave="data.isHover = false" class="relative text-base w-auto">
-    <div :class="fieldClass">
-        <slot v-if="selectionSlotDisplay" name="selection" :item="selectionItem"/>
+    <fieldset v-bind="$attrs" :class="fieldClass">
+        <div class="pb-1 pt-4 whitespace-nowrap group-read-only:text-gray-500 group-disabled:text-gray-500">
+            <slot v-if="selectionSlotDisplay" name="selection" :item="selectionItem"/>
+        </div>
         <input 
-        v-model="data.inputText" 
-        :placeholder="modelValue ? '' : placeholder"
-        @focus="openDropdownList" 
-        @blur="closeDropdownList"
-        @keyup.delete="clear"
-        class="py-2 w-full focus:outline-none opacity-100"
-        :disabled="disabled"
-        :readonly="readonly">
-    </div>
-    <c-svg-icon v-show="clearIconDisplay" :path="mdiClose" @click="clear" class="absolute top-2 right-7 text-gray-500" />
-    <c-svg-icon v-show="dropdownIconDisplay" :path="data.isActive ? mdiMenuUp : mdiMenuDown" @click="toggleDropdownList" class="absolute top-2 right-1" :class="isError ? 'text-red-700':'text-gray-500'"/>
-    <div v-show="dropdownListDisplay" class="absolute left-0 top-full z-50 w-full">
-        <ul class="overflow-auto divide-y-2 divide-gray-100 rounded-b bg-white shadow-lg z-50 max-h-60">
-            <template v-if="dropdownListItems.length > 0">
-                <li v-for="item in dropdownListItems" :key="itemValue?item[itemValue]:item" @click.stop="selectItem(item)" :class="liClass(item)" class="py-2 px-3 min-w-full text-gray-700 cursor-pointer hover:bg-gray-100">
-                <slot name="item" :item="item"/>
-            </li>
-            </template>
-            <li v-if="dropdownListItems.length === 0" @click="data.isActive=false" class="p-2 min-w-full text-xs text-gray-500">
-                一致するものはありません
-            </li>
-        </ul>
-    </div>
+            v-model="data.inputText"
+            v-bind="$attrs"
+            @focus="openDropdownList" 
+            @blur="closeDropdownList"
+            @keyup.delete="clear"
+            type="text" 
+            :readonly="readonly"
+            :class="inputClass" 
+            autocomplete="off"
+        />
+        <label 
+            :class="labelClass"
+        >
+            {{ label }}
+        </label>
+        <c-svg-icon v-show="clearIconDisplay" :icon="mdiClose" @click="clear" class="absolute inset-y-auto right-7 text-gray-500 peer-disabled:hidden peer-read-only:hidden cursor-pointer" />
+        <c-svg-icon :icon="data.isActive ? mdiMenuUp : mdiMenuDown" @click="toggleDropdownList" class="absolute inset-y-auto right-1 peer-disabled:hidden peer-read-only:hidden" :class="isError ? 'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
+        <div v-show="data.isActive" class="absolute left-0 top-full z-50 w-full rounded peer-read-only:hidden">
+            <ul class="overflow-auto divide-y-2 divide-gray-100 rounded-b bg-white shadow-lg z-50 max-h-60">
+                <template v-if="dropdownListItems.length > 0">
+                    <li v-for="item in dropdownListItems" :key="itemValue?item[itemValue]:item" @click.stop="selectItem(item)" :class="liClass(item)" class="py-2 px-3 min-w-full text-gray-700 cursor-pointer hover:bg-gray-100">
+                    <slot name="item" :item="item"/>
+                </li>
+                </template>
+                <li v-if="dropdownListItems.length === 0" @click="data.isActive=false" class="p-2 min-w-full text-xs text-gray-500">
+                    <slot name="empty"/>
+                </li>
+            </ul>
+        </div>
+    </fieldset>
+</div>
+<div v-show="isError" class="text-xs text-[var(--jupiter-danger-text)] pt-1">
+    <slot name="errorMessage"/>
 </div>
 
 </template>

@@ -216,13 +216,13 @@ const 警告 : {
 | modelValue | string | '' | コンポーネントのv-model値です |
 | label | string | '' | ラベルに設定するテキストを指定します |
 | variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
-| isError | boolean | false | コンポーネントをエラー状態にします |
+| isError | boolean | false | コンポーネントをエラー状態にするかどうか |
 
 ## Slots
 
 | Name | Props (if scoped) | Description |
 | --- | --- | --- |
-| errorMessage | errorMessage | エラーの時のメッセージを表示する時に使用します |
+| errorMessage |  | エラーの時のメッセージを表示する時に使用します |
 
 ## Events
 
