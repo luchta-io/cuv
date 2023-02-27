@@ -60,7 +60,7 @@ const data: {
 | Name     | Type                                  | Default  | Description                 |
 | -------- | ------------------------------------- | -------- | --------------------------- |
 | padding  | "none" / "small" / "medium" / "large" | "medium" | padding の指定              |
-| bordered | boolean                               | false    | border を有効にするかどうか |
+| bordered | boolean                               | false    | borderを有効にする場合は指定します |
 
 ## Slots
 

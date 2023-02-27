@@ -111,9 +111,9 @@ const data: {
 
 | Name     | Type                                  | Default  | Description                 |
 | -------- | ------------------------------------- | -------- | --------------------------- |
-| breakout | boolean | false | 位置指定コンテナから要素がはみ出しても良いか |
+| breakout | boolean | false | 位置指定コンテナから要素がはみ出させる場合は指定します |
 | margin | string | "0px" | (breakoutが適用されていない場合に)要素が配置される位置指定コンテナの内側の縁と要素との間にできる最小の余白 |
-| fixed | boolean | false | 要素をビューポート基準に配置するかどうか |
+| fixed | boolean | false | 要素をビューポート基準に配置する場合は指定します |
 
 ## Slots
 

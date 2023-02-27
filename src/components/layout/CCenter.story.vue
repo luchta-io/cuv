@@ -84,8 +84,8 @@ const data: {
 | -------- | ------------------------------------- | -------- | --------------------------- |
 | max | string | '100%' | cssのmax-widthの値 |
 | gutters | string | '1rem' | コンテンツの両端の最小限のスペース|
-| andText | boolean | false | テキストも中央揃えにするかどうか(text-align: center) |
-| intrinsic | boolean | false | 子要素をそのコンテンツ幅に基づいて中央揃えにさせるか |
+| andText | boolean | false | テキストも中央揃えにする場合は指定します(text-align: center) |
+| intrinsic | boolean | false | 子要素をそのコンテンツ幅に基づいて中央揃えにする場合は指定します |
 
 ## Slots
 
