@@ -9,16 +9,16 @@ const props = withDefaults(defineProps<{
     size: 'medium',
 })
 
-const sizeClass = computed(() => {
-    if(props.size === 'small') return '16'
-    if(props.size === 'large') return '30'
-    return '20'
+const length = computed(() => {
+    if(props.size === 'small') return '0.75em'
+    if(props.size === 'large') return '2em'
+    return '1em'
 })
 
 </script>
 
 <template>
-<svg :width="sizeClass" :height="sizeClass" viewBox="0 0 24 24">
+<svg :width="length" :height="length" viewBox="0 0 24 24">
     <path fill="currentColor" :d="icon"/>
 </svg>
 </template>

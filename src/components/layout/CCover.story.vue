@@ -99,7 +99,7 @@ const data: {
 | centered | string | 'div' | 単純なセレクタとしてCover内に中央揃えされる主要素を指定 |
 | space | string | '1rem' | すべての子要素の間や周囲にできる最小のスペース |
 | minHeight | string | '100vh' | コンポーネントの最小の高さ |
-| noPad | boolean | false | コンテナ要素のpaddingにもスペースを適用するかどうか |
+| noPad | boolean | false | コンテナ要素のpaddingにもスペースを適用する場合は指定します |
 
 ## Slots
 

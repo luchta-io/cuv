@@ -46,10 +46,10 @@ const data: {
             />
         </template>
     </Variant>
-    <Variant title="ボタンに内包れたアイコン" auto-props-disabled>
+    <Variant title="ボタンに内包されたアイコン" auto-props-disabled>
         <c-center intrinsic>
             <c-button>
-                <c-cluster space="0">
+                <c-cluster space="0" align="center">
                     <c-svg-icon :icon="mdiClose"/>
                     キャンセル
                 </c-cluster>

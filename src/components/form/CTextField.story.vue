@@ -216,7 +216,7 @@ const 警告 : {
 | modelValue | string | '' | コンポーネントのv-model値です |
 | label | string | '' | ラベルに設定するテキストを指定します |
 | variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
-| isError | boolean | false | コンポーネントをエラー状態にするかどうか |
+| isError | boolean | false | コンポーネントをエラー状態にする場合は指定します |
 
 ## Slots
 

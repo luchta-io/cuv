@@ -9,9 +9,29 @@ interface 名簿型 {
     名: string
 }
 
-const data: {
+const string: {
+    入力値: string
+    血液型: string[]
+    ラベル: string
+    スタイル: 'filled'|'outlined'|'underlined'
+    placeholder: string
+} = reactive({
+    入力値: '',
+    血液型: [
+    'A型',
+    'B型',
+    'O型',
+    'AB型',
+    ],
+    ラベル: 'ラベル',
+    スタイル: 'filled',
+    placeholder: '入力してください'
+})
+
+const object: {
     入力値: string
     名簿: 名簿型[]
+    識別子: string
     ラベル: string
     スタイル: 'filled'|'outlined'|'underlined'
     placeholder: string
@@ -39,6 +59,7 @@ const data: {
             名: 'MARY',
         },
     ],
+    識別子: 'id',
     ラベル: 'ラベル',
     スタイル: 'filled',
     placeholder: '入力してください'
@@ -84,7 +105,11 @@ const readonly: {
     スタイル: 'filled'
 })
 
-const 絞り込み = (item:名簿型, searchText:string) => {
+const 文字列配列の絞り込み = (item:string, searchText:string) => {
+    const keyword = searchText.toUpperCase()
+    return item.toUpperCase().indexOf(keyword) > -1
+}
+const オブジェクト配列の絞り込み = (item:名簿型, searchText:string) => {
     const keyword = searchText.toUpperCase()
     if(item.姓.toUpperCase().indexOf(keyword) > -1) return true
     return item.名.toUpperCase().indexOf(keyword) > -1
@@ -96,38 +121,28 @@ const 絞り込み = (item:名簿型, searchText:string) => {
     title="Form / CAutocomplete"
     :layout="{ type: 'grid', width: 500 }"
 >
-<Variant title="基本" auto-props-disabled>
+<Variant title="文字列の配列の場合" auto-props-disabled>
         <c-box padding="large">
             <c-autocomplete
-            v-model="data.入力値"
-            :items="data.名簿"
-            item-value="id"
-            :filter="絞り込み"
-            :label="data.ラベル"
-            :placeholder="data.placeholder"
-            :variant="data.スタイル"
-            id="filled"
+            v-model="string.入力値"
+            :items="string.血液型"
+            :filter="文字列配列の絞り込み"
+            :label="string.ラベル"
+            :placeholder="string.placeholder"
+            :variant="string.スタイル"
+            id="string"
             >
-                <template v-slot:selection="{item}">
-                    {{ item.姓 }} {{ item.名 }}
-                </template>
-                <template v-slot:item="{item}">
-                    {{ item.姓 }} {{ item.名 }}
-                </template>
-                <template v-slot:empty>
-                    一致するものはありませんでした
-                </template>
             </c-autocomplete>    
         </c-box>
         <template #controls>
-            <HstText v-model="data.入力値" title="modelValue"/>
+            <HstText v-model="string.入力値" title="modelValue"/>
             <HstJson
-                v-model="data.名簿"
+                v-model="string.血液型"
                 title="items"
             />
-            <HstText v-model="data.ラベル" title="label"/>
+            <HstText v-model="string.ラベル" title="label"/>
             <HstSelect
-            v-model="data.スタイル"
+            v-model="string.スタイル"
             title="variant"
             :options="[
                 {value: 'filled', label: 'filled'},
@@ -135,16 +150,56 @@ const 絞り込み = (item:名簿型, searchText:string) => {
                 {value: 'underlined', label: 'underlined'},
             ]"
             />
-            <HstText v-model="data.placeholder" title="placeholder"/>
+            <HstText v-model="string.placeholder" title="placeholder"/>
+        </template>
+    </Variant>
+    <Variant title="オブジェクト配列の場合" auto-props-disabled>
+        <c-box padding="large">
+            <c-autocomplete
+            v-model="object.入力値"
+            :items="object.名簿"
+            :item-value="object.識別子"
+            :filter="オブジェクト配列の絞り込み"
+            :label="object.ラベル"
+            :placeholder="object.placeholder"
+            :variant="object.スタイル"
+            id="object"
+            >
+                <template v-slot:selection="{item}">
+                    {{ item.姓 }} {{ item.名 }}
+                </template>
+                <template v-slot:item="{item}">
+                    {{ item.姓 }} {{ item.名 }}
+                </template>
+            </c-autocomplete>    
+        </c-box>
+        <template #controls>
+            <HstText v-model="object.入力値" title="modelValue"/>
+            <HstJson
+                v-model="object.名簿"
+                title="items"
+            />
+            <HstText v-model="object.識別子" title="itemValue"/>
+            <HstText v-model="object.ラベル" title="label"/>
+            <HstSelect
+            v-model="object.スタイル"
+            title="variant"
+            :options="[
+                {value: 'filled', label: 'filled'},
+                {value: 'outlined', label: 'outlined'},
+                {value: 'underlined', label: 'underlined'},
+            ]"
+            />
+            <HstText v-model="object.placeholder" title="placeholder"/>
         </template>
     </Variant>
     <Variant title="clearable" auto-props-disabled>
         <c-box padding="large">
             <c-autocomplete
             v-model="clearable.選択された値"
-            :items="data.名簿"
+            :items="object.名簿"
             item-value="id"
-            :filter="絞り込み"
+            :filter="オブジェクト配列の絞り込み"
             :variant="clearable.スタイル"
             placeholder="入力"
             :clearable="clearable.clearable"
@@ -177,9 +232,9 @@ const 絞り込み = (item:名簿型, searchText:string) => {
         <c-box padding="large">
             <c-autocomplete
             v-model="disabled.選択された値"
-            :items="data.名簿"
+            :items="object.名簿"
             item-value="id"
-            :filter="絞り込み"
+            :filter="オブジェクト配列の絞り込み"
             :variant="disabled.スタイル"
             placeholder="入力"
             :disabled="disabled.disabled"
@@ -212,9 +267,9 @@ const 絞り込み = (item:名簿型, searchText:string) => {
         <c-box padding="large">
             <c-autocomplete
             v-model="readonly.選択された値"
-            :items="data.名簿"
+            :items="object.名簿"
             item-value="id"
-            :filter="絞り込み"
+            :filter="オブジェクト配列の絞り込み"
             :variant="readonly.スタイル"
             :readonly="readonly.readonly"
             >
@@ -246,9 +301,9 @@ const 絞り込み = (item:名簿型, searchText:string) => {
         <c-box padding="large">
             <c-autocomplete
             v-model="iserror.選択された値"
-            :items="data.名簿"
+            :items="object.名簿"
             item-value="id"
-            :filter="絞り込み"
+            :filter="オブジェクト配列の絞り込み"
             :variant="iserror.スタイル"
             placeholder="入力"
             :is-error="iserror.isError"
@@ -293,13 +348,13 @@ const 絞り込み = (item:名簿型, searchText:string) => {
 | --- | --- | --- | --- |
 | modelValue | any | null | コンポーネントのv-model値です |
 | items | any[] | [] | オブジェクトの配列、または文字列の配列を指定できます。オブジェクトの配列の場合、itemValueを使用することで、キーを変更できます。 |
-| itemValue | string | 'value' | itemsがオブジェクト配列の場合、識別するためのキーを指定することができます |
+| itemValue | string | '' | itemsがオブジェクト配列の場合、識別するためのキーを指定することができます |
 | filter | (item: any, searchText: string) => boolean | undefined | 絞り込みを行うための関数を指定します |
 | label | string | '' | ラベルに設定するテキストを指定します |
 | variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
-| readonly | boolean | false | 読み取り専用かどうか |
-| isError | boolean | false | コンポーネントをエラー状態にするかどうか |
-| clearable | boolean | false | 入力したテキストをクリアするボタンを追加するかどうか |
+| readonly | boolean | false | 読み取り専用にする場合は指定します |
+| isError | boolean | false | コンポーネントをエラー状態にする場合は指定します |
+| clearable | boolean | false | 入力したテキストをクリアするボタンを追加する場合は指定します |
 
 ## Slots
 

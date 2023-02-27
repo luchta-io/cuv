@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { computed, reactive, watchEffect } from 'vue'
+import { computed, reactive, useSlots, watchEffect } from 'vue'
 import { mdiMenuDown, mdiMenuUp, mdiClose } from '@mdi/js';
 import CSvgIcon from '@/components/dataDisplay/CSvgIcon.vue';
+
+const slots = useSlots()
 
 const props = withDefaults(defineProps<{
     modelValue: any
@@ -14,7 +16,7 @@ const props = withDefaults(defineProps<{
     isError?: boolean
     clearable?: boolean
 }>(), {
-    itemValue: 'value',
+    itemValue: '',
     label: '',
     variant: 'filled',
     readonly: false,
@@ -143,7 +145,9 @@ watchEffect(() => {
 <div @mouseover="data.isHover = true" @mouseleave="data.isHover = false" class="relative text-base w-auto">
     <fieldset v-bind="$attrs" :class="fieldClass">
         <div class="pb-1 pt-4 whitespace-nowrap group-read-only:text-gray-500 group-disabled:text-gray-500">
-            <slot v-if="selectionSlotDisplay" name="selection" :item="selectionItem"/>
+            <slot v-if="selectionSlotDisplay" name="selection" :item="selectionItem">
+                {{ typeof selectionItem === "object" ? selectionItem[itemValue] : selectionItem }}
+            </slot>
         </div>
         <input 
             v-model="data.inputText"
@@ -167,18 +171,21 @@ watchEffect(() => {
             <ul class="overflow-auto divide-y-2 divide-gray-100 rounded-b bg-white shadow-lg z-50 max-h-60">
                 <template v-if="dropdownListItems.length > 0">
                     <li v-for="item in dropdownListItems" :key="itemValue?item[itemValue]:item" @click.stop="selectItem(item)" :class="liClass(item)" class="py-2 px-3 min-w-full text-gray-700 cursor-pointer hover:bg-gray-100">
-                    <slot name="item" :item="item"/>
+                    <slot name="item" :item="item">
+                        {{ typeof item === "object" ? item[itemValue] : item }}
+                    </slot>
                 </li>
                 </template>
                 <li v-if="dropdownListItems.length === 0" @click="data.isActive=false" class="p-2 min-w-full text-xs text-gray-500">
-                    <slot name="empty"/>
+                    <slot name="empty">
+                        一件もデータがありません
+                    </slot>
                 </li>
             </ul>
         </div>
     </fieldset>
 </div>
-<div v-show="isError" class="text-xs text-[var(--jupiter-danger-text)] pt-1">
+<div v-if="slots.errorMessage" class="text-xs text-[var(--jupiter-danger-text)] pt-1">
     <slot name="errorMessage"/>
 </div>
-
 </template>
