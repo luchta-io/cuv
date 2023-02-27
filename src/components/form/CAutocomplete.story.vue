@@ -14,6 +14,7 @@ const data: {
     名簿: 名簿型[]
     ラベル: string
     スタイル: 'filled'|'outlined'|'underlined'
+    placeholder: string
 } = reactive({
     入力値: '',
     名簿: [
@@ -40,6 +41,7 @@ const data: {
     ],
     ラベル: 'ラベル',
     スタイル: 'filled',
+    placeholder: '入力してください'
 })
 
 const clearable: {
@@ -102,8 +104,7 @@ const 絞り込み = (item:名簿型, searchText:string) => {
             item-value="id"
             :filter="絞り込み"
             :label="data.ラベル"
-            placeholder="placeholder"
-            clearable
+            :placeholder="data.placeholder"
             :variant="data.スタイル"
             id="filled"
             >
@@ -134,6 +135,7 @@ const 絞り込み = (item:名簿型, searchText:string) => {
                 {value: 'underlined', label: 'underlined'},
             ]"
             />
+            <HstText v-model="data.placeholder" title="placeholder"/>
         </template>
     </Variant>
     <Variant title="clearable" auto-props-disabled>
