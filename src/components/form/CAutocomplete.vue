@@ -185,7 +185,7 @@ watchEffect(() => {
         </div>
     </fieldset>
 </div>
-<div v-if="slots.errorMessage" class="text-xs text-[var(--jupiter-danger-text)] pt-1">
+<div v-if="isError && slots.errorMessage" class="text-xs text-[var(--jupiter-danger-text)] pt-1">
     <slot name="errorMessage"/>
 </div>
 </template>
