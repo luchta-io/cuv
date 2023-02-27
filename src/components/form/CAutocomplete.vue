@@ -84,7 +84,7 @@ const dropdownListItems = computed(() => {
 })
 
 const selectionItem = computed(() => {
-    if(!props.itemValue && props.modelValue) return props.items.filter(item =>{ return item === props.modelValue})[0]
+    if(!props.itemValue && props.modelValue) return props.items.filter(item =>{ return item == props.modelValue})[0]
     if(!props.itemValue && !props.modelValue) return ''
     if(props.modelValue) return props.items.filter(item => {
         if(props.itemValue) return item[props.itemValue] == props.modelValue
@@ -105,8 +105,8 @@ const selectionSlotDisplay = computed(() => {
 })
 
 const liClass= (item:any) => {
-    if(props.itemValue) return item[props.itemValue]===selectionItem.value[props.itemValue]?'bg-blue-50 text-blue-700':''
-    return item === selectionItem.value ? 'bg-blue-50 text-blue-700':''
+    if(props.itemValue) return item[props.itemValue]==selectionItem.value[props.itemValue]?'bg-blue-50 text-blue-700':''
+    return item == selectionItem.value ? 'bg-blue-50 text-blue-700':''
 }
 
 const selectItem = (option: any) => {

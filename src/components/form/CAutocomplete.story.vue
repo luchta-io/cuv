@@ -44,33 +44,41 @@ const data: {
 
 const clearable: {
     選択された値: string
+    clearable: boolean
     スタイル: 'filled'|'outlined'|'underlined'
 } = reactive({
     選択された値: '1',
+    clearable: true,
     スタイル: 'filled'
 })
 
 const iserror: {
     選択された値: string
+    isError: boolean
     スタイル: 'filled'|'outlined'|'underlined'
 } = reactive({
     選択された値: '1',
+    isError: true,
     スタイル: 'filled'
 })
 
 const disabled: {
     選択された値: string
+    disabled: boolean
     スタイル: 'filled'|'outlined'|'underlined'
 } = reactive({
     選択された値: '1',
+    disabled: true,
     スタイル: 'filled'
 })
 
 const readonly: {
     選択された値: string
+    readonly: boolean
     スタイル: 'filled'|'outlined'|'underlined'
 } = reactive({
     選択された値: '1',
+    readonly: true,
     スタイル: 'filled'
 })
 
@@ -137,7 +145,7 @@ const 絞り込み = (item:名簿型, searchText:string) => {
             :filter="絞り込み"
             :variant="clearable.スタイル"
             placeholder="入力"
-            clearable
+            :clearable="clearable.clearable"
             >
                 <template v-slot:selection="{item}">
                     {{ item.姓 }} {{ item.名 }}
@@ -148,6 +156,10 @@ const 絞り込み = (item:名簿型, searchText:string) => {
             </c-autocomplete>
         </c-box>
         <template #controls>
+            <HstCheckbox
+                v-model="clearable.clearable"
+                title="clearable"
+            />
             <HstSelect
             v-model="clearable.スタイル"
             title="variant"
@@ -168,7 +180,7 @@ const 絞り込み = (item:名簿型, searchText:string) => {
             :filter="絞り込み"
             :variant="disabled.スタイル"
             placeholder="入力"
-            disabled
+            :disabled="disabled.disabled"
             >
                 <template v-slot:selection="{item}">
                     {{ item.姓 }} {{ item.名 }}
@@ -179,6 +191,10 @@ const 絞り込み = (item:名簿型, searchText:string) => {
             </c-autocomplete>
         </c-box>
         <template #controls>
+            <HstCheckbox
+                v-model="disabled.disabled"
+                title="disabled"
+            />
             <HstSelect
             v-model="disabled.スタイル"
             title="variant"
@@ -198,7 +214,7 @@ const 絞り込み = (item:名簿型, searchText:string) => {
             item-value="id"
             :filter="絞り込み"
             :variant="readonly.スタイル"
-            readonly
+            :readonly="readonly.readonly"
             >
                 <template v-slot:selection="{item}">
                     {{ item.姓 }} {{ item.名 }}
@@ -209,6 +225,10 @@ const 絞り込み = (item:名簿型, searchText:string) => {
             </c-autocomplete>
         </c-box>
         <template #controls>
+            <HstCheckbox
+                v-model="readonly.readonly"
+                title="readonly"
+            />
             <HstSelect
             v-model="readonly.スタイル"
             title="variant"
@@ -229,7 +249,7 @@ const 絞り込み = (item:名簿型, searchText:string) => {
             :filter="絞り込み"
             :variant="iserror.スタイル"
             placeholder="入力"
-            is-error
+            :is-error="iserror.isError"
             >
                 <template v-slot:selection="{item}">
                     {{ item.姓 }} {{ item.名 }}
@@ -243,6 +263,10 @@ const 絞り込み = (item:名簿型, searchText:string) => {
             </c-autocomplete>
         </c-box>
         <template #controls>
+            <HstCheckbox
+                v-model="iserror.isError"
+                title="isError"
+            />
             <HstSelect
             v-model="iserror.スタイル"
             title="variant"
