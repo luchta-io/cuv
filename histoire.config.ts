@@ -11,11 +11,13 @@ export default defineConfig({
             {
                 title: 'Components',
                 include: file => file.path.includes('components'),
-                
             },
         ],
     },
     vite: {
-        base: '/jupiter/'
+        base: '/jupiter/',
+        server: {
+            host: true
+        }
     },
 })
