@@ -11,7 +11,6 @@ export default defineConfig({
             {
                 title: 'Components',
                 include: file => file.path.includes('components'),
-
             },
         ],
     },
