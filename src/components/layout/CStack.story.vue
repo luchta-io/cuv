@@ -74,7 +74,7 @@ const data: {
 
 | Name     | Type                                  | Default  | Description                 |
 | -------- | ------------------------------------- | -------- | --------------------------- |
-| space | string | "1rem" | 要素間のスペースを指定するmarginの値 |
+| space | string | '1rem' | 要素間のスペースを指定するmarginの値 |
 | recursive | boolean | false | スペースが再帰的に(入れ子階層に関係なく)適用させたい場合は指定します |
 | splitAfter | number | 0(max10) | Stackを区分けするために後ろにautoマージンを適用する要素の位置 |
 

@@ -51,8 +51,8 @@ const data: {
 
 | Name     | Type                                  | Default  | Description                 |
 | -------- | ------------------------------------- | -------- | --------------------------- |
-| min | string | "60ch" | minmax(min(x, 100%), 1fr)のxを表す、cssの長さの値 |
-| space | string | "1rem" | グリッドセル間のスペースを表すgapの値 |
+| min | string | '60ch' | minmax(min(x, 100%), 1fr)のxを表す、cssの長さの値 |
+| space | string | '1rem' | グリッドセル間のスペースを表すgapの値 |
 
 ## Slots
 

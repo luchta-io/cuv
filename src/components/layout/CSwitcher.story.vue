@@ -76,8 +76,8 @@ const data: {
 
 | Name     | Type                                  | Default  | Description                 |
 | -------- | ------------------------------------- | -------- | --------------------------- |
-| threshold | string | "60ch" | cssのwidthの値(「コンテナのブレイクポイント」を表す) |
-| space | string | "1rem" | cssの要素間のスペースを表すmarginの値 |
+| threshold | string | '60ch' | cssのwidthの値(「コンテナのブレイクポイント」を表す) |
+| space | string | '1rem' | cssの要素間のスペースを表すmarginの値 |
 | limit | number | 4(max10) | 水平方向のレイアウトで受け入れられる最大の項目数 |
 
 ## Slots

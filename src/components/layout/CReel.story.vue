@@ -82,9 +82,9 @@ const data: {
 
 | Name     | Type                                  | Default  | Description                 |
 | -------- | ------------------------------------- | -------- | --------------------------- |
-| itemWidth | string | "auto" | 各項目(子要素)の幅 |
-| space | string | "1rem" | 各項目(子要素)間とReelのmarginのスペース |
-| height | string | "auto" | Reel自体の高さ |
+| itemWidth | string | 'auto' | 各項目(子要素)の幅 |
+| space | string | '1rem' | 各項目(子要素)間とReelのmarginのスペース |
+| height | string | 'auto' | Reel自体の高さ |
 | noBar | boolean | false | スクロールバーを表示しない場合は指定します |
 
 ## Slots

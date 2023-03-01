@@ -52,8 +52,8 @@ const data: {
 
 | Name     | Type                                  | Default  | Description                 |
 | -------- | ------------------------------------- | -------- | --------------------------- |
-| space | string | "0px" | テキストとアイコンとの間のスペース |
-| label | string | "" | 要素を画像として扱い、この値のaria-labelを追加します |
+| space | string | '0px' | テキストとアイコンとの間のスペース |
+| label | string | '' | 要素を画像として扱い、この値のaria-labelを追加します |
 
 ## Slots
 

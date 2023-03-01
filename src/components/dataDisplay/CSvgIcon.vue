@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<{
 const length = computed(() => {
     if(props.size === 'small') return '0.75em'
     if(props.size === 'large') return '2em'
-    return '1em'
+    return '1.2em'
 })
 
 </script>

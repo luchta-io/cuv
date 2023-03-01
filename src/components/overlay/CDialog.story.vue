@@ -169,7 +169,7 @@ const longData: {
 | Name     | Type                         | Default  | Description                          |
 | -------- | ---------------------------- | -------- | ------------------------------------ |
 | modelValue | boolean                      | false    | ダイアログを表示する場合は指定します         |
-| size     | "small" / "medium" / "large" | "medium" | ダイアログの横幅のサイズを指定します |
+| size     | 'small' / 'medium' / 'large' | 'medium' | ダイアログの横幅のサイズを指定します |
 
 ## Slots
 
