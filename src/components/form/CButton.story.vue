@@ -78,7 +78,7 @@ refs. https://developer.mozilla.org/ja/docs/Web/HTML/Element/button
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| color | "white" / "black" / "light" / "dark" / "primary" / "link" / "success" / "danger" / "warning" / "info" | "light" | ボタンの色を指定します |
+| color | 'white' / 'black' / 'light' / 'dark' / 'primary' / 'link' / 'success' / 'danger' / 'warning' / 'info' | 'light' | ボタンの色を指定します |
 | outlined | boolean | false | ボタンの見た目をアウトラインボタンにする場合は指定します |
 
 ## Slots

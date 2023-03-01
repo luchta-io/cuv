@@ -121,10 +121,10 @@ const data: {
 
 | Name     | Type                                  | Default  | Description                 |
 | -------- | ------------------------------------- | -------- | --------------------------- |
-| side | "left"/"right" | "left" | 左右どちらかの要素をサイドバーとして処理します |
-| sideWidth | string | "auto" | 垂直方向の配置におけるサイドバーの幅 |
-| contentMin | string | "50%" | cssのパーセンテージの値。水平方向の配置の場合のコンテンツの最小値 |
-| space | string | "1rem" | 二つの要素間のスペースを表すcssのmarginの値 |
+| side | 'left'/'right' | 'left' | 左右どちらかの要素をサイドバーとして処理します |
+| sideWidth | string | 'auto' | 垂直方向の配置におけるサイドバーの幅 |
+| contentMin | string | '50%' | cssのパーセンテージの値。水平方向の配置の場合のコンテンツの最小値 |
+| space | string | '1rem' | 二つの要素間のスペースを表すcssのmarginの値 |
 | noStretch | boolean | false | 垂直方向の配置において、要素の本来の(コンテンツに応じた)高さになるようにする場合は指定します |
 
 ## Slots

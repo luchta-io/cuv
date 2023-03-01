@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<{
     outlined: false,
 })
 
-const computedColor = computed(() => {
+const themeColor = computed(() => {
     if (props.color === 'white') return props.outlined ? `text-black` : `bg-[var(--jupiter-white)] text-black `
     if (props.color === 'black') return props.outlined ? `text-[var(--jupiter-black)] border-[var(--jupiter-black)]` : `text-white bg-[var(--jupiter-black)] border-[var(--jupiter-black)]`
     if (props.color === 'dark') return props.outlined 
@@ -45,18 +45,18 @@ const computedColor = computed(() => {
 
 })
 
-const computedClass = computed(() => {
+const buttonClass = computed(() => {
     const base = [
         'px-2 py-1 border rounded',
         'disabled:bg-gray-100 disabled:border-gray-300 disabled:text-gray-400',
-        computedColor.value,
+        themeColor.value,
     ]
     return base
 })
 </script>
 
 <template>
-<button :class="computedClass">
+<button :class="buttonClass">
     <slot/>
 </button>
 </template>
