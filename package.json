@@ -2,7 +2,9 @@
   "name": "jupiter",
   "description": "Vue3向けのコンポーネントライブラリ",
   "version": "0.0.1",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "module": "./dist/jupiter.mjs",
   "main": "./dist/jupiter.umd.js",
   "exports": {
@@ -39,6 +41,7 @@
     "eslint-plugin-vue": "^9.3.0",
     "histoire": "^0.12.4",
     "jsdom": "^20.0.3",
+    "npm-check-updates": "^16.7.10",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.4",
