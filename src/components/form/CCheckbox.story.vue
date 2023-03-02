@@ -200,6 +200,9 @@ const isError: {
 
 <docs lang="md">
 # CCheckbox
+基本的なチェックボックス部品です。下記のProps/Eventsの他に、
+html標準のbutton要素と同様の属性/イベントを扱うことができます。
+refs. https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/checkbox
 
 ## Props
 
