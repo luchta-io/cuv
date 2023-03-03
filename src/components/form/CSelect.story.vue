@@ -4,31 +4,81 @@ import CSelect from '@/components/form/CSelect.vue';
 import CBox from '@/components/layout/CBox.vue';
 
 const data: {
-    選択値: string
-    血液型: string[]
-    ラベル: string
+    modelValue: string
+    bloodTypeList: string[]
+    label: string
+    variant: 'filled'|'outlined'|'underlined'
 } = reactive({
-    選択値: '',
-    血液型: [
+    modelValue: 'A型',
+    bloodTypeList: [
         'A型',
         'B型',
         'O型',
         'AB型',
     ],
-    ラベル: '基本のラベル'
+    label: '基本のラベル',
+    variant: 'filled'
 })
 
 const object: {
-    選択値: string
-    名簿: {
+    modelValue: string
+    nameList: {
+        value: string
+        name: string
+    }[]
+    label: string
+    itemValue: string
+} = reactive({
+    modelValue: '',
+    nameList: [
+        {
+            value: '1',
+            name: '田中 太郎',
+        },
+        {
+            value: '2',
+            name: '田中 一郎',
+        },
+        {
+            value: '3',
+            name: '鈴木 花子',
+        },
+        {
+            value: '4',
+            name: 'JOHNSON MARY',
+        },
+    ],
+    label: 'ラベル',
+    itemValue: 'value',
+})
+
+const multiple: {
+    modelValue: string[]
+    bloodTypeList: string[]
+    label: string
+} = reactive({
+    modelValue: ['B型'],
+    bloodTypeList: [
+        'A型',
+        'B型',
+        'O型',
+        'AB型',
+    ],
+    label: 'ラベル'
+})
+
+const custom: {
+    modelValue: string[]
+    nameList: {
         id: string
         姓: string
         名: string
     }[]
-    ラベル: string
+    label: string
+    multiple: boolean
 } = reactive({
-    選択値: '',
-    名簿: [
+    modelValue: [],
+    nameList: [
         {
             id: '1',
             姓: '田中',
@@ -49,58 +99,98 @@ const object: {
             姓: 'JOHNSON',
             名: 'MARY',
         },
+        {
+            id: '5',
+            姓: '山田',
+            名: '太郎',
+        },
+        {
+            id: '6',
+            姓: 'Gammaracanthuskytodermogammarus',
+            名: 'loricatobaical-ensis',
+        },
+        {
+            id: '7',
+            姓: 'あけち',
+            名: 'こごろう',
+        },
     ],
-    ラベル: '基本のラベル'
+    label: 'ラベル',
+    multiple: true,
 })
 
 const clearable: {
-    選択値: string
-    血液型: string[]
-    ラベル: string
+    modelValue: string
+    bloodTypeList: string[]
+    label: string
     clearable: boolean
 } = reactive({
-    選択値: '',
-    血液型: [
+    modelValue: '',
+    bloodTypeList: [
         'A型',
         'B型',
         'O型',
         'AB型',
     ],
-    ラベル: '基本のラベル',
+    label: 'ラベル',
     clearable: true,
 })
 
 const disabled: {
-    選択値: string
-    血液型: string[]
-    ラベル: string
+    modelValue: string
+    bloodTypeList: string[]
+    label: string
     disabled: boolean
+    variant: 'filled'|'outlined'|'underlined'
 } = reactive({
-    選択値: 'A型',
-    血液型: [
+    modelValue: 'A型',
+    bloodTypeList: [
         'A型',
         'B型',
         'O型',
         'AB型',
     ],
-    ラベル: '基本のラベル',
+    label: 'ラベル',
     disabled: true,
+    variant: 'filled'
 })
+
 const readonly: {
-    選択値: string
-    血液型: string[]
-    ラベル: string
+    modelValue: string
+    bloodTypeList: string[]
+    label: string
     readonly: boolean
+    variant: 'filled'|'outlined'|'underlined'
 } = reactive({
-    選択値: '',
-    血液型: [
+    modelValue: '',
+    bloodTypeList: [
         'A型',
         'B型',
         'O型',
         'AB型',
     ],
-    ラベル: '基本のラベル',
+    label: 'ラベル',
     readonly: true,
+    variant: 'filled'
+})
+
+const iserror: {
+    modelValue: string
+    bloodTypeList: string[]
+    label: string
+    iserror: boolean
+    variant: 'filled'|'outlined'|'underlined'
+} = reactive({
+    modelValue: '',
+    bloodTypeList: [
+        'A型',
+        'B型',
+        'O型',
+        'AB型',
+    ],
+    label: 'ラベル',
+    iserror: true,
+    variant: 'filled'
 })
 
 </script>
@@ -110,29 +200,83 @@ const readonly: {
     title="Form / CSelect"
     :layout="{ type: 'grid', width: 500 }"
 >
-<Variant title="基本" auto-props-disabled>
+    <Variant title="基本" auto-props-disabled>
+        <c-box>
+            <c-select
+                v-model="data.modelValue"
+                :items="data.bloodTypeList"
+                :label="data.label"
+                :variant="data.variant"
+            >
+            </c-select>
+        </c-box>  
+        <template #controls>
+            <HstJson v-model="data.bloodTypeList" title="items"/>
+            <HstText v-model="data.label" title="label"/>
+            <HstSelect
+            v-model="data.variant"
+            title="variant"
+            :options="[
+                {value: 'filled', label: 'filled'},
+                {value: 'outlined', label: 'outlined'},
+                {value: 'underlined', label: 'underlined'},
+            ]"
+            />
+        </template>
+    </Variant>
+    <Variant title="オブジェクトの配列の場合" auto-props-disabled>
         <c-box class="pb-48">
             <c-select
-                v-model="data.選択値"
-                :items="data.血液型"
-                :label="data.ラベル"
+                v-model="object.modelValue"
+                :items="object.nameList"
+                :label="object.label"
+                :item-value="object.itemValue"
+            >
+                <template v-slot:selection="{item}">
+                    {{ item.name }}
+                </template>
+                <template v-slot:item="{item}">
+                    {{ item.name }}
+                </template>
+            </c-select>
+        </c-box>
+        <template #controls>
+            <HstJson v-model="object.nameList" title="items"/>
+        </template>
+    </Variant>
+    <Variant title="複数選択" auto-props-disabled>
+        <c-box class="pb-48">
+            <c-select
+                v-model="multiple.modelValue"
+                :items="multiple.bloodTypeList"
+                :label="multiple.label"
+                multiple
             >
             </c-select>
         </c-box>
-    
         <template #controls>
         </template>
-    </Variant>
-    <Variant title="オブジェクト配列の場合" auto-props-disabled>
-        <c-box>
+    </Variant> 
+    <Variant title="カスタム" auto-props-disabled>
+        <c-box class="pb-48">
             <c-select
-                v-model="object.選択値"
-                :items="object.名簿"
+                v-model="custom.modelValue"
+                :items="custom.nameList"
                 item-value="id"
-                :label="object.ラベル"
+                :label="custom.label"
+                :multiple="custom.multiple"
             >
-                <template v-slot:selection="{item}">
-                    {{ item.姓+' '+item.名 }}
+                <template v-slot:selection="{item, index}">
+                    <span v-if="index < 2">
+                        {{ item.姓+' '+item.名 }} 
+                    </span>
+                    {{ index!==custom.modelValue.length-1 ?', ':'' }}
+                    <span
+                        v-if="index === 2"
+                        class="text-grey text-caption align-self-center"
+                        >
+                        +{{ custom.modelValue.length - 2 }}人
+                    </span>
                 </template>
                 <template v-slot:item="{item}">
                     {{ item.姓+' '+item.名 }}
@@ -140,42 +284,96 @@ const readonly: {
             </c-select>
         </c-box>
         <template #controls>
+            <HstJson v-model="custom.nameList" title="items"/>
+            <HstCheckbox v-model="custom.multiple" title="multiple"/>
         </template>
     </Variant>
+
     <Variant title="clearable" auto-props-disabled>
         <c-box>
             <c-select
-                v-model="clearable.選択値"
-                :items="clearable.血液型"
-                :label="clearable.ラベル"
+                v-model="clearable.modelValue"
+                :items="clearable.bloodTypeList"
+                :label="clearable.label"
                 :clearable="clearable.clearable"
             />
         </c-box>
         <template #controls>
+            <HstCheckbox v-model="clearable.clearable" title="clearable"/>
         </template>
     </Variant>
     <Variant title="不活性化" auto-props-disabled>
         <c-box>
             <c-select
-                v-model="disabled.選択値"
-                :items="disabled.血液型"
-                :label="disabled.ラベル"
+                v-model="disabled.modelValue"
+                :items="disabled.bloodTypeList"
+                :label="disabled.label"
+                :variant="disabled.variant"
                 :disabled="disabled.disabled"
             />
         </c-box>
         <template #controls>
+            <HstCheckbox v-model="disabled.disabled" title="disabled"/>
+            <HstSelect
+            v-model="disabled.variant"
+            title="variant"
+            :options="[
+                {value: 'filled', label: 'filled'},
+                {value: 'outlined', label: 'outlined'},
+                {value: 'underlined', label: 'underlined'},
+            ]"
+            />
+
         </template>
     </Variant>
     <Variant title="読み取り専用" auto-props-disabled>
         <c-box>
             <c-select
-                v-model="readonly.選択値"
-                :items="readonly.血液型"
-                :label="readonly.ラベル"
+                v-model="readonly.modelValue"
+                :items="readonly.bloodTypeList"
+                :label="readonly.label"
+                :variant="readonly.variant"
                 :readonly="readonly.readonly"
             />
         </c-box>
         <template #controls>
+            <HstCheckbox v-model="readonly.readonly" title="readonly"/>
+            <HstSelect
+            v-model="data.variant"
+            title="variant"
+            :options="[
+                {value: 'filled', label: 'filled'},
+                {value: 'outlined', label: 'outlined'},
+                {value: 'underlined', label: 'underlined'},
+            ]"
+            />
+        </template>
+    </Variant>
+    <Variant title="警告" auto-props-disabled>
+        <c-box>
+            <c-select
+                v-model="iserror.modelValue"
+                :items="iserror.bloodTypeList"
+                :label="iserror.label"
+                :variant="iserror.variant"
+                :is-error="iserror.iserror"
+            >
+            <template v-slot:errorMessage>
+                入力してください
+            </template>
+            </c-select>
+        </c-box>
+        <template #controls>
+            <HstCheckbox v-model="iserror.iserror" title="isError"/>
+            <HstSelect
+            v-model="data.variant"
+            title="variant"
+            :options="[
+                {value: 'filled', label: 'filled'},
+                {value: 'outlined', label: 'outlined'},
+                {value: 'underlined', label: 'underlined'},
+            ]"
+            />
         </template>
     </Variant>
 </Story>
@@ -190,16 +388,28 @@ html標準のbutton要素と同様の属性/イベントを扱うことができ
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
+| modelValue | any | null | コンポーネントのv-model値です |
+| items | any[] | [] | オブジェクトの配列、または文字列の配列を指定できます。オブジェクトの配列の場合、itemValueを使用することで、キーを変更できます。 |
+| itemValue | string | 'value' | itemsがオブジェクトの配列の場合、識別するためのキーを指定することができます |
+| label | string | '' | ラベルに設定するテキストを指定します |
+| variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
+| multiple | boolean | false | 複数選択を可能にする場合は指定します |
+| readonly | boolean | false | 読み取り専用にする場合は指定します |
+| isError | boolean | false | コンポーネントをエラー状態にする場合は指定します |
+| clearable | boolean | false | 選択した値をクリアするボタンを追加する場合は指定します |
 
 ## Slots
 
 | Name | Props (if scoped) | Description |
 | --- | --- | --- |
-| default | - | ボタンに表示するコンテンツを指定します |
+| selection | item / index| 選択された値の表示方法をカスタムできます |
+| item | item / index| ドロップダウンリストの各項目の表示方法をカスタムできます |
+| empty |  | ドロップダウンリストに一件も表示されない時に使用します |
+| errorMessage |  | エラーの時のメッセージを表示する時に使用します |
 
 ## Events
 
 | Name | Parameters | Description |
 | --- | --- | --- |
-| - | - | このコンポーネント独自のイベントはありません |
+| update:modelValue | - | コンポーネントのv-modelが変更されたときに発行されるイベントです |
 </docs>
