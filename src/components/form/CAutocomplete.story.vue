@@ -348,7 +348,7 @@ const オブジェクト配列の絞り込み = (item:名簿型, searchText:stri
 | --- | --- | --- | --- |
 | modelValue | any | null | コンポーネントのv-model値です |
 | items | any[] | [] | オブジェクトの配列、または文字列の配列を指定できます。オブジェクトの配列の場合、itemValueを使用することで、キーを変更できます。 |
-| itemValue | string | '' | itemsがオブジェクト配列の場合、識別するためのキーを指定することができます |
+| itemValue | string | '' | itemsがオブジェクトの配列の場合、識別するためのキーを指定することができます |
 | filter | (item: any, searchText: string) => boolean | undefined | 絞り込みを行うための関数を指定します |
 | label | string | '' | ラベルに設定するテキストを指定します |
 | variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
@@ -361,7 +361,7 @@ const オブジェクト配列の絞り込み = (item:名簿型, searchText:stri
 | Name | Props (if scoped) | Description |
 | --- | --- | --- |
 | selection | item | 選択された値の表示方法をカスタムできます |
-| item | item | ドロップダウンリストの各項目の表示方法をカスタムできます |
+| item | item/index | ドロップダウンリストの各項目の表示方法をカスタムできます |
 | empty |  | ドロップダウンリストに一件も表示されない時に使用します |
 | errorMessage |  | エラーの時のメッセージを表示する時に使用します |
 

@@ -21,7 +21,7 @@ const outline: {
 } = reactive({
     入力値: '',
     ラベル: 'outlinedのラベル',
-    placeholder: ' ',
+    placeholder: '',
 })
 
 const underline: {
@@ -31,7 +31,7 @@ const underline: {
 } = reactive({
     入力値: '',
     ラベル: 'underlinedのラベル',
-    placeholder: ' ',
+    placeholder: '',
 })
 
 const 非活性 : {
