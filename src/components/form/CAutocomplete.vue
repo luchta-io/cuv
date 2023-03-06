@@ -142,7 +142,7 @@ watchEffect(() => {
 
 </script>
 <template>
-<div @mouseover="data.isHover = true" @mouseleave="data.isHover = false" class="relative text-base w-auto">
+<div @mouseover="data.isHover = true" @mouseleave="data.isHover = false" class="relative w-auto">
     <fieldset v-bind="$attrs" :class="fieldClass">
         <div class="pb-1 pt-4 whitespace-nowrap group-read-only:text-gray-500 group-disabled:text-gray-500">
             <slot v-if="selectionSlotDisplay" name="selection" :item="selectionItem">
@@ -170,8 +170,8 @@ watchEffect(() => {
         <div v-show="data.isActive" class="absolute left-0 top-full z-50 w-full rounded peer-read-only:hidden">
             <ul class="overflow-auto divide-y-2 divide-gray-100 rounded-b bg-white shadow-lg z-50 max-h-60">
                 <template v-if="dropdownListItems.length > 0">
-                    <li v-for="item in dropdownListItems" :key="itemValue?item[itemValue]:item" @click.stop="selectItem(item)" :class="liClass(item)" class="py-2 px-3 min-w-full text-gray-700 cursor-pointer hover:bg-gray-100">
-                    <slot name="item" :item="item">
+                    <li v-for="(item,index) in dropdownListItems" :key="index" @click.stop="selectItem(item)" :class="liClass(item)" class="py-2 px-3 min-w-full text-gray-700 cursor-pointer hover:bg-gray-100">
+                    <slot name="item" :item="item" :index="index">
                         {{ typeof item === "object" ? item[itemValue] : item }}
                     </slot>
                 </li>
