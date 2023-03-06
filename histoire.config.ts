@@ -12,6 +12,10 @@ export default defineConfig({
                 title: 'Components',
                 include: file => file.path.includes('components'),
             },
+            {
+                title: 'Examples',
+                include: file => file.path.includes('examples'),
+            },
         ],
     },
     vite: {
