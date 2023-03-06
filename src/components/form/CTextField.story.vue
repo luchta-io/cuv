@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {reactive} from "vue";
+import { mdiEye, mdiEyeOff } from "@mdi/js";
 import CTextField from "@/components/form/CTextField.vue";
 import CBox from "@/components/layout/CBox.vue";
 import CStack from "@/components/layout/CStack.vue";
@@ -32,6 +33,28 @@ const underline: {
     入力値: '',
     ラベル: 'underlinedのラベル',
     placeholder: '',
+})
+
+const email : {
+    入力値: string
+    ラベル: string
+    placeholder: string
+} = reactive({
+    入力値: '',
+    ラベル: 'emailのラベル',
+    placeholder: 'email@address.com',
+})
+
+const password : {
+    入力値: string
+    ラベル: string
+    placeholder: string
+    show: boolean
+} = reactive({
+    入力値: 'password',
+    ラベル: 'emailのラベル',
+    placeholder: '',
+    show: false,
 })
 
 const 非活性 : {
@@ -102,8 +125,8 @@ const 警告 : {
             <HstText v-model="outline.ラベル" title="label"/>
             <HstText v-model="outline.placeholder" title="placeholder"/>
         </template>
-
     </Variant>
+
     <Variant title="underlined">
         <c-box padding="medium">
             <c-text-field 
@@ -119,8 +142,33 @@ const 警告 : {
             <HstText v-model="underline.ラベル" title="label"/>
             <HstText v-model="underline.placeholder" title="placeholder"/>
         </template>
-
     </Variant>
+
+    <Variant title="email">
+        <c-box padding="medium">
+            <c-text-field 
+                v-model="email.入力値"
+                :label="email.ラベル"
+                :placeholder="email.placeholder"
+                id="email"
+            />
+        </c-box>
+    </Variant> 
+    
+    <Variant title="password">
+        <c-box padding="medium">
+            <c-text-field 
+                v-model="password.入力値"
+                :label="password.ラベル"
+                :placeholder="password.placeholder"
+                :append-icon="password.show ? mdiEye : mdiEyeOff"
+                :type="password.show?'text':'password'"
+                @click:append="password.show = !password.show"
+                id="password"
+            />
+        </c-box>
+    </Variant>    
+
     <Variant title="非活性">
         <c-box padding="medium">
             <c-stack>
@@ -215,8 +263,11 @@ const 警告 : {
 | --- | --- | --- | --- |
 | modelValue | string | '' | コンポーネントのv-model値です |
 | label | string | '' | ラベルに設定するテキストを指定します |
+| type | 'text'/'email'/'password' | 'text' | inputのtype属性を選択します |
 | variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
 | isError | boolean | false | コンポーネントをエラー状態にする場合は指定します |
+| appendIcon | string | undefined | iconを入力フォームの右に追加する場合は指定します |
+| prependIcon | string | undefined | iconを入力フォームの左に追加する場合は指定します |
 
 ## Slots
 
@@ -229,5 +280,7 @@ const 警告 : {
 | Name | Parameters | Description |
 | --- | --- | --- |
 | update:modelValue | - | コンポーネントのv-modelが変更されたときに発行されるイベントです |
+| click:append | - | 入力フォームの右側に表示されたアイコンをクリックした時に発行されるイベントです |
+| click:prepend | - | 入力フォームの左側に表示されたアイコンをクリックした時に発行されるイベントです |
 
 </docs>
