@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { computed, reactive } from 'vue';
 import CSelect from '@/components/form/CSelect.vue';
 import CBox from '@/components/layout/CBox.vue';
+import CCheckbox from '@/components/form/CCheckbox.vue';
 
 const data: {
     modelValue: string
@@ -27,7 +28,6 @@ const object: {
         name: string
     }[]
     label: string
-    itemValue: string
 } = reactive({
     modelValue: '',
     nameList: [
@@ -49,7 +49,6 @@ const object: {
         },
     ],
     label: 'ラベル',
-    itemValue: 'value',
 })
 
 const multiple: {
@@ -193,6 +192,18 @@ const iserror: {
     variant: 'filled'
 })
 
+const isAllChecked = computed({
+    get: () => custom.modelValue.length === custom.nameList.length,
+    set: value => {
+        return value
+    }
+})
+
+const customToggle = () => {
+    if(custom.modelValue.length === custom.nameList.length) return custom.modelValue = []
+    return custom.modelValue = custom.nameList.map(x => x.id)
+}
+
 </script>
 
 <template>
@@ -207,8 +218,7 @@ const iserror: {
                 :items="data.bloodTypeList"
                 :label="data.label"
                 :variant="data.variant"
-            >
-            </c-select>
+            />
         </c-box>  
         <template #controls>
             <HstJson v-model="data.bloodTypeList" title="items"/>
@@ -225,12 +235,11 @@ const iserror: {
         </template>
     </Variant>
     <Variant title="オブジェクトの配列の場合" auto-props-disabled>
-        <c-box class="pb-48">
+        <c-box>
             <c-select
                 v-model="object.modelValue"
                 :items="object.nameList"
                 :label="object.label"
-                :item-value="object.itemValue"
             >
                 <template v-slot:selection="{item}">
                     {{ item.name }}
@@ -245,20 +254,19 @@ const iserror: {
         </template>
     </Variant>
     <Variant title="複数選択" auto-props-disabled>
-        <c-box class="pb-48">
+        <c-box>
             <c-select
                 v-model="multiple.modelValue"
                 :items="multiple.bloodTypeList"
                 :label="multiple.label"
                 multiple
-            >
-            </c-select>
+            />
         </c-box>
         <template #controls>
         </template>
     </Variant> 
     <Variant title="カスタム" auto-props-disabled>
-        <c-box class="pb-48">
+        <c-box>
             <c-select
                 v-model="custom.modelValue"
                 :items="custom.nameList"
@@ -266,11 +274,17 @@ const iserror: {
                 :label="custom.label"
                 :multiple="custom.multiple"
             >
+                <template v-slot:prependItem>
+                    <c-checkbox
+                    v-model="isAllChecked"
+                    @click="customToggle"
+                    label="全選択"/>
+                </template>
                 <template v-slot:selection="{item, index}">
                     <span v-if="index < 2">
                         {{ item.姓+' '+item.名 }} 
                     </span>
-                    {{ index!==custom.modelValue.length-1 ?', ':'' }}
+                    {{ index < custom.modelValue.length-1 && index < 2 ?', ':'' }}
                     <span
                         v-if="index === 2"
                         class="text-grey text-caption align-self-center"
@@ -288,7 +302,6 @@ const iserror: {
             <HstCheckbox v-model="custom.multiple" title="multiple"/>
         </template>
     </Variant>
-
     <Variant title="clearable" auto-props-disabled>
         <c-box>
             <c-select
@@ -323,7 +336,6 @@ const iserror: {
                 {value: 'underlined', label: 'underlined'},
             ]"
             />
-
         </template>
     </Variant>
     <Variant title="読み取り専用" auto-props-disabled>
@@ -403,7 +415,8 @@ html標準のbutton要素と同様の属性/イベントを扱うことができ
 | Name | Props (if scoped) | Description |
 | --- | --- | --- |
 | selection | item / index| 選択された値の表示方法をカスタムできます |
-| item | item / index| ドロップダウンリストの各項目の表示方法をカスタムできます |
+| prependItem |  | ドロップダウンリストの先頭に追加する表示項目を指定します |
+| item | item/index| ドロップダウンリストの各項目の表示方法をカスタムできます |
 | empty |  | ドロップダウンリストに一件も表示されない時に使用します |
 | errorMessage |  | エラーの時のメッセージを表示する時に使用します |
 

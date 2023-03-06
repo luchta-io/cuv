@@ -221,6 +221,9 @@ const clear = () => {
         <div v-show="data.isActive" class="absolute left-0 top-full z-50 w-full rounded">
             <ul class="overflow-auto divide-y-2 divide-gray-100 rounded-b bg-white shadow-lg z-50 max-h-60">
                 <template v-if="items.length > 0">
+                    <li v-if="slots.prependItem" class="py-2 px-3 min-w-full text-gray-700 cursor-pointer hover:bg-gray-100">
+                        <slot name="prependItem"/>
+                    </li>
                     <li v-for="(item, index) in items" :key="index" @click="selectItem(item)" :class="liClass(item)" class="py-2 px-3 min-w-full text-gray-700 cursor-pointer hover:bg-gray-100">
                         <c-cluster align="center" space="0">
                             <c-checkbox v-if="multiple" v-model="changeableModelValue" :value="items[0][itemValue]?item[itemValue]:item"/>
