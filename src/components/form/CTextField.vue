@@ -77,7 +77,7 @@ const labelClass = computed(() => {
     </div>
 </div>
 </template>
-<style>
+<style module>
 input:disabled {
     -webkit-text-fill-color: rgb(107 114 128);
 }
