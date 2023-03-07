@@ -6,6 +6,7 @@ import CTextField from "@/components/form/CTextField.vue";
 import CButton from "@/components/form/CButton.vue";
 import CCluster from "@/components/layout/CCluster.vue";
 import CCenter from "@/components/layout/CCenter.vue";
+import CCover from "@/components/layout/CCover.vue";
 
 const input = reactive({
   email: '',
@@ -56,8 +57,6 @@ const validator = {
 
 const doLogin = async () => {
   if (processing.value) return
-
-  validator.all()
   if (invalid.value) return
 
   processing.value = true
@@ -77,50 +76,58 @@ const doLogin = async () => {
 <template>
   <Story title="Form / LoginForm"
          auto-props-disabled>
-    <CCenter :max="'60ch'">
-      <CBox> <!-- TODO Sheetへ差し替える -->
-        <form novalidate
-              @submit.prevent="doLogin">
-          <CStack>
-            <!-- TODO Alertへ差し替える -->
-            <p v-if="failed" class="text-[var(--jupiter-danger-text)]">
-              {{ failed }}
-            </p>
-            <CTextField type="email"
-                        v-model="input.email"
-                        label="email"
-                        placeholder="example@example.com"
-                        :is-error="!!errors.email || !!failed"
-                        @blur="validator.email"
-            >
-              <template #errorMessage>
-                {{ errors.email }}
-              </template>
-            </CTextField>
-            <CTextField type="password"
-                        v-model="input.password"
-                        label="password"
-                        :is-error="!!errors.password || !!failed"
-                        @blur="validator.password"
-            >
-              <template #errorMessage>
-                {{ errors.password }}
-              </template>
-            </CTextField>
-            <CCluster :justify="'space-between'">
-              <CButton :color="'primary'" :disabled="processing">
-                ログイン
-              </CButton>
-            </CCluster>
-          </CStack>
-        </form>
-      </CBox>
-    </CCenter>
+    <CCover style="background: lightgray">
+      <h1>ex. Login Form</h1>
+      <CCenter>
+        <!-- TODO backgroundの色指定はCardに任せる -->
+        <CBox style="background: white;">
+          <form novalidate
+                @submit.prevent="doLogin">
+            <CStack>
+              <!-- TODO Alertへ差し替える -->
+              <p v-if="failed" class="text-[var(--jupiter-danger-text)]">
+                {{ failed }}
+              </p>
+              <CTextField type="email"
+                          v-model="input.email"
+                          label="email"
+                          placeholder="example@example.com"
+                          :is-error="!!errors.email || !!failed"
+                          @blur="validator.email"
+              >
+                <template #errorMessage>
+                  {{ errors.email }}
+                </template>
+              </CTextField>
+              <CTextField type="password"
+                          v-model="input.password"
+                          label="password"
+                          :is-error="!!errors.password || !!failed"
+                          @blur="validator.password"
+              ><!-- TODO Passwordの表示/非表示を切り替える処理を入れる -->
+                <template #errorMessage>
+                  {{ errors.password }}
+                </template>
+              </CTextField>
+              <CCluster justify="space-between"
+                        align="center">
+                <!-- TODO Progressを使う  -->
+                <CButton color="primary"
+                         :disabled="processing">
+                  {{ processing ? '処理中...' : 'ログイン' }}
+                </CButton>
+                <a href="https://example.com/" target="_blank" rel="noopener noreferrer">
+                  パスワードを忘れた方はこちら
+                </a>
+              </CCluster>
+            </CStack>
+          </form>
+        </CBox>
+      </CCenter>
+    </CCover>
+    <template #source>
+      <textarea v-pre>
+      </textarea>
+    </template>
   </Story>
 </template>
-
-<docs lang="md">
-# My documentation
-
-Checkout this [cool video](https://www.youtube.com/watch?v=dQw4w9WgXcQ)!
-</docs>

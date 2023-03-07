@@ -6,6 +6,9 @@ export default defineConfig({
         HstVue(),
     ],
     setupFile: '/src/histoire.setup.ts',
+    theme: {
+        title: "jupiter"
+    },
     tree: {
         groups: [
             {
