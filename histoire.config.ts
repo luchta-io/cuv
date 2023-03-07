@@ -6,11 +6,18 @@ export default defineConfig({
         HstVue(),
     ],
     setupFile: '/src/histoire.setup.ts',
+    theme: {
+        title: "jupiter"
+    },
     tree: {
         groups: [
             {
                 title: 'Components',
                 include: file => file.path.includes('components'),
+            },
+            {
+                title: 'Examples',
+                include: file => file.path.includes('examples'),
             },
         ],
     },
