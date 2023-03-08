@@ -48,12 +48,12 @@ const changeableModelValue = computed({
 
 const fieldClass = computed(() => {
     const base = [
-        'group peer flex items-center w-full appearance-none focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100 border-gray-300',
+        'group peer flex items-center w-full appearance-none focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100',
         props.label === '' ? 'placeholder:opacity-100': '',
         props.readonly ? 'focus-within:border-gray-900' : 'focus-within:border-blue-600',
         props.isError 
         ? 'border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)] text-[var(--jupiter-danger-text)] placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' 
-        : 'placeholder:text-gray-400 placeholder:opacity-0 focus:placeholder:opacity-100',
+        : 'placeholder:text-gray-400 placeholder:opacity-0 focus:placeholder:opacity-100 border-gray-300',
         props.clearable ? 'pr-14' : '',
     ]
     if(props.variant === 'filled') base.push('min-h-[2.7rem] rounded-t-lg rounded-b-none px-2.5 bg-gray-50 border-0 border-b-2')
@@ -76,21 +76,21 @@ const inputClass = computed(() => {
 
 const labelClass = computed(() => {
     const base = [
-        'absolute text-sm duration-300 transform scale-75 origin-[0] peer-focus:scale-75 whitespace-nowrap overflow-hidden pointer-events-none',
+        'absolute text-sm duration-300 transform origin-[0] peer-focus:scale-75 whitespace-nowrap overflow-hidden pointer-events-none',
     ]
     if(props.isError) base.push('text-[var(--jupiter-danger-text)]')
     if(!props.isError) base.push('text-gray-500 peer-focus:text-blue-600')
     if(props.variant === 'filled') base.push(
         '-translate-y-4 top-4 z-10 left-2.5 peer-focus:-translate-y-4',
-        !props.modelValue || !props.modelValue.length ? 'scale-100 translate-y-0' : 'peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0'
+        !props.modelValue || !props.modelValue.length ? 'scale-100 translate-y-0' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0'
         )
     if(props.variant === 'outlined') base.push(
         '-translate-y-4 top-4 z-10 px-2 peer-focus:px-2 peer-focus:-translate-y-4 left-1 top-4',
-        !props.modelValue || !props.modelValue.length ? 'scale-100 -translate-y-0' :'peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0'
+        !props.modelValue || !props.modelValue.length ? 'scale-100 translate-y-0' :'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0'
         )
     if(props.variant === 'underlined') base.push(
         '-translate-y-5 top-3 z-10 peer-focus:left-0 peer-focus:-translate-y-5',
-        !props.modelValue || !props.modelValue.length ? 'scale-100 translate-y-0' : 'peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0'
+        !props.modelValue || !props.modelValue.length ? 'scale-100 translate-y-0' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0'
         )
     if(props.readonly) base.push('peer-focus:translate-y-0 peer-focus:scale-100 peer-focus:text-gray-900')
 

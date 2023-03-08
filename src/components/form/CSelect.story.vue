@@ -123,6 +123,7 @@ const clearable: {
     bloodTypeList: string[]
     label: string
     clearable: boolean
+    variant: 'filled'|'outlined'|'underlined'
 } = reactive({
     modelValue: '',
     bloodTypeList: [
@@ -133,6 +134,7 @@ const clearable: {
     ],
     label: 'ラベル',
     clearable: true,
+    variant: 'filled',
 })
 
 const disabled: {
@@ -221,6 +223,7 @@ const customToggle = () => {
             />
         </c-box>  
         <template #controls>
+            <HstText v-model="data.modelValue" title="modelValue"/>
             <HstJson v-model="data.bloodTypeList" title="items"/>
             <HstText v-model="data.label" title="label"/>
             <HstSelect
@@ -309,10 +312,20 @@ const customToggle = () => {
                 :items="clearable.bloodTypeList"
                 :label="clearable.label"
                 :clearable="clearable.clearable"
+                :variant="clearable.variant"
             />
         </c-box>
         <template #controls>
             <HstCheckbox v-model="clearable.clearable" title="clearable"/>
+            <HstSelect
+            v-model="clearable.variant"
+            title="variant"
+            :options="[
+                {value: 'filled', label: 'filled'},
+                {value: 'outlined', label: 'outlined'},
+                {value: 'underlined', label: 'underlined'},
+            ]"
+            />
         </template>
     </Variant>
     <Variant title="不活性化" auto-props-disabled>
