@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {computed, reactive, ref} from "vue";
+import {mdiEye, mdiEyeOff} from "@mdi/js";
 import CBox from "@/components/layout/CBox.vue";
 import CStack from "@/components/layout/CStack.vue";
 import CTextField from "@/components/form/CTextField.vue";
@@ -13,16 +14,22 @@ const input = reactive({
   password: '',
 })
 
-const errors = reactive({
-  email: '',
-  password: '',
+const errors: {
+  email: string[],
+  password: string[]
+} = reactive({
+  email: [],
+  password: [],
 })
 
 const invalid = computed(() => {
-  return !!(errors.email || errors.password)
+  return !!errors.email.length
+      || !!errors.password.length
 })
 
-const failed = ref("")
+const passwordShowing = ref(false)
+
+const failed = ref<string[]>([])
 
 const processing = ref(false)
 
@@ -38,16 +45,19 @@ const rules = {
 
 const validator = {
   email() {
-    errors.email = ''
-    errors.email = rules.required(input.email)
-    if (errors.email) return
-    errors.email = rules.email(input.email)
-    if (errors.email) return
+    errors.email = []
+    const empty = rules.required(input.email)
+    if (empty) {
+      errors.email.push(empty)
+      return
+    }
+    const invalidPattern = rules.email(input.email)
+    if (invalidPattern) errors.email.push(invalidPattern)
   },
   password() {
-    errors.password = ''
-    errors.password = rules.required(input.password)
-    if (errors.password) return
+    errors.password = []
+    const empty = rules.required(input.password)
+    if (empty) errors.password.push(empty)
   },
   all() {
     this.email()
@@ -57,6 +67,7 @@ const validator = {
 
 const doLogin = async () => {
   if (processing.value) return
+  validator.all()
   if (invalid.value) return
 
   processing.value = true
@@ -68,8 +79,8 @@ const doLogin = async () => {
     },
     body: JSON.stringify(input)
   })
+  if (!response.ok) failed.value.push('メールアドレスまたはパスワードが間違っています')
   processing.value = false
-  failed.value = response.ok ? '' : 'メールアドレスまたはパスワードが間違っています'
 }
 </script>
 
@@ -85,28 +96,35 @@ const doLogin = async () => {
                 @submit.prevent="doLogin">
             <CStack>
               <!-- TODO Alertへ差し替える -->
-              <p v-if="failed" class="text-[var(--jupiter-danger-text)]">
+              <p v-if="failed.length" class="text-[var(--jupiter-danger-text)]">
                 {{ failed }}
               </p>
               <CTextField type="email"
                           v-model="input.email"
                           label="email"
                           placeholder="example@example.com"
-                          :is-error="!!errors.email || !!failed"
+                          :is-error="!!errors.email.length || !!failed.length"
                           @blur="validator.email"
               >
                 <template #errorMessage>
-                  {{ errors.email }}
+                  <ul v-for="message in errors.email" :key="message">
+                    <li>・{{ message }}</li>
+                  </ul>
                 </template>
               </CTextField>
-              <CTextField type="password"
+              <!-- TODO PasswordFieldに差し替える -->
+              <CTextField :type="passwordShowing ? 'text' : 'password'"
                           v-model="input.password"
                           label="password"
-                          :is-error="!!errors.password || !!failed"
+                          :is-error="!!errors.password.length || !!failed.length"
+                          :append-icon="passwordShowing ? mdiEye : mdiEyeOff"
+                          @click:append="passwordShowing = !passwordShowing"
                           @blur="validator.password"
-              ><!-- TODO Passwordの表示/非表示を切り替える処理を入れる -->
+              >
                 <template #errorMessage>
-                  {{ errors.password }}
+                  <ul v-for="message in errors.password" :key="message">
+                    <li>・{{ message }}</li>
+                  </ul>
                 </template>
               </CTextField>
               <CCluster justify="space-between"
