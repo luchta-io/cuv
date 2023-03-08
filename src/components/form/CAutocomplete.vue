@@ -40,12 +40,11 @@ const data: {
 
 const fieldClass = computed(() => {
     const base = [
-        'group peer flex items-center w-full appearance-none focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100 border-gray-300',
-        props.label === '' ? 'placeholder:opacity-100': '',
+        'group peer flex items-center w-full appearance-none focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100',
         props.readonly ? 'focus-within:border-gray-900' : 'focus-within:border-blue-600',
         props.isError 
         ? 'border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)] text-[var(--jupiter-danger-text)] placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' 
-        : 'placeholder:text-gray-400 placeholder:opacity-0 focus:placeholder:opacity-100',
+        : 'placeholder:text-gray-400 placeholder:opacity-0 focus:placeholder:opacity-100 border-gray-300',
         props.clearable ? 'pr-14' : '',
     ]
     if(props.variant === 'filled') base.push('rounded-t-lg rounded-b-none px-2.5 bg-gray-50 border-0 border-b-2')
