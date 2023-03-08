@@ -57,9 +57,9 @@ const fieldClass = computed(() => {
 
 const inputClass = computed(() => {
     return [
-        'peer w-full focus:outline-none opacity-100 bg-transparent',
+        'peer w-full focus:outline-none bg-transparent',
         props.label == '' ? 'placeholder:opacity-100': 'placeholder:opacity-0 focus:placeholder:opacity-100',
-        props.modelValue ? 'placeholder:opacity-0' : '',
+        props.modelValue ? 'placeholder:opacity-0' : 'opacity-100',
         props.variant === 'filled' ? 'pt-4 pb-1' : '',
         props.variant === 'outlined' ? 'pt-4 pb-1.5' : '',
         props.variant === 'underlined' ? 'pt-2.5 pb-1' : '',        
