@@ -55,7 +55,7 @@ const labelClass = computed(() => {
         )
     if(props.variant === 'outlined') base.push(
         '-translate-y-4 top-4 z-10 px-2 peer-focus:px-2 peer-focus:-translate-y-4 left-1 top-4',
-        props.modelValue ? 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0' : 'scale-100 translate-y-0'
+        props.modelValue ? 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0' : 'scale-100 translate-y-0'
         )
     if(props.variant === 'underlined') base.push(
         '-translate-y-5 top-3 z-10 peer-focus:left-0 peer-focus:-translate-y-5',
