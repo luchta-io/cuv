@@ -29,8 +29,8 @@ const tableClass = computed(() => {
         props.density === 'comfortable' ? '[&_td]:h-8' : '',
         props.density === 'compact' ? '[&_td]:h-10' : '',
 
-        props.fixedHeader ? 'overflow-y-scroll [&_thead]:sticky [&_thead]:top-0' : '',
-        props.fixedFooter ? 'overflow-y-scroll [&_tfoot]:sticky [&_tfoot]:bottom-0' : '',
+        props.fixedHeader ? 'overflow-y-scroll overscroll-contain [&_thead]:sticky [&_thead]:top-0' : '',
+        props.fixedFooter ? 'overflow-y-scroll overscroll-contain [&_tfoot]:sticky [&_tfoot]:bottom-0' : '',
     ]
 })
 
