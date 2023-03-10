@@ -6,21 +6,19 @@ import CSvgIcon from '@/components/dataDisplay/CSvgIcon.vue';
 const slots = useSlots()
 
 const props = withDefaults(defineProps<{
-    modelValue: string
+    modelValue: any
     label?: string
     variant?: 'filled'|'outlined'|'underlined'
-    rows?: string|number
-    error?: boolean
-    clearable?: boolean
-    readonly?: boolean
     prependIcon?: string
     appendIcon?: string
     prependInnerIcon?: string
     appendInnerIcon?: string
+    error?: boolean
+    clearable?: boolean
+    readonly?: boolean
 }>(), {
     label: '',
     variant: 'filled',
-    rows: 5,
     error: false,
     clearable: false,
     readonly: false,
@@ -87,7 +85,7 @@ const labelClass = computed(() => {
         props.modelValue ? 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0' : 'scale-100 translate-y-0'
         )
     if(props.variant === 'underlined') base.push(
-        '-translate-y-5 top-3 z-10 peer-focus:left-0 peer-focus:-translate-y-5',
+        '-translate-y-4 top-3 z-10 peer-focus:left-0 peer-focus:-translate-y-4',
         props.modelValue ? 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0' : 'scale-100 translate-y-0'
         )
 
@@ -118,14 +116,15 @@ const clear = () => {
             <textarea
             v-model="textareaValue"
             v-bind="$attrs"
-            :rows="rows"
             :readonly="readonly"
             :class="textareaClass"/>
             <label :class="labelClass">
                 {{ label }}
             </label>
         </div>
-        <c-svg-icon v-show="clearIconDisplay" :icon="mdiClose" @click="clear" class=" top-4 right-1 text-gray-500 peer-disabled:hidden peer-read-only:hidden cursor-pointer" />
+        <div class="pt-1 pr-1 self-start">
+            <c-svg-icon v-show="clearIconDisplay" :icon="mdiClose" @click="clear" class="text-gray-500 peer-disabled:hidden peer-read-only:hidden cursor-pointer" />
+        </div>
         <div v-show="appendInnerIcon" class="px-2 text-lg">
             <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="text-gray-500 cursor-pointer" />
         </div>

@@ -24,7 +24,7 @@ const clearable: {
     variant: 'filled'|'outlined'|'underlined'
     clearable: boolean
 } = reactive({
-    modelValue: '',
+    modelValue: '腹はいちどの病気猫みちを晩へ許しゴーシュなな。ではこれからだめましませという交響楽だない。',
     label: 'ラベル',
     variant: 'filled',
     clearable: true,
@@ -110,6 +110,7 @@ const error: {
         :label="clearable.label"
         :variant="clearable.variant"
         :clearable="clearable.clearable"
+        rows="5"
         />
         <template #controls>
             <HstCheckbox v-model="clearable.clearable" title="clearable"/>
@@ -238,27 +239,44 @@ const error: {
             />
         </template>
     </Variant>
-
 </Story>
 </template>
 
 <docs lang="md">
 # CTextarea
 
+基本的なテキストエリア部品です。複数行の入力が可能です。下記のPropsの他に、
+html標準のtextarea要素と同様の属性を扱うことができます。
+refs. https://developer.mozilla.org/ja/docs/Web/HTML/Element/textarea
+
 ## Props
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
+| modelValue | any | undefined | コンポーネントのv-model値です |
+| label | string | '' | ラベルに設定するテキストを指定します |
+| variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
+| prependIcon | string | undefined | 入力フォームの左外側に表示させるiconを指定します |
+| appendIcon | string | undefined | 入力フォームの右外側に表示させるiconを指定します |
+| prependInnerIcon | string | undefined | 入力フォームの左内側に表示させるiconを指定します |
+| appendInnerIcon | string | undefined | 入力フォームの右内側に表示させるiconを指定します |
+| error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
+| clearable | boolean | false | 入力したテキストをクリアするボタンを追加する場合は指定します |
+| readonly | boolean | false | 読み取り専用にする場合は指定します |
 
 ## Slots
 
 | Name | Props (if scoped) | Description |
 | --- | --- | --- |
-| default | - | ボタンに表示するコンテンツを指定します |
+| errorMessage |  | エラーの時のメッセージを表示する時に使用します |
 
 ## Events
 
 | Name | Parameters | Description |
 | --- | --- | --- |
-| - | - | このコンポーネント独自のイベントはありません |
+| update:modelValue | - | コンポーネントのv-modelが変更されたときに発行されるイベントです |
+| click:append | - | 入力フォームの右外側に表示されたアイコンをクリックした時に発行されるイベントです |
+| click:prepend | - | 入力フォームの左外側に表示されたアイコンをクリックした時に発行されるイベントです |
+| click:appendInner | - | 入力フォームの右内側に表示されたアイコンをクリックした時に発行されるイベントです |
+| click:prependInner | - | 入力フォームの左内側に表示されたアイコンをクリックした時に発行されるイベントです |
 </docs>
