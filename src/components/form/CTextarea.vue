@@ -65,7 +65,7 @@ const textareaClass = computed(() => {
     ]
     if(props.variant === 'filled') base.push('rounded-t-lg rounded-b-none px-2.5 pb-1 pt-4 bg-gray-50')
     if(props.variant === 'outlined') base.push('px-2.5 pb-1.5 pt-4 bg-transparent rounded-lg')
-    if(props.variant === 'underlined') base.push('rounded-none pt-2.5 pb-1 px-0 bg-transparent')
+    if(props.variant === 'underlined') base.push('rounded-none pt-2.5 pb-1 pl-1 bg-transparent')
 
     return base
 })
@@ -85,7 +85,7 @@ const labelClass = computed(() => {
         props.modelValue ? 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0' : 'scale-100 translate-y-0'
         )
     if(props.variant === 'underlined') base.push(
-        '-translate-y-4 top-3 z-10 peer-focus:left-0 peer-focus:-translate-y-4',
+        '-translate-y-4 top-3 z-10 pl-1 peer-focus:left-0 peer-focus:-translate-y-4',
         props.modelValue ? 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0' : 'scale-100 translate-y-0'
         )
 
@@ -138,3 +138,8 @@ const clear = () => {
     <slot name="errorMessage"/>
 </div>
 </template>
+<style module>
+textarea:disabled {
+    -webkit-text-fill-color: rgb(107 114 128);
+}
+</style>
