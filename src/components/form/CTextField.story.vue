@@ -280,7 +280,7 @@ const error : {
 | type | 'text'/'email'/'password' | 'text' | inputのtype属性を選択します |
 | variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
 | error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
-| errorMessage | string|string[] | '' | エラー状態の場合に表示するメッセージを指定します。(slotsのerrorMessageが使用されている場合、こちらは非表示になります) |
+| errorMessage | string/string[] | '' | エラー状態の場合に表示するメッセージを指定します。(slotsのerrorMessageが使用されている場合、こちらは非表示になります) |
 | appendIcon | string | undefined | iconを入力フォームの右に追加する場合は指定します |
 | prependIcon | string | undefined | iconを入力フォームの左に追加する場合は指定します |
 
