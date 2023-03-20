@@ -6,14 +6,14 @@ import CSvgIcon from '@/components/dataDisplay/CSvgIcon.vue';
 const props = withDefaults(defineProps<{
     modelValue: any
     color?: 'white' | 'black' | 'light' | 'dark' | 'primary' | 'link' | 'success' | 'danger' | 'warning' | 'info'
-    isError?: boolean
+    error?: boolean
     label?: string
     value?: string
     indeterminate?:boolean
     readonly?: boolean
 }>(), {
     color: 'black',
-    isError: false,
+    error: false,
     label: '',
     value: '',
     indeterminate: false,
@@ -64,7 +64,7 @@ const iconClass = computed(() => {
         'peer-disabled:text-gray-400 peer-hover:bg-gray-50 peer-hover:peer-disabled:bg-transparent',
         iconDisplayStatus.value === 'blank' ? 'text-[var(--jupiter-black)]' : iconColor.value,
         props.readonly ? 'peer-read-only:text-gray-500' : '',
-        props.isError ? 'bg-red-100' : '',
+        props.error ? 'bg-red-100' : '',
     ]
 })
 
@@ -94,7 +94,7 @@ const indeterminateClick = () => {
         </div>
     </label>
 </div>
-<div v-show="isError" class="text-xs text-[var(--jupiter-danger-text)] pt-1 pl-2">
+<div v-show="error" class="text-xs text-[var(--jupiter-danger-text)] pt-1 pl-2">
     <slot name="errorMessage"/>
 </div>
 </template>

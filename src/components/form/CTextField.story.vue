@@ -57,7 +57,7 @@ const password : {
     show: false,
 })
 
-const 非活性 : {
+const disabled : {
     入力値: string
     ラベル: string
 } = reactive({
@@ -65,7 +65,7 @@ const 非活性 : {
     ラベル: '夏目漱石',
 })
 
-const 読み取り専用 : {
+const readonly : {
     入力値: string
     ラベル: string
 } = reactive({
@@ -73,7 +73,7 @@ const 読み取り専用 : {
     ラベル: '宮沢賢治',
 })
 
-const 警告 : {
+const error : {
     filled入力値: string
     outlined入力値: string
     underlined入力値: string
@@ -173,19 +173,19 @@ const 警告 : {
         <c-box padding="medium">
             <c-stack>
                 <c-text-field 
-                    v-model="非活性.入力値"
-                    :label="非活性.ラベル"
+                    v-model="disabled.入力値"
+                    :label="disabled.ラベル"
                     disabled
                 />
                 <c-text-field 
-                    v-model="非活性.入力値"
-                    :label="非活性.ラベル"
+                    v-model="disabled.入力値"
+                    :label="disabled.ラベル"
                     variant="outlined"
                     disabled
                 />
                 <c-text-field 
-                    v-model="非活性.入力値"
-                    :label="非活性.ラベル"
+                    v-model="disabled.入力値"
+                    :label="disabled.ラベル"
                     variant="underlined"
                     disabled
                 />
@@ -197,19 +197,19 @@ const 警告 : {
         <c-box padding="medium">
             <c-stack>
                 <c-text-field 
-                    v-model="読み取り専用.入力値"
-                    :label="読み取り専用.ラベル"
+                    v-model="readonly.入力値"
+                    :label="readonly.ラベル"
                     readonly
                 />
                 <c-text-field 
-                    v-model="読み取り専用.入力値"
-                    :label="読み取り専用.ラベル"
+                    v-model="readonly.入力値"
+                    :label="readonly.ラベル"
                     variant="outlined"
                     readonly
                 />
                 <c-text-field 
-                    v-model="読み取り専用.入力値"
-                    :label="読み取り専用.ラベル"
+                    v-model="readonly.入力値"
+                    :label="readonly.ラベル"
                     variant="underlined"
                     readonly
                 />
@@ -221,10 +221,10 @@ const 警告 : {
         <c-box padding="medium">
             <c-stack>
                 <c-text-field 
-                    v-model="警告.filled入力値"
-                    :label="警告.ラベル"
-                    :placeholder="警告.placeholder"
-                    is-error
+                    v-model="error.filled入力値"
+                    :label="error.ラベル"
+                    :placeholder="error.placeholder"
+                    error
                     id="dangerfilled"
                 >
                     <template #errorMessage>
@@ -232,19 +232,19 @@ const 警告 : {
                     </template>
                 </c-text-field>
                 <c-text-field 
-                    v-model="警告.outlined入力値"
-                    :label="警告.ラベル"
-                    :placeholder="警告.placeholder"
+                    v-model="error.outlined入力値"
+                    :label="error.ラベル"
+                    :placeholder="error.placeholder"
                     variant="outlined"
-                    is-error
+                    error
                     id="dangeroutlined"
                 />
                 <c-text-field 
-                    v-model="警告.underlined入力値"
-                    :label="警告.ラベル"
-                    :placeholder="警告.placeholder"
+                    v-model="error.underlined入力値"
+                    :label="error.ラベル"
+                    :placeholder="error.placeholder"
                     variant="underlined"
-                    is-error
+                    error
                     id="dangerunderlined"
                 />
             </c-stack>
@@ -265,7 +265,7 @@ const 警告 : {
 | label | string | '' | ラベルに設定するテキストを指定します |
 | type | 'text'/'email'/'password' | 'text' | inputのtype属性を選択します |
 | variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
-| isError | boolean | false | コンポーネントをエラー状態にする場合は指定します |
+| error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
 | appendIcon | string | undefined | iconを入力フォームの右に追加する場合は指定します |
 | prependIcon | string | undefined | iconを入力フォームの左に追加する場合は指定します |
 
