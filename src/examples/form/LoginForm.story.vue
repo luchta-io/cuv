@@ -103,7 +103,7 @@ const doLogin = async () => {
                           v-model="input.email"
                           label="email"
                           placeholder="example@example.com"
-                          :is-error="!!errors.email.length || !!failed.length"
+                          :error="!!errors.email.length || !!failed.length"
                           @blur="validator.email"
               >
                 <template #errorMessage>
@@ -116,7 +116,7 @@ const doLogin = async () => {
               <CTextField :type="passwordShowing ? 'text' : 'password'"
                           v-model="input.password"
                           label="password"
-                          :is-error="!!errors.password.length || !!failed.length"
+                          :error="!!errors.password.length || !!failed.length"
                           :append-icon="passwordShowing ? mdiEye : mdiEyeOff"
                           @click:append="passwordShowing = !passwordShowing"
                           @blur="validator.password"

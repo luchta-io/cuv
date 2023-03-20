@@ -6,14 +6,14 @@ const props = withDefaults(defineProps<{
     modelValue: string
     label?: string
     variant?: 'filled'|'outlined'|'underlined'
-    isError?: boolean
+    error?: boolean
     type?: 'text'|'email'|'password'
     appendIcon?: string
     prependIcon?: string
 }>(), {
     label: '',
     variant: 'filled',
-    isError: false,
+    error: false,
     type: 'text'
 })
 
@@ -34,7 +34,7 @@ const inputClass = computed(() => {
     const base = [
         'peer block w-full appearance-none focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100',
         props.label === '' ? 'placeholder:opacity-100': '',
-        props.isError ? 'border-[var(--jupiter-danger-border)] text-[var(--jupiter-danger-text)] placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' : 'border-gray-300 text-gray-900 read-only:text-gray-500 read-only:focus:border-gray-900 focus:border-blue-600 placeholder:text-gray-400 placeholder:opacity-0 focus:placeholder:opacity-100',
+        props.error ? 'border-[var(--jupiter-danger-border)] text-[var(--jupiter-danger-text)] placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' : 'border-gray-300 text-gray-900 read-only:text-gray-500 read-only:focus:border-gray-900 focus:border-blue-600 placeholder:text-gray-400 placeholder:opacity-0 focus:placeholder:opacity-100',
     ]
     if(props.variant === 'filled') base.push('rounded-t-lg rounded-b-none px-2.5 pb-1 pt-4 bg-gray-50 border-0 border-b-2')
     if(props.variant === 'outlined') base.push('px-2.5 pb-1.5 pt-4 bg-transparent rounded-lg border')
@@ -47,8 +47,8 @@ const labelClass = computed(() => {
     const base = [
         'absolute text-sm duration-300 transform origin-[0] peer-focus:scale-75 whitespace-nowrap overflow-hidden pointer-events-none',
     ]
-    if(props.isError) base.push('text-[var(--jupiter-danger-text)]')
-    if(!props.isError) base.push('text-gray-500 peer-read-only:peer-focus:text-gray-900 peer-focus:text-blue-600')
+    if(props.error) base.push('text-[var(--jupiter-danger-text)]')
+    if(!props.error) base.push('text-gray-500 peer-read-only:peer-focus:text-gray-900 peer-focus:text-blue-600')
     if(props.variant === 'filled') base.push(
         '-translate-y-4 top-4 z-10 left-2.5 peer-focus:-translate-y-4',
         props.modelValue ? 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0' : 'scale-100 translate-y-0'
@@ -68,7 +68,7 @@ const labelClass = computed(() => {
 
 <template>
 <div class="w-full flex items-center gap-2">
-    <c-svg-icon v-if="prependIcon" @click="$emit('click:prepend')" :icon="prependIcon" size="large" class="cursor-pointer" :class="isError?'text-[var(--jupiter-danger-text)]':'text-gray-600'"/>
+    <c-svg-icon v-if="prependIcon" @click="$emit('click:prepend')" :icon="prependIcon" size="large" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-600'"/>
     <div class="relative z-0 w-full">
         <input 
             v-model="inputValue"
@@ -81,11 +81,11 @@ const labelClass = computed(() => {
         >
             {{ label }}
         </label>
-        <div v-show="isError" class="text-xs text-[var(--jupiter-danger-text)] pt-1">
+        <div v-show="error" class="text-xs text-[var(--jupiter-danger-text)] pt-1">
             <slot name="errorMessage"/>
         </div>
     </div>
-    <c-svg-icon v-if="appendIcon" @click="$emit('click:append')" :icon="appendIcon" size="large" class="cursor-pointer" :class="isError?'text-[var(--jupiter-danger-text)]':'text-gray-600'"/>
+    <c-svg-icon v-if="appendIcon" @click="$emit('click:append')" :icon="appendIcon" size="large" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-600'"/>
 </div>
 </template>
 <style module>

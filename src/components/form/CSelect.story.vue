@@ -175,11 +175,11 @@ const readonly: {
     variant: 'filled'
 })
 
-const iserror: {
+const error: {
     modelValue: string
     bloodTypeList: string[]
     label: string
-    iserror: boolean
+    error: boolean
     variant: 'filled'|'outlined'|'underlined'
 } = reactive({
     modelValue: '',
@@ -190,7 +190,7 @@ const iserror: {
         'AB型',
     ],
     label: 'ラベル',
-    iserror: true,
+    error: true,
     variant: 'filled'
 })
 
@@ -377,11 +377,11 @@ const customToggle = () => {
     <Variant title="警告" auto-props-disabled>
         <c-box>
             <c-select
-                v-model="iserror.modelValue"
-                :items="iserror.bloodTypeList"
-                :label="iserror.label"
-                :variant="iserror.variant"
-                :is-error="iserror.iserror"
+                v-model="error.modelValue"
+                :items="error.bloodTypeList"
+                :label="error.label"
+                :variant="error.variant"
+                :error="error.error"
             >
             <template v-slot:errorMessage>
                 入力してください
@@ -389,7 +389,7 @@ const customToggle = () => {
             </c-select>
         </c-box>
         <template #controls>
-            <HstCheckbox v-model="iserror.iserror" title="isError"/>
+            <HstCheckbox v-model="error.error" title="error"/>
             <HstSelect
             v-model="data.variant"
             title="variant"
@@ -420,7 +420,7 @@ html標準のbutton要素と同様の属性/イベントを扱うことができ
 | variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
 | multiple | boolean | false | 複数選択を可能にする場合は指定します |
 | readonly | boolean | false | 読み取り専用にする場合は指定します |
-| isError | boolean | false | コンポーネントをエラー状態にする場合は指定します |
+| error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
 | clearable | boolean | false | 選択した値をクリアするボタンを追加する場合は指定します |
 
 ## Slots

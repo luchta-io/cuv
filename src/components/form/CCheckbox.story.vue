@@ -60,12 +60,12 @@ const readonly: {
     readonly: true,
 })
 
-const isError: {
+const error: {
     選択値: boolean
-    isError: boolean
+    error: boolean
 } = reactive({
     選択値: false,
-    isError: true,
+    error: true,
 })
 </script>
 
@@ -182,16 +182,16 @@ const isError: {
     </Variant>
     <Variant title="警告" auto-props-disabled>
         <c-checkbox
-            v-model="isError.選択値"
-            label="isError"
-            :is-error="isError.isError"
+            v-model="error.選択値"
+            label="error"
+            :error="error.error"
         >
             <template v-slot:errorMessage>
                 選択してください
             </template>
         </c-checkbox>
         <template #controls>
-            <HstCheckbox v-model="isError.isError" title="readonly"/>
+            <HstCheckbox v-model="error.error" title="error"/>
         </template>
     </Variant>
 
@@ -210,7 +210,7 @@ refs. https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/checkbox
 | --- | --- | --- | --- |
 | modelValue | any | undefined | コンポーネントのv-model値です |
 | color | 'white' / 'black' / 'light' / 'dark' / 'primary' / 'link' / 'success' / 'danger' / 'warning' / 'info' | 'black' |  |
-| isError | boolean | false | コンポーネントをエラー状態にする場合は指定します |
+| error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
 | label | string | '' | ラベルに設定するテキストを指定します |
 | value | string | '' | チェックされた時に返す値を指定します |
 | indeterminate | boolean | false | チェックボックスを不確定状態にする場合は指定します |
