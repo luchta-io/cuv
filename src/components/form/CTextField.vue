@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import {computed} from 'vue';
+import {computed, useSlots} from 'vue';
 import CSvgIcon from '@/components/dataDisplay/CSvgIcon.vue';
+
+const slots = useSlots()
 
 const props = withDefaults(defineProps<{
     modelValue: string
     label?: string
     variant?: 'filled'|'outlined'|'underlined'
     error?: boolean
+    errorMessage?: string|string[]
     type?: 'text'|'email'|'password'
     appendIcon?: string
     prependIcon?: string
@@ -14,6 +17,7 @@ const props = withDefaults(defineProps<{
     label: '',
     variant: 'filled',
     error: false,
+    errorMessage: '',
     type: 'text'
 })
 
@@ -30,11 +34,17 @@ const inputValue = computed({
     }
 })
 
+const formatedErrorMessage = computed(() => {
+    if(!props.errorMessage) return []
+    if(typeof props.errorMessage === 'string') return [props.errorMessage]
+    return props.errorMessage
+})
+
 const inputClass = computed(() => {
     const base = [
-        'peer block w-full appearance-none focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100',
+        'peer block w-full appearance-none text-gray-900 focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100',
         props.label === '' ? 'placeholder:opacity-100': '',
-        props.error ? 'border-[var(--jupiter-danger-border)] text-[var(--jupiter-danger-text)] placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' : 'border-gray-300 text-gray-900 read-only:text-gray-500 read-only:focus:border-gray-900 focus:border-blue-600 placeholder:text-gray-400 placeholder:opacity-0 focus:placeholder:opacity-100',
+        props.error ? 'border-[var(--jupiter-danger-border)] placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' : 'border-gray-300 read-only:text-gray-500 read-only:focus:border-gray-900 focus:border-blue-600 placeholder:text-gray-400 placeholder:opacity-0 focus:placeholder:opacity-100',
     ]
     if(props.variant === 'filled') base.push('rounded-t-lg rounded-b-none px-2.5 pb-1 pt-4 bg-gray-50 border-0 border-b-2')
     if(props.variant === 'outlined') base.push('px-2.5 pb-1.5 pt-4 bg-transparent rounded-lg border')
@@ -82,6 +92,11 @@ const labelClass = computed(() => {
             {{ label }}
         </label>
         <div v-show="error" class="text-xs text-[var(--jupiter-danger-text)] pt-1">
+            <div v-if="!slots.errorMessage">
+                <p v-for="(msg,index) in formatedErrorMessage" :key="index">
+                    {{ msg }}
+                </p>
+            </div>
             <slot name="errorMessage"/>
         </div>
     </div>
