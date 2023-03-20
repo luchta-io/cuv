@@ -79,12 +79,19 @@ const error : {
     underlined入力値: string
     ラベル: string
     placeholder: string
+    error: boolean
+    errorMessage: string|Array<string>
 } = reactive({
     filled入力値: '',
     outlined入力値: '',
     underlined入力値: '',
     ラベル: 'ラベル',
     placeholder: '入力してください',
+    error: true,
+    errorMessage: [
+        '入力が必須です',
+        '最大文字数制限(10文字)を超えています'
+    ],
 })
 
 </script>
@@ -110,7 +117,7 @@ const error : {
         </template>
     </Variant>
 
-    <Variant title="outlined">
+    <Variant title="outlined" auto-props-disabled>
         <c-box padding="medium">
             <c-text-field 
                 v-model="outline.入力値"
@@ -127,7 +134,7 @@ const error : {
         </template>
     </Variant>
 
-    <Variant title="underlined">
+    <Variant title="underlined" auto-props-disabled>
         <c-box padding="medium">
             <c-text-field 
                 v-model="underline.入力値"
@@ -144,7 +151,7 @@ const error : {
         </template>
     </Variant>
 
-    <Variant title="email">
+    <Variant title="email" auto-props-disabled>
         <c-box padding="medium">
             <c-text-field 
                 v-model="email.入力値"
@@ -155,7 +162,7 @@ const error : {
         </c-box>
     </Variant> 
     
-    <Variant title="password">
+    <Variant title="password" auto-props-disabled>
         <c-box padding="medium">
             <c-text-field 
                 v-model="password.入力値"
@@ -169,7 +176,7 @@ const error : {
         </c-box>
     </Variant>    
 
-    <Variant title="非活性">
+    <Variant title="非活性" auto-props-disabled>
         <c-box padding="medium">
             <c-stack>
                 <c-text-field 
@@ -193,7 +200,7 @@ const error : {
         </c-box>
     </Variant>
 
-    <Variant title="読み取り専用">
+    <Variant title="読み取り専用" auto-props-disabled>
         <c-box padding="medium">
             <c-stack>
                 <c-text-field 
@@ -217,18 +224,19 @@ const error : {
         </c-box>
     </Variant>
 
-    <Variant title="警告">
+    <Variant title="警告" auto-props-disabled>
         <c-box padding="medium">
             <c-stack>
                 <c-text-field 
                     v-model="error.filled入力値"
                     :label="error.ラベル"
                     :placeholder="error.placeholder"
-                    error
+                    :error="error.error"
+                    :error-message="error.errorMessage"
                     id="dangerfilled"
                 >
                     <template #errorMessage>
-                        エラーメッセージを表示します
+                        入力してください(slotsが優先されます)
                     </template>
                 </c-text-field>
                 <c-text-field 
@@ -236,7 +244,8 @@ const error : {
                     :label="error.ラベル"
                     :placeholder="error.placeholder"
                     variant="outlined"
-                    error
+                    :error="error.error"
+                    :error-message="error.errorMessage"
                     id="dangeroutlined"
                 />
                 <c-text-field 
@@ -244,11 +253,16 @@ const error : {
                     :label="error.ラベル"
                     :placeholder="error.placeholder"
                     variant="underlined"
-                    error
+                    :error="error.error"
+                    :error-message="error.errorMessage"
                     id="dangerunderlined"
                 />
             </c-stack>
         </c-box>
+        <template #controls>
+            <HstCheckbox v-model="error.error" title="error"/>
+            <HstJson v-model="error.errorMessage" title="errorMessage"/>
+        </template>
     </Variant>
 
 </Story>
@@ -266,6 +280,7 @@ const error : {
 | type | 'text'/'email'/'password' | 'text' | inputのtype属性を選択します |
 | variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
 | error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
+| errorMessage | string/string[] | '' | コンポーネントをエラー状態にし、表示するメッセージを指定します。(slotsのerrorMessageが使用されている場合、このメッセージは表示されません) |
 | appendIcon | string | undefined | iconを入力フォームの右に追加する場合は指定します |
 | prependIcon | string | undefined | iconを入力フォームの左に追加する場合は指定します |
 
@@ -273,7 +288,7 @@ const error : {
 
 | Name | Props (if scoped) | Description |
 | --- | --- | --- |
-| errorMessage |  | エラーの時のメッセージを表示する時に使用します |
+| errorMessage |  | エラーの時のメッセージを表示する時に使用します(propsのerrorMessageが指定されている場合、こちらが優先されます) |
 
 ## Events
 
