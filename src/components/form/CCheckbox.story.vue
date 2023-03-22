@@ -200,9 +200,8 @@ const error: {
 
 <docs lang="md">
 # CCheckbox
-基本的なチェックボックス部品です。下記のProps/Eventsの他に、
-html標準のbutton要素と同様の属性/イベントを扱うことができます。
-refs. https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/checkbox
+基本的なチェックボックス部品です。
+フォールスルー属性が適用されています。
 
 ## Props
 
@@ -213,6 +212,8 @@ refs. https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/checkbox
 | error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
 | label | string | '' | ラベルに設定するテキストを指定します |
 | value | string | '' | チェックされた時に返す値を指定します |
+| id | string | undefined | idを指定します |
+| name | string | undefined | nameを指定します |
 | indeterminate | boolean | false | チェックボックスを不確定状態にする場合は指定します |
 | readonly | boolean | false | 読み取り専用にする場合は指定します |
 | disabled | boolean | false | 非活性にする場合は指定します |

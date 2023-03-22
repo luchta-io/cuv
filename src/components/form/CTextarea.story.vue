@@ -245,9 +245,8 @@ const error: {
 <docs lang="md">
 # CTextarea
 
-基本的なテキストエリア部品です。複数行の入力が可能です。下記のPropsの他に、
-html標準のtextarea要素と同様の属性を扱うことができます。
-refs. https://developer.mozilla.org/ja/docs/Web/HTML/Element/textarea
+基本的なテキストエリア部品です。複数行の入力が可能です。
+フォールスルー属性が適用されています。
 
 ## Props
 
@@ -256,6 +255,8 @@ refs. https://developer.mozilla.org/ja/docs/Web/HTML/Element/textarea
 | modelValue | any | undefined | コンポーネントのv-model値です |
 | label | string | '' | ラベルに設定するテキストを指定します |
 | variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
+| id | string | undefined | idを指定します |
+| name | string | undefined | nameを指定します |
 | prependIcon | string | undefined | 入力フォームの左外側に表示させるiconを指定します |
 | appendIcon | string | undefined | 入力フォームの右外側に表示させるiconを指定します |
 | prependInnerIcon | string | undefined | 入力フォームの左内側に表示させるiconを指定します |

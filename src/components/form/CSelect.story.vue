@@ -406,8 +406,8 @@ const customToggle = () => {
 
 <docs lang="md">
 # CSelect
-基本的なセレクトボックス部品です。下記のProps/Eventsの他に、
-html標準のbutton要素と同様の属性/イベントを扱うことができます。
+基本的なセレクトボックス部品です。
+フォールスルー属性が適用されています。
 
 ## Props
 
@@ -418,6 +418,8 @@ html標準のbutton要素と同様の属性/イベントを扱うことができ
 | itemValue | string | 'value' | itemsがオブジェクトの配列の場合、識別するためのキーを指定することができます |
 | label | string | '' | ラベルに設定するテキストを指定します |
 | variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
+| id | string | undefined | idを指定します |
+| name | string | undefined | nameを指定します |
 | multiple | boolean | false | 複数選択を可能にする場合は指定します |
 | readonly | boolean | false | 読み取り専用にする場合は指定します |
 | disabled | boolean | false | 非活性にする場合は指定します |

@@ -9,6 +9,8 @@ const props = withDefaults(defineProps<{
     error?: boolean
     label?: string
     value?: string
+    id?:string
+    name?:string
     indeterminate?:boolean
     readonly?: boolean
     disabled?: boolean
@@ -84,6 +86,8 @@ const indeterminateClick = () => {
         v-bind="$attrs"
         @click="indeterminateClick"
         :value="value"
+        :id="id"
+        :name="name"
         :indeterminate="indeterminate"
         :readonly="readonly"
         :disabled="disabled"

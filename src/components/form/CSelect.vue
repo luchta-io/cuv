@@ -13,6 +13,8 @@ const props = withDefaults(defineProps<{
     itemValue?: string
     label?:string
     variant?: 'filled'|'outlined'|'underlined'
+    id?:string
+    name?:string
     multiple?: boolean
     readonly?: boolean
     disabled?: boolean
@@ -211,6 +213,8 @@ const clear = () => {
         @focus="openDropdownList" 
         @blur="closeDropdownList"
         type="text"
+        :id="id"
+        :name="name"
         :disabled="disabled"
         readonly
         :class="inputClass">

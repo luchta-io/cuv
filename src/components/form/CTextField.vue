@@ -8,6 +8,8 @@ const props = withDefaults(defineProps<{
     modelValue: string
     label?: string
     variant?: 'filled'|'outlined'|'underlined'
+    id?:string
+    name?:string
     error?: boolean
     errorMessage?: string|string[]
     type?: 'text'|'email'|'password'
@@ -95,6 +97,8 @@ const labelClass = computed(() => {
         <input 
             v-model="inputValue"
             v-bind="$attrs"
+            :id="id"
+            :name="name"
             :type="type" 
             :readonly="readonly"
             :disabled="disabled"

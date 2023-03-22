@@ -341,6 +341,7 @@ const オブジェクト配列の絞り込み = (item:名簿型, searchText:stri
 <docs lang="md">
 # CAutocomplete
 入力補完機能のついたフォームコンポーネントです。
+フォールスルー属性が適用されています。
 
 ## Props
 
@@ -352,6 +353,8 @@ const オブジェクト配列の絞り込み = (item:名簿型, searchText:stri
 | filter | (item: any, searchText: string) => boolean | undefined | 絞り込みを行うための関数を指定します |
 | label | string | '' | ラベルに設定するテキストを指定します |
 | variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
+| id | string | undefined | idを指定します |
+| name | string | undefined | nameを指定します |
 | readonly | boolean | false | 読み取り専用にする場合は指定します |
 | disabled | boolean | false | 非活性にする場合は指定します |
 | error | boolean | false | コンポーネントをエラー状態にする場合は指定します |

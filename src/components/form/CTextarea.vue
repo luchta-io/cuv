@@ -9,6 +9,8 @@ const props = withDefaults(defineProps<{
     modelValue: any
     label?: string
     variant?: 'filled'|'outlined'|'underlined'
+    id?:string
+    name?:string
     prependIcon?: string
     appendIcon?: string
     prependInnerIcon?: string
@@ -122,6 +124,8 @@ const clear = () => {
             <textarea
             v-model="textareaValue"
             v-bind="$attrs"
+            :id="id"
+            :name="name"
             :readonly="readonly"
             :disabled="disabled"
             :placeholder="placeholder"

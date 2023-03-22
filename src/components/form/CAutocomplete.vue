@@ -12,6 +12,8 @@ const props = withDefaults(defineProps<{
     filter: (item: any, searchText: string) => boolean
     label?: string
     variant?: 'filled'|'outlined'|'underlined'
+    id?: string
+    name?: string
     readonly?: boolean
     disabled?: boolean
     error?: boolean
@@ -159,6 +161,8 @@ watchEffect(() => {
             @blur="closeDropdownList"
             @keyup.delete="clear"
             type="text" 
+            :id="id"
+            :name="name"
             :readonly="readonly"
             :disabled="disabled"
             :placeholder="placeholder"
