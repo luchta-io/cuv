@@ -215,6 +215,7 @@ refs. https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/checkbox
 | value | string | '' | チェックされた時に返す値を指定します |
 | indeterminate | boolean | false | チェックボックスを不確定状態にする場合は指定します |
 | readonly | boolean | false | 読み取り専用にする場合は指定します |
+| disabled | boolean | false | 非活性にする場合は指定します |
 
 ## Slots
 

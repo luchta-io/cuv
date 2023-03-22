@@ -353,8 +353,10 @@ const オブジェクト配列の絞り込み = (item:名簿型, searchText:stri
 | label | string | '' | ラベルに設定するテキストを指定します |
 | variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
 | readonly | boolean | false | 読み取り専用にする場合は指定します |
+| disabled | boolean | false | 非活性にする場合は指定します |
 | error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
 | clearable | boolean | false | 入力したテキストをクリアするボタンを追加する場合は指定します |
+| placeholder | string | '' | placeholderのメッセージを指定することができます |
 
 ## Slots
 

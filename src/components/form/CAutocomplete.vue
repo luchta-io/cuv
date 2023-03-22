@@ -13,15 +13,19 @@ const props = withDefaults(defineProps<{
     label?: string
     variant?: 'filled'|'outlined'|'underlined'
     readonly?: boolean
+    disabled?: boolean
     error?: boolean
     clearable?: boolean
+    placeholder?: string
 }>(), {
     itemValue: '',
     label: '',
     variant: 'filled',
     readonly: false,
+    disabled:false,
     error: false,
     clearable: false,
+    placeholder: '',
 })
 
 const emits = defineEmits<{
@@ -156,6 +160,8 @@ watchEffect(() => {
             @keyup.delete="clear"
             type="text" 
             :readonly="readonly"
+            :disabled="disabled"
+            :placeholder="placeholder"
             :class="inputClass" 
             autocomplete="off"
         />
