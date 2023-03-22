@@ -283,6 +283,9 @@ const error : {
 | errorMessage | string/string[] | '' | コンポーネントをエラー状態にし、表示するメッセージを指定します。(slotsのerrorMessageが使用されている場合、このメッセージは表示されません) |
 | appendIcon | string | undefined | iconを入力フォームの右に追加する場合は指定します |
 | prependIcon | string | undefined | iconを入力フォームの左に追加する場合は指定します |
+| readonly | boolean | false | 読み取り専用にする場合は指定します |
+| disabled | boolean | false | 非活性にする場合は指定します |
+| placeholder | string | '' | placeholderのメッセージを指定することができます |
 
 ## Slots
 

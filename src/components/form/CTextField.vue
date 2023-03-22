@@ -13,12 +13,18 @@ const props = withDefaults(defineProps<{
     type?: 'text'|'email'|'password'
     appendIcon?: string
     prependIcon?: string
+    readonly?: boolean
+    disabled?: boolean
+    placeholder?: string
 }>(), {
     label: '',
     variant: 'filled',
     error: false,
     errorMessage: '',
-    type: 'text'
+    type: 'text',
+    readonly: false,
+    disabled: false,
+    placeholder: '',
 })
 
 const emits = defineEmits<{
@@ -90,6 +96,9 @@ const labelClass = computed(() => {
             v-model="inputValue"
             v-bind="$attrs"
             :type="type" 
+            :readonly="readonly"
+            :disabled="disabled"
+            :placeholder="placeholder"
             :class="inputClass" 
         />
         <label 

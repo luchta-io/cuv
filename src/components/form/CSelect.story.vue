@@ -328,7 +328,7 @@ const customToggle = () => {
             />
         </template>
     </Variant>
-    <Variant title="不活性化" auto-props-disabled>
+    <Variant title="非活性" auto-props-disabled>
         <c-box>
             <c-select
                 v-model="disabled.modelValue"
