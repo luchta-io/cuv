@@ -15,6 +15,7 @@ const props = withDefaults(defineProps<{
     variant?: 'filled'|'outlined'|'underlined'
     multiple?: boolean
     readonly?: boolean
+    disabled?: boolean
     error?: boolean
     clearable?: boolean
 }>(), {
@@ -23,6 +24,7 @@ const props = withDefaults(defineProps<{
     variant: 'filled',
     multiple: false,
     readonly: false,
+    disabled: false,
     error: false,
     clearable: false,
 })
@@ -208,7 +210,8 @@ const clear = () => {
         v-bind="$attrs"
         @focus="openDropdownList" 
         @blur="closeDropdownList"
-        type="text" 
+        type="text"
+        :disabled="disabled"
         readonly
         :class="inputClass">
         <label 

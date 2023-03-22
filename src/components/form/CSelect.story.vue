@@ -420,6 +420,7 @@ html標準のbutton要素と同様の属性/イベントを扱うことができ
 | variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
 | multiple | boolean | false | 複数選択を可能にする場合は指定します |
 | readonly | boolean | false | 読み取り専用にする場合は指定します |
+| disabled | boolean | false | 非活性にする場合は指定します |
 | error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
 | clearable | boolean | false | 選択した値をクリアするボタンを追加する場合は指定します |
 
