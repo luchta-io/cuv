@@ -9,6 +9,8 @@ const props = withDefaults(defineProps<{
     modelValue: any
     label?: string
     variant?: 'filled'|'outlined'|'underlined'
+    id?:string
+    name?:string
     prependIcon?: string
     appendIcon?: string
     prependInnerIcon?: string
@@ -16,12 +18,18 @@ const props = withDefaults(defineProps<{
     error?: boolean
     clearable?: boolean
     readonly?: boolean
+    disabled?: boolean
+    placeholder?: string
+    rows?: string|number
 }>(), {
     label: '',
     variant: 'filled',
     error: false,
     clearable: false,
     readonly: false,
+    disabled: false, 
+    placeholder: '',
+    rows: 2,
 })
 
 const emits = defineEmits<{
@@ -116,7 +124,12 @@ const clear = () => {
             <textarea
             v-model="textareaValue"
             v-bind="$attrs"
+            :id="id"
+            :name="name"
             :readonly="readonly"
+            :disabled="disabled"
+            :placeholder="placeholder"
+            :rows="rows"
             :class="textareaClass"/>
             <label :class="labelClass">
                 {{ label }}

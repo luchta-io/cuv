@@ -9,9 +9,11 @@ type ColorType =
 const props = withDefaults(defineProps<{
     color?: ColorType
     outlined?: boolean
+    id?:string
+    name?:string
 }>(), {
     color: 'light',
-    outlined: false,
+    outlined: false,    
 })
 
 const themeColor = computed(() => {
@@ -56,7 +58,7 @@ const buttonClass = computed(() => {
 </script>
 
 <template>
-<button :class="buttonClass">
+<button :id="id" :name="name" :class="buttonClass">
     <slot/>
 </button>
 </template>

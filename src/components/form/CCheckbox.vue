@@ -9,8 +9,11 @@ const props = withDefaults(defineProps<{
     error?: boolean
     label?: string
     value?: string
+    id?:string
+    name?:string
     indeterminate?:boolean
     readonly?: boolean
+    disabled?: boolean
 }>(), {
     color: 'black',
     error: false,
@@ -18,6 +21,7 @@ const props = withDefaults(defineProps<{
     value: '',
     indeterminate: false,
     readonly: false,
+    disabled: false
 })
 
 const data: {
@@ -82,6 +86,11 @@ const indeterminateClick = () => {
         v-bind="$attrs"
         @click="indeterminateClick"
         :value="value"
+        :id="id"
+        :name="name"
+        :indeterminate="indeterminate"
+        :readonly="readonly"
+        :disabled="disabled"
         type="checkbox" 
         class="absolute top-0 left-0 w-auto h-full opacity-0 cursor-pointer peer"/>
         <div :class="iconClass">

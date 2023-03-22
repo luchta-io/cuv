@@ -70,9 +70,8 @@ const data: {
 <docs lang="md">
 # CButton
 
-基本的なボタン部品です。下記のProps/Eventsの他に、
-html標準のbutton要素と同様の属性/イベントを扱うことができます。
-refs. https://developer.mozilla.org/ja/docs/Web/HTML/Element/button
+基本的なボタン部品です。
+フォールスルー属性が適用されています。
 
 ## Props
 
@@ -80,6 +79,8 @@ refs. https://developer.mozilla.org/ja/docs/Web/HTML/Element/button
 | --- | --- | --- | --- |
 | color | 'white' / 'black' / 'light' / 'dark' / 'primary' / 'link' / 'success' / 'danger' / 'warning' / 'info' | 'light' | ボタンの色を指定します |
 | outlined | boolean | false | ボタンの見た目をアウトラインボタンにする場合は指定します |
+| id | string | undefined | idを指定します |
+| name | string | undefined | nameを指定します |
 
 ## Slots
 

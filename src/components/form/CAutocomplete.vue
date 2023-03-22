@@ -12,16 +12,22 @@ const props = withDefaults(defineProps<{
     filter: (item: any, searchText: string) => boolean
     label?: string
     variant?: 'filled'|'outlined'|'underlined'
+    id?: string
+    name?: string
     readonly?: boolean
+    disabled?: boolean
     error?: boolean
     clearable?: boolean
+    placeholder?: string
 }>(), {
     itemValue: '',
     label: '',
     variant: 'filled',
     readonly: false,
+    disabled:false,
     error: false,
     clearable: false,
+    placeholder: '',
 })
 
 const emits = defineEmits<{
@@ -155,7 +161,11 @@ watchEffect(() => {
             @blur="closeDropdownList"
             @keyup.delete="clear"
             type="text" 
+            :id="id"
+            :name="name"
             :readonly="readonly"
+            :disabled="disabled"
+            :placeholder="placeholder"
             :class="inputClass" 
             autocomplete="off"
         />

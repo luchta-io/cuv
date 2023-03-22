@@ -13,8 +13,11 @@ const props = withDefaults(defineProps<{
     itemValue?: string
     label?:string
     variant?: 'filled'|'outlined'|'underlined'
+    id?:string
+    name?:string
     multiple?: boolean
     readonly?: boolean
+    disabled?: boolean
     error?: boolean
     clearable?: boolean
 }>(), {
@@ -23,6 +26,7 @@ const props = withDefaults(defineProps<{
     variant: 'filled',
     multiple: false,
     readonly: false,
+    disabled: false,
     error: false,
     clearable: false,
 })
@@ -92,7 +96,7 @@ const labelClass = computed(() => {
         '-translate-y-5 top-3 z-10 peer-focus:left-0 peer-focus:-translate-y-5',
         !props.modelValue || !props.modelValue.length ? 'scale-100 translate-y-0' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0'
         )
-    if(props.readonly) base.push('peer-focus:translate-y-0 peer-focus:scale-100 peer-focus:text-gray-900')
+    if(props.readonly) base.push('peer-focus:translate-y-0 peer-focus:!scale-100 peer-focus:text-gray-900')
 
     return base
 })
@@ -208,7 +212,10 @@ const clear = () => {
         v-bind="$attrs"
         @focus="openDropdownList" 
         @blur="closeDropdownList"
-        type="text" 
+        type="text"
+        :id="id"
+        :name="name"
+        :disabled="disabled"
         readonly
         :class="inputClass">
         <label 
