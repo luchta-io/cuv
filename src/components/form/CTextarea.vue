@@ -16,12 +16,18 @@ const props = withDefaults(defineProps<{
     error?: boolean
     clearable?: boolean
     readonly?: boolean
+    disabled?: boolean
+    placeholder?: string
+    rows?: string|number
 }>(), {
     label: '',
     variant: 'filled',
     error: false,
     clearable: false,
     readonly: false,
+    disabled: false, 
+    placeholder: '',
+    rows: 2,
 })
 
 const emits = defineEmits<{
@@ -117,6 +123,9 @@ const clear = () => {
             v-model="textareaValue"
             v-bind="$attrs"
             :readonly="readonly"
+            :disabled="disabled"
+            :placeholder="placeholder"
+            :rows="rows"
             :class="textareaClass"/>
             <label :class="labelClass">
                 {{ label }}

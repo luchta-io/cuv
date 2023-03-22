@@ -263,6 +263,9 @@ refs. https://developer.mozilla.org/ja/docs/Web/HTML/Element/textarea
 | error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
 | clearable | boolean | false | 入力したテキストをクリアするボタンを追加する場合は指定します |
 | readonly | boolean | false | 読み取り専用にする場合は指定します |
+| disabled | boolean | false | 非活性にする場合は指定します |
+| placeholder | string | '' | placeholderのメッセージを指定することができます |
+| rows | string/number | 2 | コントロールで見ることが可能なテキストの行数を指定できます |
 
 ## Slots
 
