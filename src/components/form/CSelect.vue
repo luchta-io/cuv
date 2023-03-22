@@ -94,7 +94,7 @@ const labelClass = computed(() => {
         '-translate-y-5 top-3 z-10 peer-focus:left-0 peer-focus:-translate-y-5',
         !props.modelValue || !props.modelValue.length ? 'scale-100 translate-y-0' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0'
         )
-    if(props.readonly) base.push('peer-focus:translate-y-0 peer-focus:scale-100 peer-focus:text-gray-900')
+    if(props.readonly) base.push('peer-focus:translate-y-0 peer-focus:!scale-100 peer-focus:text-gray-900')
 
     return base
 })
