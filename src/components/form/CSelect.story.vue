@@ -9,8 +9,9 @@ const data: {
     bloodTypeList: string[]
     label: string
     variant: 'filled'|'outlined'|'underlined'
+    placeholder: string
 } = reactive({
-    modelValue: 'A型',
+    modelValue: '',
     bloodTypeList: [
         'A型',
         'B型',
@@ -18,7 +19,8 @@ const data: {
         'AB型',
     ],
     label: '基本のラベル',
-    variant: 'filled'
+    variant: 'filled',
+    placeholder: '選択してください'
 })
 
 const object: {
@@ -220,6 +222,7 @@ const customToggle = () => {
                 :items="data.bloodTypeList"
                 :label="data.label"
                 :variant="data.variant"
+                :placeholder="data.placeholder"
             />
         </c-box>  
         <template #controls>
@@ -235,6 +238,7 @@ const customToggle = () => {
                 {value: 'underlined', label: 'underlined'},
             ]"
             />
+            <HstText v-model="data.placeholder" title="placeholder"/>
         </template>
     </Variant>
     <Variant title="オブジェクトの配列の場合" auto-props-disabled>
@@ -420,6 +424,7 @@ const customToggle = () => {
 | variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
 | id | string | undefined | idを指定します |
 | name | string | undefined | nameを指定します |
+| placeholder | string | undefined | placeholderに表示するメッセージを指定します |
 | multiple | boolean | false | 複数選択を可能にする場合は指定します |
 | readonly | boolean | false | 読み取り専用にする場合は指定します |
 | disabled | boolean | false | 非活性にする場合は指定します |
