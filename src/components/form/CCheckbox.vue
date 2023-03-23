@@ -68,8 +68,19 @@ const iconClass = computed(() => {
         'peer-disabled:text-gray-400 peer-hover:bg-gray-50 peer-hover:peer-disabled:bg-transparent',
         iconDisplayStatus.value === 'blank' ? 'text-[var(--jupiter-black)]' : iconColor.value,
         props.readonly ? 'peer-read-only:text-gray-500' : '',
-        props.error ? 'bg-red-100' : '',
+        props.error ? 'text-[var(--jupiter-danger-text)]' : '',
     ]
+})
+
+const labelClass = computed(() => {
+    const base = [
+        'text-base peer-disabled:text-gray-400',
+    ]
+    if(props.readonly) base.push('text-gray-500')
+    if(props.error) base.push('text-[var(--jupiter-danger-text)]')
+    if(!props.readonly && !props.error) base.push('text-[var(--jupiter-black)]')
+
+    return base
 })
 
 const indeterminateClick = () => {
@@ -98,7 +109,7 @@ const indeterminateClick = () => {
             <c-svg-icon v-if="iconDisplayStatus==='blank'" :icon="mdiCheckboxBlankOutline"/>
             <c-svg-icon v-if="iconDisplayStatus==='indeterminate'" :icon="mdiMinusBox" />
         </div>
-        <div class="text-base peer-disabled:text-gray-400" :class="readonly?'text-gray-500':'text-[var(--jupiter-black)]'">
+        <div :class="labelClass">
             {{ label }}
         </div>
     </label>
