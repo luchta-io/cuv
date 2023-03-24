@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import {computed, useSlots} from 'vue';
+import {computed} from 'vue';
 import CSvgIcon from '@/components/dataDisplay/CSvgIcon.vue';
 
-const slots = useSlots()
+// const slots = useSlots()
 
 const props = withDefaults(defineProps<{
     modelValue: string
@@ -12,6 +12,7 @@ const props = withDefaults(defineProps<{
     name?:string
     error?: boolean
     errorMessage?: string|string[]
+    maxErrors?: string|number
     type?: 'text'|'email'|'password'
     appendIcon?: string
     prependIcon?: string
@@ -43,8 +44,11 @@ const inputValue = computed({
 })
 
 const formatedErrorMessage = computed(() => {
+    const max = Number(props.maxErrors)
     if(!props.errorMessage) return []
-    if(typeof props.errorMessage === 'string') return [props.errorMessage]
+    if(typeof props.errorMessage === 'string') return new Array(props.errorMessage)
+    if(!isNaN(max)) return props.errorMessage.filter((x, index) => index < max )
+    if(isNaN(max)) return props.errorMessage
     return props.errorMessage
 })
 
@@ -91,7 +95,7 @@ const labelClass = computed(() => {
 </script>
 
 <template>
-<div class="w-full grid grid-cols-[auto_1fr_auto] gap-2">
+<div class="w-full grid grid-cols-[auto_1fr_auto] gap-x-2 gap-y-1">
     <div class="col-start-1 self-center">
         <c-svg-icon v-if="prependIcon" @click="$emit('click:prepend')" :icon="prependIcon" size="large" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-600'"/>
     </div>
@@ -116,13 +120,10 @@ const labelClass = computed(() => {
     <div class="col-start-3 self-center">
         <c-svg-icon v-if="appendIcon" @click="$emit('click:append')" :icon="appendIcon" size="large" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-600'"/>
     </div>
-    <div v-show="isError" class="text-xs text-[var(--jupiter-danger-text)] pt-1 col-start-2">
-        <div v-if="!slots.errorMessage">
-            <p v-for="(msg,index) in formatedErrorMessage" :key="index">
-                {{ msg }}
-            </p>
-        </div>
-        <slot name="errorMessage"/>
+    <div v-show="isError" class="text-xs text-[var(--jupiter-danger-text)] col-start-2">
+        <p v-for="(msg,index) in formatedErrorMessage" :key="index">
+            {{ msg }}
+        </p>
     </div>
 </div>
 </template>

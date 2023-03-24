@@ -3,7 +3,6 @@ import {reactive} from "vue";
 import { mdiEye, mdiEyeOff } from "@mdi/js";
 import CTextField from "@/components/form/CTextField.vue";
 import CBox from "@/components/layout/CBox.vue";
-import CStack from "@/components/layout/CStack.vue";
 
 const filled: {
     入力値: string
@@ -60,17 +59,21 @@ const password : {
 const disabled : {
     入力値: string
     ラベル: string
+    variant: 'filled'|'outlined'|'underlined'
 } = reactive({
     入力値: '吾輩は猫である',
     ラベル: '夏目漱石',
+    variant: 'filled',
 })
 
 const readonly : {
     入力値: string
     ラベル: string
+    variant: 'filled'|'outlined'|'underlined'
 } = reactive({
     入力値: 'セロ弾きのゴーシュ',
     ラベル: '宮沢賢治',
+    variant: 'filled',
 })
 
 const error : {
@@ -79,19 +82,24 @@ const error : {
     underlined入力値: string
     ラベル: string
     placeholder: string
+    variant: 'filled'|'outlined'|'underlined'
     error: boolean
     errorMessage: string|Array<string>
+    maxErrors: string|undefined
 } = reactive({
     filled入力値: '',
     outlined入力値: '',
     underlined入力値: '',
     ラベル: 'ラベル',
     placeholder: '入力してください',
+    variant: 'filled',
     error: true,
     errorMessage: [
         '入力が必須です',
-        '最大文字数制限(10文字)を超えています'
+        '最大文字数制限(10文字)を超えています',
+        '半角英数字を入力してください'
     ],
+    maxErrors: undefined,
 })
 
 </script>
@@ -178,90 +186,74 @@ const error : {
 
     <Variant title="非活性" auto-props-disabled>
         <c-box padding="medium">
-            <c-stack>
-                <c-text-field 
-                    v-model="disabled.入力値"
-                    :label="disabled.ラベル"
-                    disabled
-                />
-                <c-text-field 
-                    v-model="disabled.入力値"
-                    :label="disabled.ラベル"
-                    variant="outlined"
-                    disabled
-                />
-                <c-text-field 
-                    v-model="disabled.入力値"
-                    :label="disabled.ラベル"
-                    variant="underlined"
-                    disabled
-                />
-            </c-stack>
+            <c-text-field 
+                v-model="disabled.入力値"
+                :label="disabled.ラベル"
+                :variant="disabled.variant"
+                disabled
+            />
         </c-box>
+        <template #controls>
+            <HstSelect
+            v-model="disabled.variant"
+            title="variant"
+            :options="[
+                {value: 'filled', label: 'filled'},
+                {value: 'outlined', label: 'outlined'},
+                {value: 'underlined', label: 'underlined'},
+            ]"
+            />
+        </template>
     </Variant>
 
     <Variant title="読み取り専用" auto-props-disabled>
         <c-box padding="medium">
-            <c-stack>
-                <c-text-field 
-                    v-model="readonly.入力値"
-                    :label="readonly.ラベル"
-                    readonly
-                />
-                <c-text-field 
-                    v-model="readonly.入力値"
-                    :label="readonly.ラベル"
-                    variant="outlined"
-                    readonly
-                />
-                <c-text-field 
-                    v-model="readonly.入力値"
-                    :label="readonly.ラベル"
-                    variant="underlined"
-                    readonly
-                />
-            </c-stack>
+            <c-text-field 
+                v-model="readonly.入力値"
+                :label="readonly.ラベル"
+                :variant="readonly.variant"
+                readonly
+            />
         </c-box>
+        <template #controls>
+            <HstSelect
+            v-model="readonly.variant"
+            title="variant"
+            :options="[
+                {value: 'filled', label: 'filled'},
+                {value: 'outlined', label: 'outlined'},
+                {value: 'underlined', label: 'underlined'},
+            ]"
+            />
+        </template>
     </Variant>
 
     <Variant title="警告" auto-props-disabled>
         <c-box padding="medium">
-            <c-stack>
-                <c-text-field 
-                    v-model="error.filled入力値"
-                    :label="error.ラベル"
-                    :placeholder="error.placeholder"
-                    :error="error.error"
-                    :error-message="error.errorMessage"
-                    id="dangerfilled"
-                >
-                    <template #errorMessage>
-                        入力してください(slotsが優先されます)
-                    </template>
-                </c-text-field>
-                <c-text-field 
-                    v-model="error.outlined入力値"
-                    :label="error.ラベル"
-                    :placeholder="error.placeholder"
-                    variant="outlined"
-                    :error="error.error"
-                    :error-message="error.errorMessage"
-                    id="dangeroutlined"
-                />
-                <c-text-field 
-                    v-model="error.underlined入力値"
-                    :label="error.ラベル"
-                    :placeholder="error.placeholder"
-                    variant="underlined"
-                    :error="error.error"
-                    :error-message="error.errorMessage"
-                    id="dangerunderlined"
-                />
-            </c-stack>
+            <c-text-field 
+                v-model="error.filled入力値"
+                :label="error.ラベル"
+                :placeholder="error.placeholder"
+                :variant="error.variant"
+                :error="error.error"
+                :error-message="error.errorMessage"
+                :max-errors="error.maxErrors"
+                id="error"
+            />
         </c-box>
         <template #controls>
             <HstCheckbox v-model="error.error" title="error"/>
             <HstJson v-model="error.errorMessage" title="errorMessage"/>
+            <HstText v-model="error.maxErrors" title="maxErrors"/>
+            <HstSelect
+            v-model="error.variant"
+            title="variant"
+            :options="[
+                {value: 'filled', label: 'filled'},
+                {value: 'outlined', label: 'outlined'},
+                {value: 'underlined', label: 'underlined'},
+            ]"
+            />
         </template>
     </Variant>
 
@@ -277,25 +269,26 @@ const error : {
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| modelValue | string | '' | コンポーネントのv-model値です |
-| label | string | '' | ラベルに設定するテキストを指定します |
-| type | 'text'/'email'/'password' | 'text' | inputのtype属性を選択します |
-| variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
-| id | string | undefined | idを指定します |
-| name | string | undefined | nameを指定します |
-| error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
-| errorMessage | string/string[] | '' | コンポーネントをエラー状態にし、表示するメッセージを指定します。(slotsのerrorMessageが使用されている場合、このメッセージは表示されません) |
 | appendIcon | string | undefined | iconを入力フォームの右に追加する場合は指定します |
+| disabled | boolean | false | 非活性にする場合は指定します |
+| error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
+| errorMessage | string/string[] | '' | コンポーネントをエラー状態にし、表示するメッセージを指定します|
+| id | string | undefined | idを指定します |
+| label | string | '' | ラベルに設定するテキストを指定します |
+| maxErrors | string/number | undefined | 表示するエラーメッセージの数を制限します |
+| modelValue | string | '' | コンポーネントのv-model値です |
+| name | string | undefined | nameを指定します |
+| placeholder | string | '' | placeholderのメッセージを指定することができます |
 | prependIcon | string | undefined | iconを入力フォームの左に追加する場合は指定します |
 | readonly | boolean | false | 読み取り専用にする場合は指定します |
-| disabled | boolean | false | 非活性にする場合は指定します |
-| placeholder | string | '' | placeholderのメッセージを指定することができます |
+| type | 'text'/'email'/'password' | 'text' | inputのtype属性を選択します |
+| variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
 
 ## Slots
 
 | Name | Props (if scoped) | Description |
 | --- | --- | --- |
-| errorMessage |  | エラーの時のメッセージを表示する時に使用します(propsのerrorMessageが指定されている場合、こちらが優先されます) |
+| - | - | このコンポーネント独自のSlotはありません |
 
 ## Events
 
