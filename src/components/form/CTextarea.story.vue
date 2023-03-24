@@ -67,11 +67,19 @@ const error: {
     label: string
     variant: 'filled'|'outlined'|'underlined'
     error: boolean
+    errorMessage: string|string[]|undefined
+    maxErrors: string|undefined
 } = reactive({
     modelValue: '',
     label: 'ラベル',
     variant: 'filled',
     error: true,
+    errorMessage: [
+        '入力が必須です',
+        '最大文字数制限(10文字)を超えています',
+        '半角英数字を入力してください'
+    ],
+    maxErrors: undefined,
 })
 </script>
 
@@ -220,14 +228,13 @@ const error: {
         :label="error.label"
         :variant="error.variant"
         :error="error.error"
-        clearable
-        >
-        <template v-slot:errorMessage>
-            ・入力が必須の項目です。
-        </template>
-        </c-textarea>
+        :error-message="error.errorMessage"
+        :max-errors="error.maxErrors"
+        />
         <template #controls>
             <HstCheckbox v-model="error.error" title="error"/>
+            <HstJson v-model="error.errorMessage" title="errorMessage"/>
+            <HstText v-model="error.maxErrors" title="maxErrors"/>
             <HstSelect
             v-model="error.variant"
             title="variant"
@@ -252,27 +259,29 @@ const error: {
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| modelValue | any | undefined | コンポーネントのv-model値です |
-| label | string | '' | ラベルに設定するテキストを指定します |
-| variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
-| id | string | undefined | idを指定します |
-| name | string | undefined | nameを指定します |
-| prependIcon | string | undefined | 入力フォームの左外側に表示させるiconを指定します |
 | appendIcon | string | undefined | 入力フォームの右外側に表示させるiconを指定します |
-| prependInnerIcon | string | undefined | 入力フォームの左内側に表示させるiconを指定します |
 | appendInnerIcon | string | undefined | 入力フォームの右内側に表示させるiconを指定します |
-| error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
 | clearable | boolean | false | 入力したテキストをクリアするボタンを追加する場合は指定します |
-| readonly | boolean | false | 読み取り専用にする場合は指定します |
 | disabled | boolean | false | 非活性にする場合は指定します |
+| error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
+| errorMessage | string/string[] | '' | コンポーネントをエラー状態にし、表示するメッセージを指定します|
+| id | string | undefined | idを指定します |
+| label | string | '' | ラベルに設定するテキストを指定します |
+| maxErrors | string/number | undefined | 表示するエラーメッセージの数を制限します |
+| modelValue | any | undefined | コンポーネントのv-model値です |
+| name | string | undefined | nameを指定します |
 | placeholder | string | '' | placeholderのメッセージを指定することができます |
+| prependIcon | string | undefined | 入力フォームの左外側に表示させるiconを指定します |
+| prependInnerIcon | string | undefined | 入力フォームの左内側に表示させるiconを指定します |
+| readonly | boolean | false | 読み取り専用にする場合は指定します |
 | rows | string/number | 2 | コントロールで見ることが可能なテキストの行数を指定できます |
+| variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
 
 ## Slots
 
 | Name | Props (if scoped) | Description |
 | --- | --- | --- |
-| errorMessage |  | エラーの時のメッセージを表示する時に使用します |
+| - | - | このコンポーネント独自のSlotはありません |
 
 ## Events
 
