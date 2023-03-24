@@ -75,15 +75,6 @@ const clearable: {
     スタイル: 'filled'
 })
 
-const error: {
-    選択された値: string
-    error: boolean
-    スタイル: 'filled'|'outlined'|'underlined'
-} = reactive({
-    選択された値: '1',
-    error: true,
-    スタイル: 'filled'
-})
 
 const disabled: {
     選択された値: string
@@ -105,10 +96,29 @@ const readonly: {
     スタイル: 'filled'
 })
 
+const error: {
+    選択された値: string
+    error: boolean
+    スタイル: 'filled'|'outlined'|'underlined'
+    errorMessage: string|string[]|undefined
+    maxErrors: string|undefined
+} = reactive({
+    選択された値: '1',
+    error: true,
+    スタイル: 'filled',
+    errorMessage: [
+        '入力が必須です',
+        '最大文字数制限(10文字)を超えています',
+        '半角英数字を入力してください'
+    ],
+    maxErrors: undefined,
+})
+
 const 文字列配列の絞り込み = (item:string, searchText:string) => {
     const keyword = searchText.toUpperCase()
     return item.toUpperCase().indexOf(keyword) > -1
 }
+
 const オブジェクト配列の絞り込み = (item:名簿型, searchText:string) => {
     const keyword = searchText.toUpperCase()
     if(item.姓.toUpperCase().indexOf(keyword) > -1) return true
@@ -121,7 +131,7 @@ const オブジェクト配列の絞り込み = (item:名簿型, searchText:stri
     title="Form / CAutocomplete"
     :layout="{ type: 'grid', width: 500 }"
 >
-<Variant title="文字列の配列の場合" auto-props-disabled>
+    <Variant title="文字列の配列の場合" auto-props-disabled>
         <c-box padding="large">
             <c-autocomplete
             v-model="string.入力値"
@@ -131,8 +141,7 @@ const オブジェクト配列の絞り込み = (item:名簿型, searchText:stri
             :placeholder="string.placeholder"
             :variant="string.スタイル"
             id="string"
-            >
-            </c-autocomplete>    
+            />
         </c-box>
         <template #controls>
             <HstText v-model="string.入力値" title="modelValue"/>
@@ -301,12 +310,15 @@ const オブジェクト配列の絞り込み = (item:名簿型, searchText:stri
         <c-box padding="large">
             <c-autocomplete
             v-model="error.選択された値"
+            label="ラベル"
             :items="object.名簿"
             item-value="id"
             :filter="オブジェクト配列の絞り込み"
             :variant="error.スタイル"
             placeholder="入力"
             :error="error.error"
+            :error-message="error.errorMessage"
+            :max-errors="error.maxErrors"
             >
                 <template v-slot:selection="{item}">
                     {{ item.姓 }} {{ item.名 }}
@@ -314,16 +326,12 @@ const オブジェクト配列の絞り込み = (item:名簿型, searchText:stri
                 <template v-slot:item="{item}">
                     {{ item.姓 }} {{ item.名 }}
                 </template>
-                <template v-slot:errorMessage>
-                    名前を入力してください
-                </template>
             </c-autocomplete>
         </c-box>
         <template #controls>
-            <HstCheckbox
-                v-model="error.error"
-                title="error"
-            />
+            <HstCheckbox v-model="error.error" title="error"/>
+            <HstJson v-model="error.errorMessage" title="errorMessage"/>
+            <HstText v-model="error.maxErrors" title="maxErrors"/>
             <HstSelect
             v-model="error.スタイル"
             title="variant"
@@ -347,28 +355,29 @@ const オブジェクト配列の絞り込み = (item:名簿型, searchText:stri
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| modelValue | any | null | コンポーネントのv-model値です |
-| items | any[] | [] | オブジェクトの配列、または文字列の配列を指定できます。オブジェクトの配列の場合、itemValueを使用することで、キーを変更できます。 |
-| itemValue | string | '' | itemsがオブジェクトの配列の場合、識別するためのキーを指定することができます |
-| filter | (item: any, searchText: string) => boolean | undefined | 絞り込みを行うための関数を指定します |
-| label | string | '' | ラベルに設定するテキストを指定します |
-| variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
-| id | string | undefined | idを指定します |
-| name | string | undefined | nameを指定します |
-| readonly | boolean | false | 読み取り専用にする場合は指定します |
+| clearable | boolean | false | 入力したテキストをクリアするボタンを追加する場合は指定します |
 | disabled | boolean | false | 非活性にする場合は指定します |
 | error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
-| clearable | boolean | false | 入力したテキストをクリアするボタンを追加する場合は指定します |
+| errorMessage | string/string[] | '' | コンポーネントをエラー状態にし、表示するメッセージを指定します|
+| filter | (item: any, searchText: string) => boolean | undefined | 絞り込みを行うための関数を指定します |
+| id | string | undefined | idを指定します |
+| items | any[] | [] | オブジェクトの配列、または文字列の配列を指定できます。オブジェクトの配列の場合、itemValueを使用することで、キーを変更できます。 |
+| itemValue | string | '' | itemsがオブジェクトの配列の場合、識別するためのキーを指定することができます |
+| label | string | '' | ラベルに設定するテキストを指定します |
+| maxErrors | string/number | undefined | 表示するエラーメッセージの数を制限します |
+| modelValue | any | null | コンポーネントのv-model値です |
+| name | string | undefined | nameを指定します |
 | placeholder | string | '' | placeholderのメッセージを指定することができます |
+| readonly | boolean | false | 読み取り専用にする場合は指定します |
+| variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
 
 ## Slots
 
 | Name | Props (if scoped) | Description |
 | --- | --- | --- |
-| selection | item | 選択された値の表示方法をカスタムできます |
-| item | item/index | ドロップダウンリストの各項目の表示方法をカスタムできます |
 | empty |  | ドロップダウンリストに一件も表示されない時に使用します |
-| errorMessage |  | エラーの時のメッセージを表示する時に使用します |
+| item | item/index | ドロップダウンリストの各項目の表示方法をカスタムできます |
+| selection | item | 選択された値の表示方法をカスタムできます |
 
 ## Events
 

@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import {computed, useSlots} from 'vue';
+import {computed} from 'vue';
 import { mdiClose } from '@mdi/js';
 import CSvgIcon from '@/components/dataDisplay/CSvgIcon.vue';
-
-const slots = useSlots()
 
 const props = withDefaults(defineProps<{
     modelValue: any
@@ -16,6 +14,8 @@ const props = withDefaults(defineProps<{
     prependInnerIcon?: string
     appendInnerIcon?: string
     error?: boolean
+    errorMessage?: string|string[]
+    maxErrors?: string|number
     clearable?: boolean
     readonly?: boolean
     disabled?: boolean
@@ -25,6 +25,7 @@ const props = withDefaults(defineProps<{
     label: '',
     variant: 'filled',
     error: false,
+    errorMessage: '',
     clearable: false,
     readonly: false,
     disabled: false, 
@@ -47,12 +48,27 @@ const textareaValue = computed({
     }
 })
 
+const formatedErrorMessage = computed(() => {
+    const max = Number(props.maxErrors)
+    if(!props.errorMessage) return []
+    if(typeof props.errorMessage === 'string') return new Array(props.errorMessage)
+    if(!isNaN(max)) return props.errorMessage.filter((x, index) => index < max )
+    if(isNaN(max)) return props.errorMessage
+    return props.errorMessage
+})
+
+const isError = computed(() => {
+    if(props.error) return true
+    if(formatedErrorMessage.value.length) return true
+    return false
+})
+
 const fieldClass = computed(() => {
     const base = [
         'group peer col-start-2 flex items-center w-full appearance-none focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100',
     ]
-    if(props.error) base.push('border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)] placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' )
-    if(!props.error) {
+    if(isError.value) base.push('border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)] placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' )
+    if(!isError.value) {
         base.push('placeholder:text-gray-400 placeholder:opacity-0 focus:placeholder:opacity-100 border-gray-300')
         base.push(props.readonly? 'focus-within:border-gray-900' : 'focus-within:border-blue-600')
     }
@@ -68,7 +84,7 @@ const textareaClass = computed(() => {
     const base = [
         'peer block w-full appearance-none focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100',
         props.label === '' ? 'placeholder:opacity-100': '',
-        props.error ? 'placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' : 'text-gray-900 read-only:text-gray-500 placeholder:text-gray-400 placeholder:opacity-0 focus:placeholder:opacity-100',
+        isError.value ? 'placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' : 'text-gray-900 read-only:text-gray-500 placeholder:text-gray-400 placeholder:opacity-0 focus:placeholder:opacity-100',
     ]
     if(props.variant === 'filled') base.push('rounded-t-lg rounded-b-none px-2.5 pb-1 pt-4 bg-gray-50')
     if(props.variant === 'outlined') base.push('px-2.5 pb-1.5 pt-4 bg-transparent rounded-lg')
@@ -81,8 +97,8 @@ const labelClass = computed(() => {
     const base = [
         'absolute text-sm duration-300 transform origin-[0] peer-focus:scale-75 whitespace-nowrap overflow-hidden pointer-events-none',
     ]
-    if(props.error) base.push('text-[var(--jupiter-danger-text)]')
-    if(!props.error) base.push('text-gray-500 peer-read-only:peer-focus:text-gray-900 peer-focus:text-blue-600')
+    if(isError.value) base.push('text-[var(--jupiter-danger-text)]')
+    if(!isError.value) base.push('text-gray-500 peer-read-only:peer-focus:text-gray-900 peer-focus:text-blue-600')
     if(props.variant === 'filled') base.push(
         '-translate-y-4 top-4 z-10 left-2.5 peer-focus:-translate-y-4',
         props.modelValue ? 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0' : 'scale-100 translate-y-0'
@@ -111,8 +127,8 @@ const clear = () => {
 </script>
 
 <template>
-<div class="grid grid-cols-[auto_1fr_auto] gap-2">
-    <div v-show="prependIcon" class="text-lg col-start-1 self-center">
+<div class="grid grid-cols-[auto_1fr_auto] gap-y-1">
+    <div v-show="prependIcon" class="text-lg col-start-1 self-center pr-1">
         <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="text-gray-500 cursor-pointer" />
     </div>
     <div :class="fieldClass">
@@ -141,11 +157,13 @@ const clear = () => {
             <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="text-gray-500 cursor-pointer" />
         </div>
     </div>
-    <div v-show="appendIcon" class="text-lg col-start-3 self-center">
+    <div v-show="appendIcon" class="text-lg col-start-3 self-center pl-1">
         <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="text-gray-500 cursor-pointer" />
     </div>
-    <div v-show="error && slots.errorMessage" class="text-xs text-[var(--jupiter-danger-text)] pt-1 col-start-2">
-        <slot name="errorMessage"/>
+    <div v-show="isError" class="text-xs text-[var(--jupiter-danger-text)] col-start-2">
+        <p v-for="(msg,index) in formatedErrorMessage" :key="index">
+            {{ msg }}
+        </p>
     </div>
 </div>
 </template>
