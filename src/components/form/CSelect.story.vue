@@ -182,6 +182,8 @@ const error: {
     bloodTypeList: string[]
     label: string
     error: boolean
+    errorMessage: string|string[]|undefined
+    maxErrors: string|undefined
     variant: 'filled'|'outlined'|'underlined'
 } = reactive({
     modelValue: '',
@@ -193,7 +195,13 @@ const error: {
     ],
     label: 'ラベル',
     error: true,
-    variant: 'filled'
+    variant: 'filled',
+    errorMessage: [
+        '入力が必須です',
+        '最大文字数制限(10文字)を超えています',
+        '半角英数字を入力してください'
+    ],
+    maxErrors: undefined,
 })
 
 const isAllChecked = computed({
@@ -386,14 +394,15 @@ const customToggle = () => {
                 :label="error.label"
                 :variant="error.variant"
                 :error="error.error"
-            >
-            <template v-slot:errorMessage>
-                入力してください
-            </template>
-            </c-select>
+                :error-message="error.errorMessage"
+                :max-errors="error.maxErrors"
+                clearable
+            />
         </c-box>
         <template #controls>
             <HstCheckbox v-model="error.error" title="error"/>
+            <HstJson v-model="error.errorMessage" title="errorMessage"/>
+            <HstText v-model="error.maxErrors" title="maxErrors"/>
             <HstSelect
             v-model="data.variant"
             title="variant"
@@ -417,19 +426,21 @@ const customToggle = () => {
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| modelValue | any | null | コンポーネントのv-model値です |
+| clearable | boolean | false | 選択した値をクリアするボタンを追加する場合は指定します |
+| disabled | boolean | false | 非活性にする場合は指定します |
+| error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
+| errorMessage | string/string[] | '' | コンポーネントをエラー状態にし、表示するメッセージを指定します|
+| id | string | undefined | idを指定します |
 | items | any[] | [] | オブジェクトの配列、または文字列の配列を指定できます。オブジェクトの配列の場合、itemValueを使用することで、キーを変更できます。 |
 | itemValue | string | 'value' | itemsがオブジェクトの配列の場合、識別するためのキーを指定することができます |
 | label | string | '' | ラベルに設定するテキストを指定します |
-| variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
-| id | string | undefined | idを指定します |
+| maxErrors | string/number | undefined | 表示するエラーメッセージの数を制限します |
+| modelValue | any | null | コンポーネントのv-model値です |
+| multiple | boolean | false | 複数選択を可能にする場合は指定します |
 | name | string | undefined | nameを指定します |
 | placeholder | string | undefined | placeholderに表示するメッセージを指定します |
-| multiple | boolean | false | 複数選択を可能にする場合は指定します |
 | readonly | boolean | false | 読み取り専用にする場合は指定します |
-| disabled | boolean | false | 非活性にする場合は指定します |
-| error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
-| clearable | boolean | false | 選択した値をクリアするボタンを追加する場合は指定します |
+| variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
 
 ## Slots
 
@@ -439,7 +450,6 @@ const customToggle = () => {
 | prependItem |  | ドロップダウンリストの先頭に追加する表示項目を指定します |
 | item | item/index| ドロップダウンリストの各項目の表示方法をカスタムできます |
 | empty |  | ドロップダウンリストに一件も表示されない時に使用します |
-| errorMessage |  | エラーの時のメッセージを表示する時に使用します |
 
 ## Events
 

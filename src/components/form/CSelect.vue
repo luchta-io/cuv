@@ -20,6 +20,8 @@ const props = withDefaults(defineProps<{
     readonly?: boolean
     disabled?: boolean
     error?: boolean
+    errorMessage?: string|string[]
+    maxErrors?: string|number
     clearable?: boolean
 }>(), {
     itemValue: 'value',
@@ -51,12 +53,27 @@ const changeableModelValue = computed({
     }
 })
 
+const formatedErrorMessage = computed(() => {
+    const max = Number(props.maxErrors)
+    if(!props.errorMessage) return []
+    if(typeof props.errorMessage === 'string') return new Array(props.errorMessage)
+    if(!isNaN(max)) return props.errorMessage.filter((x, index) => index < max )
+    if(isNaN(max)) return props.errorMessage
+    return props.errorMessage
+})
+
+const isError = computed(() => {
+    if(props.error) return true
+    if(formatedErrorMessage.value.length) return true
+    return false
+})
+
 const fieldClass = computed(() => {
     const base = [
         'group peer flex items-center w-full appearance-none focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100',
         props.label === '' ? 'placeholder:opacity-100': '',
         props.readonly ? 'focus-within:border-gray-900' : 'focus-within:border-blue-600',
-        props.error 
+        isError.value 
         ? 'border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)] text-[var(--jupiter-danger-text)] placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' 
         : 'placeholder:text-gray-400 placeholder:opacity-0 focus:placeholder:opacity-100 border-gray-300',
         props.clearable ? 'pr-14' : '',
@@ -84,8 +101,8 @@ const labelClass = computed(() => {
     const base = [
         'absolute text-sm duration-300 transform origin-[0] peer-focus:scale-75 whitespace-nowrap overflow-hidden pointer-events-none',
     ]
-    if(props.error) base.push('text-[var(--jupiter-danger-text)]')
-    if(!props.error) base.push('text-gray-500 peer-focus:text-blue-600')
+    if(isError.value ) base.push('text-[var(--jupiter-danger-text)]')
+    if(!isError.value ) base.push('text-gray-500 peer-focus:text-blue-600')
     if(props.variant === 'filled') base.push(
         '-translate-y-4 top-4 z-10 left-2.5 peer-focus:-translate-y-4',
         !props.modelValue || !props.modelValue.length 
@@ -233,7 +250,7 @@ const clear = () => {
             {{ label }}
         </label>
         <c-svg-icon v-show="clearIconDisplay" :icon="mdiClose" @click="clear" class="absolute inset-y-1/2 translate-y-[-50%] right-7 text-gray-500 peer-disabled:hidden cursor-pointer" />
-        <c-svg-icon v-show="menuIconDisplay" :icon="data.isActive ? mdiMenuUp : mdiMenuDown" @click="toggleDropdownList" class="absolute inset-y-1/2 translate-y-[-50%] right-1 peer-disabled:hidden" :class="error ? 'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
+        <c-svg-icon v-show="menuIconDisplay" :icon="data.isActive ? mdiMenuUp : mdiMenuDown" @click="toggleDropdownList" class="absolute inset-y-1/2 translate-y-[-50%] right-1 peer-disabled:hidden" :class="isError ? 'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
         <div v-show="data.isActive" class="absolute left-0 top-full z-50 w-full rounded">
             <ul class="overflow-auto divide-y-2 divide-gray-100 rounded-b bg-white shadow-lg z-50 max-h-60">
                 <template v-if="items.length > 0">
@@ -260,8 +277,10 @@ const clear = () => {
         </div>
     </fieldset>
 </div>
-<div v-if="error && slots.errorMessage" class="text-xs text-[var(--jupiter-danger-text)] pt-1">
-    <slot name="errorMessage"/>
+<div v-if="isError" class="text-xs text-[var(--jupiter-danger-text)] pt-1">
+    <p v-for="(msg,index) in formatedErrorMessage" :key="index">
+        {{ msg }}
+    </p>
 </div>
 
 </template>
