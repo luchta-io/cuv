@@ -91,9 +91,11 @@ const labelClass = computed(() => {
 </script>
 
 <template>
-<div class="w-full flex items-center gap-2">
-    <c-svg-icon v-if="prependIcon" @click="$emit('click:prepend')" :icon="prependIcon" size="large" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-600'"/>
-    <div class="relative z-0 w-full">
+<div class="w-full grid grid-cols-[auto_1fr_auto] gap-2">
+    <div class="col-start-1 self-center">
+        <c-svg-icon v-if="prependIcon" @click="$emit('click:prepend')" :icon="prependIcon" size="large" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-600'"/>
+    </div>
+    <div class="relative z-0 w-full col-start-2">
         <input 
             v-model="inputValue"
             v-bind="$attrs"
@@ -110,16 +112,18 @@ const labelClass = computed(() => {
         >
             {{ label }}
         </label>
-        <div v-show="isError" class="text-xs text-[var(--jupiter-danger-text)] pt-1">
-            <div v-if="!slots.errorMessage">
-                <p v-for="(msg,index) in formatedErrorMessage" :key="index">
-                    {{ msg }}
-                </p>
-            </div>
-            <slot name="errorMessage"/>
-        </div>
     </div>
-    <c-svg-icon v-if="appendIcon" @click="$emit('click:append')" :icon="appendIcon" size="large" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-600'"/>
+    <div class="col-start-3 self-center">
+        <c-svg-icon v-if="appendIcon" @click="$emit('click:append')" :icon="appendIcon" size="large" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-600'"/>
+    </div>
+    <div v-show="isError" class="text-xs text-[var(--jupiter-danger-text)] pt-1 col-start-2">
+        <div v-if="!slots.errorMessage">
+            <p v-for="(msg,index) in formatedErrorMessage" :key="index">
+                {{ msg }}
+            </p>
+        </div>
+        <slot name="errorMessage"/>
+    </div>
 </div>
 </template>
 <style module>

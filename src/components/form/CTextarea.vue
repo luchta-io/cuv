@@ -49,8 +49,7 @@ const textareaValue = computed({
 
 const fieldClass = computed(() => {
     const base = [
-        'group peer flex items-center w-full appearance-none focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100',
-        // props.clearable ? 'pr-6' : '',
+        'group peer col-start-2 flex items-center w-full appearance-none focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100',
     ]
     if(props.error) base.push('border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)] placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' )
     if(!props.error) {
@@ -112,8 +111,8 @@ const clear = () => {
 </script>
 
 <template>
-<div class="flex items-center">
-    <div v-show="prependIcon" class="px-2 text-lg">
+<div class="grid grid-cols-[auto_1fr_auto] gap-2">
+    <div v-show="prependIcon" class="text-lg col-start-1 self-center">
         <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="text-gray-500 cursor-pointer" />
     </div>
     <div :class="fieldClass">
@@ -142,13 +141,12 @@ const clear = () => {
             <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="text-gray-500 cursor-pointer" />
         </div>
     </div>
-    <div v-show="appendIcon" class="px-2 text-lg">
+    <div v-show="appendIcon" class="text-lg col-start-3 self-center">
         <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="text-gray-500 cursor-pointer" />
     </div>
-</div>
-
-<div v-show="error && slots.errorMessage" class="text-xs text-[var(--jupiter-danger-text)] pt-1">
-    <slot name="errorMessage"/>
+    <div v-show="error && slots.errorMessage" class="text-xs text-[var(--jupiter-danger-text)] pt-1 col-start-2">
+        <slot name="errorMessage"/>
+    </div>
 </div>
 </template>
 <style module>
