@@ -31,6 +31,7 @@ const props = withDefaults(defineProps<{
     readonly: false,
     disabled: false,
     error: false,
+    errorMessage: '',
     clearable: false,
 })
 
