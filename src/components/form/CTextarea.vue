@@ -127,8 +127,8 @@ const clear = () => {
 </script>
 
 <template>
-<div class="grid grid-cols-[auto_1fr_auto] gap-x-2 gap-y-1">
-    <div v-show="prependIcon" class="text-lg col-start-1 self-center">
+<div class="grid grid-cols-[auto_1fr_auto] gap-y-1">
+    <div v-show="prependIcon" class="text-lg col-start-1 self-center pr-1">
         <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="text-gray-500 cursor-pointer" />
     </div>
     <div :class="fieldClass">
@@ -157,7 +157,7 @@ const clear = () => {
             <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="text-gray-500 cursor-pointer" />
         </div>
     </div>
-    <div v-show="appendIcon" class="text-lg col-start-3 self-center">
+    <div v-show="appendIcon" class="text-lg col-start-3 self-center pl-1">
         <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="text-gray-500 cursor-pointer" />
     </div>
     <div v-show="isError" class="text-xs text-[var(--jupiter-danger-text)] col-start-2">

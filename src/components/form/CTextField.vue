@@ -95,8 +95,8 @@ const labelClass = computed(() => {
 </script>
 
 <template>
-<div class="w-full grid grid-cols-[auto_1fr_auto] gap-x-2 gap-y-1">
-    <div class="col-start-1 self-center">
+<div class="w-full grid grid-cols-[auto_1fr_auto] gap-y-1">
+    <div class="col-start-1 self-center pr-1">
         <c-svg-icon v-if="prependIcon" @click="$emit('click:prepend')" :icon="prependIcon" size="large" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-600'"/>
     </div>
     <div class="relative z-0 w-full col-start-2">
@@ -117,7 +117,7 @@ const labelClass = computed(() => {
             {{ label }}
         </label>
     </div>
-    <div class="col-start-3 self-center">
+    <div class="col-start-3 self-center pl-1">
         <c-svg-icon v-if="appendIcon" @click="$emit('click:append')" :icon="appendIcon" size="large" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-600'"/>
     </div>
     <div v-show="isError" class="text-xs text-[var(--jupiter-danger-text)] col-start-2">
