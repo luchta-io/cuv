@@ -63,9 +63,17 @@ const readonly: {
 const error: {
     選択値: boolean
     error: boolean
+    errorMessage: string|string[]|undefined
+    maxErrors: string|undefined
 } = reactive({
     選択値: false,
     error: true,
+    errorMessage: [
+        '選択が必須です',
+        '選択が必須です2',
+        '選択が必須です3'
+    ],
+    maxErrors: undefined,
 })
 </script>
 
@@ -185,13 +193,13 @@ const error: {
             v-model="error.選択値"
             label="error"
             :error="error.error"
-        >
-            <template v-slot:errorMessage>
-                選択してください
-            </template>
-        </c-checkbox>
+            :error-message="error.errorMessage"
+            :max-errors="error.maxErrors"
+        />
         <template #controls>
             <HstCheckbox v-model="error.error" title="error"/>
+            <HstJson v-model="error.errorMessage" title="errorMessage"/>
+            <HstText v-model="error.maxErrors" title="maxErrors"/>
         </template>
     </Variant>
 
@@ -207,22 +215,24 @@ const error: {
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| modelValue | any | undefined | コンポーネントのv-model値です |
 | color | 'white' / 'black' / 'light' / 'dark' / 'primary' / 'link' / 'success' / 'danger' / 'warning' / 'info' | 'black' |  |
-| error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
-| label | string | '' | ラベルに設定するテキストを指定します |
-| value | string | '' | チェックされた時に返す値を指定します |
-| id | string | undefined | idを指定します |
-| name | string | undefined | nameを指定します |
-| indeterminate | boolean | false | チェックボックスを不確定状態にする場合は指定します |
-| readonly | boolean | false | 読み取り専用にする場合は指定します |
 | disabled | boolean | false | 非活性にする場合は指定します |
+| error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
+| errorMessage | string/string[] | '' | コンポーネントをエラー状態にし、表示するメッセージを指定します|| maxErrors | string/number | undefined | 表示するエラーメッセージの数を制限します |
+| id | string | undefined | idを指定します |
+| indeterminate | boolean | false | チェックボックスを不確定状態にする場合は指定します |
+| label | string | '' | ラベルに設定するテキストを指定します |
+| maxErrors | string/number | undefined | 表示するエラーメッセージの数を制限します |
+| modelValue | any | undefined | コンポーネントのv-model値です |
+| name | string | undefined | nameを指定します |
+| readonly | boolean | false | 読み取り専用にする場合は指定します |
+| value | string | '' | チェックされた時に返す値を指定します |
 
 ## Slots
 
 | Name | Props (if scoped) | Description |
 | --- | --- | --- |
-| errorMessage |  | エラーの時のメッセージを表示する時に使用します |
+| - | - | このコンポーネント独自のSlotはありません |
 
 ## Events
 

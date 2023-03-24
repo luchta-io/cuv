@@ -7,6 +7,8 @@ const props = withDefaults(defineProps<{
     modelValue: any
     color?: 'white' | 'black' | 'light' | 'dark' | 'primary' | 'link' | 'success' | 'danger' | 'warning' | 'info'
     error?: boolean
+    errorMessage?: string|string[]
+    maxErrors?: string|number
     label?: string
     value?: string
     id?:string
@@ -17,6 +19,7 @@ const props = withDefaults(defineProps<{
 }>(), {
     color: 'black',
     error: false,
+    errorMessage: '',
     label: '',
     value: '',
     indeterminate: false,
@@ -48,6 +51,21 @@ const iconDisplayStatus = computed(() => {
     return checkboxValue.value.includes(props.value) ? 'marked' : 'blank'
 })
 
+const formatedErrorMessage = computed(() => {
+    const max = Number(props.maxErrors)
+    if(!props.errorMessage) return []
+    if(typeof props.errorMessage === 'string') return new Array(props.errorMessage)
+    if(!isNaN(max)) return props.errorMessage.filter((x, index) => index < max )
+    if(isNaN(max)) return props.errorMessage
+    return props.errorMessage
+})
+
+const isError = computed(() => {
+    if(props.error) return true
+    if(formatedErrorMessage.value.length) return true
+    return false
+})
+
 const iconColor = computed(() => {
     if(props.color === 'white') return 'text-[var(--jupiter-white)]'
     if(props.color === 'black') return 'text-[var(--jupiter-black)]'
@@ -65,10 +83,10 @@ const iconColor = computed(() => {
 const iconClass = computed(() => {
     return [
         'group w-10 h-10 rounded-full flex justify-center items-center',
-        'peer-disabled:text-gray-400 peer-hover:bg-gray-50 peer-hover:peer-disabled:bg-transparent',
+        'peer-disabled:text-gray-400 peer-hover:bg-gray-50 peer-focus:bg-gray-50 peer-hover:peer-disabled:bg-transparent',
         iconDisplayStatus.value === 'blank' ? 'text-[var(--jupiter-black)]' : iconColor.value,
         props.readonly ? 'peer-read-only:text-gray-500' : '',
-        props.error ? 'text-[var(--jupiter-danger-text)]' : '',
+        isError.value ? 'text-[var(--jupiter-danger-text)]' : '',
     ]
 })
 
@@ -77,8 +95,8 @@ const labelClass = computed(() => {
         'text-base peer-disabled:text-gray-400',
     ]
     if(props.readonly) base.push('text-gray-500')
-    if(props.error) base.push('text-[var(--jupiter-danger-text)]')
-    if(!props.readonly && !props.error) base.push('text-[var(--jupiter-black)]')
+    if(isError.value) base.push('text-[var(--jupiter-danger-text)]')
+    if(!props.readonly && !isError.value) base.push('text-[var(--jupiter-black)]')
 
     return base
 })
@@ -114,7 +132,9 @@ const indeterminateClick = () => {
         </div>
     </label>
 </div>
-<div v-show="error" class="text-xs text-[var(--jupiter-danger-text)] pt-1 pl-2">
-    <slot name="errorMessage"/>
+<div v-show="isError" class="text-xs text-[var(--jupiter-danger-text)] pt-1 pl-2">
+    <p v-for="(msg,index) in formatedErrorMessage" :key="index">
+        {{ msg }}
+    </p>
 </div>
 </template>
