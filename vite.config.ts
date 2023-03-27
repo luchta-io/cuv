@@ -10,8 +10,8 @@ export default defineConfig({
         sourcemap: true,
         lib: {
             entry: resolve(__dirname, 'src/index.ts'),
-            name: 'Jupiter',
-            fileName: 'jupiter'
+            name: 'cuv',
+            fileName: 'cuv'
         },
         rollupOptions: {
             external: ['vue'],

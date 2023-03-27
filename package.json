@@ -1,16 +1,16 @@
 {
-  "name": "jupiter",
+  "name": "@actier-luchta/cuv",
   "description": "Vue3向けのコンポーネントライブラリ",
-  "version": "0.0.1",
+  "version": "1.0.0-alpha.0",
   "files": [
     "dist"
   ],
-  "module": "./dist/jupiter.mjs",
-  "main": "./dist/jupiter.umd.js",
+  "module": "./dist/cuv.mjs",
+  "main": "./dist/cuv.umd.js",
   "exports": {
     ".": {
-      "import": "./dist/jupiter.mjs",
-      "require": "./dist/jupiter.umd.js"
+      "import": "./dist/cuv.mjs",
+      "require": "./dist/cuv.umd.js"
     }
   },
   "scripts": {
