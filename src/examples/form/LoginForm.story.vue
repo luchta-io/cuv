@@ -8,6 +8,9 @@ import CButton from "@/components/form/CButton.vue";
 import CCluster from "@/components/layout/CCluster.vue";
 import CCenter from "@/components/layout/CCenter.vue";
 import CCover from "@/components/layout/CCover.vue";
+import CSheet from "@/components/surface/CSheet.vue";
+import COverlay from "@/components/overlay/COverlay.vue";
+import CProgress from "@/components/feedback/CProgress.vue";
 
 const input = reactive({
   email: '',
@@ -79,70 +82,72 @@ const doLogin = async () => {
     },
     body: JSON.stringify(input)
   })
-  if (!response.ok) failed.value.push('メールアドレスまたはパスワードが間違っています')
+  if (!response.ok) {
+    failed.value = []
+    failed.value.push('メールアドレスまたはパスワードが間違っています')
+  }
   processing.value = false
 }
 </script>
 
 <template>
-  <Story title="Form / LoginForm"
-         auto-props-disabled>
-    <CCover style="background: lightgray">
-      <h1>ex. Login Form</h1>
-      <CCenter>
-        <!-- TODO backgroundの色指定はCardに任せる -->
-        <CBox style="background: white;">
-          <form novalidate
-                @submit.prevent="doLogin">
-            <CStack>
-              <!-- TODO Alertへ差し替える -->
-              <p v-if="failed.length" class="text-[var(--jupiter-danger-text)]">
-                {{ failed }}
-              </p>
-              <CTextField type="email"
-                          v-model="input.email"
-                          label="email"
-                          placeholder="example@example.com"
-                          :error="!!errors.email.length || !!failed.length"
-                          @blur="validator.email"
-              >
-                <template #errorMessage>
-                  <ul v-for="message in errors.email" :key="message">
-                    <li>・{{ message }}</li>
-                  </ul>
-                </template>
-              </CTextField>
-              <!-- TODO PasswordFieldに差し替える -->
-              <CTextField :type="passwordShowing ? 'text' : 'password'"
-                          v-model="input.password"
-                          label="password"
-                          :error="!!errors.password.length || !!failed.length"
-                          :append-icon="passwordShowing ? mdiEye : mdiEyeOff"
-                          @click:append="passwordShowing = !passwordShowing"
-                          @blur="validator.password"
-              >
-                <template #errorMessage>
-                  <ul v-for="message in errors.password" :key="message">
-                    <li>・{{ message }}</li>
-                  </ul>
-                </template>
-              </CTextField>
-              <CCluster justify="space-between"
-                        align="center">
-                <!-- TODO Progressを使う  -->
-                <CButton color="primary"
-                         :disabled="processing">
-                  {{ processing ? '処理中...' : 'ログイン' }}
-                </CButton>
-                <a href="https://example.com/" target="_blank" rel="noopener noreferrer">
-                  パスワードを忘れた方はこちら
-                </a>
-              </CCluster>
-            </CStack>
-          </form>
-        </CBox>
-      </CCenter>
-    </CCover>
+  <Story title="Form / LoginForm" auto-props-disabled>
+    <CSheet color="light">
+      <CCover>
+          <h1>ex. Login Form</h1>
+          <CCenter>
+            <CSheet color="white" elevation="medium">
+              <CBox>
+                <form novalidate
+                      @submit.prevent="doLogin">
+                  <CStack>
+                    <CCluster justify="center">
+                      <img src="https://placehold.jp/100x100.png"/>
+                    </CCluster>
+                    <CSheet v-if="failed.length" color="danger">
+                      <CBox padding="small">
+                        <div v-for="(msg, index) of failed" :key="index" class="text-white">
+                          {{ msg }}
+                        </div>
+                      </CBox>
+                    </CSheet>
+                    <CTextField type="email"
+                                v-model="input.email"
+                                label="email"
+                                placeholder="example@example.com"
+                                :error="!!errors.email.length || !!failed.length"
+                                :error-message="errors.email"
+                                @blur="validator.email"
+                    />
+                    <CTextField :type="passwordShowing ? 'text' : 'password'"
+                                v-model="input.password"
+                                label="password"
+                                :append-icon="passwordShowing ? mdiEye : mdiEyeOff"
+                                :error="!!errors.password.length || !!failed.length"
+                                :error-message="errors.password"
+                                @click:append="passwordShowing = !passwordShowing"
+                                @blur="validator.password"
+                    />
+                    <CCluster justify="space-between"
+                              align="center">
+                      <CButton color="primary" :disabled="processing">
+                        ログイン
+                        <COverlay v-model="processing" contained disabled>
+                            <CProgress size="small" width="thin" color="link"/>
+                        </COverlay>
+                      </CButton>
+                      <a href="https://example.com/" target="_blank" rel="noopener noreferrer">
+                        パスワードを忘れた方はこちら
+                      </a>
+                    </CCluster>
+                  </CStack>
+                </form>
+              </CBox>
+            </CSheet>
+          </CCenter>
+          <p class="mx-auto">Copyright ©︎ Sample Login Form</p>
+      </CCover>
+    </CSheet>
     <template #source>
       <textarea v-pre>
       </textarea>

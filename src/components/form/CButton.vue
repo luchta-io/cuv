@@ -49,7 +49,7 @@ const themeColor = computed(() => {
 
 const buttonClass = computed(() => {
     const base = [
-        'px-2 py-1 border rounded',
+        'px-2 py-1 border rounded relative',
         'disabled:bg-gray-100 disabled:border-gray-300 disabled:text-gray-400',
         themeColor.value,
     ]
