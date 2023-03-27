@@ -2,8 +2,6 @@
 import {computed} from 'vue';
 import CSvgIcon from '@/components/dataDisplay/CSvgIcon.vue';
 
-// const slots = useSlots()
-
 const props = withDefaults(defineProps<{
     modelValue: string
     label?: string
