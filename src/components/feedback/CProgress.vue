@@ -24,7 +24,7 @@ const outerRingClass = computed(() => {
     ]    
 })
 
-const InnerRingClass = computed(() => {
+const innerRingClass = computed(() => {
     return [
         'inline-block animate-spin rounded-full border-solid border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]',
         props.size === 'default' ? 'h-8 w-8' : '',
@@ -52,6 +52,6 @@ const InnerRingClass = computed(() => {
 <template>
 <div class="flex items-center justify-center">
     <div :class="outerRingClass"></div>
-    <div :class="InnerRingClass"></div>
+    <div :class="innerRingClass"></div>
 </div>
 </template>

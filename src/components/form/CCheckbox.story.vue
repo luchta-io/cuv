@@ -2,20 +2,20 @@
 import {reactive} from "vue";
 import CCheckbox from "@/components/form/CCheckbox.vue";
 
-const 基本: {
-    選択値: boolean
-    ラベル: string
-    色: 'white' | 'black' | 'light' | 'dark' | 'primary' | 'link' | 'success' | 'danger' | 'warning' | 'info'
+const data: {
+    modelValue: boolean
+    label: string
+    color: 'white' | 'black' | 'light' | 'dark' | 'primary' | 'link' | 'success' | 'danger' | 'warning' | 'info'
 } = reactive({
-    選択値: false,
-    ラベル: 'ラベル',
-    色: 'black',
+    modelValue: false,
+    label: 'ラベル',
+    color: 'black',
 })
 
 const group: {
-    選択値: string[]
+    modelValue: string[]
 } = reactive({
-    選択値: [],
+    modelValue: [],
 })
 
 const colors: {
@@ -37,36 +37,36 @@ const colors: {
 })
 
 const indeterminate: {
-    選択値: boolean
+    modelValue: boolean
     indeterminate: boolean
 } = reactive({
-    選択値: false,
+    modelValue: false,
     indeterminate: true,
 })
 
 const disabled: {
-    選択値: boolean
+    modelValue: boolean
     disabled: boolean
 } = reactive({
-    選択値: false,
+    modelValue: false,
     disabled: true,
 })
 
 const readonly: {
-    選択値: boolean
+    modelValue: boolean
     readonly: boolean
 } = reactive({
-    選択値: false,
+    modelValue: false,
     readonly: true,
 })
 
 const error: {
-    選択値: boolean
+    modelValue: boolean
     error: boolean
     errorMessage: string|string[]|undefined
     maxErrors: string|undefined
 } = reactive({
-    選択値: false,
+    modelValue: false,
     error: true,
     errorMessage: [
         '選択が必須です',
@@ -84,14 +84,14 @@ const error: {
 >
     <Variant title="基本" auto-props-disabled>
         <c-checkbox
-            v-model="基本.選択値"
-            :label="基本.ラベル"
-            :color="基本.色"
+            v-model="data.modelValue"
+            :label="data.label"
+            :color="data.color"
         />
         <template #controls>
-            <HstCheckbox v-model="基本.選択値" title="modelValue"/>
+            <HstCheckbox v-model="data.modelValue" title="modelValue"/>
             <HstSelect
-                v-model="基本.色"
+                v-model="data.color"
                 title="Color"
                 :options="[
                             {value: 'white', label: 'white'},
@@ -106,30 +106,30 @@ const error: {
                             {value: 'info', label: 'info'},
                         ]"
             />
-            <HstText v-model="基本.ラベル" title="label"/>
+            <HstText v-model="data.label" title="label"/>
         </template>
     </Variant>
     <Variant title="グループ化(配列)" auto-props-disabled>
         <div>
-            選択された値：{{ group.選択値 }}
+            選択された値：{{ group.modelValue }}
         </div>
         <c-checkbox
-            v-model="group.選択値"
+            v-model="group.modelValue"
             label="checkbox1"
             value="checkbox1"
         />
         <c-checkbox
-            v-model="group.選択値"
+            v-model="group.modelValue"
             label="checkbox2"
             value="checkbox2"
         />
         <c-checkbox
-            v-model="group.選択値"
+            v-model="group.modelValue"
             label="checkbox3"
             value="checkbox3"
         />
         <template #controls>
-            <HstJson v-model="group.選択値" title="modelValue"/>
+            <HstJson v-model="group.modelValue" title="modelValue"/>
         </template>
     </Variant>
     <Variant title="colors" auto-props-disabled>
@@ -160,17 +160,17 @@ const error: {
     </Variant>
     <Variant title="indeterminate" auto-props-disabled>
         <c-checkbox
-            v-model="indeterminate.選択値"
+            v-model="indeterminate.modelValue"
             label="indeterminate"
             :indeterminate="indeterminate.indeterminate"
         />
         <template #controls>
-            <HstCheckbox v-model="indeterminate.選択値" title="modelValue"/>
+            <HstCheckbox v-model="indeterminate.modelValue" title="modelValue"/>
         </template>
     </Variant>
     <Variant title="非活性" auto-props-disabled>
         <c-checkbox
-            v-model="disabled.選択値"
+            v-model="disabled.modelValue"
             label="disabled"
             :disabled="disabled.disabled"
         />
@@ -180,7 +180,7 @@ const error: {
     </Variant>
     <Variant title="読み取り専用" auto-props-disabled>
         <c-checkbox
-            v-model="readonly.選択値"
+            v-model="readonly.modelValue"
             label="readonly"
             :readonly="readonly.readonly"
         />
@@ -190,7 +190,7 @@ const error: {
     </Variant>
     <Variant title="警告" auto-props-disabled>
         <c-checkbox
-            v-model="error.選択値"
+            v-model="error.modelValue"
             label="error"
             :error="error.error"
             :error-message="error.errorMessage"

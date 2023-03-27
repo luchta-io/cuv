@@ -5,92 +5,88 @@ import CTextField from "@/components/form/CTextField.vue";
 import CBox from "@/components/layout/CBox.vue";
 
 const filled: {
-    入力値: string
-    ラベル: string
+    modelValue: string
+    label: string
     placeholder: string
 } = reactive({
-    入力値: '',
-    ラベル: 'filledのラベル',
+    modelValue: '',
+    label: 'filledのラベル',
     placeholder: 'filledのplaceholder',
 })
 
 const outline: {
-    入力値: string
-    ラベル: string
+    modelValue: string
+    label: string
     placeholder: string
 } = reactive({
-    入力値: '',
-    ラベル: 'outlinedのラベル',
+    modelValue: '',
+    label: 'outlinedのラベル',
     placeholder: '',
 })
 
 const underline: {
-    入力値: string
-    ラベル: string
+    modelValue: string
+    label: string
     placeholder: string
 } = reactive({
-    入力値: '',
-    ラベル: 'underlinedのラベル',
+    modelValue: '',
+    label: 'underlinedのラベル',
     placeholder: '',
 })
 
 const email : {
-    入力値: string
-    ラベル: string
+    modelValue: string
+    label: string
     placeholder: string
 } = reactive({
-    入力値: '',
-    ラベル: 'emailのラベル',
+    modelValue: '',
+    label: 'emailのラベル',
     placeholder: 'email@address.com',
 })
 
 const password : {
-    入力値: string
-    ラベル: string
+    modelValue: string
+    label: string
     placeholder: string
     show: boolean
 } = reactive({
-    入力値: 'password',
-    ラベル: 'emailのラベル',
+    modelValue: 'password',
+    label: 'emailのラベル',
     placeholder: '',
     show: false,
 })
 
 const disabled : {
-    入力値: string
-    ラベル: string
+    modelValue: string
+    label: string
     variant: 'filled'|'outlined'|'underlined'
 } = reactive({
-    入力値: '吾輩は猫である',
-    ラベル: '夏目漱石',
+    modelValue: '吾輩は猫である',
+    label: '夏目漱石',
     variant: 'filled',
 })
 
 const readonly : {
-    入力値: string
-    ラベル: string
+    modelValue: string
+    label: string
     variant: 'filled'|'outlined'|'underlined'
 } = reactive({
-    入力値: 'セロ弾きのゴーシュ',
-    ラベル: '宮沢賢治',
+    modelValue: 'セロ弾きのゴーシュ',
+    label: '宮沢賢治',
     variant: 'filled',
 })
 
 const error : {
-    filled入力値: string
-    outlined入力値: string
-    underlined入力値: string
-    ラベル: string
+    modelValue: string
+    label: string
     placeholder: string
     variant: 'filled'|'outlined'|'underlined'
     error: boolean
     errorMessage: string|Array<string>
     maxErrors: string|undefined
 } = reactive({
-    filled入力値: '',
-    outlined入力値: '',
-    underlined入力値: '',
-    ラベル: 'ラベル',
+    modelValue: '',
+    label: 'ラベル',
     placeholder: '入力してください',
     variant: 'filled',
     error: true,
@@ -112,15 +108,15 @@ const error : {
     <Variant title="filled" auto-props-disabled>
         <c-box padding="medium">
             <c-text-field 
-                v-model="filled.入力値"
-                :label="filled.ラベル"
+                v-model="filled.modelValue"
+                :label="filled.label"
                 :placeholder="filled.placeholder"
                 id="filled"
             />
         </c-box>
         <template #controls>
-            <HstText v-model="filled.入力値" title="modelValue"/>
-            <HstText v-model="filled.ラベル" title="label"/>
+            <HstText v-model="filled.modelValue" title="modelValue"/>
+            <HstText v-model="filled.label" title="label"/>
             <HstText v-model="filled.placeholder" title="placeholder"/>
         </template>
     </Variant>
@@ -128,16 +124,16 @@ const error : {
     <Variant title="outlined" auto-props-disabled>
         <c-box padding="medium">
             <c-text-field 
-                v-model="outline.入力値"
-                :label="outline.ラベル"
+                v-model="outline.modelValue"
+                :label="outline.label"
                 :placeholder="outline.placeholder"
                 variant="outlined"
                 id="outlined"
             />
         </c-box>
         <template #controls>
-            <HstText v-model="outline.入力値" title="modelValue"/>
-            <HstText v-model="outline.ラベル" title="label"/>
+            <HstText v-model="outline.modelValue" title="modelValue"/>
+            <HstText v-model="outline.label" title="label"/>
             <HstText v-model="outline.placeholder" title="placeholder"/>
         </template>
     </Variant>
@@ -145,16 +141,16 @@ const error : {
     <Variant title="underlined" auto-props-disabled>
         <c-box padding="medium">
             <c-text-field 
-                v-model="underline.入力値"
-                :label="underline.ラベル"
+                v-model="underline.modelValue"
+                :label="underline.label"
                 :placeholder="underline.placeholder"
                 variant="underlined"
                 id="underlined"
             />
         </c-box>
         <template #controls>
-            <HstText v-model="underline.入力値" title="modelValue"/>
-            <HstText v-model="underline.ラベル" title="label"/>
+            <HstText v-model="underline.modelValue" title="modelValue"/>
+            <HstText v-model="underline.label" title="label"/>
             <HstText v-model="underline.placeholder" title="placeholder"/>
         </template>
     </Variant>
@@ -162,8 +158,8 @@ const error : {
     <Variant title="email" auto-props-disabled>
         <c-box padding="medium">
             <c-text-field 
-                v-model="email.入力値"
-                :label="email.ラベル"
+                v-model="email.modelValue"
+                :label="email.label"
                 :placeholder="email.placeholder"
                 id="email"
             />
@@ -173,8 +169,8 @@ const error : {
     <Variant title="password" auto-props-disabled>
         <c-box padding="medium">
             <c-text-field 
-                v-model="password.入力値"
-                :label="password.ラベル"
+                v-model="password.modelValue"
+                :label="password.label"
                 :placeholder="password.placeholder"
                 :append-icon="password.show ? mdiEye : mdiEyeOff"
                 :type="password.show?'text':'password'"
@@ -187,8 +183,8 @@ const error : {
     <Variant title="非活性" auto-props-disabled>
         <c-box padding="medium">
             <c-text-field 
-                v-model="disabled.入力値"
-                :label="disabled.ラベル"
+                v-model="disabled.modelValue"
+                :label="disabled.label"
                 :variant="disabled.variant"
                 disabled
             />
@@ -209,8 +205,8 @@ const error : {
     <Variant title="読み取り専用" auto-props-disabled>
         <c-box padding="medium">
             <c-text-field 
-                v-model="readonly.入力値"
-                :label="readonly.ラベル"
+                v-model="readonly.modelValue"
+                :label="readonly.label"
                 :variant="readonly.variant"
                 readonly
             />
@@ -231,8 +227,8 @@ const error : {
     <Variant title="警告" auto-props-disabled>
         <c-box padding="medium">
             <c-text-field 
-                v-model="error.filled入力値"
-                :label="error.ラベル"
+                v-model="error.modelValue"
+                :label="error.label"
                 :placeholder="error.placeholder"
                 :variant="error.variant"
                 :error="error.error"
