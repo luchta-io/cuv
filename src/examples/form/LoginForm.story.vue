@@ -92,25 +92,25 @@ const doLogin = async () => {
 
 <template>
   <Story title="Form / LoginForm" auto-props-disabled>
-    <c-sheet color="light">
+    <CSheet color="light">
       <CCover>
           <h1>ex. Login Form</h1>
           <CCenter>
-            <c-sheet color="white" elevation="medium">
+            <CSheet color="white" elevation="medium">
               <CBox>
                 <form novalidate
                       @submit.prevent="doLogin">
                   <CStack>
-                    <c-sheet v-if="failed.length" color="danger">
-                      <c-box padding="small">
+                    <CCluster justify="center">
+                      <img src="https://placehold.jp/100x100.png"/>
+                    </CCluster>
+                    <CSheet v-if="failed.length" color="danger">
+                      <CBox padding="small">
                         <div v-for="(msg, index) of failed" :key="index" class="text-white">
                           {{ msg }}
                         </div>
-                      </c-box>
-                    </c-sheet>
-                    <c-cluster justify="center">
-                      <img src="https://placehold.jp/100x100.png"/>
-                    </c-cluster>
+                      </CBox>
+                    </CSheet>
                     <CTextField type="email"
                                 v-model="input.email"
                                 label="email"
@@ -132,11 +132,9 @@ const doLogin = async () => {
                               align="center">
                       <CButton color="primary" :disabled="processing">
                         ログイン
-                        <c-overlay v-model="processing" contained disabled>
-                          <template v-if="processing">
-                            <c-progress size="small" width="thin" color="link"/>
-                          </template>
-                        </c-overlay>
+                        <COverlay v-model="processing" contained disabled>
+                            <CProgress size="small" width="thin" color="link"/>
+                        </COverlay>
                       </CButton>
                       <a href="https://example.com/" target="_blank" rel="noopener noreferrer">
                         パスワードを忘れた方はこちら
@@ -145,11 +143,11 @@ const doLogin = async () => {
                   </CStack>
                 </form>
               </CBox>
-            </c-sheet>
+            </CSheet>
           </CCenter>
           <p class="mx-auto">Copyright ©︎ Sample Login Form</p>
       </CCover>
-    </c-sheet>
+    </CSheet>
     <template #source>
       <textarea v-pre>
       </textarea>
