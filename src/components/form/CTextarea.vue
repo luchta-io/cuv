@@ -65,7 +65,7 @@ const isError = computed(() => {
 
 const fieldClass = computed(() => {
     const base = [
-        'group peer col-start-2 flex items-center w-full',
+        'group peer col-start-2 flex items-start w-full',
     ]
     if(isError.value) base.push('border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)]' )
     if(!isError.value) base.push(props.readonly? 'focus-within:border-gray-900' : 'border-gray-300 focus-within:border-blue-600')
@@ -125,11 +125,11 @@ const clear = () => {
 
 <template>
 <div class="grid grid-cols-[auto_1fr_auto] gap-y-1">
-    <div v-show="prependIcon" class="text-lg col-start-1 self-center pr-1">
+    <div v-show="prependIcon" class="text-lg col-start-1 pt-4 pr-1">
         <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="text-gray-500 cursor-pointer" />
     </div>
     <div :class="fieldClass">
-        <div v-show="prependInnerIcon" class="pl-2 text-lg">
+        <div v-show="prependInnerIcon" class="pl-2 pt-4 text-lg">
             <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="text-gray-500 cursor-pointer" />
         </div>
         <div class="relative w-full">
@@ -150,11 +150,11 @@ const clear = () => {
         <div class="pt-1 pr-1 self-start">
             <c-svg-icon v-show="clearIconDisplay" :icon="mdiClose" @click="clear" class="text-gray-500 peer-disabled:hidden peer-read-only:hidden cursor-pointer" />
         </div>
-        <div v-show="appendInnerIcon" class="px-2 text-lg">
+        <div v-show="appendInnerIcon" class="px-2 pt-4 text-lg">
             <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="text-gray-500 cursor-pointer" />
         </div>
     </div>
-    <div v-show="appendIcon" class="text-lg col-start-3 self-center pl-1">
+    <div v-show="appendIcon" class="text-lg col-start-3 pt-4 pl-1">
         <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="text-gray-500 cursor-pointer" />
     </div>
     <div v-show="isError" class="text-xs text-[var(--jupiter-danger-text)] col-start-2">
