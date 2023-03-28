@@ -65,13 +65,10 @@ const isError = computed(() => {
 
 const fieldClass = computed(() => {
     const base = [
-        'group peer col-start-2 flex items-center w-full appearance-none focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100',
+        'group peer col-start-2 flex items-center w-full',
     ]
-    if(isError.value) base.push('border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)] placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' )
-    if(!isError.value) {
-        base.push('placeholder:text-gray-400 placeholder:opacity-0 focus:placeholder:opacity-100 border-gray-300')
-        base.push(props.readonly? 'focus-within:border-gray-900' : 'focus-within:border-blue-600')
-    }
+    if(isError.value) base.push('border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)]' )
+    if(!isError.value) base.push(props.readonly? 'focus-within:border-gray-900' : 'border-gray-300 focus-within:border-blue-600')
 
     if(props.variant === 'filled') base.push('rounded-t-lg rounded-b-none bg-gray-50 border-0 border-b-2')
     if(props.variant === 'outlined') base.push('bg-transparent rounded-lg border')
@@ -82,13 +79,13 @@ const fieldClass = computed(() => {
 
 const textareaClass = computed(() => {
     const base = [
-        'peer block w-full appearance-none focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100',
+        'peer block w-full appearance-none bg-transparent focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100',
         props.label === '' ? 'placeholder:opacity-100': '',
         isError.value ? 'placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' : 'text-gray-900 read-only:text-gray-500 placeholder:text-gray-400 placeholder:opacity-0 focus:placeholder:opacity-100',
     ]
-    if(props.variant === 'filled') base.push('rounded-t-lg rounded-b-none px-2.5 pb-1 pt-4 bg-gray-50')
-    if(props.variant === 'outlined') base.push('px-2.5 pb-1.5 pt-4 bg-transparent rounded-lg')
-    if(props.variant === 'underlined') base.push('rounded-none pt-2.5 pb-1 pl-1 bg-transparent')
+    if(props.variant === 'filled') base.push('min-h-[2.7rem] px-2.5 pb-1 pt-4')
+    if(props.variant === 'outlined') base.push('min-h-[2.8rem] px-2.5 pb-1.5 pt-4')
+    if(props.variant === 'underlined') base.push('min-h-[2.3rem] pt-2.5 pb-1 pl-1')
 
     return base
 })
