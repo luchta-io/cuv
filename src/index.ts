@@ -1,55 +1,33 @@
 import './tailwind.css'
+import './variables.css'
 
 // data
-import CSvgIcon from "@/components/dataDisplay/CSvgIcon.vue"
-import CTable from "@/components/dataDisplay/CTable.vue"
+export {default as CSvgIcon} from "./components/dataDisplay/CSvgIcon.vue"
+export {default as CTable} from "./components/dataDisplay/CTable.vue"
 // feedback
-import CProgress from "@/components/feedback/CProgress.vue"
+export {default as CProgress} from "./components/feedback/CProgress.vue"
 // form
-import CAutocomplete from "@/components/form/CAutocomplete.vue"
-import CButton from "@/components/form/CButton.vue"
-import CCheckbox from "@/components/form/CCheckbox.vue"
-import CSelect from "@/components/form/CSelect.vue"
-import CTextarea from "@/components/form/CTextarea.vue"
-import CTextField from "@/components/form/CTextField.vue"
+export {default as CAutocomplete} from "./components/form/CAutocomplete.vue"
+export {default as CButton} from "./components/form/CButton.vue"
+export {default as CCheckbox} from "./components/form/CCheckbox.vue"
+export {default as CSelect} from "./components/form/CSelect.vue"
+export {default as CTextarea} from "./components/form/CTextarea.vue"
+export {default as CTextField} from "./components/form/CTextField.vue"
 // layout
-import CBox from "@/components/layout/CBox.vue"
-import CCenter from "@/components/layout/CCenter.vue"
-import CCluster from "@/components/layout/CCluster.vue"
-import CCover from "@/components/layout/CCover.vue"
-import CFrame from "@/components/layout/CFrame.vue"
-import CGrid from "@/components/layout/CGrid.vue"
-import CIcon from "@/components/layout/CIcon.vue"
-import CImposter from "@/components/layout/CImposter.vue"
-import CReel from "@/components/layout/CReel.vue"
-import CSidebar from "@/components/layout/CSidebar.vue"
-import CStack from "@/components/layout/CStack.vue"
-import CSwitcher from "@/components/layout/CSwitcher.vue"
-
-export {
-    // data
-    CSvgIcon,
-    CTable,
-    // feedback
-    CProgress,
-    // form
-    CAutocomplete,
-    CButton,
-    CCheckbox,
-    CSelect,
-    CTextarea,
-    CTextField,
-    // layout
-    CBox,
-    CCenter,
-    CCluster,
-    CCover,
-    CFrame,
-    CGrid,
-    CIcon,
-    CImposter,
-    CReel,
-    CSidebar,
-    CStack,
-    CSwitcher
-}
+export {default as CBox} from "./components/layout/CBox.vue"
+export {default as CCenter} from "./components/layout/CCenter.vue"
+export {default as CCluster} from "./components/layout/CCluster.vue"
+export {default as CCover} from "./components/layout/CCover.vue"
+export {default as CFrame} from "./components/layout/CFrame.vue"
+export {default as CGrid} from "./components/layout/CGrid.vue"
+export {default as CIcon} from "./components/layout/CIcon.vue"
+export {default as CImposter} from "./components/layout/CImposter.vue"
+export {default as CReel} from "./components/layout/CReel.vue"
+export {default as CSidebar} from "./components/layout/CSidebar.vue"
+export {default as CStack} from "./components/layout/CStack.vue"
+export {default as CSwitcher} from "./components/layout/CSwitcher.vue"
+// overlay
+export {default as CDialog} from "./components/overlay/CDialog.vue"
+export {default as COverlay} from "./components/overlay/COverlay.vue"
+// surface
+export {default as CSheet} from "./components/surface/CSheet.vue"
