@@ -19,6 +19,10 @@ const props = withDefaults(defineProps<{
     maxErrors?: string|number
     clearable?: boolean
     placeholder?: string
+    prependIcon?: string
+    appendIcon?: string
+    prependInnerIcon?: string
+    appendInnerIcon?: string
 }>(), {
     itemValue: '',
     label: '',
@@ -33,6 +37,10 @@ const props = withDefaults(defineProps<{
 
 const emits = defineEmits<{
     (e: 'update:modelValue', value: any): void
+    (e: 'click:prepend'): void
+    (e: 'click:append'): void
+    (e: 'click:prependInner'): void
+    (e: 'click:appendInner'): void
 }>()
 
 const data: {
@@ -62,12 +70,11 @@ const isError = computed(() => {
 
 const fieldClass = computed(() => {
     const base = [
-        'group peer flex items-center w-full appearance-none focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100',
+        'group peer relative col-start-2 flex items-center w-full appearance-none focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100',
         props.readonly ? 'focus-within:border-gray-900' : 'focus-within:border-blue-600',
         isError.value
-        ? 'border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)] text-[var(--jupiter-danger-text)] placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' 
-        : 'placeholder:text-gray-400 placeholder:opacity-0 focus:placeholder:opacity-100 border-gray-300',
-        props.clearable ? 'pr-14' : '',
+        ? 'border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)]' 
+        : 'border-gray-300',
     ]
     if(props.variant === 'filled') base.push('rounded-t-lg rounded-b-none px-2.5 bg-gray-50 border-0 border-b-2')
     if(props.variant === 'outlined') base.push('px-2.5 bg-transparent rounded-lg border')
@@ -79,8 +86,7 @@ const fieldClass = computed(() => {
 const inputClass = computed(() => {
     return [
         'peer w-full focus:outline-none bg-transparent',
-        props.label !== '' ? 'placeholder:opacity-0 focus:placeholder:opacity-100': '',
-        props.modelValue ? 'placeholder:opacity-0' : 'opacity-100',
+        props.modelValue ? 'placeholder:opacity-0' : props.label ? 'placeholder:opacity-0 focus:placeholder:opacity-100' : 'opacity-100',
         props.variant === 'filled' ? 'pt-4 pb-1' : '',
         props.variant === 'outlined' ? 'pt-4 pb-1.5' : '',
         props.variant === 'underlined' ? 'pt-2.5 pb-1' : '',        
@@ -89,14 +95,26 @@ const inputClass = computed(() => {
 
 const labelClass = computed(() => {
     const base = [
-        'absolute text-sm duration-300 transform scale-75 origin-[0] peer-focus:scale-75 whitespace-nowrap overflow-hidden pointer-events-none',
+        'absolute text-sm duration-300 transform origin-[0] peer-focus:scale-75 whitespace-nowrap overflow-hidden pointer-events-none',
     ]
     if(isError.value) base.push('text-[var(--jupiter-danger-text)]')
     if(!isError.value) base.push('text-gray-500 peer-read-only:peer-focus:text-gray-900 peer-focus:text-blue-600')
 
-    if(props.variant === 'filled') base.push('-translate-y-4 top-4 z-10 left-2.5 peer-focus:-translate-y-4', !props.modelValue?'peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0':'')
-    if(props.variant === 'outlined') base.push('-translate-y-4 top-4 z-10 px-2 peer-focus:px-2 peer-focus:-translate-y-4 left-1 top-4', !props.modelValue?'peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0':'')
-    if(props.variant === 'underlined') base.push('-translate-y-5 top-3 z-10 peer-focus:left-0 peer-focus:-translate-y-5', !props.modelValue?'peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0':'')
+    if(props.variant === 'filled') base.push(
+        '-translate-y-4 top-4 z-10 peer-focus:-translate-y-4', 
+        !props.modelValue && !data.inputText
+        ? 'scale-100 translate-y-0' 
+        : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
+    if(props.variant === 'outlined') base.push(
+        '-translate-y-4 top-4 z-10 peer-focus:-translate-y-4', 
+        !props.modelValue && !data.inputText
+        ? 'scale-100 translate-y-0' 
+        : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
+    if(props.variant === 'underlined') base.push(
+        '-translate-y-5 top-3 z-10 peer-focus:left-0 peer-focus:-translate-y-5', 
+        !props.modelValue && !data.inputText
+        ? 'scale-100 translate-y-0' 
+        : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
     return base
 })
 
@@ -117,7 +135,11 @@ const selectionItem = computed(() => {
 })
 
 const clearIconDisplay = computed(() => {
-    return props.clearable && (data.inputText!=='' || Object.keys(selectionItem.value).length)
+    return props.clearable && (data.inputText!=='' || Object.keys(selectionItem.value).length) && !props.readonly && !props.disabled
+})
+
+const toggleIconDisplay = computed(() => {
+    return !props.readonly && !props.disabled
 })
 
 const selectionSlotDisplay = computed(() => {
@@ -140,6 +162,7 @@ const selectItem = (option: any) => {
 }
 
 const openDropdownList = () => {
+    if(props.readonly) return 
     data.isActive = true
 }
 
@@ -163,36 +186,53 @@ watchEffect(() => {
 
 </script>
 <template>
-<div @mouseover="data.isHover = true" @mouseleave="data.isHover = false" class="relative w-auto">
-    <fieldset v-bind="$attrs" :class="fieldClass">
-        <div class="pb-1 pt-4 whitespace-nowrap group-read-only:text-gray-500 group-disabled:text-gray-500">
-            <slot v-if="selectionSlotDisplay" name="selection" :item="selectionItem">
-                {{ typeof selectionItem === "object" ? selectionItem[itemValue] : selectionItem }}
-            </slot>
+<div @mouseover="data.isHover = true" @mouseleave="data.isHover = false" class="relative grid grid-cols-[auto_1fr_auto] gap-y-1">
+    <div v-show="prependIcon" class="text-lg col-start-1 pt-4 pr-1">
+        <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="text-gray-500 cursor-pointer" />
+    </div>
+    <div :class="fieldClass">
+        <div v-show="prependInnerIcon" class="pt-2 pr-2 text-lg">
+            <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="text-gray-500 cursor-pointer" />
         </div>
-        <input 
-            v-model="data.inputText"
-            v-bind="$attrs"
-            @focus="openDropdownList" 
-            @blur="closeDropdownList"
-            @keyup.delete="clear"
-            type="text" 
-            :id="id"
-            :name="name"
-            :readonly="readonly"
-            :disabled="disabled"
-            :placeholder="placeholder"
-            :class="inputClass" 
-            autocomplete="off"
-        />
-        <label 
-            :class="labelClass"
-        >
-            {{ label }}
-        </label>
-        <c-svg-icon v-show="clearIconDisplay" :icon="mdiClose" @click="clear" class="absolute inset-y-auto right-7 text-gray-500 peer-disabled:hidden peer-read-only:hidden cursor-pointer" />
-        <c-svg-icon :icon="data.isActive ? mdiMenuUp : mdiMenuDown" @click="toggleDropdownList" class="absolute inset-y-auto right-1 peer-disabled:hidden peer-read-only:hidden" :class="isError ? 'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
-        <div v-show="data.isActive" class="absolute left-0 top-full z-50 w-full rounded peer-read-only:hidden">
+        <div class="relative w-full flex">
+            <div v-if="selectionSlotDisplay" class="pb-1 pt-4 whitespace-nowrap group-read-only:text-gray-500 group-disabled:text-gray-500">
+                <slot name="selection" :item="selectionItem">
+                    {{ typeof selectionItem === "object" ? selectionItem[itemValue] : selectionItem }}
+                </slot>
+            </div>
+            <input
+                v-model="data.inputText"
+                v-bind="$attrs"
+                @focus="openDropdownList"
+                @blur="closeDropdownList"
+                @keyup.delete="clear"
+                type="text"
+                :id="id"
+                :name="name"
+                :readonly="readonly"
+                :disabled="disabled"
+                :placeholder="placeholder"
+                :class="inputClass"
+                autocomplete="off"
+            />
+            <label
+                :class="labelClass"
+            >
+                {{ label }}
+            </label>
+
+        </div>
+        <div v-show="clearIconDisplay" class="pt-2">
+            <c-svg-icon :icon="mdiClose" @click="clear" class="text-gray-500 cursor-pointer" />
+        </div>
+        <div v-show="toggleIconDisplay" class="pt-2">
+            <c-svg-icon :icon="data.isActive ? mdiMenuUp : mdiMenuDown" @click="toggleDropdownList" :class="isError ? 'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
+        </div>
+        <div v-show="appendInnerIcon" class="pt-2 pl-1 text-lg">
+            <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="text-gray-500 cursor-pointer" />
+        </div>
+
+        <div v-show="data.isActive" class="absolute left-0 top-full pt-1 z-50 w-full rounded peer-read-only:hidden">
             <ul class="overflow-auto divide-y-2 divide-gray-100 rounded-b bg-white shadow-lg z-50 max-h-60">
                 <template v-if="dropdownListItems.length > 0">
                     <li v-for="(item,index) in dropdownListItems" :key="index" @click.stop="selectItem(item)" :class="liClass(item)" class="py-2 px-3 min-w-full text-gray-700 cursor-pointer hover:bg-gray-100">
@@ -208,11 +248,14 @@ watchEffect(() => {
                 </li>
             </ul>
         </div>
-    </fieldset>
-</div>
-<div v-if="isError" class="text-xs text-[var(--jupiter-danger-text)] pt-1">
-    <p v-for="(msg,index) in formatedErrorMessage" :key="index">
-        {{ msg }}
-    </p>
+    </div>
+    <div v-show="appendIcon" class="text-lg col-start-3 pt-4 pl-1">
+        <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="text-gray-500 cursor-pointer" />
+    </div>
+    <div v-if="isError" class="text-xs text-[var(--jupiter-danger-text)] pt-1 col-start-2">
+        <p v-for="(msg,index) in formatedErrorMessage" :key="index">
+            {{ msg }}
+        </p>
+    </div>
 </div>
 </template>

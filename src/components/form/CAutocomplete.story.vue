@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import {reactive} from "vue";
+import {logEvent} from "histoire/client";
+import { mdiComment } from '@mdi/js'
 import CBox from "@/components/layout/CBox.vue";
+import CStack from "@/components/layout/CStack.vue";
 import CAutocomplete from "@/components/form/CAutocomplete.vue";
 
 interface nameListType {
@@ -75,6 +78,15 @@ const clearable: {
     variant: 'filled'
 })
 
+const icons: {
+    modelValue: string
+    label: string
+    variant: 'filled'|'outlined'|'underlined'
+} = reactive({
+    modelValue: '',
+    label: 'ラベル',
+    variant: 'filled',
+})
 
 const disabled: {
     modelValue: string
@@ -228,6 +240,69 @@ const objectArrayFilter = (item:nameListType, searchText:string) => {
             />
             <HstSelect
             v-model="clearable.variant"
+            title="variant"
+            :options="[
+                {value: 'filled', label: 'filled'},
+                {value: 'outlined', label: 'outlined'},
+                {value: 'underlined', label: 'underlined'},
+            ]"
+            />
+        </template>
+    </Variant>
+    <Variant title="Icons" auto-props-disabled>
+        <c-box padding="large">
+            <c-stack>
+                <c-autocomplete
+                v-model="icons.modelValue"
+                :items="string.bloodType"
+                :filter="stringArrayFilter"
+                label="prepend-icon"
+                :variant="icons.variant"
+                :prepend-icon="mdiComment"
+                placeholder="placeholder"
+                clearable
+                @click:prepend="logEvent('fire click:prepend', $event)"
+                >
+                </c-autocomplete>
+                <c-autocomplete
+                v-model="icons.modelValue"
+                :items="string.bloodType"
+                :filter="stringArrayFilter"
+                label="append-icon"
+                :variant="icons.variant"
+                :append-icon="mdiComment"
+                clearable
+                @click:append="logEvent('fire click:append', $event)"
+                >
+                </c-autocomplete>
+                <c-autocomplete
+                v-model="icons.modelValue"
+                :items="string.bloodType"
+                :filter="stringArrayFilter"
+                label="prepend-inner-icon"
+                :variant="icons.variant"
+                :prepend-inner-icon="mdiComment"
+                clearable
+                @click:prepend-inner="logEvent('fire click:prepend-inner', $event)"
+                >
+                </c-autocomplete>
+                <c-autocomplete
+                v-model="icons.modelValue"
+                :items="string.bloodType"
+                :filter="stringArrayFilter"
+                label="append-inner-icon"
+                :variant="icons.variant"
+                :append-inner-icon="mdiComment"
+                clearable
+                @click:append-inner="logEvent('fire click:append-inner', $event)"
+                >
+                </c-autocomplete>
+            </c-stack>
+        </c-box>
+        <template #controls>
+            <HstText v-model="icons.modelValue" title="modelValue"/>
+            <HstSelect
+            v-model="icons.variant"
             title="variant"
             :options="[
                 {value: 'filled', label: 'filled'},
