@@ -80,7 +80,6 @@ const isError = computed(() => {
 const fieldClass = computed(() => {
     const base = [
         'group peer relative col-start-2 flex items-center w-full appearance-none focus:outline-none focus:ring-0 opacity-100',
-        props.label === '' ? 'placeholder:opacity-100': '',
         props.readonly ? 'focus-within:border-gray-900' : 'focus-within:border-blue-600',
         isError.value 
         ? 'border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)] text-[var(--jupiter-danger-text)] placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' 
