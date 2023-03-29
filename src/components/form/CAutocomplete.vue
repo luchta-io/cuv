@@ -70,7 +70,7 @@ const isError = computed(() => {
 
 const fieldClass = computed(() => {
     const base = [
-        'group peer relative col-start-2 flex items-center w-full appearance-none focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100',
+        'group peer relative col-start-2 flex items-center w-full appearance-none focus:outline-none focus:ring-0 opacity-100',
         props.readonly ? 'focus-within:border-gray-900' : 'focus-within:border-blue-600',
         isError.value
         ? 'border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)]' 
@@ -138,7 +138,7 @@ const clearIconDisplay = computed(() => {
     return props.clearable && (data.inputText!=='' || Object.keys(selectionItem.value).length) && !props.readonly && !props.disabled
 })
 
-const toggleIconDisplay = computed(() => {
+const menuIconDisplay = computed(() => {
     return !props.readonly && !props.disabled
 })
 
@@ -225,14 +225,14 @@ watchEffect(() => {
         <div v-show="clearIconDisplay" class="pt-2">
             <c-svg-icon :icon="mdiClose" @click="clear" class="text-gray-500 cursor-pointer" />
         </div>
-        <div v-show="toggleIconDisplay" class="pt-2">
+        <div v-show="menuIconDisplay" class="pt-2">
             <c-svg-icon :icon="data.isActive ? mdiMenuUp : mdiMenuDown" @click="toggleDropdownList" :class="isError ? 'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
         </div>
         <div v-show="appendInnerIcon" class="pt-2 pl-1 text-lg">
             <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="text-gray-500 cursor-pointer" />
         </div>
 
-        <div v-show="data.isActive" class="absolute left-0 top-full pt-1 z-50 w-full rounded peer-read-only:hidden">
+        <div v-show="data.isActive" class="absolute left-0 top-full pt-0.5 z-50 w-full rounded peer-read-only:hidden">
             <ul class="overflow-auto divide-y-2 divide-gray-100 rounded-b bg-white shadow-lg z-50 max-h-60">
                 <template v-if="dropdownListItems.length > 0">
                     <li v-for="(item,index) in dropdownListItems" :key="index" @click.stop="selectItem(item)" :class="liClass(item)" class="py-2 px-3 min-w-full text-gray-700 cursor-pointer hover:bg-gray-100">
