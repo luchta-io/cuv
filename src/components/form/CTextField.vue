@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {computed} from 'vue';
+import { mdiClose } from '@mdi/js';
 import CSvgIcon from '@/components/dataDisplay/CSvgIcon.vue';
 
 const props = withDefaults(defineProps<{
@@ -14,6 +15,9 @@ const props = withDefaults(defineProps<{
     type?: 'text'|'email'|'password'
     appendIcon?: string
     prependIcon?: string
+    prependInnerIcon?: string
+    appendInnerIcon?: string
+    clearable: boolean
     readonly?: boolean
     disabled?: boolean
     placeholder?: string
@@ -23,6 +27,7 @@ const props = withDefaults(defineProps<{
     error: false,
     errorMessage: '',
     type: 'text',
+    clearable: false,
     readonly: false,
     disabled: false,
     placeholder: '',
@@ -56,15 +61,30 @@ const isError = computed(() => {
     return false
 })
 
+const fieldClass = computed(() => {
+    const base = [
+        'peer w-full col-start-2 flex items-center appearance-none text-gray-900 focus:outline-none focus:ring-0 opacity-100',
+        props.readonly ? 'focus-within:border-gray-900' : 'focus-within:border-blue-600',
+        isError.value 
+        ? 'border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)] text-[var(--jupiter-danger-text)] placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' 
+        : 'placeholder:text-gray-400 placeholder:opacity-0 focus:placeholder:opacity-100 border-gray-300',
+    ]
+    if(props.variant === 'filled') base.push('rounded-t-lg rounded-b-none px-2.5 bg-gray-50 border-0 border-b-2')
+    if(props.variant === 'outlined') base.push('px-2.5 bg-transparent rounded-lg border')
+    if(props.variant === 'underlined') base.push('rounded-none px-0 bg-transparent border-0 border-b-2')
+
+    return base
+})
 const inputClass = computed(() => {
     const base = [
-        'peer block w-full appearance-none text-gray-900 focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100',
-        props.label === '' ? 'placeholder:opacity-100': '',
-        isError.value ? 'border-[var(--jupiter-danger-border)] placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' : 'border-gray-300 read-only:text-gray-500 read-only:focus:border-gray-900 focus:border-blue-600 placeholder:text-gray-400 placeholder:opacity-0 focus:placeholder:opacity-100',
+        'peer w-full appearance-none text-gray-900 focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100 bg-transparent',
+        props.label === '' 
+        ? 'placeholder:opacity-100'
+        : !props.modelValue ? 'placeholder:opacity-0 focus:placeholder:opacity-100' : 'placeholder:opacity-0',
+        props.variant === 'filled' ? 'pt-4 pb-1' : '',
+        props.variant === 'outlined' ? 'pt-4 pb-1.5' : '',
+        props.variant === 'underlined' ? 'pt-2.5 pb-1' : '',        
     ]
-    if(props.variant === 'filled') base.push('rounded-t-lg rounded-b-none px-2.5 pb-1 pt-4 bg-gray-50 border-0 border-b-2')
-    if(props.variant === 'outlined') base.push('px-2.5 pb-1.5 pt-4 bg-transparent rounded-lg border')
-    if(props.variant === 'underlined') base.push('rounded-none pt-2.5 pb-1 px-0 bg-transparent border-0 border-b-2')
 
     return base
 })
@@ -76,47 +96,71 @@ const labelClass = computed(() => {
     if(isError.value) base.push('text-[var(--jupiter-danger-text)]')
     if(!isError.value) base.push('text-gray-500 peer-read-only:peer-focus:text-gray-900 peer-focus:text-blue-600')
     if(props.variant === 'filled') base.push(
-        '-translate-y-4 top-4 z-10 left-2.5 peer-focus:-translate-y-4',
+        '-translate-y-4 top-4 left-0 peer-focus:-translate-y-4',
         props.modelValue ? 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0' : 'scale-100 translate-y-0'
         )
     if(props.variant === 'outlined') base.push(
-        '-translate-y-4 top-4 z-10 px-2 peer-focus:px-2 peer-focus:-translate-y-4 left-1 top-4',
+        '-translate-y-4 top-4 left-0 peer-focus:-translate-y-4',
         props.modelValue ? 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0' : 'scale-100 translate-y-0'
         )
     if(props.variant === 'underlined') base.push(
-        '-translate-y-5 top-3 z-10 peer-focus:left-0 peer-focus:-translate-y-5',
+        '-translate-y-5 top-3 left-0 peer-focus:left-0 peer-focus:-translate-y-5',
         props.modelValue ? 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0' : 'scale-100 translate-y-0'
         )
 
     return base
 })
+
+const clearIconDisplay = computed(() => {
+    if(!props.clearable) return false
+    if(props.readonly) return false
+    if(props.disabled) return false
+    return props.modelValue 
+})
+
+const clear = () => {
+    emits('update:modelValue', '')
+}
+
 </script>
 
 <template>
-<div class="w-full grid grid-cols-[auto_1fr_auto] gap-y-1">
-    <div class="col-start-1 self-center pr-1">
-        <c-svg-icon v-if="prependIcon" @click="$emit('click:prepend')" :icon="prependIcon" size="large" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-600'"/>
+<div class="relative w-auto grid grid-cols-[auto_1fr_auto] gap-y-1">
+    <div v-show="prependIcon" class="text-lg col-start-1 pt-4 pr-1">
+        <c-svg-icon @click="$emit('click:prepend')" :icon="prependIcon" size="medium" class="cursor-pointer text-gray-500"/>
     </div>
-    <div class="relative z-0 w-full col-start-2">
-        <input 
-            v-model="inputValue"
-            v-bind="$attrs"
-            :id="id"
-            :name="name"
-            :type="type" 
-            :readonly="readonly"
-            :disabled="disabled"
-            :placeholder="placeholder"
-            :class="inputClass" 
-        />
-        <label 
-            :class="labelClass"
-        >
-            {{ label }}
-        </label>
+    <div :class="fieldClass">
+        <div v-show="prependInnerIcon" class="pt-2 pr-2 text-lg">
+            <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="text-gray-500 cursor-pointer" />
+        </div>
+        <div class="relative w-full">
+            <input 
+                v-model="inputValue"
+                v-bind="$attrs"
+                :id="id"
+                :name="name"
+                :type="type" 
+                :readonly="readonly"
+                :disabled="disabled"
+                :placeholder="placeholder"
+                :class="inputClass" 
+            />
+            <label 
+                :class="labelClass"
+            >
+                {{ label }}
+            </label>
+        </div>
+        <div v-show="clearIconDisplay" class="pt-2">
+            <c-svg-icon :icon="mdiClose" @click="clear" class="text-gray-500 cursor-pointer" />
+        </div>
+        <div v-show="appendInnerIcon" class="pt-2 pl-1 text-lg">
+            <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="text-gray-500 cursor-pointer" />
+        </div>
+
     </div>
-    <div class="col-start-3 self-center pl-1">
-        <c-svg-icon v-if="appendIcon" @click="$emit('click:append')" :icon="appendIcon" size="large" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-600'"/>
+    <div v-show="appendIcon" class="text-lg col-start-3 pt-4 pl-1">
+        <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="text-gray-500 cursor-pointer" />
     </div>
     <div v-show="isError" class="text-xs text-[var(--jupiter-danger-text)] col-start-2">
         <p v-for="(msg,index) in formatedErrorMessage" :key="index">
