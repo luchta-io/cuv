@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { computed, reactive } from 'vue';
+import {logEvent} from "histoire/client";
+import { mdiComment } from '@mdi/js'
 import CSelect from '@/components/form/CSelect.vue';
 import CBox from '@/components/layout/CBox.vue';
+import CStack from '@/components/layout/CStack.vue';
 import CCheckbox from '@/components/form/CCheckbox.vue';
 
 const data: {
@@ -136,6 +139,21 @@ const clearable: {
     ],
     label: 'ラベル',
     clearable: true,
+    variant: 'filled',
+})
+
+const icons: {
+    modelValue: string
+    bloodTypeList: string[]
+    variant: 'filled'|'outlined'|'underlined'
+} = reactive({
+    modelValue: '',
+    bloodTypeList: [
+        'A型',
+        'B型',
+        'O型',
+        'AB型',
+    ],
     variant: 'filled',
 })
 
@@ -331,6 +349,59 @@ const customToggle = () => {
             <HstCheckbox v-model="clearable.clearable" title="clearable"/>
             <HstSelect
             v-model="clearable.variant"
+            title="variant"
+            :options="[
+                {value: 'filled', label: 'filled'},
+                {value: 'outlined', label: 'outlined'},
+                {value: 'underlined', label: 'underlined'},
+            ]"
+            />
+        </template>
+    </Variant>
+    <Variant title="Icons" auto-props-disabled>
+        <c-box>
+            <c-stack>
+                <c-select
+                    v-model="icons.modelValue"
+                    :items="icons.bloodTypeList"
+                    label="prepend-icon"
+                    :variant="icons.variant"
+                    :prepend-icon="mdiComment"
+                    clearable
+                    @click:prepend="logEvent('fire click:prepend', $event)"
+                />
+                <c-select
+                    v-model="icons.modelValue"
+                    :items="icons.bloodTypeList"
+                    label="append-icon"
+                    :variant="icons.variant"
+                    :append-icon="mdiComment"
+                    clearable
+                    @click:append="logEvent('fire click:append', $event)"
+                />
+                <c-select
+                    v-model="icons.modelValue"
+                    :items="icons.bloodTypeList"
+                    label="prepend-inner-icon"
+                    :variant="icons.variant"
+                    :prepend-inner-icon="mdiComment"
+                    clearable
+                    @click:prepend-inner="logEvent('fire click:prepend-inner', $event)"
+                />
+                <c-select
+                    v-model="icons.modelValue"
+                    :items="icons.bloodTypeList"
+                    label="append-inner-icon"
+                    :variant="icons.variant"
+                    :append-inner-icon="mdiComment"
+                    clearable
+                    @click:append-inner="logEvent('fire click:append-inner', $event)"
+                />
+            </c-stack>
+        </c-box>
+        <template #controls>
+            <HstSelect
+            v-model="icons.variant"
             title="variant"
             :options="[
                 {value: 'filled', label: 'filled'},
