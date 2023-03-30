@@ -1,17 +1,28 @@
 {
   "name": "@actier-luchta/cuv",
   "description": "Vue3向けのコンポーネントライブラリ",
+  "keywords": [
+    "vue",
+    "component library"
+  ],
+  "license": "Apache-2.0",
+  "homepage": "https://actier-luchta.github.io/jupiter/",
+  "repository": "https://github.com/actier-luchta/jupiter",
   "version": "1.0.0-alpha.0",
   "files": [
-    "dist"
+    "dist",
+    "src/index.ts",
+    "src/components"
   ],
+  "types": "src/index.ts",
   "module": "./dist/cuv.mjs",
   "main": "./dist/cuv.umd.js",
   "exports": {
     ".": {
       "import": "./dist/cuv.mjs",
       "require": "./dist/cuv.umd.js"
-    }
+    },
+    "./style": "./dist/style.css"
   },
   "scripts": {
     "build": "run-p type-check build-only",
