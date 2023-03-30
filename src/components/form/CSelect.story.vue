@@ -475,7 +475,7 @@ const customToggle = () => {
             <HstJson v-model="error.errorMessage" title="errorMessage"/>
             <HstText v-model="error.maxErrors" title="maxErrors"/>
             <HstSelect
-            v-model="data.variant"
+            v-model="error.variant"
             title="variant"
             :options="[
                 {value: 'filled', label: 'filled'},

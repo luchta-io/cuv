@@ -320,8 +320,9 @@ const objectArrayFilter = (item:nameListType, searchText:string) => {
             item-value="id"
             :filter="objectArrayFilter"
             :variant="disabled.variant"
-            placeholder="入力"
+            placeholder="入力してください"
             :disabled="disabled.disabled"
+            label="ラベル"
             >
                 <template v-slot:selection="{item}">
                     {{ item.姓 }} {{ item.名 }}
@@ -356,6 +357,7 @@ const objectArrayFilter = (item:nameListType, searchText:string) => {
             :filter="objectArrayFilter"
             :variant="readonly.variant"
             :readonly="readonly.readonly"
+            label="ラベル"
             >
                 <template v-slot:selection="{item}">
                     {{ item.姓 }} {{ item.名 }}
@@ -394,6 +396,10 @@ const objectArrayFilter = (item:nameListType, searchText:string) => {
             :error="error.error"
             :error-message="error.errorMessage"
             :max-errors="error.maxErrors"
+            :append-icon="mdiComment"
+            :append-inner-icon="mdiComment"
+            :prepend-icon="mdiComment"
+            :prepend-inner-icon="mdiComment"
             >
                 <template v-slot:selection="{item}">
                     {{ item.姓 }} {{ item.名 }}

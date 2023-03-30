@@ -79,12 +79,11 @@ const isError = computed(() => {
 
 const fieldClass = computed(() => {
     const base = [
-        'group peer relative col-start-2 flex items-center w-full appearance-none focus:outline-none focus:ring-0 opacity-100',
-        props.readonly ? 'focus-within:border-gray-900' : 'focus-within:border-blue-600',
-        isError.value 
-        ? 'border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)] text-[var(--jupiter-danger-text)] placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' 
-        : 'placeholder:text-gray-400 placeholder:opacity-0 focus:placeholder:opacity-100 border-gray-300',
+        'peer relative col-start-2 flex items-center w-full appearance-none focus:outline-none focus:ring-0 opacity-100',
     ]
+    if(isError.value) base.push('border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)]')
+    if(!isError.value && props.readonly) base.push('focus-within:border-gray-900 border-gray-300') 
+    if(!isError.value && !props.readonly) base.push('focus-within:border-blue-600 border-gray-300')
     if(props.variant === 'filled') base.push('min-h-[2.7rem] rounded-t-lg rounded-b-none px-2.5 bg-gray-50 border-0 border-b-2')
     if(props.variant === 'outlined') base.push('min-h-[2.8rem] px-2.5 bg-transparent rounded-lg border')
     if(props.variant === 'underlined') base.push('min-h-[2.3rem] rounded-none px-0 bg-transparent border-0 border-b-2')
@@ -93,15 +92,16 @@ const fieldClass = computed(() => {
 })
 
 const inputClass = computed(() => {
-    return [
+    const base = [
         'peer w-full focus:outline-none bg-transparent',
-        props.label === '' 
-        ? 'placeholder:opacity-100'
-        : !props.modelValue || !props.modelValue.length ? props.readonly? 'placeholder:opacity-0' :'placeholder:opacity-0 focus:placeholder:opacity-100' : 'placeholder:opacity-0',
-        props.variant === 'filled' ? 'pt-4 pb-1' : '',
-        props.variant === 'outlined' ? 'pt-4 pb-1.5' : '',
-        props.variant === 'underlined' ? 'pt-2.5 pb-1' : '',        
     ]
+    if(!props.label) base.push('placeholder:opacity-100')
+    if(props.label && (!props.modelValue || !props.modelValue.length)) base.push('placeholder:opacity-0 focus:placeholder:opacity-100')
+    if(props.label && (props.modelValue || props.modelValue.length)) base.push('placeholder:opacity-0')
+    if(props.variant === 'filled') base.push('pt-4 pb-1')
+    if(props.variant === 'outlined') base.push('pt-4 pb-1.5')
+    if(props.variant === 'underlined') base.push('pt-2.5 pb-1')
+    return base
 })
 
 const labelClass = computed(() => {
@@ -135,10 +135,11 @@ const labelClass = computed(() => {
 
 const selectionClass = computed(() => {
     return [
-        'pb-1 pr-4 whitespace-nowrap cursor-pointer group-read-only:text-gray-500 group-disabled:text-gray-500',
+        'pb-1 pr-4 whitespace-nowrap cursor-pointer',
         props.variant === 'filled' ? 'pt-4' : '',
         props.variant === 'outlined' ? 'pt-4' : '',
         props.variant === 'underlined' ? 'pt-2.5' : '',
+        props.readonly || props.disabled ? 'text-gray-500' : 'text-gray-900',
     ]
 })
 
@@ -230,12 +231,12 @@ const clear = () => {
 
 <template>
 <div @mouseover="data.isHover = true" @mouseleave="data.isHover = false" class="relative w-auto grid grid-cols-[auto_1fr_auto] gap-y-1">
-    <div v-show="prependIcon" class="text-lg col-start-1 pt-4 pr-1">
-        <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="text-gray-500 cursor-pointer" />
+    <div v-show="prependIcon" class="my-auto text-lg col-start-1 pt-1.5 pr-1">
+        <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
     </div>
     <div :class="fieldClass">
-        <div v-show="prependInnerIcon" class="pt-2 pr-2 text-lg">
-            <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="text-gray-500 cursor-pointer" />
+        <div v-show="prependInnerIcon" class="my-auto pt-2 pr-2 text-lg">
+            <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
         </div>
         <div class="relative w-full flex">
             <div v-show="selectionSlotDisplay && Array.isArray(selectionItem)" @click="toggleDropdownList" :class="selectionClass">
@@ -274,8 +275,8 @@ const clear = () => {
         <div v-show="menuIconDisplay" class="pt-2">
             <c-svg-icon :icon="data.isActive ? mdiMenuUp : mdiMenuDown" @click="toggleDropdownList" :class="isError ? 'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
         </div>
-        <div v-show="appendInnerIcon" class="pt-2 pl-1 text-lg">
-            <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="text-gray-500 cursor-pointer" />
+        <div v-show="appendInnerIcon" class="my-auto pt-2 pl-1 text-lg">
+            <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
         </div>
         <div v-show="data.isActive" class="absolute left-0 top-full pt-0.5 z-50 w-full rounded">
             <ul class="overflow-auto divide-y-2 divide-gray-100 rounded-b bg-white shadow-lg z-50 max-h-60">
@@ -302,8 +303,8 @@ const clear = () => {
             </ul>
         </div>
     </div>
-    <div v-show="appendIcon" class="text-lg col-start-3 pt-4 pl-1">
-        <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="text-gray-500 cursor-pointer" />
+    <div v-show="appendIcon" class="my-auto text-lg col-start-3 pt-1.5 pl-1">
+        <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
     </div>
     <div v-if="isError" class="text-xs text-[var(--jupiter-danger-text)] pt-1 col-start-2">
         <p v-for="(msg,index) in formatedErrorMessage" :key="index">

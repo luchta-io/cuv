@@ -70,12 +70,12 @@ const isError = computed(() => {
 
 const fieldClass = computed(() => {
     const base = [
-        'group peer relative col-start-2 flex items-center w-full appearance-none focus:outline-none focus:ring-0 opacity-100',
-        props.readonly ? 'focus-within:border-gray-900' : 'focus-within:border-blue-600',
-        isError.value
-        ? 'border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)]' 
-        : 'border-gray-300',
+        'peer relative col-start-2 flex items-center w-full appearance-none focus:outline-none focus:ring-0 opacity-100',
     ]
+    if(isError.value) base.push('border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)]')
+    if(!isError.value && props.readonly) base.push('focus-within:border-gray-900 border-gray-300') 
+    if(!isError.value && !props.readonly) base.push('focus-within:border-blue-600 border-gray-300')
+
     if(props.variant === 'filled') base.push('rounded-t-lg rounded-b-none px-2.5 bg-gray-50 border-0 border-b-2')
     if(props.variant === 'outlined') base.push('px-2.5 bg-transparent rounded-lg border')
     if(props.variant === 'underlined') base.push('rounded-none px-0 bg-transparent border-0 border-b-2')
@@ -85,7 +85,7 @@ const fieldClass = computed(() => {
 
 const inputClass = computed(() => {
     return [
-        'peer w-full focus:outline-none bg-transparent',
+        'peer w-full text-gray-900 focus:outline-none focus:ring-0 bg-transparent opacity-100',
         props.modelValue ? 'placeholder:opacity-0' : props.label ? 'placeholder:opacity-0 focus:placeholder:opacity-100' : 'opacity-100',
         props.variant === 'filled' ? 'pt-4 pb-1' : '',
         props.variant === 'outlined' ? 'pt-4 pb-1.5' : '',
@@ -116,6 +116,13 @@ const labelClass = computed(() => {
         ? 'scale-100 translate-y-0' 
         : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
     return base
+})
+
+const selectionClass = computed(() => {
+    return [
+        'pb-1 pt-4 whitespace-nowrap',
+        props.readonly || props.disabled ? 'text-gray-500' : 'text-gray-900',
+    ]
 })
 
 const dropdownListItems = computed(() => {
@@ -187,15 +194,15 @@ watchEffect(() => {
 </script>
 <template>
 <div @mouseover="data.isHover = true" @mouseleave="data.isHover = false" class="relative grid grid-cols-[auto_1fr_auto] gap-y-1">
-    <div v-show="prependIcon" class="text-lg col-start-1 pt-4 pr-1">
-        <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="text-gray-500 cursor-pointer" />
+    <div v-show="prependIcon" class="text-lg col-start-1 my-auto pt-1.5 pr-1">
+        <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
     </div>
     <div :class="fieldClass">
-        <div v-show="prependInnerIcon" class="pt-2 pr-2 text-lg">
-            <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="text-gray-500 cursor-pointer" />
+        <div v-show="prependInnerIcon" class="my-auto pt-2 pr-2 text-lg">
+            <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
         </div>
         <div class="relative w-full flex">
-            <div v-if="selectionSlotDisplay" class="pb-1 pt-4 whitespace-nowrap group-read-only:text-gray-500 group-disabled:text-gray-500">
+            <div v-if="selectionSlotDisplay" :class="selectionClass">
                 <slot name="selection" :item="selectionItem">
                     {{ typeof selectionItem === "object" ? selectionItem[itemValue] : selectionItem }}
                 </slot>
@@ -228,8 +235,8 @@ watchEffect(() => {
         <div v-show="menuIconDisplay" class="pt-2">
             <c-svg-icon :icon="data.isActive ? mdiMenuUp : mdiMenuDown" @click="toggleDropdownList" :class="isError ? 'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
         </div>
-        <div v-show="appendInnerIcon" class="pt-2 pl-1 text-lg">
-            <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="text-gray-500 cursor-pointer" />
+        <div v-show="appendInnerIcon" class="my-auto pt-2 pl-1 text-lg">
+            <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
         </div>
 
         <div v-show="data.isActive" class="absolute left-0 top-full pt-0.5 z-50 w-full rounded peer-read-only:hidden">
@@ -249,8 +256,8 @@ watchEffect(() => {
             </ul>
         </div>
     </div>
-    <div v-show="appendIcon" class="text-lg col-start-3 pt-4 pl-1">
-        <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="text-gray-500 cursor-pointer" />
+    <div v-show="appendIcon" class="my-auto text-lg col-start-3 pt-1.5 pl-1">
+        <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
     </div>
     <div v-if="isError" class="text-xs text-[var(--jupiter-danger-text)] pt-1 col-start-2">
         <p v-for="(msg,index) in formatedErrorMessage" :key="index">
