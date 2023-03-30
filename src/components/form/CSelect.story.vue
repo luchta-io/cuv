@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { computed, reactive } from 'vue';
+import {logEvent} from "histoire/client";
+import { mdiComment } from '@mdi/js'
 import CSelect from '@/components/form/CSelect.vue';
 import CBox from '@/components/layout/CBox.vue';
+import CStack from '@/components/layout/CStack.vue';
 import CCheckbox from '@/components/form/CCheckbox.vue';
 
 const data: {
@@ -136,6 +139,21 @@ const clearable: {
     ],
     label: 'ラベル',
     clearable: true,
+    variant: 'filled',
+})
+
+const icons: {
+    modelValue: string
+    bloodTypeList: string[]
+    variant: 'filled'|'outlined'|'underlined'
+} = reactive({
+    modelValue: '',
+    bloodTypeList: [
+        'A型',
+        'B型',
+        'O型',
+        'AB型',
+    ],
     variant: 'filled',
 })
 
@@ -340,6 +358,59 @@ const customToggle = () => {
             />
         </template>
     </Variant>
+    <Variant title="Icons" auto-props-disabled>
+        <c-box>
+            <c-stack>
+                <c-select
+                    v-model="icons.modelValue"
+                    :items="icons.bloodTypeList"
+                    label="prepend-icon"
+                    :variant="icons.variant"
+                    :prepend-icon="mdiComment"
+                    clearable
+                    @click:prepend="logEvent('fire click:prepend', $event)"
+                />
+                <c-select
+                    v-model="icons.modelValue"
+                    :items="icons.bloodTypeList"
+                    label="append-icon"
+                    :variant="icons.variant"
+                    :append-icon="mdiComment"
+                    clearable
+                    @click:append="logEvent('fire click:append', $event)"
+                />
+                <c-select
+                    v-model="icons.modelValue"
+                    :items="icons.bloodTypeList"
+                    label="prepend-inner-icon"
+                    :variant="icons.variant"
+                    :prepend-inner-icon="mdiComment"
+                    clearable
+                    @click:prepend-inner="logEvent('fire click:prepend-inner', $event)"
+                />
+                <c-select
+                    v-model="icons.modelValue"
+                    :items="icons.bloodTypeList"
+                    label="append-inner-icon"
+                    :variant="icons.variant"
+                    :append-inner-icon="mdiComment"
+                    clearable
+                    @click:append-inner="logEvent('fire click:append-inner', $event)"
+                />
+            </c-stack>
+        </c-box>
+        <template #controls>
+            <HstSelect
+            v-model="icons.variant"
+            title="variant"
+            :options="[
+                {value: 'filled', label: 'filled'},
+                {value: 'outlined', label: 'outlined'},
+                {value: 'underlined', label: 'underlined'},
+            ]"
+            />
+        </template>
+    </Variant>
     <Variant title="非活性" auto-props-disabled>
         <c-box>
             <c-select
@@ -404,7 +475,7 @@ const customToggle = () => {
             <HstJson v-model="error.errorMessage" title="errorMessage"/>
             <HstText v-model="error.maxErrors" title="maxErrors"/>
             <HstSelect
-            v-model="data.variant"
+            v-model="error.variant"
             title="variant"
             :options="[
                 {value: 'filled', label: 'filled'},
@@ -426,6 +497,8 @@ const customToggle = () => {
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
+| appendIcon | string | undefined | 入力フォームの右外側に表示させるiconを指定します |
+| appendInnerIcon | string | undefined | 入力フォームの右内側に表示させるiconを指定します |
 | clearable | boolean | false | 選択した値をクリアするボタンを追加する場合は指定します |
 | disabled | boolean | false | 非活性にする場合は指定します |
 | error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
@@ -439,6 +512,8 @@ const customToggle = () => {
 | multiple | boolean | false | 複数選択を可能にする場合は指定します |
 | name | string | undefined | nameを指定します |
 | placeholder | string | undefined | placeholderに表示するメッセージを指定します |
+| prependIcon | string | undefined | 入力フォームの左外側に表示させるiconを指定します |
+| prependInnerIcon | string | undefined | 入力フォームの左内側に表示させるiconを指定します |
 | readonly | boolean | false | 読み取り専用にする場合は指定します |
 | variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
 
@@ -456,4 +531,8 @@ const customToggle = () => {
 | Name | Parameters | Description |
 | --- | --- | --- |
 | update:modelValue | - | コンポーネントのv-modelが変更されたときに発行されるイベントです |
+| click:append | - | 入力フォームの右外側に表示されたアイコンをクリックした時に発行されるイベントです |
+| click:prepend | - | 入力フォームの左外側に表示されたアイコンをクリックした時に発行されるイベントです |
+| click:appendInner | - | 入力フォームの右内側に表示されたアイコンをクリックした時に発行されるイベントです |
+| click:prependInner | - | 入力フォームの左内側に表示されたアイコンをクリックした時に発行されるイベントです |
 </docs>

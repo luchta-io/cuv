@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import {reactive} from "vue";
-import { mdiEye, mdiEyeOff } from "@mdi/js";
+import {logEvent} from "histoire/client";
+import { mdiEye, mdiEyeOff, mdiComment } from "@mdi/js";
 import CTextField from "@/components/form/CTextField.vue";
 import CBox from "@/components/layout/CBox.vue";
+import CStack from "@/components/layout/CStack.vue";
 
 const filled: {
     modelValue: string
@@ -51,9 +53,31 @@ const password : {
     show: boolean
 } = reactive({
     modelValue: 'password',
-    label: 'emailのラベル',
+    label: 'passwordのラベル',
     placeholder: '',
     show: false,
+})
+
+const clearable : {
+    modelValue: string
+    label: string
+    placeholder: string
+    clearable: boolean
+    variant: 'filled'|'outlined'|'underlined'
+} = reactive({
+    modelValue: 'バツをクリックするとクリアされます',
+    label: 'clearable',
+    placeholder: '',
+    clearable: true,
+    variant: 'filled',
+})
+
+const icons : {
+    modelValue: string
+    variant: 'filled'|'outlined'|'underlined'
+} = reactive({
+    modelValue: '',
+    variant: 'filled',
 })
 
 const disabled : {
@@ -178,7 +202,77 @@ const error : {
                 id="password"
             />
         </c-box>
+    </Variant>  
+
+    <Variant title="clearable" auto-props-disabled>
+        <c-box padding="medium">
+            <c-text-field 
+                v-model="clearable.modelValue"
+                :label="clearable.label"
+                :placeholder="clearable.placeholder"
+                :clearable="clearable.clearable"
+                :variant="clearable.variant"
+            />
+        </c-box>
+        <template #controls>
+            <HstSelect
+            v-model="clearable.variant"
+            title="variant"
+            :options="[
+                {value: 'filled', label: 'filled'},
+                {value: 'outlined', label: 'outlined'},
+                {value: 'underlined', label: 'underlined'},
+            ]"
+            />
+        </template>
     </Variant>    
+
+    <Variant title="Icons" auto-props-disabled>
+        <c-box padding="medium">
+            <c-stack>
+                <c-text-field 
+                    v-model="icons.modelValue"
+                    label="prepend-icon"
+                    :variant="icons.variant"
+                    :prepend-icon="mdiComment"
+                    @click:prepend="logEvent('fire click:prepend', $event)"
+                />
+                <c-text-field 
+                    v-model="icons.modelValue"
+                    label="append-icon"
+                    :variant="icons.variant"
+                    :append-icon="mdiComment"
+                    @click:append="logEvent('fire click:append', $event)"
+                />
+                <c-text-field 
+                    v-model="icons.modelValue"
+                    label="prepend-inner-icon"
+                    :variant="icons.variant"
+                    :prepend-inner-icon="mdiComment"
+                    @click:prepend-inner="logEvent('fire click:prepend-inner', $event)"
+                />
+                <c-text-field 
+                    v-model="icons.modelValue"
+                    label="append-inner-icon"
+                    :variant="icons.variant"
+                    :append-inner-icon="mdiComment"
+                    @click:append-inner="logEvent('fire click:append-inner', $event)"
+                    clearable
+                />
+            </c-stack>
+        </c-box>
+        <template #controls>
+            <HstSelect
+            v-model="icons.variant"
+            title="variant"
+            :options="[
+                {value: 'filled', label: 'filled'},
+                {value: 'outlined', label: 'outlined'},
+                {value: 'underlined', label: 'underlined'},
+            ]"
+            />
+        </template>
+    </Variant>
 
     <Variant title="非活性" auto-props-disabled>
         <c-box padding="medium">
@@ -265,7 +359,9 @@ const error : {
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| appendIcon | string | undefined | iconを入力フォームの右に追加する場合は指定します |
+| appendIcon | string | undefined | 入力フォームの右外側に表示させるiconを指定します |
+| appendInnerIcon | string | undefined | 入力フォームの右内側に表示させるiconを指定します |
+| clearable | boolean | false | 選択した値をクリアするボタンを追加する場合は指定します |
 | disabled | boolean | false | 非活性にする場合は指定します |
 | error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
 | errorMessage | string/string[] | '' | コンポーネントをエラー状態にし、表示するメッセージを指定します|
@@ -275,7 +371,8 @@ const error : {
 | modelValue | string | '' | コンポーネントのv-model値です |
 | name | string | undefined | nameを指定します |
 | placeholder | string | '' | placeholderのメッセージを指定することができます |
-| prependIcon | string | undefined | iconを入力フォームの左に追加する場合は指定します |
+| prependIcon | string | undefined | 入力フォームの左外側に表示させるiconを指定します |
+| prependInnerIcon | string | undefined | 入力フォームの左内側に表示させるiconを指定します |
 | readonly | boolean | false | 読み取り専用にする場合は指定します |
 | type | 'text'/'email'/'password' | 'text' | inputのtype属性を選択します |
 | variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
@@ -291,7 +388,9 @@ const error : {
 | Name | Parameters | Description |
 | --- | --- | --- |
 | update:modelValue | - | コンポーネントのv-modelが変更されたときに発行されるイベントです |
-| click:append | - | 入力フォームの右側に表示されたアイコンをクリックした時に発行されるイベントです |
-| click:prepend | - | 入力フォームの左側に表示されたアイコンをクリックした時に発行されるイベントです |
+| click:append | - | 入力フォームの右外側に表示されたアイコンをクリックした時に発行されるイベントです |
+| click:prepend | - | 入力フォームの左外側に表示されたアイコンをクリックした時に発行されるイベントです |
+| click:appendInner | - | 入力フォームの右内側に表示されたアイコンをクリックした時に発行されるイベントです |
+| click:prependInner | - | 入力フォームの左内側に表示されたアイコンをクリックした時に発行されるイベントです |
 
 </docs>

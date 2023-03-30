@@ -23,6 +23,10 @@ const props = withDefaults(defineProps<{
     errorMessage?: string|string[]
     maxErrors?: string|number
     clearable?: boolean
+    prependIcon?: string
+    appendIcon?: string
+    prependInnerIcon?: string
+    appendInnerIcon?: string
 }>(), {
     itemValue: 'value',
     label: '',
@@ -45,6 +49,10 @@ const data: {
 
 const emits = defineEmits<{
     (e: 'update:modelValue', value: any|Array<any>): void
+    (e: 'click:prepend'): void
+    (e: 'click:append'): void
+    (e: 'click:prependInner'): void
+    (e: 'click:appendInner'): void
 }>()
 
 const changeableModelValue = computed({
@@ -71,14 +79,11 @@ const isError = computed(() => {
 
 const fieldClass = computed(() => {
     const base = [
-        'group peer flex items-center w-full appearance-none focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100',
-        props.label === '' ? 'placeholder:opacity-100': '',
-        props.readonly ? 'focus-within:border-gray-900' : 'focus-within:border-blue-600',
-        isError.value 
-        ? 'border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)] text-[var(--jupiter-danger-text)] placeholder:text-[var(--jupiter-danger-text)] placeholder:opacity-0 focus:placeholder:opacity-50' 
-        : 'placeholder:text-gray-400 placeholder:opacity-0 focus:placeholder:opacity-100 border-gray-300',
-        props.clearable ? 'pr-14' : '',
+        'peer relative col-start-2 flex items-center w-full appearance-none focus:outline-none focus:ring-0 opacity-100',
     ]
+    if(isError.value) base.push('border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-outline-focus)]')
+    if(!isError.value && props.readonly) base.push('focus-within:border-gray-900 border-gray-300') 
+    if(!isError.value && !props.readonly) base.push('focus-within:border-blue-600 border-gray-300')
     if(props.variant === 'filled') base.push('min-h-[2.7rem] rounded-t-lg rounded-b-none px-2.5 bg-gray-50 border-0 border-b-2')
     if(props.variant === 'outlined') base.push('min-h-[2.8rem] px-2.5 bg-transparent rounded-lg border')
     if(props.variant === 'underlined') base.push('min-h-[2.3rem] rounded-none px-0 bg-transparent border-0 border-b-2')
@@ -87,15 +92,16 @@ const fieldClass = computed(() => {
 })
 
 const inputClass = computed(() => {
-    return [
-        'peer w-full absolute top-0 focus:outline-none bg-transparent',
-        props.label === '' 
-        ? 'placeholder:opacity-100'
-        : !props.modelValue || !props.modelValue.length ? props.readonly? 'placeholder:opacity-0' :'placeholder:opacity-0 focus:placeholder:opacity-100' : 'placeholder:opacity-0',
-        props.variant === 'filled' ? 'pt-4 left-2.5' : '',
-        props.variant === 'outlined' ? 'pt-4 left-2.5' : '',
-        props.variant === 'underlined' ? 'pt-2.5 left-0' : '',        
+    const base = [
+        'peer w-full focus:outline-none bg-transparent',
     ]
+    if(!props.label) base.push('placeholder:opacity-100')
+    if(props.label && (!props.modelValue || !props.modelValue.length)) base.push('placeholder:opacity-0 focus:placeholder:opacity-100')
+    if(props.label && (props.modelValue || props.modelValue.length)) base.push('placeholder:opacity-0')
+    if(props.variant === 'filled') base.push('pt-4 pb-1')
+    if(props.variant === 'outlined') base.push('pt-4 pb-1.5')
+    if(props.variant === 'underlined') base.push('pt-2.5 pb-1')
+    return base
 })
 
 const labelClass = computed(() => {
@@ -105,19 +111,19 @@ const labelClass = computed(() => {
     if(isError.value ) base.push('text-[var(--jupiter-danger-text)]')
     if(!isError.value ) base.push('text-gray-500 peer-focus:text-blue-600')
     if(props.variant === 'filled') base.push(
-        '-translate-y-4 top-4 z-10 left-2.5 peer-focus:-translate-y-4',
+        '-translate-y-4 top-4 peer-focus:-translate-y-4',
         !props.modelValue || !props.modelValue.length 
         ? 'scale-100 translate-y-0' 
         : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0'
         )
     if(props.variant === 'outlined') base.push(
-        '-translate-y-4 top-4 z-10 px-2 peer-focus:px-2 peer-focus:-translate-y-4 left-1 top-4',
+        '-translate-y-4 top-4 peer-focus:-translate-y-4',
         !props.modelValue || !props.modelValue.length 
         ? 'scale-100 translate-y-0' 
         : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0'
         )
     if(props.variant === 'underlined') base.push(
-        '-translate-y-5 top-3 z-10 peer-focus:left-0 peer-focus:-translate-y-5',
+        '-translate-y-5 top-3 peer-focus:left-0 peer-focus:-translate-y-5',
         !props.modelValue || !props.modelValue.length 
         ? 'scale-100 translate-y-0' 
         : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0'
@@ -129,10 +135,11 @@ const labelClass = computed(() => {
 
 const selectionClass = computed(() => {
     return [
-        'pb-1 pr-4 cursor-pointer group-read-only:text-gray-500 group-disabled:text-gray-500',
+        'pb-1 pr-4 whitespace-nowrap cursor-pointer',
         props.variant === 'filled' ? 'pt-4' : '',
         props.variant === 'outlined' ? 'pt-4' : '',
-        props.variant === 'underlined' ? 'pt-2' : '',
+        props.variant === 'underlined' ? 'pt-2.5' : '',
+        props.readonly || props.disabled ? 'text-gray-500' : 'text-gray-900',
     ]
 })
 
@@ -158,12 +165,13 @@ const initSelectionItem = computed(() => {
 const clearIconDisplay = computed(() => {
     if(!props.clearable) return false
     if(props.readonly) return false
+    if(props.disabled) return false
     if(props.multiple && !props.modelValue.length) return false
     return props.modelValue 
 })
 
 const menuIconDisplay = computed(() => {
-    return !props.readonly
+    return !props.readonly && !props.disabled
 })
 
 const selectionSlotDisplay = computed(() => {
@@ -197,6 +205,7 @@ const selectItem = (option: any) => {
 
 const openDropdownList = () => {
     if(props.readonly) return
+    if(props.disabled) return
     data.isActive = true
 }
 
@@ -207,6 +216,7 @@ const closeDropdownList = () => {
 
 const toggleDropdownList = () => {
     if(props.readonly) return
+    if(props.disabled) return
     data.isActive = !data.isActive
 }
 
@@ -220,39 +230,55 @@ const clear = () => {
 </script>
 
 <template>
-<div @mouseover="data.isHover = true" @mouseleave="data.isHover = false" class="relative w-auto">
-    <fieldset v-bind="$attrs" :class="fieldClass">
-        <div v-show="selectionSlotDisplay && Array.isArray(selectionItem)" @click="toggleDropdownList" :class="selectionClass">
-            <span v-for="(item, index) in selectionItem" :key="index">
-                <slot name="selection" :item="item" :index="index">
-                    {{ items[0][itemValue]?item[itemValue]:item }}{{ index!==selectionItem.length-1?', ':'' }}
+<div @mouseover="data.isHover = true" @mouseleave="data.isHover = false" class="relative w-auto grid grid-cols-[auto_1fr_auto] gap-y-1">
+    <div v-show="prependIcon" class="my-auto text-lg col-start-1 pt-1.5 pr-1">
+        <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
+    </div>
+    <div :class="fieldClass">
+        <div v-show="prependInnerIcon" class="my-auto pt-2 pr-2 text-lg">
+            <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
+        </div>
+        <div class="relative w-full flex">
+            <div v-show="selectionSlotDisplay && Array.isArray(selectionItem)" @click="toggleDropdownList" :class="selectionClass">
+                <span v-for="(item, index) in selectionItem" :key="index">
+                    <slot name="selection" :item="item" :index="index">
+                        {{ items[0][itemValue]?item[itemValue]:item }}{{ index!==selectionItem.length-1?', ':'' }}
+                    </slot>
+                </span>
+            </div>
+            <div v-show="selectionSlotDisplay && !Array.isArray(selectionItem)" @click="toggleDropdownList" :class="selectionClass">
+                <slot name="selection" :item="selectionItem" :index="0">
+                    {{ initSelectionItem }}
                 </slot>
-            </span>
+            </div>
+            <input 
+            v-bind="$attrs"
+            @focus="openDropdownList" 
+            @blur="closeDropdownList"
+            type="text"
+            :id="id"
+            :name="name"
+            :disabled="disabled"
+            :placeholder="placeholder"
+            readonly
+            :class="inputClass">
+            <label 
+                :class="labelClass"
+            >
+                {{ label }}
+            </label>
+
         </div>
-        <div v-show="selectionSlotDisplay && !Array.isArray(selectionItem)" @click="toggleDropdownList" :class="selectionClass">
-            <slot name="selection" :item="selectionItem" :index="0">
-                {{ initSelectionItem }}
-            </slot>
+        <div v-show="clearIconDisplay" class="pt-2">
+            <c-svg-icon :icon="mdiClose" @click="clear" class="text-gray-500 cursor-pointer" />
         </div>
-        <input 
-        v-bind="$attrs"
-        @focus="openDropdownList" 
-        @blur="closeDropdownList"
-        type="text"
-        :id="id"
-        :name="name"
-        :disabled="disabled"
-        :placeholder="placeholder"
-        readonly
-        :class="inputClass">
-        <label 
-            :class="labelClass"
-        >
-            {{ label }}
-        </label>
-        <c-svg-icon v-show="clearIconDisplay" :icon="mdiClose" @click="clear" class="absolute inset-y-1/2 translate-y-[-50%] right-7 text-gray-500 peer-disabled:hidden cursor-pointer" />
-        <c-svg-icon v-show="menuIconDisplay" :icon="data.isActive ? mdiMenuUp : mdiMenuDown" @click="toggleDropdownList" class="absolute inset-y-1/2 translate-y-[-50%] right-1 peer-disabled:hidden" :class="isError ? 'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
-        <div v-show="data.isActive" class="absolute left-0 top-full z-50 w-full rounded">
+        <div v-show="menuIconDisplay" class="pt-2">
+            <c-svg-icon :icon="data.isActive ? mdiMenuUp : mdiMenuDown" @click="toggleDropdownList" :class="isError ? 'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
+        </div>
+        <div v-show="appendInnerIcon" class="my-auto pt-2 pl-1 text-lg">
+            <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
+        </div>
+        <div v-show="data.isActive" class="absolute left-0 top-full pt-0.5 z-50 w-full rounded">
             <ul class="overflow-auto divide-y-2 divide-gray-100 rounded-b bg-white shadow-lg z-50 max-h-60">
                 <template v-if="items.length > 0">
                     <li v-if="slots.prependItem" class="py-2 px-3 min-w-full text-gray-700 cursor-pointer hover:bg-gray-100">
@@ -276,12 +302,15 @@ const clear = () => {
                 </li>
             </ul>
         </div>
-    </fieldset>
-</div>
-<div v-if="isError" class="text-xs text-[var(--jupiter-danger-text)] pt-1">
-    <p v-for="(msg,index) in formatedErrorMessage" :key="index">
-        {{ msg }}
-    </p>
+    </div>
+    <div v-show="appendIcon" class="my-auto text-lg col-start-3 pt-1.5 pl-1">
+        <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
+    </div>
+    <div v-if="isError" class="text-xs text-[var(--jupiter-danger-text)] pt-1 col-start-2">
+        <p v-for="(msg,index) in formatedErrorMessage" :key="index">
+            {{ msg }}
+        </p>
+    </div>
 </div>
 
 </template>

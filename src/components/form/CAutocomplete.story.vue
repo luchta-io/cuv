@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import {reactive} from "vue";
+import {logEvent} from "histoire/client";
+import { mdiComment } from '@mdi/js'
 import CBox from "@/components/layout/CBox.vue";
+import CStack from "@/components/layout/CStack.vue";
 import CAutocomplete from "@/components/form/CAutocomplete.vue";
 
 interface nameListType {
@@ -75,6 +78,15 @@ const clearable: {
     variant: 'filled'
 })
 
+const icons: {
+    modelValue: string
+    label: string
+    variant: 'filled'|'outlined'|'underlined'
+} = reactive({
+    modelValue: '',
+    label: 'ラベル',
+    variant: 'filled',
+})
 
 const disabled: {
     modelValue: string
@@ -237,6 +249,69 @@ const objectArrayFilter = (item:nameListType, searchText:string) => {
             />
         </template>
     </Variant>
+    <Variant title="Icons" auto-props-disabled>
+        <c-box padding="large">
+            <c-stack>
+                <c-autocomplete
+                v-model="icons.modelValue"
+                :items="string.bloodType"
+                :filter="stringArrayFilter"
+                label="prepend-icon"
+                :variant="icons.variant"
+                :prepend-icon="mdiComment"
+                placeholder="placeholder"
+                clearable
+                @click:prepend="logEvent('fire click:prepend', $event)"
+                >
+                </c-autocomplete>
+                <c-autocomplete
+                v-model="icons.modelValue"
+                :items="string.bloodType"
+                :filter="stringArrayFilter"
+                label="append-icon"
+                :variant="icons.variant"
+                :append-icon="mdiComment"
+                clearable
+                @click:append="logEvent('fire click:append', $event)"
+                >
+                </c-autocomplete>
+                <c-autocomplete
+                v-model="icons.modelValue"
+                :items="string.bloodType"
+                :filter="stringArrayFilter"
+                label="prepend-inner-icon"
+                :variant="icons.variant"
+                :prepend-inner-icon="mdiComment"
+                clearable
+                @click:prepend-inner="logEvent('fire click:prepend-inner', $event)"
+                >
+                </c-autocomplete>
+                <c-autocomplete
+                v-model="icons.modelValue"
+                :items="string.bloodType"
+                :filter="stringArrayFilter"
+                label="append-inner-icon"
+                :variant="icons.variant"
+                :append-inner-icon="mdiComment"
+                clearable
+                @click:append-inner="logEvent('fire click:append-inner', $event)"
+                >
+                </c-autocomplete>
+            </c-stack>
+        </c-box>
+        <template #controls>
+            <HstText v-model="icons.modelValue" title="modelValue"/>
+            <HstSelect
+            v-model="icons.variant"
+            title="variant"
+            :options="[
+                {value: 'filled', label: 'filled'},
+                {value: 'outlined', label: 'outlined'},
+                {value: 'underlined', label: 'underlined'},
+            ]"
+            />
+        </template>
+    </Variant>
     <Variant title="非活性" auto-props-disabled>
         <c-box padding="large">
             <c-autocomplete
@@ -245,8 +320,9 @@ const objectArrayFilter = (item:nameListType, searchText:string) => {
             item-value="id"
             :filter="objectArrayFilter"
             :variant="disabled.variant"
-            placeholder="入力"
+            placeholder="入力してください"
             :disabled="disabled.disabled"
+            label="ラベル"
             >
                 <template v-slot:selection="{item}">
                     {{ item.姓 }} {{ item.名 }}
@@ -281,6 +357,7 @@ const objectArrayFilter = (item:nameListType, searchText:string) => {
             :filter="objectArrayFilter"
             :variant="readonly.variant"
             :readonly="readonly.readonly"
+            label="ラベル"
             >
                 <template v-slot:selection="{item}">
                     {{ item.姓 }} {{ item.名 }}
@@ -355,6 +432,8 @@ const objectArrayFilter = (item:nameListType, searchText:string) => {
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
+| appendIcon | string | undefined | 入力フォームの右外側に表示させるiconを指定します |
+| appendInnerIcon | string | undefined | 入力フォームの右内側に表示させるiconを指定します |
 | clearable | boolean | false | 入力したテキストをクリアするボタンを追加する場合は指定します |
 | disabled | boolean | false | 非活性にする場合は指定します |
 | error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
@@ -368,6 +447,8 @@ const objectArrayFilter = (item:nameListType, searchText:string) => {
 | modelValue | any | null | コンポーネントのv-model値です |
 | name | string | undefined | nameを指定します |
 | placeholder | string | '' | placeholderのメッセージを指定することができます |
+| prependIcon | string | undefined | 入力フォームの左外側に表示させるiconを指定します |
+| prependInnerIcon | string | undefined | 入力フォームの左内側に表示させるiconを指定します |
 | readonly | boolean | false | 読み取り専用にする場合は指定します |
 | variant | 'filled'/'outlined'/'underlined' | 'filled' | コンポーネントに独自のスタイルを指定します |
 
@@ -384,4 +465,8 @@ const objectArrayFilter = (item:nameListType, searchText:string) => {
 | Name | Parameters | Description |
 | --- | --- | --- |
 | update:modelValue | - | コンポーネントのv-modelが変更されたときに発行されるイベントです |
+| click:append | - | 入力フォームの右外側に表示されたアイコンをクリックした時に発行されるイベントです |
+| click:prepend | - | 入力フォームの左外側に表示されたアイコンをクリックした時に発行されるイベントです |
+| click:appendInner | - | 入力フォームの右内側に表示されたアイコンをクリックした時に発行されるイベントです |
+| click:prependInner | - | 入力フォームの左内側に表示されたアイコンをクリックした時に発行されるイベントです |
 </docs>
