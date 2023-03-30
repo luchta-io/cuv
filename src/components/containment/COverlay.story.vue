@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {reactive, watchEffect} from "vue";
-import CButton from "@/components/form/CButton.vue";
-import COverlay from "@/components/overlay/COverlay.vue";
+import CButton from "@/components/containment/CButton.vue";
+import COverlay from "@/components/containment/COverlay.vue";
 import CBox from "@/components/layout/CBox.vue";
 import CCluster from "@/components/layout/CCluster.vue";
 import CCenter from "@/components/layout/CCenter.vue";
@@ -42,7 +42,7 @@ watchEffect(() => {
 
 <template>
 <Story
-    title="Overlay / COverlay"
+    title="Containment / COverlay"
     :layout="{ type: 'grid', width: '100%' }"
 >
     <Variant title="基本" auto-props-disabled>

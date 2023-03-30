@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
 import CIcon from '@/components/layout/CIcon.vue';
-import CButton from '@/components/form/CButton.vue';
+import CButton from '@/components/containment/CButton.vue';
 
 const data: {
     space: string

@@ -4,7 +4,7 @@ import { mdiPlus, mdiMinus, mdiAccount, mdiAlert, mdiClose, mdiTab } from "@mdi/
 import CSvgIcon from "@/components/dataDisplay/CSvgIcon.vue";
 import CCenter from "@/components/layout/CCenter.vue";
 import CCluster from "@/components/layout/CCluster.vue";
-import CButton from "@/components/form/CButton.vue";
+import CButton from "@/components/containment/CButton.vue";
 
 const data: {
     icon: string

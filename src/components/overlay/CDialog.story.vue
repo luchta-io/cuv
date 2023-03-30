@@ -2,7 +2,7 @@
 import { reactive } from "vue";
 import { logEvent } from 'histoire/client'
 import CDialog from "@/components/overlay/CDialog.vue";
-import CButton from "@/components/form/CButton.vue";
+import CButton from "@/components/containment/CButton.vue";
 import CBox from "@/components/layout/CBox.vue";
 
 const data: {

@@ -1,7 +1,7 @@
 import {describe, it} from 'vitest'
 
 import {render} from '@testing-library/vue'
-import CButton from "@/components/form/CButton.vue";
+import CButton from "@/components/containment/CButton.vue";
 
 describe('CButton', () => {
     it('すべてのprops,slotsが受け取れること', () => {
