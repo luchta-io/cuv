@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive } from "vue";
 import { logEvent } from 'histoire/client'
-import CDialog from "@/components/overlay/CDialog.vue";
+import CDialog from "@/components/containment/CDialog.vue";
 import CButton from "@/components/containment/CButton.vue";
 import CBox from "@/components/layout/CBox.vue";
 
@@ -30,7 +30,7 @@ const longData: {
 })
 </script>
 <template>
-    <Story title="Overlay / CDialog" :layout="{ type: 'grid', width: 200 }">
+    <Story title="Containment / CDialog" :layout="{ type: 'grid', width: 200 }">
         <Variant title="基本">
             <c-button @click="data.isActive = true">ダイアログを表示</c-button>
             <c-dialog

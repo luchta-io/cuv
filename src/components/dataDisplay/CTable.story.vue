@@ -113,7 +113,7 @@ const fixed: {
 
 <template>
 <Story
-    title="Data Display / CTable"
+    title="Data & Display / CTable"
     :layout="{ type: 'grid', width: '100%' }"
 >
     <Variant title="基本" auto-props-disabled>

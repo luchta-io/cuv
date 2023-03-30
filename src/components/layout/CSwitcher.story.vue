@@ -18,7 +18,7 @@ const data: {
 </script>
 
 <template>
-    <Story title="Layout / CSwitcher" :layout="{ type: 'grid', width: '100%' }">
+    <Story title="Layouts / CSwitcher" :layout="{ type: 'grid', width: '100%' }">
         <Variant title="threshold" auto-props-disabled>
             <c-switcher
             :threshold="data.threshold"

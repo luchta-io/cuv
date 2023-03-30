@@ -140,7 +140,7 @@ const objectArrayFilter = (item:nameListType, searchText:string) => {
 
 <template>
 <Story
-    title="Form / CAutocomplete"
+    title="Form Inputs & Controls / CAutocomplete"
     :layout="{ type: 'grid', width: 500 }"
 >
     <Variant title="文字列の配列の場合" auto-props-disabled>

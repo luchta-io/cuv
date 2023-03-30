@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive, useSlots } from 'vue';
 import { mdiMenuDown, mdiMenuUp, mdiClose } from '@mdi/js';
-import CSvgIcon from '@/components/dataDisplay/CSvgIcon.vue';
+import CSvgIcon from '@/components/images/CSvgIcon.vue';
 import CCheckbox from '@/components/form/CCheckbox.vue';
 import CCluster from '@/components/layout/CCluster.vue';
 

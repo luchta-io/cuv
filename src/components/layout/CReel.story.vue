@@ -17,7 +17,7 @@ const data: {
 </script>
 
 <template>
-    <Story title="Layout / CReel" :layout="{ type: 'grid', width: '100%' }">
+    <Story title="Layouts / CReel" :layout="{ type: 'grid', width: '100%' }">
         <Variant title="itemWidth" auto-props-disabled>
             <c-reel
                 :item-width="data.itemWidth"

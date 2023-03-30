@@ -14,7 +14,7 @@ const data: {
 </script>
 
 <template>
-    <Story title="Layout / CBox" :layout="{ type: 'grid', width: '100%' }">
+    <Story title="Layouts / CBox" :layout="{ type: 'grid', width: '100%' }">
         <Variant title="基本" auto-props-disabled>
             <c-box :padding="data.padding" :bordered="data.bordered" class="bg-yellow-200">
                 <c-box class="bg-white">

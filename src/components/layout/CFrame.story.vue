@@ -11,7 +11,7 @@ const data: {
 
 <template>
     <Story 
-    title="Layout / CFrame"
+    title="Layouts / CFrame"
     :layout="{
         type: 'grid',
         width: 300,

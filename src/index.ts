@@ -1,18 +1,23 @@
 import './tailwind.css'
 import './variables.css'
 
-// data
-export {default as CSvgIcon} from "./components/dataDisplay/CSvgIcon.vue"
+// containment
+export {default as CButton} from "./components/containment/CButton.vue"
+export {default as CDialog} from "./components/containment/CDialog.vue"
+export {default as COverlay} from "./components/containment/COverlay.vue"
+export {default as CSheet} from "./components/containment/CSheet.vue"
+//data display
 export {default as CTable} from "./components/dataDisplay/CTable.vue"
 // feedback
 export {default as CProgress} from "./components/feedback/CProgress.vue"
 // form
 export {default as CAutocomplete} from "./components/form/CAutocomplete.vue"
-export {default as CButton} from "./components/form/CButton.vue"
 export {default as CCheckbox} from "./components/form/CCheckbox.vue"
 export {default as CSelect} from "./components/form/CSelect.vue"
 export {default as CTextarea} from "./components/form/CTextarea.vue"
 export {default as CTextField} from "./components/form/CTextField.vue"
+//images
+export {default as CSvgIcon} from "./components/images/CSvgIcon.vue"
 // layout
 export {default as CBox} from "./components/layout/CBox.vue"
 export {default as CCenter} from "./components/layout/CCenter.vue"
@@ -26,8 +31,3 @@ export {default as CReel} from "./components/layout/CReel.vue"
 export {default as CSidebar} from "./components/layout/CSidebar.vue"
 export {default as CStack} from "./components/layout/CStack.vue"
 export {default as CSwitcher} from "./components/layout/CSwitcher.vue"
-// overlay
-export {default as CDialog} from "./components/overlay/CDialog.vue"
-export {default as COverlay} from "./components/overlay/COverlay.vue"
-// surface
-export {default as CSheet} from "./components/surface/CSheet.vue"

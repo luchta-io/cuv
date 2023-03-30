@@ -18,7 +18,7 @@ const data: {
 </script>
 
 <template>
-    <Story title="Layout / CCover">
+    <Story title="Layouts / CCover">
         <Variant title="centered" auto-props-disabled>
             <div class="h-screen bg-gray-100">
                 <c-cover

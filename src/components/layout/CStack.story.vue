@@ -16,7 +16,7 @@ const data: {
 </script>
 
 <template>
-    <Story title="Layout / CStack">
+    <Story title="Layouts / CStack">
         <Variant title="space" auto-props-disabled>
             <c-stack
                 :space="data.space"
