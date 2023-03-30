@@ -81,7 +81,7 @@ const fieldClass = computed(() => {
     const base = [
         'peer relative col-start-2 flex items-center w-full appearance-none focus:outline-none focus:ring-0 opacity-100',
     ]
-    if(isError.value) base.push('border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)]')
+    if(isError.value) base.push('border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-outline-focus)]')
     if(!isError.value && props.readonly) base.push('focus-within:border-gray-900 border-gray-300') 
     if(!isError.value && !props.readonly) base.push('focus-within:border-blue-600 border-gray-300')
     if(props.variant === 'filled') base.push('min-h-[2.7rem] rounded-t-lg rounded-b-none px-2.5 bg-gray-50 border-0 border-b-2')
@@ -111,19 +111,19 @@ const labelClass = computed(() => {
     if(isError.value ) base.push('text-[var(--jupiter-danger-text)]')
     if(!isError.value ) base.push('text-gray-500 peer-focus:text-blue-600')
     if(props.variant === 'filled') base.push(
-        '-translate-y-4 top-4 z-10 peer-focus:-translate-y-4',
+        '-translate-y-4 top-4 peer-focus:-translate-y-4',
         !props.modelValue || !props.modelValue.length 
         ? 'scale-100 translate-y-0' 
         : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0'
         )
     if(props.variant === 'outlined') base.push(
-        '-translate-y-4 top-4 z-10 peer-focus:-translate-y-4',
+        '-translate-y-4 top-4 peer-focus:-translate-y-4',
         !props.modelValue || !props.modelValue.length 
         ? 'scale-100 translate-y-0' 
         : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0'
         )
     if(props.variant === 'underlined') base.push(
-        '-translate-y-5 top-3 z-10 peer-focus:left-0 peer-focus:-translate-y-5',
+        '-translate-y-5 top-3 peer-focus:left-0 peer-focus:-translate-y-5',
         !props.modelValue || !props.modelValue.length 
         ? 'scale-100 translate-y-0' 
         : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0'

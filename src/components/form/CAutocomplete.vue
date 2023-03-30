@@ -72,7 +72,7 @@ const fieldClass = computed(() => {
     const base = [
         'peer relative col-start-2 flex items-center w-full appearance-none focus:outline-none focus:ring-0 opacity-100',
     ]
-    if(isError.value) base.push('border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)]')
+    if(isError.value) base.push('border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-outline-focus)]')
     if(!isError.value && props.readonly) base.push('focus-within:border-gray-900 border-gray-300') 
     if(!isError.value && !props.readonly) base.push('focus-within:border-blue-600 border-gray-300')
 
@@ -101,17 +101,17 @@ const labelClass = computed(() => {
     if(!isError.value) base.push('text-gray-500 peer-read-only:peer-focus:text-gray-900 peer-focus:text-blue-600')
 
     if(props.variant === 'filled') base.push(
-        '-translate-y-4 top-4 z-10 peer-focus:-translate-y-4', 
+        '-translate-y-4 top-4 peer-focus:-translate-y-4', 
         !props.modelValue && !data.inputText
         ? 'scale-100 translate-y-0' 
         : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
     if(props.variant === 'outlined') base.push(
-        '-translate-y-4 top-4 z-10 peer-focus:-translate-y-4', 
+        '-translate-y-4 top-4 peer-focus:-translate-y-4', 
         !props.modelValue && !data.inputText
         ? 'scale-100 translate-y-0' 
         : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
     if(props.variant === 'underlined') base.push(
-        '-translate-y-5 top-3 z-10 peer-focus:left-0 peer-focus:-translate-y-5', 
+        '-translate-y-5 top-3 peer-focus:left-0 peer-focus:-translate-y-5', 
         !props.modelValue && !data.inputText
         ? 'scale-100 translate-y-0' 
         : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
@@ -170,6 +170,7 @@ const selectItem = (option: any) => {
 
 const openDropdownList = () => {
     if(props.readonly) return 
+    if(props.disabled) return
     data.isActive = true
 }
 
@@ -179,6 +180,8 @@ const closeDropdownList = () => {
 }
 
 const toggleDropdownList = () => {
+    if(props.readonly) return
+    if(props.disabled) return
     data.isActive = !data.isActive
 }
 
@@ -202,7 +205,7 @@ watchEffect(() => {
             <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
         </div>
         <div class="relative w-full flex">
-            <div v-if="selectionSlotDisplay" :class="selectionClass">
+            <div v-if="selectionSlotDisplay" @click="toggleDropdownList" :class="selectionClass">
                 <slot name="selection" :item="selectionItem">
                     {{ typeof selectionItem === "object" ? selectionItem[itemValue] : selectionItem }}
                 </slot>

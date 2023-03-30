@@ -67,7 +67,7 @@ const fieldClass = computed(() => {
     const base = [
         'group peer col-start-2 flex items-start w-full',
     ]
-    if(isError.value) base.push('border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)]' )
+    if(isError.value) base.push('border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-outline-focus)]' )
     if(!isError.value && props.readonly) base.push('focus-within:border-gray-900')
     if(!isError.value && !props.readonly) base.push('border-gray-300 focus-within:border-blue-600')
     if(props.variant === 'filled') base.push('rounded-t-lg rounded-b-none bg-gray-50 border-0 border-b-2')
@@ -97,11 +97,11 @@ const labelClass = computed(() => {
     ]
     if(isError.value) base.push('text-[var(--jupiter-danger-text)]')
     if(!isError.value) base.push('text-gray-500 peer-read-only:peer-focus:text-gray-900 peer-focus:text-blue-600')
-    if(props.variant === 'filled') base.push('-translate-y-4 top-4 z-10 left-2.5 peer-focus:-translate-y-4')
+    if(props.variant === 'filled') base.push('-translate-y-4 top-4 left-2.5 peer-focus:-translate-y-4')
     if(props.variant === 'filled' && props.modelValue) base.push('scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
-    if(props.variant === 'outlined') base.push('-translate-y-4 top-4 z-10 px-2 peer-focus:px-2 peer-focus:-translate-y-4 left-1 top-4')
+    if(props.variant === 'outlined') base.push('-translate-y-4 top-4 px-2 peer-focus:px-2 peer-focus:-translate-y-4 left-1 top-4')
     if(props.variant === 'outlined' && props.modelValue) base.push('scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
-    if(props.variant === 'underlined') base.push('-translate-y-4 top-3 z-10 pl-1 peer-focus:left-0 peer-focus:-translate-y-4')
+    if(props.variant === 'underlined') base.push('-translate-y-4 top-3 pl-1 peer-focus:left-0 peer-focus:-translate-y-4')
     if(props.variant === 'underlined' && props.modelValue) base.push('scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
     if(!props.modelValue) base.push('scale-100 translate-y-0')
     return base

@@ -65,7 +65,7 @@ const fieldClass = computed(() => {
     const base = [
         'peer w-full col-start-2 flex items-center appearance-none text-gray-900 focus:outline-none focus:ring-0 opacity-100',
     ]
-    if(isError.value) base.push('border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-border)]')
+    if(isError.value) base.push('border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-outline-focus)]')
     if(!isError.value && props.readonly) base.push('focus-within:border-gray-900 border-gray-300') 
     if(!isError.value && !props.readonly) base.push('focus-within:border-blue-600 border-gray-300')
 
