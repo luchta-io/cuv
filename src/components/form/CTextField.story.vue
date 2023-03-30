@@ -361,6 +361,7 @@ const error : {
 | --- | --- | --- | --- |
 | appendIcon | string | undefined | 入力フォームの右外側に表示させるiconを指定します |
 | appendInnerIcon | string | undefined | 入力フォームの右内側に表示させるiconを指定します |
+| clearable | boolean | false | 選択した値をクリアするボタンを追加する場合は指定します |
 | disabled | boolean | false | 非活性にする場合は指定します |
 | error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
 | errorMessage | string/string[] | '' | コンポーネントをエラー状態にし、表示するメッセージを指定します|

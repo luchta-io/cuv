@@ -127,11 +127,11 @@ const clear = () => {
 <template>
 <div class="relative w-auto grid grid-cols-[auto_1fr_auto] gap-y-1">
     <div v-show="prependIcon" class="text-lg col-start-1 pt-4 pr-1">
-        <c-svg-icon @click="$emit('click:prepend')" :icon="prependIcon" size="medium" class="cursor-pointer text-gray-500"/>
+        <c-svg-icon @click="$emit('click:prepend')" :icon="prependIcon" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
     </div>
     <div :class="fieldClass">
         <div v-show="prependInnerIcon" class="pt-2 pr-2 text-lg">
-            <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="text-gray-500 cursor-pointer" />
+            <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
         </div>
         <div class="relative w-full">
             <input 
@@ -155,12 +155,12 @@ const clear = () => {
             <c-svg-icon :icon="mdiClose" @click="clear" class="text-gray-500 cursor-pointer" />
         </div>
         <div v-show="appendInnerIcon" class="pt-2 pl-1 text-lg">
-            <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="text-gray-500 cursor-pointer" />
+            <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
         </div>
 
     </div>
     <div v-show="appendIcon" class="text-lg col-start-3 pt-4 pl-1">
-        <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="text-gray-500 cursor-pointer" />
+        <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class=" cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
     </div>
     <div v-show="isError" class="text-xs text-[var(--jupiter-danger-text)] col-start-2">
         <p v-for="(msg,index) in formatedErrorMessage" :key="index">
