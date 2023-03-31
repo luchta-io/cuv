@@ -35,16 +35,16 @@ const innerRingClass = computed(() => {
         props.width === 'thin' ? 'border-2' : '',
         props.width === 'thick' ? 'border-8' : '',
 
-        props.color === 'white' ? 'border-[var(--jupiter-white)]' : '',
-        props.color === 'black' ? 'border-[var(--jupiter-black)]' : '',
-        props.color === 'light' ? 'border-[var(--jupiter-light-border)]' : '',
-        props.color === 'dark' ? 'border-[var(--jupiter-dark-border)]' : '',
-        props.color === 'primary' ? 'border-[var(--jupiter-primary-border)]' : '',
-        props.color === 'link' ? 'border-[var(--jupiter-link-border)]' : '',
-        props.color === 'success' ? 'border-[var(--jupiter-success-border)]' : '',
-        props.color === 'danger' ? 'border-[var(--jupiter-danger-border)]' : '',
-        props.color === 'warning' ? 'border-[var(--jupiter-warning-border)]' : '',
-        props.color === 'info' ? 'border-[var(--jupiter-info-border)]' : '',
+        props.color === 'white' ? 'border-[var(--cuv-white)]' : '',
+        props.color === 'black' ? 'border-[var(--cuv-black)]' : '',
+        props.color === 'light' ? 'border-[var(--cuv-light-border)]' : '',
+        props.color === 'dark' ? 'border-[var(--cuv-dark-border)]' : '',
+        props.color === 'primary' ? 'border-[var(--cuv-primary-border)]' : '',
+        props.color === 'link' ? 'border-[var(--cuv-link-border)]' : '',
+        props.color === 'success' ? 'border-[var(--cuv-success-border)]' : '',
+        props.color === 'danger' ? 'border-[var(--cuv-danger-border)]' : '',
+        props.color === 'warning' ? 'border-[var(--cuv-warning-border)]' : '',
+        props.color === 'info' ? 'border-[var(--cuv-info-border)]' : '',
     ]    
 })    
 

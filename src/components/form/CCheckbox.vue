@@ -67,16 +67,16 @@ const isError = computed(() => {
 })
 
 const iconColor = computed(() => {
-    if(props.color === 'white') return 'text-[var(--jupiter-white)]'
-    if(props.color === 'black') return 'text-[var(--jupiter-black)]'
-    if(props.color === 'light') return 'text-[var(--jupiter-light-text)]'
-    if(props.color === 'dark') return 'text-[var(--jupiter-dark-text)]'
-    if(props.color === 'primary') return 'text-[var(--jupiter-primary-text)]'
-    if(props.color === 'link') return 'text-[var(--jupiter-link-text)]'
-    if(props.color === 'success') return 'text-[var(--jupiter-success-text)]'
-    if(props.color === 'danger') return 'text-[var(--jupiter-danger-text)]'
-    if(props.color === 'warning') return 'text-[var(--jupiter-warning-text)]'
-    if(props.color === 'info') return 'text-[var(--jupiter-info-text)]'
+    if(props.color === 'white') return 'text-[var(--cuv-white)]'
+    if(props.color === 'black') return 'text-[var(--cuv-black)]'
+    if(props.color === 'light') return 'text-[var(--cuv-light-text)]'
+    if(props.color === 'dark') return 'text-[var(--cuv-dark-text)]'
+    if(props.color === 'primary') return 'text-[var(--cuv-primary-text)]'
+    if(props.color === 'link') return 'text-[var(--cuv-link-text)]'
+    if(props.color === 'success') return 'text-[var(--cuv-success-text)]'
+    if(props.color === 'danger') return 'text-[var(--cuv-danger-text)]'
+    if(props.color === 'warning') return 'text-[var(--cuv-warning-text)]'
+    if(props.color === 'info') return 'text-[var(--cuv-info-text)]'
     return ''
 })
 
@@ -84,9 +84,9 @@ const iconClass = computed(() => {
     return [
         'group w-10 h-10 rounded-full flex justify-center items-center',
         'peer-disabled:text-gray-400 peer-hover:bg-gray-50 peer-focus:bg-gray-50 peer-hover:peer-disabled:bg-transparent',
-        iconDisplayStatus.value === 'blank' ? 'text-[var(--jupiter-black)]' : iconColor.value,
+        iconDisplayStatus.value === 'blank' ? 'text-[var(--cuv-black)]' : iconColor.value,
         props.readonly ? 'peer-read-only:text-gray-500' : '',
-        isError.value ? 'text-[var(--jupiter-danger-text)]' : '',
+        isError.value ? 'text-[var(--cuv-danger-text)]' : '',
     ]
 })
 
@@ -95,8 +95,8 @@ const labelClass = computed(() => {
         'text-base peer-disabled:text-gray-400',
     ]
     if(props.readonly) base.push('text-gray-500')
-    if(isError.value) base.push('text-[var(--jupiter-danger-text)]')
-    if(!props.readonly && !isError.value) base.push('text-[var(--jupiter-black)]')
+    if(isError.value) base.push('text-[var(--cuv-danger-text)]')
+    if(!props.readonly && !isError.value) base.push('text-[var(--cuv-black)]')
 
     return base
 })
@@ -132,7 +132,7 @@ const indeterminateClick = () => {
         </div>
     </label>
 </div>
-<div v-show="isError" class="text-xs text-[var(--jupiter-danger-text)] pt-1 pl-2">
+<div v-show="isError" class="text-xs text-[var(--cuv-danger-text)] pt-1 pl-2">
     <p v-for="(msg,index) in formatedErrorMessage" :key="index">
         {{ msg }}
     </p>

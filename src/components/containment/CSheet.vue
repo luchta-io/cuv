@@ -25,16 +25,16 @@ const style = computed(() => {
         props.position,
     ]
 
-    if(props.color === 'white') base.push(props.border ? 'border-gray-100' : 'bg-[var(--jupiter-white)] border-transparent')
-    if(props.color === 'black') base.push(props.border ? 'border-[var(--jupiter-black)]' :'bg-[var(--jupiter-black)] border-transparent')
-    if(props.color === 'light') base.push(props.border ? 'border-[var(--jupiter-light-border)]' : 'bg-[var(--jupiter-light-background)] border-transparent')
-    if(props.color === 'dark') base.push(props.border ? 'border-[var(--jupiter-dark-border)]' : 'bg-[var(--jupiter-dark-background)] border-transparent')
-    if(props.color === 'primary') base.push(props.border ? 'border-[var(--jupiter-primary-border)]' : 'bg-[var(--jupiter-primary-background)] border-transparent')
-    if(props.color === 'link') base.push(props.border ? 'border-[var(--jupiter-link-border)]' : 'bg-[var(--jupiter-link-background)] border-transparent')
-    if(props.color === 'success') base.push(props.border ? 'border-[var(--jupiter-success-border)]' : 'bg-[var(--jupiter-success-background)] border-transparent')
-    if(props.color === 'danger') base.push(props.border ? 'border-[var(--jupiter-danger-border)]' : 'bg-[var(--jupiter-danger-background)] border-transparent')
-    if(props.color === 'warning') base.push(props.border ? 'border-[var(--jupiter-warning-border)]' : 'bg-[var(--jupiter-warning-background)] border-transparent')
-    if(props.color === 'info') base.push(props.border ? 'border-[var(--jupiter-info-border)]' : 'bg-[var(--jupiter-info-background)] border-transparent')
+    if(props.color === 'white') base.push(props.border ? 'border-gray-100' : 'bg-[var(--cuv-white)] border-transparent')
+    if(props.color === 'black') base.push(props.border ? 'border-[var(--cuv-black)]' :'bg-[var(--cuv-black)] border-transparent')
+    if(props.color === 'light') base.push(props.border ? 'border-[var(--cuv-light-border)]' : 'bg-[var(--cuv-light-background)] border-transparent')
+    if(props.color === 'dark') base.push(props.border ? 'border-[var(--cuv-dark-border)]' : 'bg-[var(--cuv-dark-background)] border-transparent')
+    if(props.color === 'primary') base.push(props.border ? 'border-[var(--cuv-primary-border)]' : 'bg-[var(--cuv-primary-background)] border-transparent')
+    if(props.color === 'link') base.push(props.border ? 'border-[var(--cuv-link-border)]' : 'bg-[var(--cuv-link-background)] border-transparent')
+    if(props.color === 'success') base.push(props.border ? 'border-[var(--cuv-success-border)]' : 'bg-[var(--cuv-success-background)] border-transparent')
+    if(props.color === 'danger') base.push(props.border ? 'border-[var(--cuv-danger-border)]' : 'bg-[var(--cuv-danger-background)] border-transparent')
+    if(props.color === 'warning') base.push(props.border ? 'border-[var(--cuv-warning-border)]' : 'bg-[var(--cuv-warning-background)] border-transparent')
+    if(props.color === 'info') base.push(props.border ? 'border-[var(--cuv-info-border)]' : 'bg-[var(--cuv-info-background)] border-transparent')
 
     if(props.elevation === 'small') base.push('shadow')
     if(props.elevation === 'medium') base.push('shadow-md')

@@ -72,7 +72,7 @@ const fieldClass = computed(() => {
     const base = [
         'peer relative col-start-2 flex items-center w-full appearance-none focus:outline-none focus:ring-0 opacity-100',
     ]
-    if(isError.value) base.push('border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-outline-focus)]')
+    if(isError.value) base.push('border-[var(--cuv-danger-border)] focus-within:border-[var(--cuv-danger-outline-focus)]')
     if(!isError.value && props.readonly) base.push('focus-within:border-gray-900 border-gray-300') 
     if(!isError.value && !props.readonly) base.push('focus-within:border-blue-600 border-gray-300')
 
@@ -97,7 +97,7 @@ const labelClass = computed(() => {
     const base = [
         'absolute text-sm duration-300 transform origin-[0] peer-focus:scale-75 whitespace-nowrap overflow-hidden pointer-events-none',
     ]
-    if(isError.value) base.push('text-[var(--jupiter-danger-text)]')
+    if(isError.value) base.push('text-[var(--cuv-danger-text)]')
     if(!isError.value) base.push('text-gray-500 peer-read-only:peer-focus:text-gray-900 peer-focus:text-blue-600')
 
     if(props.variant === 'filled') base.push(
@@ -198,11 +198,11 @@ watchEffect(() => {
 <template>
 <div @mouseover="data.isHover = true" @mouseleave="data.isHover = false" class="relative grid grid-cols-[auto_1fr_auto] gap-y-1">
     <div v-show="prependIcon" class="text-lg col-start-1 my-auto pt-1.5 pr-1">
-        <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
+        <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
     </div>
     <div :class="fieldClass">
         <div v-show="prependInnerIcon" class="my-auto pt-2 pr-2 text-lg">
-            <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
+            <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
         <div class="relative w-full flex">
             <div v-if="selectionSlotDisplay" @click="toggleDropdownList" :class="selectionClass">
@@ -236,10 +236,10 @@ watchEffect(() => {
             <c-svg-icon :icon="mdiClose" @click="clear" class="text-gray-500 cursor-pointer" />
         </div>
         <div v-show="menuIconDisplay" class="pt-2">
-            <c-svg-icon :icon="data.isActive ? mdiMenuUp : mdiMenuDown" @click="toggleDropdownList" :class="isError ? 'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
+            <c-svg-icon :icon="data.isActive ? mdiMenuUp : mdiMenuDown" @click="toggleDropdownList" :class="isError ? 'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
         <div v-show="appendInnerIcon" class="my-auto pt-2 pl-1 text-lg">
-            <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
+            <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
 
         <div v-show="data.isActive" class="absolute left-0 top-full pt-0.5 z-50 w-full rounded peer-read-only:hidden">
@@ -260,9 +260,9 @@ watchEffect(() => {
         </div>
     </div>
     <div v-show="appendIcon" class="my-auto text-lg col-start-3 pt-1.5 pl-1">
-        <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
+        <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
     </div>
-    <div v-if="isError" class="text-xs text-[var(--jupiter-danger-text)] pt-1 col-start-2">
+    <div v-if="isError" class="text-xs text-[var(--cuv-danger-text)] pt-1 col-start-2">
         <p v-for="(msg,index) in formatedErrorMessage" :key="index">
             {{ msg }}
         </p>

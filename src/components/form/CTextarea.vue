@@ -67,7 +67,7 @@ const fieldClass = computed(() => {
     const base = [
         'group peer col-start-2 flex items-start w-full',
     ]
-    if(isError.value) base.push('border-[var(--jupiter-danger-border)] focus-within:border-[var(--jupiter-danger-outline-focus)]' )
+    if(isError.value) base.push('border-[var(--cuv-danger-border)] focus-within:border-[var(--cuv-danger-outline-focus)]' )
     if(!isError.value && props.readonly) base.push('focus-within:border-gray-900')
     if(!isError.value && !props.readonly) base.push('border-gray-300 focus-within:border-blue-600')
     if(props.variant === 'filled') base.push('rounded-t-lg rounded-b-none bg-gray-50 border-0 border-b-2')
@@ -95,7 +95,7 @@ const labelClass = computed(() => {
     const base = [
         'absolute text-sm duration-300 transform origin-[0] peer-focus:scale-75 whitespace-nowrap overflow-hidden pointer-events-none',
     ]
-    if(isError.value) base.push('text-[var(--jupiter-danger-text)]')
+    if(isError.value) base.push('text-[var(--cuv-danger-text)]')
     if(!isError.value) base.push('text-gray-500 peer-read-only:peer-focus:text-gray-900 peer-focus:text-blue-600')
     if(props.variant === 'filled') base.push('-translate-y-4 top-4 left-2.5 peer-focus:-translate-y-4')
     if(props.variant === 'filled' && props.modelValue) base.push('scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
@@ -121,11 +121,11 @@ const clear = () => {
 <template>
 <div class="grid grid-cols-[auto_1fr_auto] gap-y-1">
     <div v-show="prependIcon" class="text-lg col-start-1 pt-4 pr-1">
-        <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
+        <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
     </div>
     <div :class="fieldClass">
         <div v-show="prependInnerIcon" class="pl-2 pt-4 text-lg">
-            <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
+            <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
         <div class="relative w-full">
             <textarea
@@ -146,13 +146,13 @@ const clear = () => {
             <c-svg-icon v-show="clearIconDisplay" :icon="mdiClose" @click="clear" class="text-gray-500 peer-disabled:hidden peer-read-only:hidden cursor-pointer" />
         </div>
         <div v-show="appendInnerIcon" class="px-2 pt-4 text-lg">
-            <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
+            <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
     </div>
     <div v-show="appendIcon" class="text-lg col-start-3 pt-4 pl-1">
-        <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="cursor-pointer" :class="error?'text-[var(--jupiter-danger-text)]':'text-gray-500'"/>
+        <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
     </div>
-    <div v-show="isError" class="text-xs text-[var(--jupiter-danger-text)] col-start-2">
+    <div v-show="isError" class="text-xs text-[var(--cuv-danger-text)] col-start-2">
         <p v-for="(msg,index) in formatedErrorMessage" :key="index">
             {{ msg }}
         </p>
