@@ -63,3 +63,5 @@ npm run test:unit
 
 単体テストには [Vitest](https://vitest.dev/) + [VueTestingLibrary](https://testing-library.com/docs/vue-testing-library/intro/) を利用しています
 
+* [リリースノート](https://github.com/actier-luchta/cuv/releases/)
+* [リポジトリ](https://github.com/actier-luchta/cuv/)
