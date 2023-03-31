@@ -7,7 +7,7 @@ export default defineConfig({
     ],
     setupFile: '/src/histoire.setup.ts',
     theme: {
-        title: "jupiter"
+        title: "cuv"
     },
     tree: {
         groups: [
@@ -22,7 +22,7 @@ export default defineConfig({
         ],
     },
     vite: {
-        base: '/jupiter/',
+        base: '/cuv/',
         server: {
             host: true
         }

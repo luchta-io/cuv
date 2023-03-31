@@ -1,4 +1,4 @@
-# jupiter
+# cuv
 
 [Vue3](https://vuejs.org/) 向けのコンポーネントライブラリ
 

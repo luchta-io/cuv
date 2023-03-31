@@ -90,7 +90,7 @@ const colors = {
         >
                 <HstColorShades
                     :shades="shades"
-                    :get-name="shade => `--jupiter-${key}-${shade}`"
+                    :get-name="shade => `--cuv-${key}-${shade}`"
                 >
                     <template #default="{ color }">
                         <div
