@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {reactive} from "vue";
-import CSheet from "@/components/surface/CSheet.vue";
+import CSheet from "@/components/containment/CSheet.vue";
 import CBox from "@/components/layout/CBox.vue";
 import CCluster from "@/components/layout/CCluster.vue";
 
@@ -25,7 +25,7 @@ const data: {
 
 <template>
 <Story
-    title="surface / CSheet"
+    title="Containment / CSheet"
     :layout="{ type: 'grid', width: '100%' }"
 >
     <Variant title="基本" auto-props-disabled>

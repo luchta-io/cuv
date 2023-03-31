@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {reactive} from "vue";
 import {logEvent} from "histoire/client";
-import CButton from "@/components/form/CButton.vue";
+import CButton from "@/components/containment/CButton.vue";
 
 const data: {
   color: 'white' | 'black' | 'light' | 'dark' | 'primary' | 'link' | 'success' | 'danger' | 'warning' | 'info'
@@ -14,7 +14,7 @@ const data: {
 
 <template>
   <Story
-      title="Form / CButton"
+      title="Containment / CButton"
       :layout="{ type: 'grid', width: 200 }"
   >
 

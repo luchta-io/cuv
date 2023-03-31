@@ -17,7 +17,7 @@ const data: {
 </script>
 
 <template>
-    <Story title="Layout / CCenter" :layout="{ type: 'grid', width: '100%' }">
+    <Story title="Layouts / CCenter" :layout="{ type: 'grid', width: '100%' }">
         <Variant title="max" auto-props-disabled>
             <c-box class="bg-gray-100" padding="none">
                 <c-center

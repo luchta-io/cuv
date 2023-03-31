@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
 import CIcon from '@/components/layout/CIcon.vue';
-import CButton from '@/components/form/CButton.vue';
+import CButton from '@/components/containment/CButton.vue';
 
 const data: {
     space: string
@@ -13,7 +13,7 @@ const data: {
 </script>
 
 <template>
-    <Story title="Layout / CIcon" :layout="{ type: 'grid', width: 300 }">
+    <Story title="Layouts / CIcon" :layout="{ type: 'grid', width: 300 }">
         <Variant title="Iconコンポーネントのみ" auto-props-disabled>
             <c-icon
             :space="data.space"

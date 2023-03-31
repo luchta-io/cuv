@@ -16,7 +16,7 @@ const data: {
 
 <template>
     <Story 
-    title="Layout / CImposter">
+    title="Layouts / CImposter">
     <Variant title="breakout" auto-props-disabled>
             <div class="relative bg-gray-100 my-20">
                 <h3>位置指定コンテナ</h3>

@@ -79,7 +79,7 @@ const error: {
 
 <template>
 <Story
-    title="Form / CCheckbox"
+    title="Form Inputs & Controls / CCheckbox"
     :layout="{ type: 'grid', width: '100%' }"
 >
     <Variant title="基本" auto-props-disabled>

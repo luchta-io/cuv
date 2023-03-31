@@ -19,7 +19,7 @@ const data: {
 </script>
 
 <template>
-    <Story title="Layout / CSidebar" :layout="{ type: 'grid', width: '100%' }">
+    <Story title="Layouts / CSidebar" :layout="{ type: 'grid', width: '100%' }">
         <Variant title="side" auto-props-disabled>
             <c-sidebar
             :side="data.side"

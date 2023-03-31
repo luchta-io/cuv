@@ -2,7 +2,7 @@
 import { reactive } from 'vue';
 import CSwitcher from '@/components/layout/CSwitcher.vue';
 import CBox from '@/components/layout/CBox.vue';
-import CButton from '@/components/form/CButton.vue';
+import CButton from '@/components/containment/CButton.vue';
 
 const data: {
     threshold: string
@@ -18,7 +18,7 @@ const data: {
 </script>
 
 <template>
-    <Story title="Layout / CSwitcher" :layout="{ type: 'grid', width: '100%' }">
+    <Story title="Layouts / CSwitcher" :layout="{ type: 'grid', width: '100%' }">
         <Variant title="threshold" auto-props-disabled>
             <c-switcher
             :threshold="data.threshold"

@@ -16,7 +16,7 @@ const cluster: {
 </script>
 
 <template>
-    <Story title="Layout / CCluster" :layout="{ type: 'grid', width: '100%' }">
+    <Story title="Layouts / CCluster" :layout="{ type: 'grid', width: '100%' }">
         <Variant title="justify" auto-props-disabled>
             <c-cluster
             :justify="cluster.justify"

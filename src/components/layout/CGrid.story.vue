@@ -13,7 +13,7 @@ const data: {
 </script>
 
 <template>
-    <Story title="Layout / CGrid" :layout="{ type: 'grid', width: '100%' }">
+    <Story title="Layouts / CGrid" :layout="{ type: 'grid', width: '100%' }">
         <Variant title="min" auto-props-disabled>
             <c-grid
                 :min="data.min"

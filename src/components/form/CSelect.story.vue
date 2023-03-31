@@ -238,7 +238,7 @@ const customToggle = () => {
 
 <template>
 <Story
-    title="Form / CSelect"
+    title="Form Inputs & Controls / CSelect"
     :layout="{ type: 'grid', width: 500 }"
 >
     <Variant title="基本" auto-props-disabled>

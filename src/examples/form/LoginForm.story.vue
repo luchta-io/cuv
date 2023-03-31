@@ -4,12 +4,12 @@ import {mdiEye, mdiEyeOff} from "@mdi/js";
 import CBox from "@/components/layout/CBox.vue";
 import CStack from "@/components/layout/CStack.vue";
 import CTextField from "@/components/form/CTextField.vue";
-import CButton from "@/components/form/CButton.vue";
+import CButton from "@/components/containment/CButton.vue";
 import CCluster from "@/components/layout/CCluster.vue";
 import CCenter from "@/components/layout/CCenter.vue";
 import CCover from "@/components/layout/CCover.vue";
-import CSheet from "@/components/surface/CSheet.vue";
-import COverlay from "@/components/overlay/COverlay.vue";
+import CSheet from "@/components/containment/CSheet.vue";
+import COverlay from "@/components/containment/COverlay.vue";
 import CProgress from "@/components/feedback/CProgress.vue";
 
 const input = reactive({

@@ -126,7 +126,7 @@ const error : {
 
 <template>
 <Story
-    title="Form / CTextField"
+    title="Form Inputs & Controls / CTextField"
     :layout="{ type: 'grid', width: 500 }"
 >
     <Variant title="filled" auto-props-disabled>

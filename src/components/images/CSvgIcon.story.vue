@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import {reactive} from "vue";
 import { mdiPlus, mdiMinus, mdiAccount, mdiAlert, mdiClose, mdiTab } from "@mdi/js";
-import CSvgIcon from "@/components/dataDisplay/CSvgIcon.vue";
+import CSvgIcon from "@/components/images/CSvgIcon.vue";
 import CCenter from "@/components/layout/CCenter.vue";
 import CCluster from "@/components/layout/CCluster.vue";
-import CButton from "@/components/form/CButton.vue";
+import CButton from "@/components/containment/CButton.vue";
 
 const data: {
     icon: string
@@ -17,7 +17,7 @@ const data: {
 
 <template>
 <Story
-    title="Data Display / CSvgIcon"
+    title="Images & Icons / CSvgIcon"
     :layout="{ type: 'grid', width: '100%' }"
 >
     <Variant title="基本" auto-props-disabled>

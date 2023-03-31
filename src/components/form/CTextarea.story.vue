@@ -85,7 +85,7 @@ const error: {
 
 <template>
 <Story
-    title="Form / CTextarea"
+    title="Form Inputs & Controls / CTextarea"
     :layout="{ type: 'grid', width: 500 }"
 >
     <Variant title="基本" auto-props-disabled>
