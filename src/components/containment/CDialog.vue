@@ -32,8 +32,10 @@ const escClose = (e:KeyboardEvent) => {
 }
 
 watchEffect(() => {
-    if(props.modelValue) document.addEventListener('keyup', escClose)
-    else document.removeEventListener('keyup', escClose)
+    if(typeof window !== 'undefined') {
+        if(props.modelValue) window.addEventListener('keyup', escClose)
+        else window.removeEventListener('keyup', escClose)
+    }
 })
 </script>
 <template>

@@ -31,7 +31,7 @@ const longData: {
 </script>
 <template>
     <Story title="Containment / CDialog" :layout="{ type: 'grid', width: 200 }">
-        <Variant title="基本">
+        <Variant title="基本" auto-props-disabled>
             <c-button @click="data.isActive = true">ダイアログを表示</c-button>
             <c-dialog
                 v-model="data.isActive"
@@ -43,7 +43,7 @@ const longData: {
                 </c-box>
             </c-dialog>
         </Variant>
-        <Variant title="重なったコンテンツ">
+        <Variant title="重なったコンテンツ" auto-props-disabled>
             <c-button @click="stackData.isParentActive = true">ダイアログを表示</c-button>
             <c-dialog
                 v-model="stackData.isParentActive"
@@ -75,7 +75,7 @@ const longData: {
                 </c-box>
             </c-dialog>
         </Variant>
-        <Variant title="長いコンテンツ">
+        <Variant title="長いコンテンツ" auto-props-disabled>
             <c-button @click="longData.isLongActive = true"
                 >長いコンテンツを表示</c-button
             >
