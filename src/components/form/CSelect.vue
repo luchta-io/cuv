@@ -95,9 +95,9 @@ const inputClass = computed(() => {
     const base = [
         'peer w-full focus:outline-none bg-transparent',
     ]
-    if(!props.label) base.push('placeholder:opacity-100')
+    if(props.modelValue || props.modelValue.length) base.push('placeholder:opacity-0')
+    if(!props.label && (!props.modelValue || !props.modelValue.length)) base.push('placeholder:opacity-100')
     if(props.label && (!props.modelValue || !props.modelValue.length)) base.push('placeholder:opacity-0 focus:placeholder:opacity-100')
-    if(props.label && (props.modelValue || props.modelValue.length)) base.push('placeholder:opacity-0')
     if(props.variant === 'filled') base.push('pt-4 pb-1')
     if(props.variant === 'outlined') base.push('pt-4 pb-1.5')
     if(props.variant === 'underlined') base.push('pt-2.5 pb-1')
