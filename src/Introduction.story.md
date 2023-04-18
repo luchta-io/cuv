@@ -38,6 +38,16 @@ npm install @mdi/js
 import '@actier-luchta/cuv/style'
 ```
 
+### Nuxtで使用する場合
+`plugins`ディレクトリの下に、`cuv.ts`ファイルを作成します
+```ts
+import '@actier-luchta/cuv/style'
+
+export default defineNuxtPlugin((nuxtApp) => {
+
+})
+```
+
 ### リンク
 * [リリースノート](https://github.com/actier-luchta/cuv/releases/)
 * [リポジトリ](https://github.com/actier-luchta/cuv/)
