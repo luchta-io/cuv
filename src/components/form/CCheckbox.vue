@@ -47,8 +47,8 @@ const checkboxValue = computed({
 
 const iconDisplayStatus = computed(() => {
     if(data.isIndeterminate) return 'indeterminate'
-    if(typeof props.modelValue === 'boolean') return checkboxValue.value ? 'marked' : 'blank'
-    return checkboxValue.value.includes(props.value) ? 'marked' : 'blank'
+    if(Array.isArray(props.modelValue)) return checkboxValue.value.includes(props.value) ? 'marked' : 'blank'
+    return checkboxValue.value ? 'marked' : 'blank'
 })
 
 const formatedErrorMessage = computed(() => {
