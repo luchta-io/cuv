@@ -95,7 +95,7 @@ const inputClass = computed(() => {
     const base = [
         'peer w-full focus:outline-none bg-transparent',
     ]
-    if(props.modelValue || props.modelValue.length) base.push('placeholder:opacity-0')
+    if(props.modelValue || Array.isArray(props.modelValue)) base.push('placeholder:opacity-0')
     if(!props.label && (!props.modelValue || !props.modelValue.length)) base.push('placeholder:opacity-100')
     if(props.label && (!props.modelValue || !props.modelValue.length)) base.push('placeholder:opacity-0 focus:placeholder:opacity-100')
     if(props.variant === 'filled') base.push('pt-4 pb-1')
@@ -182,8 +182,10 @@ const selectionSlotDisplay = computed(() => {
 })
 
 const liClass= (item:any) => {
-    if(props.multiple && props.items[0][props.itemValue]) return props.modelValue.includes(item[props.itemValue]) ? 'bg-blue-50 text-blue-700':''
-    if(props.multiple && !props.items[0][props.itemValue]) return props.modelValue.includes(item) ? 'bg-blue-50 text-blue-700':''
+    if(Array.isArray(props.modelValue)) {
+        if(props.multiple && props.items[0][props.itemValue]) return props.modelValue.includes(item[props.itemValue]) ? 'bg-blue-50 text-blue-700':''
+        if(props.multiple && !props.items[0][props.itemValue]) return props.modelValue.includes(item) ? 'bg-blue-50 text-blue-700':''
+    }
     return item == selectionItem.value ? 'bg-blue-50 text-blue-700':''
 }
 
