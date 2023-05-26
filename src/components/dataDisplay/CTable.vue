@@ -21,13 +21,15 @@ const tableClass = computed(() => {
         '[&>table]:w-full',
         '[&_thead_tr]:shadow-[inset_0_-1px_0_rgba(0,0,0,0.2)] [&_thead_tr]:bg-white [&_thead_tr]:h-12',
         '[&_thead_th]:font-semibold [&_thead_th]:text-gray-600',
-        '[&_tbody>tr]:border-b [&_tbody>tr]:border-gray-300 last:[&_tbody>tr]:border-none hover:[&_tbody>tr]:bg-gray-50',
+        '[&_tbody>tr]:border-b [&_tbody>tr]:border-gray-300 last:[&_tbody>tr]:border-none',
         '[&_tfoot_tr]:shadow-[inset_0_1px_0_rgba(0,0,0,0.2)] [&_tfoot_tr]:bg-white [&_tfoot_tr]:h-12',
         '[&_td]:px-4 [&_th]:px-4',
 
         props.density === 'default' ? '[&_td]:h-12' : '',
         props.density === 'comfortable' ? '[&_td]:h-8' : '',
         props.density === 'compact' ? '[&_td]:h-10' : '',
+
+        props.hover ? 'hover:[&_tbody>tr]:bg-gray-50' : '',
 
         props.fixedHeader ? 'overflow-y-scroll overscroll-contain [&_thead]:sticky [&_thead]:top-0' : '',
         props.fixedFooter ? 'overflow-y-scroll overscroll-contain [&_tfoot]:sticky [&_tfoot]:bottom-0' : '',

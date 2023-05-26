@@ -27,12 +27,6 @@ const props = withDefaults(defineProps<{
     disabled: false
 })
 
-const data: {
-    isIndeterminate: boolean
-} = reactive({
-    isIndeterminate: props.indeterminate,
-})
-
 const emits = defineEmits<{
     (e: 'update:modelValue', value: any): void
 }>()
@@ -46,7 +40,7 @@ const checkboxValue = computed({
 })
 
 const iconDisplayStatus = computed(() => {
-    if(data.isIndeterminate) return 'indeterminate'
+    if(isIndeterminate.value) return 'indeterminate'
     if(Array.isArray(props.modelValue)) return checkboxValue.value.includes(props.value) ? 'marked' : 'blank'
     return checkboxValue.value ? 'marked' : 'blank'
 })
@@ -101,8 +95,15 @@ const labelClass = computed(() => {
     return base
 })
 
+const isIndeterminate = computed({
+    get: () => props.indeterminate,
+    set: value => {
+        return value
+    }
+})
+
 const indeterminateClick = () => {
-    data.isIndeterminate = false
+    isIndeterminate.value = false
 }
 
 </script>
