@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive, watchEffect } from 'vue';
-import { mdiPageFirst, mdiChevronLeft, mdiChevronRight, mdiPageLast } from '@mdi/js';
+import { mdiPageFirst, mdiChevronLeft, mdiChevronRight, mdiPageLast, mdiMagnify } from '@mdi/js';
 import CProgress from '@/components/feedback/CProgress.vue';
 import CCluster from '@/components/layout/CCluster.vue';
 import CSelect from '@/components/form/CSelect.vue';
@@ -31,6 +31,7 @@ const props = withDefaults(defineProps<{
     modelValue?: any[]
     noDataText?: string
     page?: string|number
+    search?: string
     showSelect?: boolean
 }>(), {
     density: 'default',
@@ -57,52 +58,64 @@ const emits = defineEmits<{
 const data: {
     isAllChecked: boolean
     selectItems: string[]
+    newItems: any[]
     currentPage: number
     currentPerPage: number|string
 } = reactive({
     isAllChecked: false,
     selectItems: [],
+    newItems: [],
     currentPage: Number(props.page),
     currentPerPage: props.itemsPerPage,
 })
 
-const displayItems = computed(() => {
+const totalItems = computed(() => {
+    if ( props.search !== undefined && searchText.value.length ) return props.items.filter((itemRow)=>searchFilter(itemRow, searchText.value))
+    if ( props.itemsLength ) return props.items
     if( typeof data.currentPerPage === 'string' ) return props.items
-    if( props.itemsLength ) return props.items
-    return props.items.slice(startRecord.value-1, endRecord.value)
+    return props.items
 })
+
+const displayItems = computed(() => {
+    if( typeof data.currentPerPage === 'string' ) return totalItems.value
+    if( props.itemsLength ) return totalItems.value
+    return totalItems.value.slice(startRecord.value-1, endRecord.value)
+})
+
+const searchFilter = (itemRow: any, searchText: string) => {
+    const keyword = searchText.toUpperCase()
+    const result = props.headers.map(header => {
+        return String(itemRow[header.key]).toUpperCase().indexOf(keyword) > -1
+    })
+    return result.includes(true)
+}
 
 const startRecord = computed(() => {
     if( typeof data.currentPerPage === 'string' ) return 1
-    if( !totalRecord.value ) return 0
+    if( !totalItems.value.length ) return 0
     if( data.currentPerPage * data.currentPage - (data.currentPerPage-1 ) < 0 ) return 0
     return data.currentPerPage * data.currentPage - (data.currentPerPage-1)
 })
 
 const endRecord = computed(() => {
-    if( typeof data.currentPerPage === 'string' ) return totalRecord.value
-    if( data.currentPerPage * data.currentPage >= totalRecord.value ) return totalRecord.value
+    if( typeof data.currentPerPage === 'string' ) return totalItems.value.length
+    if( data.currentPerPage * data.currentPage >= totalItems.value.length ) return totalItems.value.length
     return data.currentPerPage * data.currentPage
-})
-
-const totalRecord = computed(() => {
-    if( props.itemsLength ) return props.itemsLength
-    return props.items.length
 })
 
 const lastPage = computed(() => {
     if( typeof data.currentPerPage === 'string' ) return 1
-    if( !totalRecord.value ) return 1
-    return Math.ceil(totalRecord.value / data.currentPerPage)
+    if( !totalItems.value.length ) return 1
+    return Math.ceil(totalItems.value.length / data.currentPerPage)
 })
 
 const perPageArray = computed(() => {
     if( props.itemsPerPageOptions ) return props.itemsPerPageOptions
     const Array = []
-    if( totalRecord.value >= 10) Array.push(10)
-    if( totalRecord.value >= 25) Array.push(25)
-    if( totalRecord.value >= 50) Array.push(50)
-    if( totalRecord.value >= 100) Array.push(100)
+    if( totalItems.value.length >= 10) Array.push(10)
+    if( totalItems.value.length >= 25) Array.push(25)
+    if( totalItems.value.length >= 50) Array.push(50)
+    if( totalItems.value.length >= 100) Array.push(100)
     Array.push('ALL')
     return Array
 })
@@ -122,6 +135,13 @@ const isloading = computed({
 
 const headerCheckboxIndeterminate = computed({
     get: () => !data.isAllChecked ? data.selectItems.length>0 : false,
+    set: value => {
+        return value
+    }
+})
+
+const searchText = computed({
+    get: () => { return props.search?props.search:'' },
     set: value => {
         return value
     }
@@ -150,8 +170,8 @@ const changePage = (direction: 'first'|'back'|'go'|'last') => {
     if (direction === 'go') data.currentPage ++
     if (direction === 'last') data.currentPage = lastPage.value
     if( typeof data.currentPerPage === 'string' ) {
-        emits('update:itemsPerPage', totalRecord.value)
-        emits('update:options', data.currentPage, totalRecord.value)
+        emits('update:itemsPerPage', totalItems.value.length)
+        emits('update:options', data.currentPage, totalItems.value.length)
         return
     }
     emits('update:itemsPerPage', data.currentPerPage)
@@ -162,8 +182,8 @@ const changePage = (direction: 'first'|'back'|'go'|'last') => {
 const changePerPage = () => {
     data.currentPage = 1
     if( typeof data.currentPerPage === 'string' ) {
-        emits('update:itemsPerPage', totalRecord.value)
-        emits('update:options', data.currentPage, totalRecord.value)
+        emits('update:itemsPerPage', totalItems.value.length)
+        emits('update:options', data.currentPage, totalItems.value.length)
         return
     }
     emits('update:itemsPerPage', data.currentPerPage)
@@ -235,7 +255,7 @@ watchEffect(() => {
                     Items per page:
                     <CSelect v-model="data.currentPerPage" @update:model-value="changePerPage" :items="perPageArray" variant="outlined" :disabled="!items.length" :class="$style.perpage"/>
                 </CCluster>
-                <div>{{ startRecord }}-{{ endRecord }} of {{ totalRecord }}</div>
+                <div>{{ startRecord }}-{{ endRecord }} of {{ totalItems.length }}</div>
                 <CCluster>
                     <button @click="changePage('first')" :disabled="data.currentPage<=1" :class="paginationButtonClass">
                         <CSvgIcon :icon="mdiPageFirst"/>

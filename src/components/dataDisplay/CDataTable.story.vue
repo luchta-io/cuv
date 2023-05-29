@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { onMounted, reactive } from 'vue';
 import { logEvent } from 'histoire/client'
+import { mdiMagnify } from '@mdi/js';
 import CDataTable from '@/components/dataDisplay/CDataTable.vue';
 import CSheet from '@/components/containment/CSheet.vue';
 import CCluster from '@/components/layout/CCluster.vue';
+import CSidebar from '@/components/layout/CSidebar.vue';
+import CTextField from '@/components/form/CTextField.vue';
+import CSvgIcon from '@/components/images/CSvgIcon.vue';
 
 const data: {
     nameList: {
@@ -518,6 +522,223 @@ const checked: {
     selectItems: [],
 })
 
+const search: {
+    nameList: {
+        id: string
+        name: string
+        age: number
+        gender: '男'|'女'
+    }[]
+    headers: {
+            key: string
+            title: string
+            align?: 'start' | 'end' 
+        }[]
+    search: string
+} = reactive({
+    nameList:[
+        {
+            id:'001',
+            name: '田中太郎',
+            age: 40,
+            gender: '男',
+        },
+        {
+            id:'002',
+            name: '鈴木仁美',
+            age: 32,
+            gender: '女',
+        },
+        {
+            id:'003',
+            name: '赤坂三郎',
+            age: 25,
+            gender: '男',
+        },
+        {
+            id:'004',
+            name: '目黒四郎',
+            age: 44,
+            gender: '男',
+        },
+        {
+            id:'005',
+            name: '池袋五子',
+            age: 59,
+            gender: '女',
+        },
+        {
+            id:'006',
+            name: '新宿六郎',
+            age: 30,
+            gender: '男',
+        },
+        {
+            id:'007',
+            name: '大崎七子',
+            age: 30,
+            gender: '女',
+        },
+        {
+            id:'008',
+            name: '神田八子',
+            age: 39,
+            gender: '女',
+        },
+        {
+            id:'009',
+            name: '池袋九太郎',
+            age: 29,
+            gender: '男',
+        },
+        {
+            id:'010',
+            name: '大久保十蔵',
+            age: 69,
+            gender: '男',
+        },
+        {
+            id:'011',
+            name: '田中太郎',
+            age: 40,
+            gender: '男',
+        },
+        {
+            id:'012',
+            name: '鈴木仁美',
+            age: 32,
+            gender: '女',
+        },
+        {
+            id:'013',
+            name: '赤坂三郎',
+            age: 25,
+            gender: '男',
+        },
+        {
+            id:'014',
+            name: '目黒四郎',
+            age: 44,
+            gender: '男',
+        },
+        {
+            id:'015',
+            name: '池袋五子',
+            age: 59,
+            gender: '女',
+        },
+        {
+            id:'016',
+            name: '新宿六郎',
+            age: 30,
+            gender: '男',
+        },
+        {
+            id:'017',
+            name: '大崎七子',
+            age: 30,
+            gender: '女',
+        },
+        {
+            id:'018',
+            name: '神田八子',
+            age: 39,
+            gender: '女',
+        },
+        {
+            id:'019',
+            name: '池袋九太郎',
+            age: 29,
+            gender: '男',
+        },
+        {
+            id:'020',
+            name: '大久保十蔵',
+            age: 69,
+            gender: '男',
+        },
+        {
+            id:'021',
+            name: '田中太郎',
+            age: 40,
+            gender: '男',
+        },
+        {
+            id:'022',
+            name: '鈴木仁美',
+            age: 32,
+            gender: '女',
+        },
+        {
+            id:'023',
+            name: '赤坂三郎',
+            age: 25,
+            gender: '男',
+        },
+        {
+            id:'024',
+            name: '目黒四郎',
+            age: 44,
+            gender: '男',
+        },
+        {
+            id:'025',
+            name: '池袋五子',
+            age: 59,
+            gender: '女',
+        },
+        {
+            id:'026',
+            name: '新宿六郎',
+            age: 30,
+            gender: '男',
+        },
+        {
+            id:'027',
+            name: '大崎七子',
+            age: 30,
+            gender: '女',
+        },
+        {
+            id:'028',
+            name: '神田八子',
+            age: 39,
+            gender: '女',
+        },
+        {
+            id:'029',
+            name: '池袋九太郎',
+            age: 29,
+            gender: '男',
+        },
+        {
+            id:'030',
+            name: '大久保十蔵',
+            age: 69,
+            gender: '男',
+        },
+        {
+            id:'031',
+            name: '田中太郎',
+            age: 40,
+            gender: '男',
+        },
+        {
+            id:'032',
+            name: '鈴木仁美',
+            age: 32,
+            gender: '女',
+        },
+    ],
+    headers: [
+        {key: 'id', title: 'ID'},
+        {key: 'name', title: '氏名'},
+        {key: 'gender', title: '性別'},
+        {key: 'age', title: '年齢'},
+    ],
+    search: '男',
+})
+
 const severSide: {
     itemsPerPage: number
     headers: {
@@ -703,6 +924,26 @@ onMounted(() => {
         show-select
         @click:row="logEvent('click:row', $event)"
         ></CDataTable>
+        <template #controls>
+        </template>
+    </Variant>
+    <Variant title="絞り込み" auto-props-disabled>
+        <CDataTable
+        :headers="search.headers"
+        :items="search.nameList"
+        :search="search.search"
+        item-value="id"
+        @click:row="logEvent('click:row', $event)"
+        >
+            <template #top>
+                <CSidebar side="right">
+                    <CTextField v-model="search.search"  placeholder="Search"/>
+                    <CCluster align="center">
+                        <CSvgIcon :icon="mdiMagnify" size="large" class="text-gray-500"/>
+                    </CCluster>
+                </CSidebar>
+            </template>
+        </CDataTable>
         <template #controls>
         </template>
     </Variant>
