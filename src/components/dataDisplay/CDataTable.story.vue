@@ -739,6 +739,223 @@ const search: {
     search: '男',
 })
 
+const searchCustom: {
+    nameList: {
+        id: string
+        name: string
+        age: number
+        gender: '男'|'女'
+    }[]
+    headers: {
+            key: string
+            title: string
+            align?: 'start' | 'end' 
+        }[]
+    search: string
+} = reactive({
+    nameList:[
+        {
+            id:'001',
+            name: '田中太郎',
+            age: 40,
+            gender: '男',
+        },
+        {
+            id:'002',
+            name: '鈴木仁美',
+            age: 32,
+            gender: '女',
+        },
+        {
+            id:'003',
+            name: '赤坂三郎',
+            age: 25,
+            gender: '男',
+        },
+        {
+            id:'004',
+            name: '目黒四郎',
+            age: 44,
+            gender: '男',
+        },
+        {
+            id:'005',
+            name: '池袋五子',
+            age: 59,
+            gender: '女',
+        },
+        {
+            id:'006',
+            name: '新宿六郎',
+            age: 30,
+            gender: '男',
+        },
+        {
+            id:'007',
+            name: '大崎七子',
+            age: 30,
+            gender: '女',
+        },
+        {
+            id:'008',
+            name: '神田八子',
+            age: 39,
+            gender: '女',
+        },
+        {
+            id:'009',
+            name: '池袋九太郎',
+            age: 29,
+            gender: '男',
+        },
+        {
+            id:'010',
+            name: '大久保十蔵',
+            age: 69,
+            gender: '男',
+        },
+        {
+            id:'011',
+            name: '田中太郎',
+            age: 40,
+            gender: '男',
+        },
+        {
+            id:'012',
+            name: '鈴木仁美',
+            age: 32,
+            gender: '女',
+        },
+        {
+            id:'013',
+            name: '赤坂三郎',
+            age: 25,
+            gender: '男',
+        },
+        {
+            id:'014',
+            name: '目黒四郎',
+            age: 44,
+            gender: '男',
+        },
+        {
+            id:'015',
+            name: '池袋五子',
+            age: 59,
+            gender: '女',
+        },
+        {
+            id:'016',
+            name: '新宿六郎',
+            age: 30,
+            gender: '男',
+        },
+        {
+            id:'017',
+            name: '大崎七子',
+            age: 30,
+            gender: '女',
+        },
+        {
+            id:'018',
+            name: '神田八子',
+            age: 39,
+            gender: '女',
+        },
+        {
+            id:'019',
+            name: '池袋九太郎',
+            age: 29,
+            gender: '男',
+        },
+        {
+            id:'020',
+            name: '大久保十蔵',
+            age: 69,
+            gender: '男',
+        },
+        {
+            id:'021',
+            name: '田中太郎',
+            age: 40,
+            gender: '男',
+        },
+        {
+            id:'022',
+            name: '鈴木仁美',
+            age: 32,
+            gender: '女',
+        },
+        {
+            id:'023',
+            name: '赤坂三郎',
+            age: 25,
+            gender: '男',
+        },
+        {
+            id:'024',
+            name: '目黒四郎',
+            age: 44,
+            gender: '男',
+        },
+        {
+            id:'025',
+            name: '池袋五子',
+            age: 59,
+            gender: '女',
+        },
+        {
+            id:'026',
+            name: '新宿六郎',
+            age: 30,
+            gender: '男',
+        },
+        {
+            id:'027',
+            name: '大崎七子',
+            age: 30,
+            gender: '女',
+        },
+        {
+            id:'028',
+            name: '神田八子',
+            age: 39,
+            gender: '女',
+        },
+        {
+            id:'029',
+            name: '池袋九太郎',
+            age: 29,
+            gender: '男',
+        },
+        {
+            id:'030',
+            name: '大久保十蔵',
+            age: 69,
+            gender: '男',
+        },
+        {
+            id:'031',
+            name: '田中太郎',
+            age: 40,
+            gender: '男',
+        },
+        {
+            id:'032',
+            name: '鈴木仁美',
+            age: 32,
+            gender: '女',
+        },
+    ],
+    headers: [
+        {key: 'id', title: 'ID'},
+        {key: 'name', title: '氏名'},
+        {key: 'gender', title: '性別'},
+        {key: 'age', title: '年齢'},
+    ],
+    search: '男',
+})
+
 const severSide: {
     itemsPerPage: number
     headers: {
@@ -874,6 +1091,14 @@ const loadItems = async( page:number, itemsPerPage:number) => {
     severSide.loading = false
 }
 
+const filterOnlyCapsText =  (value:string, query: string) => {
+    //valueが名前とかidとか、queryはkeyword
+    return value != null &&
+        query != null &&
+        typeof value === 'string' &&
+        value.toString().toLocaleUpperCase().indexOf(query) !== -1
+}
+
 onMounted(() => {
     loadItems(1, severSide.itemsPerPage)
 })
@@ -938,6 +1163,27 @@ onMounted(() => {
             <template #top>
                 <CSidebar side="right">
                     <CTextField v-model="search.search"  placeholder="Search"/>
+                    <CCluster align="center">
+                        <CSvgIcon :icon="mdiMagnify" size="large" class="text-gray-500"/>
+                    </CCluster>
+                </CSidebar>
+            </template>
+        </CDataTable>
+        <template #controls>
+        </template>
+    </Variant>
+    <Variant title="絞り込み(カスタム)" auto-props-disabled>
+        <CDataTable
+        :headers="searchCustom.headers"
+        :items="searchCustom.nameList"
+        :search="searchCustom.search"
+        :custom-filter="filterOnlyCapsText"
+        item-value="id"
+        @click:row="logEvent('click:row', $event)"
+        >
+            <template #top>
+                <CSidebar side="right">
+                    <CTextField v-model="searchCustom.search"  placeholder="Search"/>
                     <CCluster align="center">
                         <CSvgIcon :icon="mdiMagnify" size="large" class="text-gray-500"/>
                     </CCluster>

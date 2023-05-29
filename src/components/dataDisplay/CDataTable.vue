@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive, watchEffect } from 'vue';
-import { mdiPageFirst, mdiChevronLeft, mdiChevronRight, mdiPageLast, mdiMagnify } from '@mdi/js';
+import { mdiPageFirst, mdiChevronLeft, mdiChevronRight, mdiPageLast } from '@mdi/js';
 import CProgress from '@/components/feedback/CProgress.vue';
 import CCluster from '@/components/layout/CCluster.vue';
 import CSelect from '@/components/form/CSelect.vue';
@@ -16,6 +16,7 @@ interface headersType {
 }
 
 const props = withDefaults(defineProps<{
+    customFilter?: (value: string, query: string, item?: any) => boolean | number | [number, number] | [number, number][]
     density?:'default' | 'comfortable' | 'compact'
     fixedFooter?: boolean
     fixedHeader?: boolean
@@ -85,7 +86,8 @@ const displayItems = computed(() => {
 const searchFilter = (itemRow: any, searchText: string) => {
     const keyword = searchText.toUpperCase()
     const result = props.headers.map(header => {
-        return String(itemRow[header.key]).toUpperCase().indexOf(keyword) > -1
+        if ( props.customFilter ) return props.customFilter(itemRow[header.key], keyword)
+        return itemRow[header.key].toString().toUpperCase().indexOf(keyword) > -1
     })
     return result.includes(true)
 }
