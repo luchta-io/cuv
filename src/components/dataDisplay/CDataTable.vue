@@ -18,6 +18,7 @@ interface headersType {
 const props = withDefaults(defineProps<{
     customFilter?: (value: string, query: string, item?: any) => boolean | number | [number, number] | [number, number][]
     density?:'default' | 'comfortable' | 'compact'
+    filterKeys?: string | string[]
     fixedFooter?: boolean
     fixedHeader?: boolean
     headers: headersType[]
@@ -60,12 +61,14 @@ const data: {
     isAllChecked: boolean
     selectItems: string[]
     newItems: any[]
+    searchHeaderKeys: string[]
     currentPage: number
     currentPerPage: number|string
 } = reactive({
     isAllChecked: false,
     selectItems: [],
     newItems: [],
+    searchHeaderKeys: [],
     currentPage: Number(props.page),
     currentPerPage: props.itemsPerPage,
 })
@@ -85,11 +88,19 @@ const displayItems = computed(() => {
 
 const searchFilter = (itemRow: any, searchText: string) => {
     const keyword = searchText.toUpperCase()
-    const result = props.headers.map(header => {
-        if ( props.customFilter ) return props.customFilter(itemRow[header.key], keyword)
-        return itemRow[header.key].toString().toUpperCase().indexOf(keyword) > -1
-    })
+    data.searchHeaderKeys = props.headers.map(header=> header.key)
+    if ( props.customFilter ) {
+        const result = data.searchHeaderKeys.map(key => {
+            if ( props.customFilter ) return props.customFilter(itemRow[key], keyword)
+        })
+        return result.includes(true)
+    }
+    data.searchHeaderKeys = data.searchHeaderKeys.filter(key => props.filterKeys ? props.filterKeys.includes(key) : true)
+    const result = data.searchHeaderKeys.map(key => {
+        return itemRow[key].toString().toUpperCase().indexOf(keyword) > -1
+    })    
     return result.includes(true)
+
 }
 
 const startRecord = computed(() => {
