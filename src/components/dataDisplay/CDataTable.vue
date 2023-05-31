@@ -91,7 +91,7 @@ const totalItems = computed(() => {
 
 const totalItemsLength = computed(() => {
     if ( props.itemsLength ) return props.itemsLength
-    return props.items.length
+    return totalItems.value.length
 })
 
 const displayItems = computed(() => {
@@ -101,20 +101,20 @@ const displayItems = computed(() => {
 })
 
 const searchFilter = (itemRow: any, searchText: string) => {
-    const keyword = searchText.toUpperCase()
     data.searchHeaderKeys = props.headers.map(header=> header.key)
     if ( props.customFilter ) {
         const result = data.searchHeaderKeys.map(key => {
-            if ( props.customFilter ) return props.customFilter(itemRow[key], keyword)
+            if ( props.customFilter ) return props.customFilter(itemRow[key], searchText, key)
         })
         return filterMode(result)
     }
     if ( props.customKeyFilter ) {
         const result = Object.keys(props.customKeyFilter).map(key => {
-            if(props.customKeyFilter) return props.customKeyFilter[key](itemRow[key], keyword)
+            if(props.customKeyFilter) return props.customKeyFilter[key](itemRow[key], searchText, key)
         })
         return filterMode(result)
     }
+    const keyword = searchText.toUpperCase()
     data.searchHeaderKeys = data.searchHeaderKeys.filter(key => props.filterKeys ? props.filterKeys.includes(key) : true)
     const result = data.searchHeaderKeys.map(key => {
         return itemRow[key].toString().toUpperCase().indexOf(keyword) > -1

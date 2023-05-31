@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive } from 'vue';
+import { computed } from 'vue';
 import {mdiCheckboxMarked, mdiCheckboxBlankOutline, mdiMinusBox} from '@mdi/js'
 import CSvgIcon from '@/components/images/CSvgIcon.vue';
 
