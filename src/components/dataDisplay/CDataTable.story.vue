@@ -736,7 +736,7 @@ const search: {
         {key: 'gender', title: '性別'},
         {key: 'age', title: '年齢'},
     ],
-    search: '男',
+    search: '',
 })
 
 const searchCustom: {
@@ -953,7 +953,7 @@ const searchCustom: {
         {key: 'gender', title: '性別'},
         {key: 'age', title: '年齢'},
     ],
-    search: '男',
+    search: '',
 })
 
 const severSide: {
@@ -1217,7 +1217,11 @@ onMounted(() => {
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
+| customFilter | FilterFunction | undefined | 項目の絞り込みをする関数 |
+| customKeyFilter | { [string]: FilterFunction } | undefined | 項目の特定のキーの絞り込みで使用される関数を指定 |
 | density | 'default'/'comfortable'/'compact' | 'default' | コンポーネントが使用する垂直方向の高さを調整します |
+| filterKeys | string/string[] | undefined | 項目をフィルターする特定のキーの文字列または配列を渡します |
+| filterMode | 'every'/'some' | 'some' | 項目を照合するときに特定のフィルターを適用します。'some'はデフォルトで、項目の中のキーのどれかが検索語と一致している場合にtrueを返します。'every'は項目の全てのキーが検索語と一致している場合にtrueを返します。 |
 | fixedFooter | boolean | false | コンポーネントのtheadの位置を固定します |
 | fixedHeader | boolean | false | コンポーネントのtfootの位置を固定します |
 | headers | {key:string, title:string, align?:'start'/'end'}[] | [] | 各ヘッダー列を記述するオブジェクトの配列 |
@@ -1233,6 +1237,8 @@ onMounted(() => {
 | noDataText | string | 'データがありません。' | １件も表示されない場合に表示されるテキスト |
 | page | string/number | 1 | 最初のページを指定します |
 | showSelect | boolean | false | 左側にcheckboxを表示する場合は指定します |
+
+* FilterFunction = `(value: string, query: string, item?: any) => boolean`
 
 ## Slots
 

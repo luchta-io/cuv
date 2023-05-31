@@ -16,9 +16,11 @@ interface headersType {
 }
 
 const props = withDefaults(defineProps<{
-    customFilter?: (value: string, query: string, item?: any) => boolean | number | [number, number] | [number, number][]
+    customFilter?: (value: string, query: string, item?: any) => boolean
+    customKeyFilter?: { [value:string]: (value: string, query: string, item?: any) => boolean }
     density?:'default' | 'comfortable' | 'compact'
     filterKeys?: string | string[]
+    filterMode?: 'every' | 'some' 
     fixedFooter?: boolean
     fixedHeader?: boolean
     headers: headersType[]
@@ -37,6 +39,7 @@ const props = withDefaults(defineProps<{
     showSelect?: boolean
 }>(), {
     density: 'default',
+    filterMode: 'some',
     fixedFooter: false,
     fixedHeader: false,
     height: 'auto',
@@ -93,14 +96,24 @@ const searchFilter = (itemRow: any, searchText: string) => {
         const result = data.searchHeaderKeys.map(key => {
             if ( props.customFilter ) return props.customFilter(itemRow[key], keyword)
         })
-        return result.includes(true)
+        return filterMode(result)
+    }
+    if ( props.customKeyFilter ) {
+        const result = Object.keys(props.customKeyFilter).map(key => {
+            if(props.customKeyFilter) return props.customKeyFilter[key](itemRow[key], keyword)
+        })
+        return filterMode(result)
     }
     data.searchHeaderKeys = data.searchHeaderKeys.filter(key => props.filterKeys ? props.filterKeys.includes(key) : true)
     const result = data.searchHeaderKeys.map(key => {
         return itemRow[key].toString().toUpperCase().indexOf(keyword) > -1
     })    
-    return result.includes(true)
+    return filterMode(result)
+}
 
+const filterMode = (arr: (boolean|undefined)[]) => {
+    if ( props.filterMode === 'every' ) return arr.every( x => x === true)
+    return arr.includes(true)
 }
 
 const startRecord = computed(() => {
