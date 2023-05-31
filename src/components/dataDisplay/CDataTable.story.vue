@@ -5,9 +5,13 @@ import { mdiMagnify } from '@mdi/js';
 import CDataTable from '@/components/dataDisplay/CDataTable.vue';
 import CSheet from '@/components/containment/CSheet.vue';
 import CCluster from '@/components/layout/CCluster.vue';
-import CSidebar from '@/components/layout/CSidebar.vue';
 import CTextField from '@/components/form/CTextField.vue';
-import CSvgIcon from '@/components/images/CSvgIcon.vue';
+
+type optionsType = {
+    page: number,
+    itemsPerPage: number,
+    search?: string,
+}
 
 const data: {
     nameList: {
@@ -966,6 +970,7 @@ const severSide: {
     serverItems: any[]
     loading: boolean
     totalItems: number
+    search: string
 } = reactive({
     itemsPerPage: 5,
     headers: [
@@ -983,6 +988,7 @@ const severSide: {
     serverItems: [],
     loading: true,
     totalItems: 0,
+    search: '',
 })
 
 const desserts = [
@@ -1069,12 +1075,25 @@ const desserts = [
 ]
 
 const FakeAPI = {
-    async fetch (page:number, itemsPerPage:number) {
+    async fetch ({page, itemsPerPage, search}:optionsType) {
         return new Promise(resolve => {
             setTimeout(() => {
                 const start = (page - 1) * itemsPerPage
                 const end = start + itemsPerPage
                 const items = desserts.slice()
+                if( search ) {
+                    const headerKeys = severSide.headers.map(header=> header.key) 
+                    const newArray = desserts.filter((itemRow:any) => {
+                        const arr:boolean[] = headerKeys.map(key => {
+                            return filterOnlyCapsText(itemRow[key], search)
+                        })
+                        return arr.includes(true)
+                    })
+                    const paginated = newArray.slice(start, end)
+                    resolve({ items: paginated, total: newArray.length })
+                    return
+                }
+
                 const paginated = items.slice(start, end)
                 resolve({ items: paginated, total: items.length })
             }, 500)
@@ -1082,9 +1101,9 @@ const FakeAPI = {
     }
 }
 
-const loadItems = async( page:number, itemsPerPage:number) => {
+const loadItems = async({ page, itemsPerPage, search }:optionsType) => {
     severSide.loading = true
-    await FakeAPI.fetch(page, itemsPerPage).then((response_json:any) => {
+    await FakeAPI.fetch({page, itemsPerPage, search}).then((response_json:any) => {
         severSide.serverItems = response_json.items
         severSide.totalItems = response_json.total
     })
@@ -1095,12 +1114,11 @@ const filterOnlyCapsText =  (value:string, query: string) => {
     //valueが名前とかidとか、queryはkeyword
     return value != null &&
         query != null &&
-        typeof value === 'string' &&
         value.toString().toLocaleUpperCase().indexOf(query) !== -1
 }
 
 onMounted(() => {
-    loadItems(1, severSide.itemsPerPage)
+    loadItems({page:1, itemsPerPage:severSide.itemsPerPage})
 })
 
 </script>
@@ -1161,12 +1179,7 @@ onMounted(() => {
         @click:row="logEvent('click:row', $event)"
         >
             <template #top>
-                <CSidebar side="right">
-                    <CTextField v-model="search.search"  placeholder="Search"/>
-                    <CCluster align="center">
-                        <CSvgIcon :icon="mdiMagnify" size="large" class="text-gray-500"/>
-                    </CCluster>
-                </CSidebar>
+                <CTextField v-model="search.search" :append-inner-icon="mdiMagnify" placeholder="Search" clearable/>
             </template>
         </CDataTable>
         <template #controls>
@@ -1182,12 +1195,7 @@ onMounted(() => {
         @click:row="logEvent('click:row', $event)"
         >
             <template #top>
-                <CSidebar side="right">
-                    <CTextField v-model="searchCustom.search"  placeholder="Search"/>
-                    <CCluster align="center">
-                        <CSvgIcon :icon="mdiMagnify" size="large" class="text-gray-500"/>
-                    </CCluster>
-                </CSidebar>
+                <CTextField v-model="searchCustom.search" :append-inner-icon="mdiMagnify" placeholder="Search" clearable/>
             </template>
         </CDataTable>
         <template #controls>
@@ -1198,10 +1206,15 @@ onMounted(() => {
         :headers="severSide.headers"
         :items="severSide.serverItems"
         :items-length="severSide.totalItems"
+        :search="severSide.search"
         v-model:loading="severSide.loading"
         v-model:itemsPerPage="severSide.itemsPerPage"
         @update:options="loadItems"
-        ></CDataTable>
+        >
+            <template #top>
+                <CTextField v-model="severSide.search" :append-inner-icon="mdiMagnify" placeholder="Search" clearable/>
+            </template>
+        </CDataTable>
         <template #controls>
         </template>
     </Variant>
@@ -1217,8 +1230,8 @@ onMounted(() => {
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| customFilter | FilterFunction | undefined | 項目の絞り込みをする関数 |
-| customKeyFilter | { [string]: FilterFunction } | undefined | 項目の特定のキーの絞り込みで使用される関数を指定 |
+| customFilter | FilterFunction* | undefined | 項目の絞り込みをする関数 |
+| customKeyFilter | `{[string]: FilterFunction*}` | undefined | 項目の特定のキーの絞り込みで使用される関数を指定 |
 | density | 'default'/'comfortable'/'compact' | 'default' | コンポーネントが使用する垂直方向の高さを調整します |
 | filterKeys | string/string[] | undefined | 項目をフィルターする特定のキーの文字列または配列を渡します |
 | filterMode | 'every'/'some' | 'some' | 項目を照合するときに特定のフィルターを適用します。'some'はデフォルトで、項目の中のキーのどれかが検索語と一致している場合にtrueを返します。'every'は項目の全てのキーが検索語と一致している場合にtrueを返します。 |
@@ -1244,15 +1257,17 @@ onMounted(() => {
 
 | Name | Props (if scoped) | Description |
 | --- | --- | --- |
-| [`item.${header.key}`] | {index: number, item: any} | 動的slotを使用して特定の列の表示をカスタムできます。`header.key`はheader項目のキー`<key>`プロパティの名前を指定します |
-| bottom | {page: number, itemsPerPage:string|number, allSelected:boolean, select:any[], items:any[], headers:any[]} | tableの下部に表示するコンテンツを指定します |
-| default | {page: number, itemsPerPage:string|number, allSelected:boolean, select:any[], items:any[], headers:any[]} | tableに表示するコンテンツを指定します |
-| tbody | {page: number, itemsPerPage:string|number, allSelected:boolean, select:any[], items:any[], headers:any[]} | tbodyタグ内に表示するコンテンツを指定します |
-| tfoot | {page: number, itemsPerPage:string|number, allSelected:boolean, select:any[], items:any[], headers:any[]} | tfootタグ内に表示するコンテンツを指定します |
-| thead | {page: number, itemsPerPage:string|number, allSelected:boolean, select:any[], items:any[], headers:any[]} | theadタグ内に表示するコンテンツを指定します |
-| top | {page: number, itemsPerPage:string|number, allSelected:boolean, select:any[], items:any[], headers:any[]} | tableの上部に表示するコンテンツを指定します |
+| [`item.${header.key}`] | `{index: number, item: any}` | 動的slotを使用して特定の列の表示をカスタムできます。`header.key`はheader項目のキー`<key>`プロパティの名前を指定します |
+| bottom | ItemProps* | tableの下部に表示するコンテンツを指定します |
+| default | ItemProps* | tableに表示するコンテンツを指定します |
+| tbody | ItemProps* | tbodyタグ内に表示するコンテンツを指定します |
+| tfoot | ItemProps* | tfootタグ内に表示するコンテンツを指定します |
+| thead | ItemProps* | theadタグ内に表示するコンテンツを指定します |
+| top | ItemProps* | tableの上部に表示するコンテンツを指定します |
 | loading |  | propsのloadingがtrueの時の表示内容を定義します |
 | no-data |  | 表示するデータが一件もない場合のコンテンツを定義します |
+
+* ItemProps*1 = `{page: number, itemsPerPage:string/number, allSelected:boolean, select:any[], items:any[], headers:any[]}`
 
 ## Events
 
@@ -1262,6 +1277,6 @@ onMounted(() => {
 | update:modelValue |  | 行の選択がされたときに発行されるイベントです。選択された行の`item[itemValue]`が返されます |
 | update:itemsPerPage |  | テーブルの表示件数をセレクトボックス等で変更した場合に発行されるイベントです |
 | update:loading |  | loadingが有効になった時に発行されるイベントです |
-| update:options |  | 表示するデータを変更する場合(ページネーションや検索など)に、発行されるイベントです。`page`と`itemPerPage`が渡されます |
+| update:options | `{page:number, itemPerPage:number, search?:string} `| 表示するデータを変更する場合(ページネーションや検索など)に、発行されるイベントです。 |
 
 </docs>

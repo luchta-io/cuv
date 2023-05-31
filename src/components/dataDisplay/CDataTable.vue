@@ -9,10 +9,16 @@ import CTable from '@/components/dataDisplay/CTable.vue';
 import CCheckbox from '@/components/form/CCheckbox.vue';
 import COverlay from '@/components/containment/COverlay.vue';
 
-interface headersType {
+type headersType = {
     key: string
     title: string
     align?: 'start' | 'end' 
+}
+
+type optionsType = {
+    page: number,
+    itemsPerPage: number,
+    search?: string,
 }
 
 const props = withDefaults(defineProps<{
@@ -57,7 +63,7 @@ const emits = defineEmits<{
     (e: 'update:modelValue', value: string[]): void,
     (e: 'update:itemsPerPage', value: number): void,
     (e: 'update:loading', value: boolean): void,
-    (e: 'update:options', page: number, itemsPerPage: number): void,
+    (e: 'update:options', value:optionsType): void,
 }>()
 
 const data: {
@@ -77,10 +83,15 @@ const data: {
 })
 
 const totalItems = computed(() => {
-    if ( props.search !== undefined && searchText.value.length ) return props.items.filter((itemRow)=>searchFilter(itemRow, searchText.value))
+    if ( props.search !== undefined && searchText.value.length && !props.itemsLength ) return props.items.filter(itemRow=>searchFilter(itemRow, searchText.value))
     if ( props.itemsLength ) return props.items
-    if( typeof data.currentPerPage === 'string' ) return props.items
+    if ( typeof data.currentPerPage === 'string' ) return props.items
     return props.items
+})
+
+const totalItemsLength = computed(() => {
+    if ( props.itemsLength ) return props.itemsLength
+    return props.items.length
 })
 
 const displayItems = computed(() => {
@@ -118,30 +129,30 @@ const filterMode = (arr: (boolean|undefined)[]) => {
 
 const startRecord = computed(() => {
     if( typeof data.currentPerPage === 'string' ) return 1
-    if( !totalItems.value.length ) return 0
+    if( !totalItemsLength.value ) return 0
     if( data.currentPerPage * data.currentPage - (data.currentPerPage-1 ) < 0 ) return 0
     return data.currentPerPage * data.currentPage - (data.currentPerPage-1)
 })
 
 const endRecord = computed(() => {
-    if( typeof data.currentPerPage === 'string' ) return totalItems.value.length
-    if( data.currentPerPage * data.currentPage >= totalItems.value.length ) return totalItems.value.length
+    if( typeof data.currentPerPage === 'string' ) return totalItemsLength.value
+    if( data.currentPerPage * data.currentPage >= totalItemsLength.value ) return totalItemsLength.value
     return data.currentPerPage * data.currentPage
 })
 
 const lastPage = computed(() => {
     if( typeof data.currentPerPage === 'string' ) return 1
-    if( !totalItems.value.length ) return 1
-    return Math.ceil(totalItems.value.length / data.currentPerPage)
+    if( !totalItemsLength.value ) return 1
+    return Math.ceil(totalItemsLength.value / data.currentPerPage)
 })
 
 const perPageArray = computed(() => {
     if( props.itemsPerPageOptions ) return props.itemsPerPageOptions
     const Array = []
-    if( totalItems.value.length >= 10) Array.push(10)
-    if( totalItems.value.length >= 25) Array.push(25)
-    if( totalItems.value.length >= 50) Array.push(50)
-    if( totalItems.value.length >= 100) Array.push(100)
+    if( totalItemsLength.value >= 10) Array.push(10)
+    if( totalItemsLength.value >= 25) Array.push(25)
+    if( totalItemsLength.value >= 50) Array.push(50)
+    if( totalItemsLength.value >= 100) Array.push(100)
     Array.push('ALL')
     return Array
 })
@@ -166,11 +177,13 @@ const headerCheckboxIndeterminate = computed({
     }
 })
 
-const searchText = computed({
-    get: () => { return props.search?props.search:'' },
-    set: value => {
-        return value
+const searchText = computed(() => {
+    if( typeof data.currentPerPage === 'string' ) {
+        emits('update:options', {page:data.currentPage, itemsPerPage:totalItemsLength.value, search:props.search})
+        return props.search?props.search:'' 
     }
+    emits('update:options', {page:data.currentPage, itemsPerPage:data.currentPerPage, search:props.search})
+    return props.search?props.search:'' 
 })
 
 const headerAlign = (align?: 'start' | 'end') => {
@@ -196,24 +209,24 @@ const changePage = (direction: 'first'|'back'|'go'|'last') => {
     if (direction === 'go') data.currentPage ++
     if (direction === 'last') data.currentPage = lastPage.value
     if( typeof data.currentPerPage === 'string' ) {
-        emits('update:itemsPerPage', totalItems.value.length)
-        emits('update:options', data.currentPage, totalItems.value.length)
+        emits('update:itemsPerPage', totalItemsLength.value)
+        emits('update:options', {page:data.currentPage, itemsPerPage:totalItemsLength.value})
         return
     }
     emits('update:itemsPerPage', data.currentPerPage)
-    emits('update:options', data.currentPage, data.currentPerPage)
+    emits('update:options', {page:data.currentPage, itemsPerPage:data.currentPerPage})
     return    
 }
 
 const changePerPage = () => {
     data.currentPage = 1
     if( typeof data.currentPerPage === 'string' ) {
-        emits('update:itemsPerPage', totalItems.value.length)
-        emits('update:options', data.currentPage, totalItems.value.length)
+        emits('update:itemsPerPage', totalItemsLength.value)
+        emits('update:options', {page:data.currentPage, itemsPerPage:totalItemsLength.value})
         return
     }
     emits('update:itemsPerPage', data.currentPerPage)
-    emits('update:options', data.currentPage, data.currentPerPage)
+    emits('update:options', {page:data.currentPage, itemsPerPage:data.currentPerPage})
     return
 }
 
@@ -281,7 +294,7 @@ watchEffect(() => {
                     Items per page:
                     <CSelect v-model="data.currentPerPage" @update:model-value="changePerPage" :items="perPageArray" variant="outlined" :disabled="!items.length" :class="$style.perpage"/>
                 </CCluster>
-                <div>{{ startRecord }}-{{ endRecord }} of {{ totalItems.length }}</div>
+                <div>{{ startRecord }}-{{ endRecord }} of {{ totalItemsLength }}</div>
                 <CCluster>
                     <button @click="changePage('first')" :disabled="data.currentPage<=1" :class="paginationButtonClass">
                         <CSvgIcon :icon="mdiPageFirst"/>
