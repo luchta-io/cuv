@@ -240,9 +240,6 @@ const custom: {
             title: string
             align?: 'start' | 'end' 
         }[]
-    density: 'default' | 'comfortable' | 'compact'
-    hover: boolean
-    selectItems: string[]
 } = reactive({
     nameList:[
         {
@@ -444,9 +441,6 @@ const custom: {
         {key: 'gender', title: '性別'},
         {key: 'age', title: '年齢'},
     ],
-    density: 'default',
-    hover: false,
-    selectItems: [],
 })
 
 const checked: {
@@ -461,8 +455,6 @@ const checked: {
             title: string
             align?: 'start' | 'end' 
         }[]
-    density: 'default' | 'comfortable' | 'compact'
-    hover: boolean
     selectItems: string[]
 } = reactive({
     nameList:[
@@ -521,8 +513,6 @@ const checked: {
         {key: 'gender', title: '性別'},
         {key: 'age', title: '年齢'},
     ],
-    density: 'default',
-    hover: false,
     selectItems: [],
 })
 
@@ -1154,8 +1144,6 @@ onMounted(() => {
                 </CCluster>
             </template>
         </CDataTable>
-        <template #controls>
-        </template>
     </Variant>
     <Variant title="単数/複数選択" auto-props-disabled>
         <div>選択された行のID： {{ checked.selectItems }}</div>
@@ -1167,8 +1155,6 @@ onMounted(() => {
         show-select
         @click:row="logEvent('click:row', $event)"
         ></CDataTable>
-        <template #controls>
-        </template>
     </Variant>
     <Variant title="絞り込み" auto-props-disabled>
         <CDataTable
@@ -1182,8 +1168,6 @@ onMounted(() => {
                 <CTextField v-model="search.search" :append-inner-icon="mdiMagnify" placeholder="Search" clearable/>
             </template>
         </CDataTable>
-        <template #controls>
-        </template>
     </Variant>
     <Variant title="絞り込み(カスタム)" auto-props-disabled>
         <CDataTable
@@ -1198,8 +1182,6 @@ onMounted(() => {
                 <CTextField v-model="searchCustom.search" :append-inner-icon="mdiMagnify" placeholder="Search" clearable/>
             </template>
         </CDataTable>
-        <template #controls>
-        </template>
     </Variant>
     <Variant title="Server Side Table" auto-props-disabled>
         <CDataTable
@@ -1215,8 +1197,6 @@ onMounted(() => {
                 <CTextField v-model="severSide.search" :append-inner-icon="mdiMagnify" placeholder="Search" clearable/>
             </template>
         </CDataTable>
-        <template #controls>
-        </template>
     </Variant>
 </Story>
 </template>
