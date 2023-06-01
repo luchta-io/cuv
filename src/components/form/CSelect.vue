@@ -289,7 +289,7 @@ const clear = () => {
                     <li v-for="(item, index) in items" :key="index" @click="selectItem(item)" :class="liClass(item)" class="py-2 px-3 min-w-full text-gray-700 cursor-pointer hover:bg-gray-100">
                         <c-cluster align="center" space="0">
                             <c-checkbox v-if="multiple" v-model="changeableModelValue" :value="items[0][itemValue]?item[itemValue]:item"/>
-                            <div class="max-w-[calc(100%-40px)] break-all">
+                            <div class="break-all" :class="multiple?'max-w-[calc(100%-40px)]':''">
                                 <slot name="item" :item="item" :index="index">
                                     {{ typeof item === "object" ? item[itemValue] : item }}
                                 </slot>
