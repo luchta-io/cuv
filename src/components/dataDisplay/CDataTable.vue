@@ -9,13 +9,13 @@ import CTable from '@/components/dataDisplay/CTable.vue';
 import CCheckbox from '@/components/form/CCheckbox.vue';
 import COverlay from '@/components/containment/COverlay.vue';
 
-type headersType = {
+type HeadersType = {
     key: string
     title: string
     align?: 'start' | 'end' 
 }
 
-type optionsType = {
+type OptionsType = {
     page: number,
     itemsPerPage: number,
     search?: string,
@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<{
     filterMode?: 'every' | 'some' 
     fixedFooter?: boolean
     fixedHeader?: boolean
-    headers: headersType[]
+    headers: HeadersType[]
     height?: string
     hover?: boolean
     items: any[]
@@ -63,7 +63,7 @@ const emits = defineEmits<{
     (e: 'update:modelValue', value: string[]): void,
     (e: 'update:itemsPerPage', value: number): void,
     (e: 'update:loading', value: boolean): void,
-    (e: 'update:options', value:optionsType): void,
+    (e: 'update:options', value:OptionsType): void,
 }>()
 
 const data: {

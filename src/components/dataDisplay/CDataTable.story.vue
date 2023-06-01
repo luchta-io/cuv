@@ -8,20 +8,20 @@ import CCluster from '@/components/layout/CCluster.vue';
 import CTextField from '@/components/form/CTextField.vue';
 import CBox from '@/components/layout/CBox.vue';
 
-type optionsType = {
+type OptionsType = {
     page: number,
     itemsPerPage: number,
     search?: string,
 }
 
-type nameListType = {
+type NameListType = {
     id: string
     name: string
     date: string
     group: string
 }
 
-type headerType = {
+type HeaderType = {
     key: string
     title: string
     align?: 'start' | 'end' 
@@ -230,24 +230,24 @@ const nameListHeaders = [
 ]
 
 const data: {
-    nameList: nameListType[]
-    headers: headerType[]
+    nameList: NameListType[]
+    headers: HeaderType[]
 } = reactive({
     nameList: nameList,
     headers: nameListHeaders,
 })
 
 const custom: {
-    nameList: nameListType[]
-    headers: headerType[]
+    nameList: NameListType[]
+    headers: HeaderType[]
 } = reactive({
     nameList: nameList,
     headers: nameListHeaders,
 })
 
 const checked: {
-    nameList: nameListType[]
-    headers: headerType[]
+    nameList: NameListType[]
+    headers: HeaderType[]
     selectItems: string[]
 } = reactive({
     nameList: nameList,
@@ -256,8 +256,8 @@ const checked: {
 })
 
 const search: {
-    nameList: nameListType[]
-    headers: headerType[]
+    nameList: NameListType[]
+    headers: HeaderType[]
     search: string
 } = reactive({
     nameList: nameList,
@@ -266,8 +266,8 @@ const search: {
 })
 
 const searchCustom: {
-    nameList: nameListType[]
-    headers: headerType[]
+    nameList: NameListType[]
+    headers: HeaderType[]
     search: string
 } = reactive({
     nameList: nameList,
@@ -276,8 +276,8 @@ const searchCustom: {
 })
 
 const searchCustomMulti: {
-    nameList: nameListType[]
-    headers: headerType[]
+    nameList: NameListType[]
+    headers: HeaderType[]
     searchDate: string
     searchGroup: string
 } = reactive({
@@ -289,7 +289,7 @@ const searchCustomMulti: {
 
 const severSide: {
     itemsPerPage: number
-    headers: headerType[]
+    headers: HeaderType[]
     serverItems: any[]
     loading: boolean
     totalItems: number
@@ -398,7 +398,7 @@ const desserts = [
 ]
 
 const FakeAPI = {
-    async fetch ({page, itemsPerPage, search}:optionsType) {
+    async fetch ({page, itemsPerPage, search}:OptionsType) {
         return new Promise(resolve => {
             setTimeout(() => {
                 const start = (page - 1) * itemsPerPage
@@ -424,7 +424,7 @@ const FakeAPI = {
     }
 }
 
-const loadItems = async({ page, itemsPerPage, search }:optionsType) => {
+const loadItems = async({ page, itemsPerPage, search }:OptionsType) => {
     severSide.loading = true
     await FakeAPI.fetch({page, itemsPerPage, search}).then((response_json:any) => {
         severSide.serverItems = response_json.items
