@@ -83,6 +83,7 @@ const data: {
 })
 
 const totalItems = computed(() => {
+    if ( props.customKeyFilter ) return props.items.filter(itemRow=>searchFilter(itemRow, searchText.value))
     if ( props.search !== undefined && searchText.value.length && !props.itemsLength ) return props.items.filter(itemRow=>searchFilter(itemRow, searchText.value))
     if ( props.itemsLength ) return props.items
     if ( typeof data.currentPerPage === 'string' ) return props.items
@@ -112,7 +113,7 @@ const searchFilter = (itemRow: any, searchText: string) => {
         const result = Object.keys(props.customKeyFilter).map(key => {
             if(props.customKeyFilter) return props.customKeyFilter[key](itemRow[key], searchText, key)
         })
-        return filterMode(result)
+        return result.every( x => x === true)
     }
     const keyword = searchText.toUpperCase()
     data.searchHeaderKeys = data.searchHeaderKeys.filter(key => props.filterKeys ? props.filterKeys.includes(key) : true)

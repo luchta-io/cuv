@@ -275,6 +275,18 @@ const searchCustom: {
     search: '',
 })
 
+const searchCustomMulti: {
+    nameList: nameListType[]
+    headers: headerType[]
+    searchDate: string
+    searchGroup: string
+} = reactive({
+    nameList: nameList,
+    headers: nameListHeaders,
+    searchDate: '',
+    searchGroup: '',
+})
+
 const severSide: {
     itemsPerPage: number
     headers: headerType[]
@@ -421,11 +433,17 @@ const loadItems = async({ page, itemsPerPage, search }:optionsType) => {
     severSide.loading = false
 }
 
-const filterNameList =  (value:string, query: string, item: string) => {
-    if (item !== 'date') return false
+const filterKeyDate =  (value:string) => {
+    if( !searchCustomMulti.searchDate ) return true
     const newValue = new Date(value)
-    const newQuery= new Date(query)
+    const newQuery= new Date(searchCustomMulti.searchDate)
     return newValue >= newQuery
+}
+
+const filterKeyGroup=  (value:string) => {
+    return value != null &&
+        searchCustomMulti.searchGroup != null &&
+        value.toString().toLocaleUpperCase().indexOf(searchCustomMulti.searchGroup) !== -1
 }
 
 const filterOnlyCapsText =  (value:string, query: string) => {
@@ -501,17 +519,38 @@ onMounted(() => {
         :headers="searchCustom.headers"
         :items="searchCustom.nameList"
         :search="searchCustom.search"
-        :custom-filter="filterNameList"
+        :custom-filter="filterOnlyCapsText"
+        item-value="id"
+        @click:row="logEvent('click:row', $event)"
+        >
+            <template #top>
+                <CTextField v-model="searchCustom.search" :append-inner-icon="mdiMagnify" placeholder="Search" clearable/>
+            </template>
+        </CDataTable>
+    </Variant>
+    <Variant title="絞り込み(カスタム/複数条件)" auto-props-disabled>
+        <CDataTable
+        :headers="searchCustomMulti.headers"
+        :items="searchCustomMulti.nameList"
+        :custom-key-filter="{['date']:filterKeyDate,['group']:filterKeyGroup}"
         item-value="id"
         @click:row="logEvent('click:row', $event)"
         >
             <template #top>
                 <CSheet color="light">
                     <CBox padding="small">
-                        <CCluster align="center" space="0.3rem">
-                            登録日時：
-                            <input v-model="searchCustom.search" type="date"/>
-                            以降
+                        <CCluster align="center" space="1.5rem">
+                            <CCluster space="0" align="center">
+                                登録日時：
+                                <div class="border-b-2 border-gray-300 p-1.5">
+                                    <input v-model="searchCustomMulti.searchDate" type="date"/>
+                                    以降
+                                </div>
+                            </CCluster>
+                            <CCluster space="0" align="center">
+                                所属部署：
+                                <CTextField v-model="searchCustomMulti.searchGroup" variant="underlined" clearable/>
+                            </CCluster>
                         </CCluster>
                     </CBox>
                 </CSheet>
