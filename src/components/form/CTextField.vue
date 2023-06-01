@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<{
     prependIcon?: string
     prependInnerIcon?: string
     appendInnerIcon?: string
-    clearable: boolean
+    clearable?: boolean
     readonly?: boolean
     disabled?: boolean
     placeholder?: string

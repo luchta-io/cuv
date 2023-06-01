@@ -231,7 +231,7 @@ table要素を囲むラッパーコンポーネントです。
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| density | 'default'/'comfortable'/'compact' | 'default' | コンポーネントが使用する垂直方向の高さを調整します。 |
+| density | 'default'/'comfortable'/'compact' | 'default' | コンポーネントが使用する垂直方向の高さを調整します |
 | fixedFooter | boolean | false | コンポーネントのtheadの位置を固定します |
 | fixedHeader | boolean | false | コンポーネントのtfootの位置を固定します |
 | height | string | 'auto' | table全体の高さを指定します |

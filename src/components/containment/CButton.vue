@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<{
 })
 
 const themeColor = computed(() => {
-    if (props.color === 'white') return props.outlined ? `text-black` : `bg-[var(--cuv-white)] text-black `
+    if (props.color === 'white') return props.outlined ? `text-black` : `bg-[var(--cuv-white)] text-black border-white`
     if (props.color === 'black') return props.outlined ? `text-[var(--cuv-black)] border-[var(--cuv-black)]` : `text-white bg-[var(--cuv-black)] border-[var(--cuv-black)]`
     if (props.color === 'dark') return props.outlined 
         ? `text-[var(--cuv-dark-text)] border-[var(--cuv-dark-outline)] hover:border-[var(--cuv-dark-outline-hover)] focus:border-[var(--cuv-dark-outline-focus)]] ` 
