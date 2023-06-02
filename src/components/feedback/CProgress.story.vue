@@ -99,7 +99,7 @@ const data: {
 | --- | --- | --- | --- |
 | size | 'default' / 'small' / 'large' | 'default' | サイズを指定します |
 | width | 'default' / 'thin' / 'thick' | 'default' | コンポーネントの太さを指定します |
-| color | 'white' / 'black' / 'light' / 'dark' / 'primary' / 'link' / 'success' / 'danger' / 'warning' / 'info' | 'black' | コンポーネントの色を指定します |
+| color | 'white' \| 'black' \| 'light' \| 'dark' \| 'primary' \| 'link' \| 'success' \| 'danger' \| 'warning' \| 'info' | 'black' | コンポーネントの色を指定します |
 
 ## Slots
 

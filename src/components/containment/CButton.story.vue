@@ -77,7 +77,7 @@ const data: {
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| color | 'white' / 'black' / 'light' / 'dark' / 'primary' / 'link' / 'success' / 'danger' / 'warning' / 'info' | 'light' | ボタンの色を指定します |
+| color | 'white' \| 'black' \| 'light' \| 'dark' \| 'primary' \| 'link' \| 'success' \| 'danger' \| 'warning' \| 'info' | 'light' | ボタンの色を指定します |
 | outlined | boolean | false | ボタンの見た目をアウトラインボタンにする場合は指定します |
 | id | string | undefined | idを指定します |
 | name | string | undefined | nameを指定します |
