@@ -9,15 +9,17 @@ import CBox from "@/components/layout/CBox.vue";
 
 const data: {
     isIcon: boolean
-    size: string
+    size: 'x-small' | 'small' | 'medium' | 'large' | 'x-large'
     color: 'white' | 'black' | 'light' | 'dark' | 'primary' | 'link' | 'success' | 'danger' | 'warning' | 'info' | undefined
     isImage: boolean
+    rounded: 'none' | 'small' | 'medium' | 'large' | 'x-large' | 'circle'
     variant: 'text' | 'flat' | 'elevated' | 'outlined' | 'plain'
 } = reactive({
     isIcon: false,
     size: 'medium',
     color: 'light',
     isImage: false,
+    rounded: 'circle',
     variant: 'flat',
 })
 
@@ -44,6 +46,7 @@ const icon = computed(() => {
                     :icon="icon"
                     :size="data.size"
                     :image="image"
+                    :rounded="data.rounded"
                     :variant="data.variant"
                 />
             </CCluster>
@@ -68,7 +71,29 @@ const icon = computed(() => {
             />
             <HstCheckbox v-model="data.isIcon" title="icon"/>
             <HstCheckbox v-model="data.isImage" title="image"/>
-            <HstText v-model="data.size" title="size"/>
+            <HstSelect
+                v-model="data.size"
+                title="size"
+                :options="[
+                            {value: 'x-small', label: 'x-small'},
+                            {value: 'small', label: 'small'},
+                            {value: 'medium', label: 'medium'},
+                            {value: 'large', label: 'large'},
+                            {value: 'x-large', label: 'x-large'},
+                        ]"
+            />
+            <HstSelect
+                v-model="data.rounded"
+                title="rounded"
+                :options="[
+                            {value: 'none', label: 'none'},
+                            {value: 'small', label: 'small'},
+                            {value: 'medium', label: 'medium'},
+                            {value: 'large', label: 'large'},
+                            {value: 'x-large', label: 'x-large'},
+                            {value: 'circle', label: 'circle'},
+                        ]"
+            />
             <HstSelect
                 v-model="data.variant"
                 title="variant"
@@ -108,7 +133,7 @@ const icon = computed(() => {
     </Variant>
     <Variant title="タイル" auto-props-disabled>
         <CCluster justify="center">
-            <CAvatar color="link" rounded="0">
+            <CAvatar color="link" rounded="none">
                 <CSvgIcon :icon="mdiWifi" class="text-white"/>
             </CAvatar>
         </CCluster>
@@ -137,12 +162,12 @@ const icon = computed(() => {
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| color | 'white' / 'black' / 'light' / 'dark' / 'primary' / 'link' / 'success' / 'danger' / 'warning' / 'info' | undefined | 色を指定します |
+| color | 'white' \| 'black' \| 'light' \| 'dark' \| 'primary' \| 'link' \| 'success' \| 'danger' \| 'warning' \| 'info' | undefined | 色を指定します |
 | icon | string | undefined | iconのpathを指定します |
 | image | string | undefined | 画像のsrcに渡すpathを指定します |
-| rounded | string / number / boolean | false | コンポーネントの`border-radius`を指定します |
-| size | string/number | "medium" | サイズを指定します。`x-small`, `small`, `medium`, `large`, `x-large`で指定もできます。 |
-| variant | 'text' / 'flat' / 'elevated' / 'outlined' / 'plain' | 'flat' | コンポーネントに個別のスタイルを適用します |
+| rounded | 'none' \| 'small' \| 'medium' \| 'large' \| 'x-large' \| 'circle' | 'circle' | コンポーネントの`border-radius`を指定します |
+| size | 'x-small' \| 'small' \| 'medium' \| 'large' \| 'x-large' | "medium" | サイズを指定します |
+| variant | 'text' \| 'flat' \| 'elevated' \| 'outlined' \| 'plain' | 'flat' | コンポーネントに個別のスタイルを適用します |
 
 ## Slots
 

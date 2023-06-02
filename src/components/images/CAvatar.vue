@@ -11,11 +11,11 @@ const props = withDefaults(defineProps<{
     color?: ColorType
     icon?: string
     image?: string
-    rounded?: string | number | boolean
-    size?: string|number
+    rounded?: 'none' | 'small' | 'medium' | 'large' | 'x-large' | 'circle'
+    size?: 'x-small' | 'small' | 'medium' | 'large' | 'x-large'
     variant?: 'text' | 'flat' | 'elevated' | 'outlined' | 'plain'
 }>(), {
-    rounded: false,
+    rounded: 'circle',
     size: 'medium',
     variant: 'flat',
 })
@@ -65,7 +65,8 @@ const textColor = computed(() => {
 const avatarClass = computed(() => {
     const base = [
         'rounded-full flex inline-flex items-center justify-center leading-normal overflow-hidden relative text-center align-middle',
-        `transition-[${fixedSize.value}]`,
+        fixedRounded.value,
+        fixedSize.value
     ]
 
     if ( props.variant === 'text' ) base.push('bg-transparent', textColor.value)
@@ -78,27 +79,26 @@ const avatarClass = computed(() => {
 })
 
 const fixedSize = computed(() => {
-    if ( props.size === 'x-small' ) return '1.5rem'
-    if ( props.size === 'small' ) return '2rem'
-    if ( props.size === 'medium' ) return '2.5rem'
-    if ( props.size === 'large' ) return '3.5rem'
-    if ( props.size === 'x-large' ) return '4.5rem'
-    if ( !Number.isNaN(props.size) ) return props.size+'px'
-
-    return props.size
+    if ( props.size === 'x-small' ) return 'w-6 h-6'
+    if ( props.size === 'small' ) return 'w-8 h-8'
+    if ( props.size === 'large' ) return 'w-12 h-12'
+    if ( props.size === 'x-large' ) return 'w-14 h-14'
+    return 'w-10 h-10'
 })
 
 const fixedRounded = computed(() => {
-    if ( !props.rounded ) return '50%'
-    if ( !Number.isNaN(props.rounded) ) return props.rounded+'px'
-    if ( typeof props.rounded === 'string' ) return props.rounded
-    return '50%'
+    if ( props.rounded === 'small' ) return 'rounded-sm'
+    if ( props.rounded === 'medium' ) return 'rounded'
+    if ( props.rounded === 'large' ) return 'rounded-lg'
+    if ( props.rounded === 'x-large' ) return 'rounded-3xl'
+    if ( props.rounded === 'circle' ) return 'rounded-full'
+    return 'rounded-none'
 })
 
 </script>
 
 <template>
-    <div :class="avatarClass" :style="{width: fixedSize, height: fixedSize, 'border-radius': fixedRounded}">
+    <div :class="avatarClass">
         <CSvgIcon v-if="icon && !image" :icon="icon" size="large"/>
         <div v-if="image" class="object-cover w-full h-full">
             <img :src="image"/>
