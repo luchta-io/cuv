@@ -13,7 +13,7 @@ const data: {
     color: 'white' | 'black' | 'light' | 'dark' | 'primary' | 'link' | 'success' | 'danger' | 'warning' | 'info' | undefined
     isImage: boolean
     rounded: 'none' | 'small' | 'medium' | 'large' | 'x-large' | 'circle'
-    variant: 'text' | 'flat' | 'elevated' | 'outlined' | 'plain'
+    variant: 'text' | 'flat' | 'elevated' | 'tonal' | 'outlined' | 'plain'
 } = reactive({
     isIcon: false,
     size: 'medium',
@@ -101,6 +101,7 @@ const icon = computed(() => {
                             {value: 'text', label: 'text'},
                             {value: 'flat', label: 'flat'},
                             {value: 'elevated', label: 'elevated'},
+                            {value: 'tonal', label: 'tonal'},
                             {value: 'outlined', label: 'outlined'},
                             {value: 'plain', label: 'plain'},
                         ]"
@@ -139,7 +140,7 @@ const icon = computed(() => {
         </CCluster>
     </Variant>
     <Variant title="Slot" auto-props-disabled>
-        <CCluster justify="space-between">
+        <CCluster justify="space-around">
             <CAvatar color="primary">
                 <CSvgIcon :icon="mdiAirplane"/>
             </CAvatar>
@@ -167,7 +168,7 @@ const icon = computed(() => {
 | image | string | undefined | 画像のsrcに渡すpathを指定します |
 | rounded | 'none' \| 'small' \| 'medium' \| 'large' \| 'x-large' \| 'circle' | 'circle' | コンポーネントの`border-radius`を指定します |
 | size | 'x-small' \| 'small' \| 'medium' \| 'large' \| 'x-large' | "medium" | サイズを指定します |
-| variant | 'text' \| 'flat' \| 'elevated' \| 'outlined' \| 'plain' | 'flat' | コンポーネントに個別のスタイルを適用します |
+| variant | 'text' \| 'flat' \| 'elevated' \| 'tonal' \| 'outlined' \| 'plain' | 'flat' | コンポーネントに個別のスタイルを適用します |
 
 ## Slots
 

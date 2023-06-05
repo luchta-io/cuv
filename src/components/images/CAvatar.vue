@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<{
     image?: string
     rounded?: 'none' | 'small' | 'medium' | 'large' | 'x-large' | 'circle'
     size?: 'x-small' | 'small' | 'medium' | 'large' | 'x-large'
-    variant?: 'text' | 'flat' | 'elevated' | 'outlined' | 'plain'
+    variant?: 'text' | 'flat' | 'elevated' | 'tonal' | 'outlined' | 'plain'
 }>(), {
     rounded: 'circle',
     size: 'medium',
@@ -23,42 +23,56 @@ const props = withDefaults(defineProps<{
 const backgroundColor = computed(() => {
     if ( props.color === 'white' ) return 'bg-[var(--cuv-white)]'
     if ( props.color === 'black' ) return 'bg-[var(--cuv-black)]'
-    if ( props.color === 'light' ) return 'bg-[var(--cuv-light-background)] hover:bg-[var(--cuv-light-background-hover)]'
-    if ( props.color === 'dark' )  return 'bg-[var(--cuv-dark-background)] hover:bg-[var(--cuv-dark-background-hover)] text-white'
-    if ( props.color === 'primary' ) return 'bg-[var(--cuv-primary-background)] hover:bg-[var(--cuv-primary-background-hover)] text-white'
-    if ( props.color === 'link' ) return 'bg-[var(--cuv-link-background)] hover:bg-[var(--cuv-link-background-hover)] text-white'
-    if ( props.color === 'success' ) return 'bg-[var(--cuv-success-background)] hover:bg-[var(--cuv-success-background-hover)] text-white'
-    if ( props.color === 'danger' ) return 'bg-[var(--cuv-danger-background)] hover:bg-[var(--cuv-danger-background-hover)] text-white'
-    if ( props.color === 'warning' ) return 'bg-[var(--cuv-warning-background)] hover:bg-[var(--cuv-warning-background-hover)]'
-    if ( props.color === 'info' ) return 'bg-[var(--cuv-info-background)] hover:bg-[var(--cuv-info-background-hover)] text-white'
+    if ( props.color === 'light' ) return 'bg-[var(--cuv-light-background)]'
+    if ( props.color === 'dark' )  return 'bg-[var(--cuv-dark-background)] text-white'
+    if ( props.color === 'primary' ) return 'bg-[var(--cuv-primary-background)] text-white'
+    if ( props.color === 'link' ) return 'bg-[var(--cuv-link-background)] text-white'
+    if ( props.color === 'success' ) return 'bg-[var(--cuv-success-background)] text-white'
+    if ( props.color === 'danger' ) return 'bg-[var(--cuv-danger-background)] text-white'
+    if ( props.color === 'warning' ) return 'bg-[var(--cuv-warning-background)] '
+    if ( props.color === 'info' ) return 'bg-[var(--cuv-info-background)] text-white'
+    return 'bg-transparent'
+})
+
+const backgroundLightColor = computed(() => {
+    if ( props.color === 'white' ) return 'bg-[var(--cuv-white)]'
+    if ( props.color === 'black' ) return 'bg-[var( --cuv-grey-lighten-2)]'
+    if ( props.color === 'light' ) return 'bg-[var(--cuv-light-background)]'
+    if ( props.color === 'dark' )  return 'bg-[var(--cuv-grey-lighten-3)] text-white'
+    if ( props.color === 'primary' ) return 'bg-[var(--cuv-purple-lighten-5)] text-white'
+    if ( props.color === 'link' ) return 'bg-[var(--cuv-indigo-lighten-5)] text-white'
+    if ( props.color === 'success' ) return 'bg-[var(--cuv-green-lighten-5)] text-white'
+    if ( props.color === 'danger' ) return 'bg-[var(--cuv-red-lighten-5)] text-white'
+    if ( props.color === 'warning' ) return 'bg-[var(--cuv-yellow-lighten-5)]'
+    if ( props.color === 'info' ) return 'bg-[var(--cuv-blue-lighten-5)] text-white'
     return 'bg-transparent'
 })
 
 const outlineColor = computed(() => {
     if ( props.color === 'white' ) return 'outline outline-[var(--cuv-white)]'
     if ( props.color === 'black' ) return 'outline outline-[var(--cuv-black)]'
-    if ( props.color === 'light' ) return 'outline outline-[var(--cuv-light-outline)] hover:outline-[var(--cuv-light-outline-hover)]'
-    if ( props.color === 'dark' )  return 'outline outline-[var(--cuv-dark-outline)] hover:outline-[var(--cuv-dark-outline-hover)]'
-    if ( props.color === 'primary' ) return 'outline outline-[var(--cuv-primary-outline)] hover:outline-[var(--cuv-primary-outline-hover)]'
-    if ( props.color === 'link' ) return 'outline outline-[var(--cuv-link-outline)] hover:outline-[var(--cuv-link-outline-hover)]'
-    if ( props.color === 'success' ) return 'outline outline-[var(--cuv-success-outline)] hover:outline-[var(--cuv-success-outline-hover)]'
-    if ( props.color === 'danger' ) return 'outline outline-[var(--cuv-danger-outline)] hover:outline-[var(--cuv-danger-outline-hover)]'
-    if ( props.color === 'warning' ) return 'outline outline-[var(--cuv-warning-outline)] hover:outline-[var(--cuv-warning-outline-hover)]'
-    if ( props.color === 'info' ) return 'outline outline-[var(--cuv-info-outline)] hover:outline-[var(--cuv-info-outline-hover)]'
+    if ( props.color === 'light' ) return 'outline outline-[var(--cuv-light-outline)]'
+    if ( props.color === 'dark' )  return 'outline outline-[var(--cuv-dark-outline)]'
+    if ( props.color === 'primary' ) return 'outline outline-[var(--cuv-primary-outline)]'
+    if ( props.color === 'link' ) return 'outline outline-[var(--cuv-link-outline)]'
+    if ( props.color === 'success' ) return 'outline outline-[var(--cuv-success-outline)]'
+    if ( props.color === 'danger' ) return 'outline outline-[var(--cuv-danger-outline)]'
+    if ( props.color === 'warning' ) return 'outline outline-[var(--cuv-warning-outline)]'
+    if ( props.color === 'info' ) return 'outline outline-[var(--cuv-info-outline)]'
     return 'outline-transparent'
 })
 
 const textColor = computed(() => {
-    if ( props.color === 'white' ) return 'text-[var(--cuv-white)]'
-    if ( props.color === 'black' ) return 'text-[var(--cuv-black)]'
-    if ( props.color === 'light' ) return 'text-[var(--cuv-light-text)]'
-    if ( props.color === 'dark' )  return 'text-[var(--cuv-dark-text)]'
-    if ( props.color === 'primary' ) return 'text-[var(--cuv-primary-text)]'
-    if ( props.color === 'link' ) return 'text-[var(--cuv-link-text)]'
-    if ( props.color === 'success' ) return 'text-[var(--cuv-success-text)]'
-    if ( props.color === 'danger' ) return 'text-[var(--cuv-danger-text)]'
-    if ( props.color === 'warning' ) return 'text-[var(--cuv-warning-text)]'
-    if ( props.color === 'info' ) return 'text-[var(--cuv-info-text)]'
+    if ( props.color === 'white' ) return '!text-[var(--cuv-white)]'
+    if ( props.color === 'black' ) return '!text-[var(--cuv-black)]'
+    if ( props.color === 'light' ) return '!text-[var(--cuv-light-text)]'
+    if ( props.color === 'dark' )  return '!text-[var(--cuv-dark-text)]'
+    if ( props.color === 'primary' ) return '!text-[var(--cuv-primary-text)]'
+    if ( props.color === 'link' ) return '!text-[var(--cuv-link-text)]'
+    if ( props.color === 'success' ) return '!text-[var(--cuv-success-text)]'
+    if ( props.color === 'danger' ) return '!text-[var(--cuv-danger-text)]'
+    if ( props.color === 'warning' ) return '!text-[var(--cuv-warning-text)]'
+    if ( props.color === 'info' ) return '!text-[var(--cuv-info-text)]'
     return 'text-black'
 })
 
@@ -72,8 +86,9 @@ const avatarClass = computed(() => {
     if ( props.variant === 'text' ) base.push('bg-transparent', textColor.value)
     if ( props.variant === 'flat' ) base.push(backgroundColor.value)
     if ( props.variant === 'elevated' ) base.push('shadow-md',backgroundColor.value)
+    if ( props.variant === 'tonal' ) base.push(backgroundLightColor.value, textColor.value)
     if ( props.variant === 'outlined' ) base.push(outlineColor.value, textColor.value)
-    if ( props.variant === 'plain' ) base.push('opacity-60', textColor.value)
+    if ( props.variant === 'plain' ) base.push('opacity-60 hover:opacity-100 duration-300', textColor.value)
 
     return base
 })
