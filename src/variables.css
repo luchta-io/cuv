@@ -2,83 +2,167 @@
     --cuv-white: #ffffff;
     --cuv-black: #000000;
 
+    /* gray */
+    --cuv-grey: #9E9E9E;
+    --cuv-grey-lighten-5: #FAFAFA;
+    --cuv-grey-lighten-4: #F5F5F5;
+    --cuv-grey-lighten-3: #EEEEEE;
+    --cuv-grey-lighten-2: #E0E0E0;
+    --cuv-grey-lighten-1: #BDBDBD;
+    --cuv-grey-darken-1: #757575;
+    --cuv-grey-darken-2: #616161;
+    --cuv-grey-darken-3: #424242;
+    --cuv-grey-darken-4: #212121;
+
+    /* red */
+    --cuv-red: #F44336;
+    --cuv-red-lighten-5: #FFEBEE;
+    --cuv-red-lighten-4: #FFCDD2;
+    --cuv-red-lighten-3: #EF9A9A;
+    --cuv-red-lighten-2: #E57373;
+    --cuv-red-lighten-1: #EF5350;
+    --cuv-red-darken-1: #E53935;
+    --cuv-red-darken-2: #D32F2F;
+    --cuv-red-darken-3: #C62828;
+    --cuv-red-darken-4: #B71C1C;
+
+    /* purple */
+    --cuv-purple: #9C27B0;
+    --cuv-purple-lighten-5: #F3E5F5;
+    --cuv-purple-lighten-4: #E1BEE7;
+    --cuv-purple-lighten-3: #CE93D8;
+    --cuv-purple-lighten-2: #BA68C8;
+    --cuv-purple-lighten-1: #AB47BC;
+    --cuv-purple-darken-1: #8E24AA;
+    --cuv-purple-darken-2: #7B1FA2;
+    --cuv-purple-darken-3: #6A1B9A;
+    --cuv-purple-darken-4: #4A148C;
+
+    /* indigo */
+    --cuv-indigo: #3F51B5;
+    --cuv-indigo-lighten-5: #E8EAF6;
+    --cuv-indigo-lighten-4: #C5CAE9;
+    --cuv-indigo-lighten-3: #9FA8DA;
+    --cuv-indigo-lighten-2: #7986CB;
+    --cuv-indigo-lighten-1: #5C6BC0;
+    --cuv-indigo-darken-1: #3949AB;
+    --cuv-indigo-darken-2: #303F9F;
+    --cuv-indigo-darken-3: #283593;
+    --cuv-indigo-darken-4: #1A237E;
+    
+    /* blue */
+    --cuv-blue: #2196F3;
+    --cuv-blue-lighten-5: #E3F2FD;
+    --cuv-blue-lighten-4: #BBDEFB;
+    --cuv-blue-lighten-3: #90CAF9;
+    --cuv-blue-lighten-2: #64B5F6;
+    --cuv-blue-lighten-1: #42A5F5;
+    --cuv-blue-darken-1: #1E88E5;
+    --cuv-blue-darken-2: #1976D2;
+    --cuv-blue-darken-3: #1565C0;
+    --cuv-blue-darken-4: #0D47A1;
+
+    /* green */
+    --cuv-green: #4CAF50;
+    --cuv-green-lighten-5: #E8F5E9;
+    --cuv-green-lighten-4: #C8E6C9;
+    --cuv-green-lighten-3: #A5D6A7;
+    --cuv-green-lighten-2: #81C784;
+    --cuv-green-lighten-1: #66BB6A;
+    --cuv-green-darken-1: #43A047;
+    --cuv-green-darken-2: #388E3C;
+    --cuv-green-darken-3: #2E7D32;
+    --cuv-green-darken-4: #1B5E20;
+
+    /* yellow */
+    --cuv-yellow: #FFEB3B;
+    --cuv-yellow-lighten-5: #FFFDE7;
+    --cuv-yellow-lighten-4: #FFF9C4;
+    --cuv-yellow-lighten-3: #FFF59D;
+    --cuv-yellow-lighten-2: #FFF176;
+    --cuv-yellow-lighten-1: #FFEE58;
+    --cuv-yellow-darken-1: #FDD835;
+    --cuv-yellow-darken-2: #FBC02D;
+    --cuv-yellow-darken-3: #F9A825;
+    --cuv-yellow-darken-4: #F57F17;
+
     /* light */
-    --cuv-light-background: #f6f3f3;
-    --cuv-light-background-hover: #ecebeb;
-    --cuv-light-background-focus: #f6f3f3;
-    --cuv-light-border: #f6f3f3;
-    --cuv-light-text: #808080;
-    --cuv-light-outline: #808080;
-    --cuv-light-outline-hover: #636262;
-    --cuv-light-outline-focus: #808080;
+    --cuv-light-background: var(--cuv-grey-lighten-4);
+    --cuv-light-background-hover: var(--cuv-grey-lighten-2);
+    --cuv-light-background-focus: var(--cuv-grey-lighten-2);
+    --cuv-light-border: var(--cuv-grey-lighten-3);
+    --cuv-light-text: var(--cuv-grey);
+    --cuv-light-outline: var(--cuv-grey-lighten-2);
+    --cuv-light-outline-hover: var(--cuv-grey-lighten-4);
+    --cuv-light-outline-focus: var(--cuv-grey-lighten-4);
 
     /* dark */
-    --cuv-dark-background: #1d324f;
-    --cuv-dark-background-hover: #090c10;
-    --cuv-dark-background-focus: #1f2937;
-    --cuv-dark-border: #1f2937;
-    --cuv-dark-text: #1f2937;
-    --cuv-dark-outline: #1f2937;
-    --cuv-dark-outline-hover: #090c10;
-    --cuv-dark-outline-focus: #1f2937;
+    --cuv-dark-background: var(--cuv-grey-darken-4);
+    --cuv-dark-background-hover: var(--cuv-black);
+    --cuv-dark-background-focus: var(--cuv-black);
+    --cuv-dark-border: var(--cuv-grey-darken-4);
+    --cuv-dark-text: var(--cuv-grey-darken-4);
+    --cuv-dark-outline: var(--cuv-grey-darken-4);
+    --cuv-dark-outline-hover: var(--cuv-black);
+    --cuv-dark-outline-focus: var(--cuv-black);
 
     /* primary */
-    --cuv-primary-background: #9333ea;
-    --cuv-primary-background-hover: #7627c1;
-    --cuv-primary-background-focus: #9333ea;
-    --cuv-primary-border: #9333ea;
-    --cuv-primary-text: #9333ea;
-    --cuv-primary-outline: #9333ea;
-    --cuv-primary-outline-hover: #7627c1;
-    --cuv-primary-outline-focus: #9333ea;
+    --cuv-primary-background: var(--cuv-purple);
+    --cuv-primary-background-hover: var(--cuv-purple-darken-2);
+    --cuv-primary-background-focus: var(--cuv-purple-darken-2);
+    --cuv-primary-border: var(--cuv-purple);
+    --cuv-primary-text: var(--cuv-purple);
+    --cuv-primary-outline: var(--cuv-purple);
+    --cuv-primary-outline-hover: var(--cuv-purple-darken-2);
+    --cuv-primary-outline-focus: var(--cuv-purple-darken-2);
 
     /* link */
-    --cuv-link-background: #2563eb;
-    --cuv-link-background-hover: #1e51be;
-    --cuv-link-background-focus: #2563eb;
-    --cuv-link-border: #2563eb;
-    --cuv-link-text: #2563eb;
-    --cuv-link-outline: #2563eb;
-    --cuv-link-outline-hover: #1e51be;
-    --cuv-link-outline-focus: #2563eb;
+    --cuv-link-background: var(--cuv-indigo);
+    --cuv-link-background-hover: var(--cuv-indigo-darken-2);
+    --cuv-link-background-focus: var(--cuv-indigo-darken-2);
+    --cuv-link-border: var(--cuv-indigo);
+    --cuv-link-text: var(--cuv-indigo);
+    --cuv-link-outline: var(--cuv-indigo);
+    --cuv-link-outline-hover: var(--cuv-indigo-darken-2);
+    --cuv-link-outline-focus: var(--cuv-indigo-darken-2);
 
     /* success */
-    --cuv-success-background: #10b981;
-    --cuv-success-background-hover: #028e5f;
-    --cuv-success-background-focus: #10b981;
-    --cuv-success-border: #10b981;
-    --cuv-success-text: #10b981;
-    --cuv-success-outline: #10b981;
-    --cuv-success-outline-hover: #028e5f;
-    --cuv-success-outline-focus: #10b981;
+    --cuv-success-background: var(--cuv-green);
+    --cuv-success-background-hover: var(--cuv-green-darken-2);
+    --cuv-success-background-focus: var(--cuv-green-darken-2);
+    --cuv-success-border: var(--cuv-green);
+    --cuv-success-text: var(--cuv-green);
+    --cuv-success-outline: var(--cuv-green);
+    --cuv-success-outline-hover: var(--cuv-green-darken-2);
+    --cuv-success-outline-focus: var(--cuv-green-darken-2);
 
     /* danger */
-    --cuv-danger-background: #e11d48;
-    --cuv-danger-background-hover: #c1173c;
-    --cuv-danger-background-focus: #e11d48;
-    --cuv-danger-border: #e11d48;
-    --cuv-danger-text: #e11d48;
-    --cuv-danger-outline: #e11d48;
-    --cuv-danger-outline-hover: #c1173c;
-    --cuv-danger-outline-focus: #c1173c;
+    --cuv-danger-background: var(--cuv-red);
+    --cuv-danger-background-hover: var(--cuv-red-darken-2);
+    --cuv-danger-background-focus: var(--cuv-red-darken-2);
+    --cuv-danger-border: var(--cuv-red);
+    --cuv-danger-text: var(--cuv-red);
+    --cuv-danger-outline: var(--cuv-red);
+    --cuv-danger-outline-hover: var(--cuv-red-darken-2);
+    --cuv-danger-outline-focus: var(--cuv-red-darken-2);
 
     /* warning */
-    --cuv-warning-background: #facc15;
-    --cuv-warning-background-hover: #f0c000;
-    --cuv-warning-background-focus: #facc15;
-    --cuv-warning-border: #facc15;
-    --cuv-warning-text: #facc15;
-    --cuv-warning-outline: #facc15;
-    --cuv-warning-outline-hover: #f0c000;
-    --cuv-warning-outline-focus: #facc15;
+    --cuv-warning-background: var(--cuv-yellow);
+    --cuv-warning-background-hover: var(--cuv-yellow-darken-2);
+    --cuv-warning-background-focus: var(--cuv-yellow-darken-2);
+    --cuv-warning-border: var(--cuv-yellow);
+    --cuv-warning-text: var(--cuv-yellow);
+    --cuv-warning-outline: var(--cuv-yellow);
+    --cuv-warning-outline-hover: var(--cuv-yellow-darken-2);
+    --cuv-warning-outline-focus: var(--cuv-yellow-darken-2);
     
     /* info */
-    --cuv-info-background: #0ea5e9;
-    --cuv-info-background-hover: #0c94d3;
-    --cuv-info-background-focus: #0ea5e9;
-    --cuv-info-border: #0ea5e9;
-    --cuv-info-text: #0ea5e9;
-    --cuv-info-outline: #0ea5e9;
-    --cuv-info-outline-hover: #0c94d3;
-    --cuv-info-outline-focus: #0ea5e9;
+    --cuv-info-background: var(--cuv-blue);
+    --cuv-info-background-hover: var(--cuv-blue-darken-2);
+    --cuv-info-background-focus: var(--cuv-blue-darken-2);
+    --cuv-info-border: var(--cuv-blue);
+    --cuv-info-text: var(--cuv-blue);
+    --cuv-info-outline: var(--cuv-blue);
+    --cuv-info-outline-hover: var(--cuv-blue-darken-2);
+    --cuv-info-outline-focus: var(--cuv-blue-darken-2);
 }
