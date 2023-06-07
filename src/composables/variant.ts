@@ -7,7 +7,7 @@ type ColorType =
     'primary' | 'link' |
     'success' | 'danger' | 'warning' | 'info'
 
-export const useVariant = ({variant, color}:{variant:VarianType; color:ColorType;}) => {
+export const useVariant = ({variant, color}:{variant:VarianType; color?:ColorType;}) => {
 
     const backgroundColor = computed(() => {
         if ( color === 'white' ) return 'bg-[var(--cuv-white)]'
@@ -52,16 +52,16 @@ export const useVariant = ({variant, color}:{variant:VarianType; color:ColorType
     })
     
     const textColor = computed(() => {
-        if ( color === 'white' ) return '!text-[var(--cuv-white)]'
-        if ( color === 'black' ) return '!text-[var(--cuv-black)]'
-        if ( color === 'light' ) return '!text-[var(--cuv-light-text)]'
-        if ( color === 'dark' )  return '!text-[var(--cuv-dark-text)]'
-        if ( color === 'primary' ) return '!text-[var(--cuv-primary-text)]'
-        if ( color === 'link' ) return '!text-[var(--cuv-link-text)]'
-        if ( color === 'success' ) return '!text-[var(--cuv-success-text)]'
-        if ( color === 'danger' ) return '!text-[var(--cuv-danger-text)]'
-        if ( color === 'warning' ) return '!text-[var(--cuv-warning-text)]'
-        if ( color === 'info' ) return '!text-[var(--cuv-info-text)]'
+        if ( color === 'white' ) return 'text-[var(--cuv-white)]'
+        if ( color === 'black' ) return 'text-[var(--cuv-black)]'
+        if ( color === 'light' ) return 'text-[var(--cuv-light-text)]'
+        if ( color === 'dark' )  return 'text-[var(--cuv-dark-text)]'
+        if ( color === 'primary' ) return 'text-[var(--cuv-primary-text)]'
+        if ( color === 'link' ) return 'text-[var(--cuv-link-text)]'
+        if ( color === 'success' ) return 'text-[var(--cuv-success-text)]'
+        if ( color === 'danger' ) return 'text-[var(--cuv-danger-text)]'
+        if ( color === 'warning' ) return 'text-[var(--cuv-warning-text)]'
+        if ( color === 'info' ) return 'text-[var(--cuv-info-text)]'
         return 'text-inherit'
     })
 
