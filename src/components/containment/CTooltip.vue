@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 
 const props = withDefaults(defineProps<{
     disabled?: boolean
@@ -57,6 +57,10 @@ const id = computed(() => 'c-tooltip--' + uid)
 
 const tooltipId = computed(() => 'c-tooltip-content--' + uid)
 
+const target = ref<HTMLDivElement>()
+
+const content = ref<HTMLSpanElement>()
+
 const open = () => {
     if ( props.disabled ) return 
     emits('update:modelValue', true)
@@ -70,7 +74,8 @@ const close = () => {
     isActive.value = false
 }
 
-const teleportTarget = computed(() => {        
+const teleportTarget = computed(() => {
+    if (typeof window === 'undefined') return undefined
     const targetElement = document.body
     const container = document.createElement('div')
     container.className = 'c-overlay-container'
@@ -79,30 +84,30 @@ const teleportTarget = computed(() => {
 })
 
 const tooltipHeight = computed(() => {
-    const tooltipElement = document.getElementById(tooltipId.value)
+    const tooltipElement = content.value
     if ( !tooltipElement ) return 0
     return tooltipElement.clientHeight
 })
 
 const tooltipWidth = computed(() => {
-    const tooltipElement = document.getElementById(tooltipId.value)
+    const tooltipElement = content.value
     if ( !tooltipElement ) return 0
     return tooltipElement.clientWidth
 })
 
 const positionLeft = () => {
-    const targetElement = document.getElementById(id.value)
+    const targetElement = target.value
     if ( !targetElement ) return
     const clientRect = targetElement.getBoundingClientRect()
     const x = clientRect.left
     const elementWidth = targetElement.clientWidth
     if ( props.location === 'start' ) return x - tooltipWidth.value - 8 + 'px'
-    if ( props.location === 'end' ) return x + elementWidth + 10 + 'px'
+    if ( props.location === 'end' ) return x + elementWidth + 8 + 'px'
     return x + (elementWidth/2 - tooltipWidth.value/2) + 'px'
 }
 
 const positionTop = () => {
-    const targetElement = document.getElementById(id.value)
+    const targetElement = target.value
     if ( !targetElement ) return
     const clientRect = targetElement.getBoundingClientRect()
     const y = clientRect.top
@@ -116,6 +121,7 @@ const positionTop = () => {
 <div class="relative inline-flex">
     <div 
     :id="id"
+    ref="target"
     @mouseenter="open"
     @mouseleave="close"
     @focus.capture="open"
@@ -124,7 +130,11 @@ const positionTop = () => {
         <slot name="activator"/>
     </div>
     <Teleport :to="teleportTarget">
-        <span :id="tooltipId" :class="computedClass" :style="{left: positionLeft(), top: positionTop()}">
+        <span 
+        :id="tooltipId"
+        ref="content"
+        :class="computedClass" 
+        :style="{left: positionLeft(), top: positionTop()}">
             <slot>
                 {{text}}
             </slot>
