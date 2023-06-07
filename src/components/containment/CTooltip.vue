@@ -51,12 +51,6 @@ const computedClass = computed(()=> {
     return base
 })
 
-const uid = Math.random().toString(32).substring(2)
-
-const id = computed(() => 'c-tooltip--' + uid)
-
-const tooltipId = computed(() => 'c-tooltip-content--' + uid)
-
 const target = ref<HTMLDivElement>()
 
 const content = ref<HTMLSpanElement>()
@@ -118,9 +112,8 @@ const positionTop = () => {
 }
 </script>
 <template>
-<div class="relative inline-flex">
-    <div 
-    :id="id"
+<div :id="id" class="relative inline-flex">
+    <div
     ref="target"
     @mouseenter="open"
     @mouseleave="close"
@@ -131,7 +124,6 @@ const positionTop = () => {
     </div>
     <Teleport :to="teleportTarget">
         <span 
-        :id="tooltipId"
         ref="content"
         :class="computedClass" 
         :style="{left: positionLeft(), top: positionTop()}">
