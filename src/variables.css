@@ -91,7 +91,7 @@
     --cuv-light-background-hover: var(--cuv-grey-lighten-2);
     --cuv-light-background-focus: var(--cuv-grey-lighten-2);
     --cuv-light-border: var(--cuv-grey-lighten-3);
-    --cuv-light-text: var(--cuv-grey);
+    --cuv-light-text: var(--cuv-grey-darken-2);
     --cuv-light-outline: var(--cuv-grey-lighten-2);
     --cuv-light-outline-hover: var(--cuv-grey-lighten-4);
     --cuv-light-outline-focus: var(--cuv-grey-lighten-4);
