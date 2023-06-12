@@ -143,18 +143,19 @@ const selectionClass = computed(() => {
     ]
 })
 
-const selectionItem = computed(() => {
+const selectionItem = computed((): any[] => {
+    console.log(typeof props.modelValue)
     if(props.multiple && Array.isArray(props.modelValue)) {
         if(props.items[0][props.itemValue]) return props.items.filter(item => props.modelValue.includes(item[props.itemValue]))
         return props.items.filter(item => props.modelValue.includes(item))
     }
     if(!props.items[0][props.itemValue] && props.modelValue) return props.items.filter(item =>{ return item == props.modelValue})[0]
-    if(!props.items[0][props.itemValue] && !props.modelValue) return ''
+    if(!props.items[0][props.itemValue] && !props.modelValue) return []
     if(props.modelValue) return props.items.filter(item => {
         if(props.items[0][props.itemValue]) return item[props.itemValue] == props.modelValue
     })[0]
 
-    return {}
+    return []
 })
 
 const initSelectionItem = computed(() => {
@@ -178,7 +179,7 @@ const selectionSlotDisplay = computed(() => {
     if (!props.modelValue) return false
     if(!props.items) return false
     if (props.items.length === 0) return false 
-    return props.items[0][props.itemValue] ? Object.keys(selectionItem.value).length : selectionItem.value!==''
+    return props.items[0][props.itemValue] ? Object.keys(selectionItem.value).length : selectionItem.value.length
 })
 
 const liClass= (item:any) => {
