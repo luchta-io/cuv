@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, useSlots } from 'vue';
+import { computed, reactive, ref, useSlots, watchEffect } from 'vue';
 import { mdiMenuDown, mdiMenuUp, mdiClose } from '@mdi/js';
 import CSvgIcon from '@/components/images/CSvgIcon.vue';
 import CCheckbox from '@/components/form/CCheckbox.vue';
@@ -39,6 +39,14 @@ const props = withDefaults(defineProps<{
     clearable: false,
 })
 
+const emits = defineEmits<{
+    (e: 'update:modelValue', value: any|Array<any>): void
+    (e: 'click:prepend'): void
+    (e: 'click:append'): void
+    (e: 'click:prependInner'): void
+    (e: 'click:appendInner'): void
+}>()
+
 const data: {
     isActive: boolean
     isHover: boolean
@@ -47,13 +55,20 @@ const data: {
     isHover: false,
 })
 
-const emits = defineEmits<{
-    (e: 'update:modelValue', value: any|Array<any>): void
-    (e: 'click:prepend'): void
-    (e: 'click:append'): void
-    (e: 'click:prependInner'): void
-    (e: 'click:appendInner'): void
-}>()
+const componentRef = ref<HTMLElement>()
+const fieldEl = ref<HTMLElement>()
+const inputRef = ref<HTMLElement>()
+const optionsRef = ref<HTMLElement>()
+
+const optionsPosition: {
+    top: string
+    left: string
+    width: string
+} = reactive({
+    top: '',
+    left: '',
+    width: '',
+})
 
 const changeableModelValue = computed({
     get: () => props.modelValue,
@@ -144,16 +159,15 @@ const selectionClass = computed(() => {
 })
 
 const selectionItem = computed((): any[] => {
-    console.log(typeof props.modelValue)
     if(props.multiple && Array.isArray(props.modelValue)) {
         if(props.items[0][props.itemValue]) return props.items.filter(item => props.modelValue.includes(item[props.itemValue]))
         return props.items.filter(item => props.modelValue.includes(item))
     }
-    if(!props.items[0][props.itemValue] && props.modelValue) return props.items.filter(item =>{ return item == props.modelValue})[0]
+    if(!props.items[0][props.itemValue] && props.modelValue) return props.items.filter(item =>{ return item == props.modelValue})
     if(!props.items[0][props.itemValue] && !props.modelValue) return []
     if(props.modelValue) return props.items.filter(item => {
         if(props.items[0][props.itemValue]) return item[props.itemValue] == props.modelValue
-    })[0]
+    })
 
     return []
 })
@@ -179,7 +193,16 @@ const selectionSlotDisplay = computed(() => {
     if (!props.modelValue) return false
     if(!props.items) return false
     if (props.items.length === 0) return false 
-    return props.items[0][props.itemValue] ? Object.keys(selectionItem.value).length : selectionItem.value.length
+    return props.items[0][props.itemValue] ? Object.keys(selectionItem.value).length : selectionItem.value.length>0
+})
+
+const teleportTarget = computed(() => {
+    if (typeof window === 'undefined') return undefined
+    const targetElement = document.body
+    const container = document.createElement('div')
+    container.className = 'c-overlay-container'
+    targetElement.appendChild(container)
+    return container
 })
 
 const liClass= (item:any) => {
@@ -230,14 +253,59 @@ const clear = () => {
     return changeableModelValue.value = ''
 }
 
+const optionsMouseOver = () => {
+    data.isHover = true
+    if ( !inputRef.value ) return
+    inputRef.value.focus()
+}
+
+const optionClass = () => {
+    if ( !fieldEl.value ) return
+    if ( typeof window == 'undefined' ) return
+    if ( !optionsRef.value ) return
+    const allElementHeight = fieldEl.value.getBoundingClientRect().top + fieldEl.value.clientHeight + optionsRef.value.clientHeight
+    if ( allElementHeight >= window.innerHeight ) optionsPosition.top = fieldEl.value.getBoundingClientRect().top - optionsRef.value.clientHeight - 10 + 'px'
+    else optionsPosition.top = fieldEl.value.getBoundingClientRect().top + fieldEl.value.clientHeight + 1 + 'px'
+    optionsPosition.left = fieldEl.value.getBoundingClientRect().left+'px'
+    optionsPosition.width = fieldEl.value.clientWidth+'px'
+}
+
+const getScrollParent = (el?: HTMLElement) => {
+    while (el) {
+        if (hasScrollbar(el)) return el
+        el = el.parentElement!
+    }
+
+    return document.scrollingElement as HTMLElement
+}
+
+const hasScrollbar = (el?: Element | null) => {
+    if (!el || el.nodeType !== Node.ELEMENT_NODE) return false
+
+    const style = window.getComputedStyle(el)
+    return style.overflowY === 'scroll' || (style.overflowY === 'auto' && el.scrollHeight > el.clientHeight)
+}
+
+watchEffect(() => {
+    if ( data.isActive ) {
+        optionClass()
+        const scrollParent = getScrollParent(componentRef.value)
+        scrollParent.onscroll = () => {
+            data.isActive = false
+            if ( !inputRef.value ) return
+            inputRef.value.blur()
+        }
+    }
+})
+
 </script>
 
 <template>
-<div @mouseover="data.isHover = true" @mouseleave="data.isHover = false" class="relative w-auto grid grid-cols-[auto_1fr_auto] gap-y-1">
+<div ref="componentRef" @mouseover="data.isHover = true" @mouseleave="data.isHover = false" class="relative w-auto grid grid-cols-[auto_1fr_auto] gap-y-1">
     <div v-show="prependIcon" class="my-auto text-lg col-start-1 pt-1.5 pr-1">
         <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
     </div>
-    <div :class="fieldClass">
+    <div :class="fieldClass" ref="fieldEl">
         <div v-show="prependInnerIcon" class="my-auto pt-2 pr-2 text-lg">
             <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
@@ -264,13 +332,13 @@ const clear = () => {
             :disabled="disabled"
             :placeholder="placeholder"
             readonly
+            ref="inputRef"
             :class="inputClass">
             <label 
                 :class="labelClass"
             >
                 {{ label }}
             </label>
-
         </div>
         <div v-show="clearIconDisplay" class="pt-2">
             <c-svg-icon :icon="mdiClose" @click="clear" class="text-gray-500 cursor-pointer" />
@@ -281,8 +349,18 @@ const clear = () => {
         <div v-show="appendInnerIcon" class="my-auto pt-2 pl-1 text-lg">
             <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
-        <div v-show="data.isActive" class="absolute left-0 top-full pt-0.5 z-50 w-full rounded">
-            <ul class="overflow-auto divide-y-2 divide-gray-100 rounded-b bg-white shadow-lg z-50 max-h-60">
+    </div>
+    <div v-show="appendIcon" class="my-auto text-lg col-start-3 pt-1.5 pl-1">
+        <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
+    </div>
+    <div v-if="isError" class="text-xs text-[var(--cuv-danger-text)] pt-1 col-start-2">
+        <p v-for="(msg,index) in formatedErrorMessage" :key="index">
+            {{ msg }}
+        </p>
+    </div>
+    <Teleport :to="teleportTarget">
+        <div @mouseover="optionsMouseOver()" @mouseleave="data.isHover=false" :style="{width:optionsPosition.width, top:optionsPosition.top, left:optionsPosition.left}" :class="data.isActive?'block':'hidden'" class="absolute pt-0.5 z-50 rounded">
+            <ul ref="optionsRef" class="overflow-auto divide-y-2 divide-gray-100 rounded-b bg-white shadow-lg z-50 max-h-60">
                 <template v-if="items.length > 0">
                     <li v-if="slots.prependItem" class="py-2 px-3 min-w-full text-gray-700 cursor-pointer hover:bg-gray-100">
                         <slot name="prependItem"/>
@@ -305,15 +383,6 @@ const clear = () => {
                 </li>
             </ul>
         </div>
-    </div>
-    <div v-show="appendIcon" class="my-auto text-lg col-start-3 pt-1.5 pl-1">
-        <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
-    </div>
-    <div v-if="isError" class="text-xs text-[var(--cuv-danger-text)] pt-1 col-start-2">
-        <p v-for="(msg,index) in formatedErrorMessage" :key="index">
-            {{ msg }}
-        </p>
-    </div>
+    </Teleport>
 </div>
-
 </template>
