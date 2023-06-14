@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive,  watchEffect } from 'vue'
+import { computed, reactive,  ref,  watchEffect } from 'vue'
 import { mdiMenuDown, mdiMenuUp, mdiClose } from '@mdi/js';
 import CSvgIcon from '@/components/images/CSvgIcon.vue';
 
@@ -51,6 +51,21 @@ const data: {
     isActive: false,
     isHover: false,
     inputText: '',
+})
+
+const componentRef = ref<HTMLElement>()
+const fieldEl = ref<HTMLElement>()
+const inputRef = ref<HTMLElement>()
+const optionsRef = ref<HTMLElement>()
+
+const optionsPosition: {
+    top: string
+    left: string
+    width: string
+} = reactive({
+    top: '',
+    left: '',
+    width: '',
 })
 
 const formatedErrorMessage = computed(() => {
@@ -156,6 +171,15 @@ const selectionSlotDisplay = computed(() => {
     return props.itemValue ? Object.keys(selectionItem).length : selectionItem.value!==''
 })
 
+const teleportTarget = computed(() => {
+    if (typeof window === 'undefined') return undefined
+    const targetElement = document.body
+    const container = document.createElement('div')
+    container.className = 'c-overlay-container'
+    targetElement.appendChild(container)
+    return container
+})
+
 const liClass= (item:any) => {
     if(props.itemValue) return item[props.itemValue]==selectionItem.value[props.itemValue]?'bg-blue-50 text-blue-700':''
     return item == selectionItem.value ? 'bg-blue-50 text-blue-700':''
@@ -190,17 +214,59 @@ const clear = () => {
     if(data.inputText) data.inputText = ''
 }
 
+const optionsMouseOver = () => {
+    data.isHover = true
+    if ( !inputRef.value ) return
+    inputRef.value.focus()
+}
+
+const optionClass = () => {
+    if ( !fieldEl.value ) return
+    if ( typeof window == 'undefined' ) return
+    if ( !optionsRef.value ) return
+    const allElementHeight = fieldEl.value.getBoundingClientRect().top + fieldEl.value.clientHeight + optionsRef.value.clientHeight
+    if ( allElementHeight >= window.innerHeight ) optionsPosition.top = fieldEl.value.getBoundingClientRect().top - optionsRef.value.clientHeight - 10 + 'px'
+    else optionsPosition.top = fieldEl.value.getBoundingClientRect().top + fieldEl.value.clientHeight + 1 + 'px'
+    optionsPosition.left = fieldEl.value.getBoundingClientRect().left+'px'
+    optionsPosition.width = fieldEl.value.clientWidth+'px'
+}
+
+const getScrollParent = (el?: HTMLElement) => {
+    while (el) {
+        if (hasScrollbar(el)) return el
+        el = el.parentElement!
+    }
+
+    return document.scrollingElement as HTMLElement
+}
+
+const hasScrollbar = (el?: Element | null) => {
+    if (!el || el.nodeType !== Node.ELEMENT_NODE) return false
+
+    const style = window.getComputedStyle(el)
+    return style.overflowY === 'scroll' || (style.overflowY === 'auto' && el.scrollHeight > el.clientHeight)
+}
+
 watchEffect(() => {
     if(data.inputText) emits('update:modelValue', '')
+    if ( data.isActive ) {
+        optionClass()
+        const scrollParent = getScrollParent(componentRef.value)
+        scrollParent.onscroll = () => {
+            data.isActive = false
+            if ( !inputRef.value ) return
+            inputRef.value.blur()
+        }
+    }
 })
 
 </script>
 <template>
-<div @mouseover="data.isHover = true" @mouseleave="data.isHover = false" class="relative grid grid-cols-[auto_1fr_auto] gap-y-1">
+<div ref="componentRef" @mouseover="data.isHover = true" @mouseleave="data.isHover = false" class="relative grid grid-cols-[auto_1fr_auto] gap-y-1">
     <div v-show="prependIcon" class="text-lg col-start-1 my-auto pt-1.5 pr-1">
         <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
     </div>
-    <div :class="fieldClass">
+    <div :class="fieldClass" ref="fieldEl">
         <div v-show="prependInnerIcon" class="my-auto pt-2 pr-2 text-lg">
             <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
@@ -224,6 +290,7 @@ watchEffect(() => {
                 :placeholder="placeholder"
                 :class="inputClass"
                 autocomplete="off"
+                ref="inputRef"
             />
             <label
                 :class="labelClass"
@@ -242,22 +309,6 @@ watchEffect(() => {
             <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
 
-        <div v-show="data.isActive" class="absolute left-0 top-full pt-0.5 z-50 w-full rounded peer-read-only:hidden">
-            <ul class="overflow-auto divide-y-2 divide-gray-100 rounded-b bg-white shadow-lg z-50 max-h-60">
-                <template v-if="dropdownListItems.length > 0">
-                    <li v-for="(item,index) in dropdownListItems" :key="index" @click.stop="selectItem(item)" :class="liClass(item)" class="py-2 px-3 min-w-full text-gray-700 cursor-pointer hover:bg-gray-100">
-                    <slot name="item" :item="item" :index="index">
-                        {{ typeof item === "object" ? item[itemValue] : item }}
-                    </slot>
-                </li>
-                </template>
-                <li v-if="dropdownListItems.length === 0" @click="data.isActive=false" class="p-2 min-w-full text-xs text-gray-500">
-                    <slot name="empty">
-                        一件もデータがありません
-                    </slot>
-                </li>
-            </ul>
-        </div>
     </div>
     <div v-show="appendIcon" class="my-auto text-lg col-start-3 pt-1.5 pl-1">
         <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
@@ -268,4 +319,22 @@ watchEffect(() => {
         </p>
     </div>
 </div>
+<Teleport :to="teleportTarget">
+    <div v-if="data.isActive" @mouseover="optionsMouseOver()" @mouseleave="data.isHover=false" :style="{width:optionsPosition.width, top:optionsPosition.top, left:optionsPosition.left}"  class="absolute pt-0.5 z-50 rounded peer-read-only:hidden">
+        <ul ref="optionsRef" class="overflow-auto divide-y-2 divide-gray-100 rounded-b bg-white shadow-lg z-50 max-h-60">
+            <template v-if="dropdownListItems.length > 0">
+                <li v-for="(item,index) in dropdownListItems" :key="index" @click.stop="selectItem(item)" :class="liClass(item)" class="py-2 px-3 min-w-full text-gray-700 cursor-pointer hover:bg-gray-100">
+                <slot name="item" :item="item" :index="index">
+                    {{ typeof item === "object" ? item[itemValue] : item }}
+                </slot>
+            </li>
+            </template>
+            <li v-if="dropdownListItems.length === 0" @click="data.isActive=false" class="p-2 min-w-full text-xs text-gray-500">
+                <slot name="empty">
+                    一件もデータがありません
+                </slot>
+            </li>
+        </ul>
+    </div>
+</Teleport>
 </template>

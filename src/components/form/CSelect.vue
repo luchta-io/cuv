@@ -361,7 +361,7 @@ watchEffect(() => {
         </p>
     </div>
     <Teleport :to="teleportTarget">
-        <div @mouseover="optionsMouseOver()" @mouseleave="data.isHover=false" :style="{width:optionsPosition.width, top:optionsPosition.top, left:optionsPosition.left}" :class="data.isActive?'block':'hidden'" class="absolute pt-0.5 z-50 rounded">
+        <div v-if="data.isActive" @mouseover="optionsMouseOver()" @mouseleave="data.isHover=false" :style="{width:optionsPosition.width, top:optionsPosition.top, left:optionsPosition.left}" class="absolute pt-0.5 z-50 rounded">
             <ul ref="optionsRef" class="overflow-auto divide-y-2 divide-gray-100 rounded-b bg-white shadow-lg z-50 max-h-60">
                 <template v-if="items.length > 0">
                     <li v-if="slots.prependItem" class="py-2 px-3 min-w-full text-gray-700 cursor-pointer hover:bg-gray-100">
