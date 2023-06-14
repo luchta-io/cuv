@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref, useSlots, watchEffect } from 'vue';
+import { getScrollParent } from '@/composables/scroll';
+import { teleportTarget } from '@/composables/teleport'
 import { mdiMenuDown, mdiMenuUp, mdiClose } from '@mdi/js';
 import CSvgIcon from '@/components/images/CSvgIcon.vue';
 import CCheckbox from '@/components/form/CCheckbox.vue';
@@ -196,15 +198,6 @@ const selectionSlotDisplay = computed(() => {
     return props.items[0][props.itemValue] ? Object.keys(selectionItem.value).length : selectionItem.value.length>0
 })
 
-const teleportTarget = computed(() => {
-    if (typeof window === 'undefined') return undefined
-    const targetElement = document.body
-    const container = document.createElement('div')
-    container.className = 'c-overlay-container'
-    targetElement.appendChild(container)
-    return container
-})
-
 const liClass= (item:any) => {
     if(Array.isArray(props.modelValue)) {
         if(props.multiple && props.items[0][props.itemValue]) return props.modelValue.includes(item[props.itemValue]) ? 'bg-blue-50 text-blue-700':''
@@ -268,22 +261,6 @@ const optionClass = () => {
     else optionsPosition.top = fieldEl.value.getBoundingClientRect().top + fieldEl.value.clientHeight + 1 + 'px'
     optionsPosition.left = fieldEl.value.getBoundingClientRect().left+'px'
     optionsPosition.width = fieldEl.value.clientWidth+'px'
-}
-
-const getScrollParent = (el?: HTMLElement) => {
-    while (el) {
-        if (hasScrollbar(el)) return el
-        el = el.parentElement!
-    }
-
-    return document.scrollingElement as HTMLElement
-}
-
-const hasScrollbar = (el?: Element | null) => {
-    if (!el || el.nodeType !== Node.ELEMENT_NODE) return false
-
-    const style = window.getComputedStyle(el)
-    return style.overflowY === 'scroll' || (style.overflowY === 'auto' && el.scrollHeight > el.clientHeight)
 }
 
 watchEffect(() => {
