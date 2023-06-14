@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import {computed} from 'vue';
+import CSvgIcon from '@/components/images/CSvgIcon.vue';
+import { useVariant } from '@/composables/variant';
 
 type ColorType =
     'white' | 'black' | 'light' | 'dark' | 
@@ -8,57 +10,59 @@ type ColorType =
 
 const props = withDefaults(defineProps<{
     color?: ColorType
-    outlined?: boolean
     id?:string
     name?:string
+    variant?: 'text' | 'flat' | 'elevated' | 'tonal' | 'outlined' | 'plain'
+    icon?: string
+    disabled?: boolean
+    rounded?: 'none' | 'small' | 'medium' | 'large' | 'x-large' | 'circle'
+    size?: 'x-small' | 'small' | 'medium' | 'large' | 'x-large'
+
 }>(), {
     color: 'light',
-    outlined: false,    
-})
-
-const themeColor = computed(() => {
-    if (props.color === 'white') return props.outlined ? `text-black` : `bg-[var(--cuv-white)] text-black border-white`
-    if (props.color === 'black') return props.outlined ? `text-[var(--cuv-black)] border-[var(--cuv-black)]` : `text-white bg-[var(--cuv-black)] border-[var(--cuv-black)]`
-    if (props.color === 'dark') return props.outlined 
-        ? `text-[var(--cuv-dark-text)] border-[var(--cuv-dark-outline)] hover:border-[var(--cuv-dark-outline-hover)] focus:border-[var(--cuv-dark-outline-focus)]] ` 
-        : `text-white bg-[var(--cuv-dark-background)] hover:bg-[var(--cuv-dark-background-hover)] focus:bg-[var(--cuv-dark-background-focus)] border-[var(--cuv-dark-border)]`
-    if (props.color === 'primary') return props.outlined 
-        ? `text-[var(--cuv-primary-text)] border-[var(--cuv-primary-outline)] hover:border-[var(--cuv-primary-outline-hover)] focus:border-[var(--cuv-primary-outline-focus)]] ` 
-        : `text-white bg-[var(--cuv-primary-background)] hover:bg-[var(--cuv-primary-background-hover)] focus:bg-[var(--cuv-primary-background-focus)] border-[var(--cuv-primary-border)]`
-    if (props.color === 'link') return props.outlined 
-        ? `text-[var(--cuv-link-text)] border-[var(--cuv-link-outline)] hover:border-[var(--cuv-link-outline-hover)] focus:border-[var(--cuv-link-outline-focus)]] ` 
-        : `text-white bg-[var(--cuv-link-background)] hover:bg-[var(--cuv-link-background-hover)] focus:bg-[var(--cuv-link-background-focus)] border-[var(--cuv-link-border)]`
-    if (props.color === 'success') return props.outlined 
-        ? `text-[var(--cuv-success-text)] border-[var(--cuv-success-outline)] hover:border-[var(--cuv-success-outline-hover)] focus:border-[var(--cuv-success-outline-focus)]] ` 
-        : `text-white bg-[var(--cuv-success-background)] hover:bg-[var(--cuv-success-background-hover)] focus:bg-[var(--cuv-success-background-focus)] border-[var(--cuv-success-border)]`
-    if (props.color === 'danger') return props.outlined 
-        ? `text-[var(--cuv-danger-text)] border-[var(--cuv-danger-outline)] hover:border-[var(--cuv-danger-outline-hover)] focus:border-[var(--cuv-danger-outline-focus)]] ` 
-        : `text-white bg-[var(--cuv-danger-background)] hover:bg-[var(--cuv-danger-background-hover)] focus:bg-[var(--cuv-danger-background-focus)] border-[var(--cuv-danger-border)]`
-    if (props.color === 'warning') return props.outlined 
-        ? `text-[var(--cuv-warning-text)] border-[var(--cuv-warning-outline)] hover:border-[var(--cuv-warning-outline-hover)] focus:border-[var(--cuv-warning-outline-focus)]] ` 
-        : `text-white bg-[var(--cuv-warning-background)] hover:bg-[var(--cuv-warning-background-hover)] focus:bg-[var(--cuv-warning-background-focus)] border-[var(--cuv-warning-border)]`
-    if (props.color === 'info') return props.outlined 
-        ? `text-[var(--cuv-info-text)] border-[var(--cuv-info-outline)] hover:border-[var(--cuv-info-outline-hover)] focus:border-[var(--cuv-info-outline-focus)]] ` 
-        : `text-white bg-[var(--cuv-info-background)] hover:bg-[var(--cuv-info-background-hover)] focus:bg-[var(--cuv-info-background-focus)] border-[var(--cuv-info-border)]`
-
-    return props.outlined 
-        ? `text-[var(--cuv-light-text)] border-[var(--cuv-light-outline)] hover:border-[var(--cuv-light-outline-hover)] focus:border-[var(--cuv-light-outline-focus)]] ` 
-        : `text-black bg-[var(--cuv-light-background)] hover:bg-[var(--cuv-light-background-hover)] focus:bg-[var(--cuv-light-background-focus)] border-[var(--cuv-light-border)]`
-
+    variant: 'elevated',
+    disabled: false,
+    rounded: 'circle',
+    size: 'medium',
 })
 
 const buttonClass = computed(() => {
     const base = [
-        'px-2 py-1 border rounded relative',
-        'disabled:bg-gray-100 disabled:border-gray-300 disabled:text-gray-400',
-        themeColor.value,
+        'relative',
+        !props.disabled ? useVariant({variant: props.variant, color: props.color}) : 'bg-gray-100 text-gray-400 cursor-default',
+        props.icon ? 'rounded-full p-' : 'rounded px-2 py-1',
+        fixedSize.value,
+        fixedRounded.value,
     ]
     return base
 })
+
+const fixedSize = computed(() => {
+    if ( props.icon ) return 'w-12 h-12 text-base '
+    if ( props.size === 'x-small' ) return 'h-5 text-[0.625rem] px-2'
+    if ( props.size === 'small' ) return 'h-7 text-xs px-3'
+    if ( props.size === 'large' ) return 'h-11 text-base px-5'
+    if ( props.size === 'x-large' ) return 'h-[3.25rem] text-lg px-6'
+    return 'h-9 text-sm px-4'
+})
+
+const fixedRounded = computed(() => {
+    if ( props.icon ) return 'rounded-full'
+    if ( props.rounded === 'small' ) return 'rounded-sm'
+    if ( props.rounded === 'medium' ) return 'rounded'
+    if ( props.rounded === 'large' ) return 'rounded-lg'
+    if ( props.rounded === 'x-large' ) return 'rounded-3xl'
+    if ( props.rounded === 'circle' ) return 'rounded-full'
+    return 'rounded-none'
+})
+
 </script>
 
 <template>
 <button :id="id" :name="name" :class="buttonClass">
-    <slot/>
+    <CSvgIcon v-if="icon" :icon="icon"/>
+    <div v-if="!icon">
+        <slot/>
+    </div>
 </button>
 </template>
