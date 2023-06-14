@@ -11,36 +11,36 @@ type ColorType =
 const props = withDefaults(defineProps<{
     appendIcon?: string,
     color?: ColorType
-    id?:string
-    name?:string
-    variant?: 'text' | 'flat' | 'elevated' | 'tonal' | 'outlined' | 'plain'
-    icon?: string
     density?:'default' | 'comfortable' | 'compact'
     disabled?: boolean
     elevation?: 'small'|'medium'|'large'
+    icon?: string
+    id?:string
+    name?:string
+    prependIcon?: string,
     rounded?: 'none' | 'small' | 'medium' | 'large' | 'x-large' | 'circle'
     size?: 'x-small' | 'small' | 'medium' | 'large' | 'x-large'
-    prependIcon?: string,
+    variant?: 'text' | 'flat' | 'elevated' | 'tonal' | 'outlined' | 'plain'
 }>(), {
     color: 'light',
-    variant: 'elevated',
     density: 'default',
     disabled: false,
     rounded: 'medium',
     size: 'medium',
+    variant: 'elevated',
 })
 
 const buttonClass = computed(() => {
     const base = [
         'relative inline-grid items-center justify-center',
-        !props.disabled ? useVariant({variant: props.variant, color: props.color}) : 'bg-gray-100 text-gray-400 cursor-default',
+        !props.disabled ? useVariant({variant: props.variant, color: props.color, hover: true, focus: true}) : 'bg-gray-100 text-gray-400 cursor-default',
         props.icon ? 'rounded-full' : 'rounded',
         fixedSize.value,
         fixedRounded.value,
     ]
     if ( props.elevation == 'small' ) base.push('shadow')
-    if ( props.elevation == 'medium' ) base.push('shadow-md')
-    if ( props.elevation == 'large' ) base.push('shadow-lg')
+    if ( props.elevation == 'medium' ) base.push('shadow-lg')
+    if ( props.elevation == 'large' ) base.push('shadow-xl')
 
     return base
 })

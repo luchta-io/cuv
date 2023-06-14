@@ -171,6 +171,47 @@ const data: {
       </CBox>
     </Variant>
 
+    <Variant title="Rounded" auto-props-disabled>
+      <CBox>
+        <CCluster justify="space-around" align="center">
+          <CButton rounded="none" color="dark">
+              rounded none
+          </CButton>
+          <CButton rounded="small" color="dark">
+              rounded small
+          </CButton>
+          <CButton rounded="medium" color="dark">
+              rounded medium
+          </CButton>
+          <CButton rounded="large" color="dark">
+              rounded large
+          </CButton>
+          <CButton rounded="x-large" color="dark">
+              rounded x-large
+          </CButton>
+          <CButton rounded="circle" color="dark">
+              rounded circle
+          </CButton>
+        </CCluster>
+      </CBox>
+    </Variant>
+
+    <Variant title="Elevation" auto-props-disabled>
+      <CBox padding="large">
+        <CCluster justify="space-around" align="center">
+          <CButton elevation="small">
+            elevation small
+          </CButton>
+          <CButton elevation="medium">
+            elevation medium
+          </CButton>
+          <CButton elevation="large">
+            elevation large
+          </CButton>
+        </CCluster>
+      </CBox>
+    </Variant>
+
   </Story>
 </template>
 
@@ -184,10 +225,19 @@ const data: {
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
+| appendIcon | string | undefined | コンポーネントの右側に表示させるiconを指定します |
 | color | 'white' \| 'black' \| 'light' \| 'dark' \| 'primary' \| 'link' \| 'success' \| 'danger' \| 'warning' \| 'info' | 'light' | ボタンの色を指定します |
-| outlined | boolean | false | ボタンの見た目をアウトラインボタンにする場合は指定します |
+| density | 'default' \| 'comfortable' \| 'compact' | 'default' | コンポーネントが使用する垂直方向の高さを調整します |
+| disabled | boolean | false | 非活性にする場合は指定します |
+| elevation | 'small' \| 'medium' \| 'large' | undefined | 影をつける場合に指定します |
+| icon | string | undefined | iconを指定します |
 | id | string | undefined | idを指定します |
 | name | string | undefined | nameを指定します |
+| prependIcon | string | undefined | コンポーネントの左側に表示させるiconを指定します |
+| rounded | 'none' \| 'small' \| 'medium' \| 'large' \| 'x-large' \| 'circle' | 'circle' | コンポーネントの`border-radius`を指定します |
+| size | 'x-small' \| 'small' \| 'medium' \| 'large' \| 'x-large' | "medium" | サイズを指定します |
+| variant | 'text' \| 'flat' \| 'elevated' \| 'tonal' \| 'outlined' \| 'plain' | 'tonal' | コンポーネントに個別のスタイルを適用します |
+
 
 ## Slots
 
