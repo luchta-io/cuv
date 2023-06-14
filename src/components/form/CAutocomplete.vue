@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive,  ref,  watchEffect } from 'vue'
 import { getScrollParent } from '@/composables/scroll';
-import { teleportTarget } from '@/composables/teleport'
 import { mdiMenuDown, mdiMenuUp, mdiClose } from '@mdi/js';
 import CSvgIcon from '@/components/images/CSvgIcon.vue';
 
@@ -296,7 +295,7 @@ watchEffect(() => {
         </p>
     </div>
 </div>
-<Teleport :to="teleportTarget">
+<Teleport to="body">
     <div v-if="data.isActive" @mouseover="optionsMouseOver()" @mouseleave="data.isHover=false" :style="{width:optionsPosition.width, top:optionsPosition.top, left:optionsPosition.left}"  class="absolute pt-0.5 z-50 rounded peer-read-only:hidden">
         <ul ref="optionsRef" class="overflow-auto divide-y-2 divide-gray-100 rounded-b bg-white shadow-lg z-50 max-h-60">
             <template v-if="dropdownListItems.length > 0">

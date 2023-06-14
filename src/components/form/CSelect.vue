@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive, ref, useSlots, watchEffect } from 'vue';
 import { getScrollParent } from '@/composables/scroll';
-import { teleportTarget } from '@/composables/teleport'
 import { mdiMenuDown, mdiMenuUp, mdiClose } from '@mdi/js';
 import CSvgIcon from '@/components/images/CSvgIcon.vue';
 import CCheckbox from '@/components/form/CCheckbox.vue';
@@ -337,7 +336,7 @@ watchEffect(() => {
             {{ msg }}
         </p>
     </div>
-    <Teleport :to="teleportTarget">
+    <Teleport to="body">
         <div v-if="data.isActive" @mouseover="optionsMouseOver()" @mouseleave="data.isHover=false" :style="{width:optionsPosition.width, top:optionsPosition.top, left:optionsPosition.left}" class="absolute pt-0.5 z-50 rounded">
             <ul ref="optionsRef" class="overflow-auto divide-y-2 divide-gray-100 rounded-b bg-white shadow-lg z-50 max-h-60">
                 <template v-if="items.length > 0">
