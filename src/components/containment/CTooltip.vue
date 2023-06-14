@@ -68,15 +68,6 @@ const close = () => {
     isActive.value = false
 }
 
-const teleportTarget = computed(() => {
-    if (typeof window === 'undefined') return undefined
-    const targetElement = document.body
-    const container = document.createElement('div')
-    container.className = 'c-overlay-container'
-    targetElement.appendChild(container)
-    return container
-})
-
 const tooltipHeight = computed(() => {
     const tooltipElement = content.value
     if ( !tooltipElement ) return 0
@@ -122,7 +113,7 @@ const positionTop = () => {
     >
         <slot name="activator"/>
     </div>
-    <Teleport :to="teleportTarget">
+    <Teleport to="body">
         <span 
         ref="content"
         :class="computedClass" 
