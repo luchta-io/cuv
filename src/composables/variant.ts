@@ -72,6 +72,7 @@ export const useVariant = ({variant, color}:{variant:VarianType; color?:ColorTyp
         if ( color === 'link' ) return 'text-white'
         if ( color === 'success' ) return 'text-white'
         if ( color === 'danger' ) return 'text-white'
+        if ( color === 'warning' ) return 'text-white'
         if ( color === 'info' ) return 'text-white'
         return 'text-inherit'
     })
