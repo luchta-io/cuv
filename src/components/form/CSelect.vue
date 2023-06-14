@@ -318,9 +318,11 @@ watchEffect(() => {
                 </span>
             </div>
             <div v-show="selectionSlotDisplay && !Array.isArray(selectionItem)" @click="toggleDropdownList" :class="selectionClass">
-                <slot name="selection" :item="selectionItem" :index="0">
-                    {{ initSelectionItem }}
-                </slot>
+                <template v-for="(item, index) in selectionItem" :key="index">
+                    <slot name="selection" :item="item" :index="0">
+                        {{ initSelectionItem }}
+                    </slot>
+                </template>
             </div>
             <input 
             v-bind="$attrs"
