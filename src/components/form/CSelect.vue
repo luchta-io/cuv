@@ -114,9 +114,9 @@ const inputClass = computed(() => {
     if(props.modelValue || Array.isArray(props.modelValue)) base.push('placeholder:opacity-0')
     if(!props.label && (!props.modelValue || !props.modelValue.length)) base.push('placeholder:opacity-100')
     if(props.label && (!props.modelValue || !props.modelValue.length)) base.push('placeholder:opacity-0 focus:placeholder:opacity-100')
-    if(props.variant === 'filled') base.push('pt-4 pb-1')
-    if(props.variant === 'outlined') base.push('pt-4 pb-1.5')
-    if(props.variant === 'underlined') base.push('pt-2.5 pb-1')
+    if(props.variant === 'filled') base.push( props.label ? 'pt-4 pb-1' : 'py-2.5')
+    if(props.variant === 'outlined') base.push(props.label ? 'pt-4 pb-1' : 'py-2.5')
+    if(props.variant === 'underlined') base.push('pt-4 pb-1')
     return base
 })
 
@@ -139,7 +139,7 @@ const labelClass = computed(() => {
         : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0'
         )
     if(props.variant === 'underlined') base.push(
-        '-translate-y-5 top-3 peer-focus:left-0 peer-focus:-translate-y-5',
+        '-translate-y-4 top-4 peer-focus:left-0 peer-focus:-translate-y-4',
         !props.modelValue || !props.modelValue.length 
         ? 'scale-100 translate-y-0' 
         : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0'
@@ -151,10 +151,11 @@ const labelClass = computed(() => {
 
 const selectionClass = computed(() => {
     return [
-        'pb-1 pr-4 whitespace-nowrap cursor-pointer',
-        props.variant === 'filled' ? 'pt-4' : '',
-        props.variant === 'outlined' ? 'pt-4' : '',
-        props.variant === 'underlined' ? 'pt-2.5' : '',
+        'pr-4 whitespace-nowrap cursor-pointer',
+        props.label ? 'pt-4 pb-1' : '',
+        props.variant === 'filled' && !props.label ? 'py-2.5' : '',
+        props.variant === 'outlined' && !props.label ? 'py-2.5' : '',
+        props.variant === 'underlined' && !props.label ? 'pt-4 pb-1' : '',        
         props.readonly || props.disabled ? 'text-gray-500' : 'text-gray-900',
     ]
 })

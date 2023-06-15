@@ -80,12 +80,12 @@ const inputClass = computed(() => {
         'peer w-full appearance-none text-gray-900 focus:outline-none focus:ring-0 disabled:text-gray-500 read-only:text-gray-500 opacity-100 bg-transparent',
     ]
     if(!props.label) base.push('placeholder:opacity-100')
-    if(props.label && !props.modelValue) base.push('placeholder:opacity-0 focus:placeholder:opacity-100')
-    if(props.label && props.modelValue) base.push('placeholder:opacity-0')
-    if(props.variant === 'filled') base.push('pt-4 pb-1')
-    if(props.variant === 'outlined') base.push('pt-4 pb-1.5')
-    if(props.variant === 'underlined') base.push('pt-2.5 pb-1')
+    if(props.label && !props.modelValue) base.push('pt-4 pb-1 placeholder:opacity-0 focus:placeholder:opacity-100')
+    if(props.label && props.modelValue) base.push('pt-4 pb-1 placeholder:opacity-0')
 
+    if(props.variant === 'filled' && !props.label) base.push('py-2.5')
+    if(props.variant === 'outlined' && !props.label) base.push('py-2.5')
+    if(props.variant === 'underlined' && !props.label) base.push('pt-4 pb-1')
     return base
 })
 
@@ -99,7 +99,7 @@ const labelClass = computed(() => {
     if(props.variant === 'filled' && props.modelValue) base.push('scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
     if(props.variant === 'outlined') base.push('-translate-y-4 top-4 left-0 peer-focus:-translate-y-4')
     if(props.variant === 'outlined' && props.modelValue) base.push('scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
-    if(props.variant === 'underlined') base.push('-translate-y-5 top-3 left-0 peer-focus:left-0 peer-focus:-translate-y-5')
+    if(props.variant === 'underlined') base.push('-translate-y-4 top-4 left-0 peer-focus:left-0 peer-focus:-translate-y-4')
     if(props.variant === 'underlined' && props.modelValue) base.push('scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
     if(!props.modelValue) base.push('scale-100 translate-y-0')
     
