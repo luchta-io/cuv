@@ -103,9 +103,10 @@ const inputClass = computed(() => {
     return [
         'peer w-full text-gray-900 focus:outline-none focus:ring-0 bg-transparent opacity-100',
         props.modelValue ? 'placeholder:opacity-0' : props.label ? 'placeholder:opacity-0 focus:placeholder:opacity-100' : 'opacity-100',
-        props.variant === 'filled' ? 'pt-4 pb-1' : '',
-        props.variant === 'outlined' ? 'pt-4 pb-1.5' : '',
-        props.variant === 'underlined' ? 'pt-2.5 pb-1' : '',        
+        props.label ? 'pt-4 pb-1' : '',
+        props.variant === 'filled' && !props.label ? 'py-2.5' : '',
+        props.variant === 'outlined' && !props.label ? 'py-2.5' : '',
+        props.variant === 'underlined' && !props.label ? 'pt-4 pb-1' : '',        
     ]
 })
 
@@ -127,7 +128,7 @@ const labelClass = computed(() => {
         ? 'scale-100 translate-y-0' 
         : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
     if(props.variant === 'underlined') base.push(
-        '-translate-y-5 top-3 peer-focus:left-0 peer-focus:-translate-y-5', 
+        '-translate-y-4 top-4 peer-focus:left-0 peer-focus:-translate-y-4', 
         !props.modelValue && !data.inputText
         ? 'scale-100 translate-y-0' 
         : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
@@ -138,6 +139,10 @@ const selectionClass = computed(() => {
     return [
         'pb-1 pt-4 whitespace-nowrap',
         props.readonly || props.disabled ? 'text-gray-500' : 'text-gray-900',
+        props.label ? 'pt-4 pb-1' : '',
+        props.variant === 'filled' && !props.label ? 'py-2.5' : '',
+        props.variant === 'outlined' && !props.label ? 'py-2.5' : '',
+        props.variant === 'underlined' && !props.label ? 'pt-4 pb-1' : '',        
     ]
 })
 
@@ -273,7 +278,6 @@ watchEffect(() => {
             >
                 {{ label }}
             </label>
-
         </div>
         <div v-show="clearIconDisplay" class="pt-2">
             <c-svg-icon :icon="mdiClose" @click="clear" class="text-gray-500 cursor-pointer" />

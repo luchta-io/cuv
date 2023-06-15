@@ -84,9 +84,9 @@ const textareaClass = computed(() => {
     if(!props.label) base.push('placeholder:opacity-100')
     if(props.label && !props.modelValue) base.push('placeholder:opacity-0 focus:placeholder:opacity-100')
     if(props.label && props.modelValue) base.push('placeholder:opacity-0')
-    if(props.variant === 'filled') base.push('min-h-[2.7rem] px-2.5 pb-1 pt-4')
-    if(props.variant === 'outlined') base.push('min-h-[2.8rem] px-2.5 pb-1.5 pt-4')
-    if(props.variant === 'underlined') base.push('min-h-[2.3rem] pt-2.5 pb-1 pl-1')
+    if(props.variant === 'filled') base.push('min-h-[2.7rem] px-2.5 ', props.label ?'pt-4 pb-1':'py-2.5')
+    if(props.variant === 'outlined') base.push('min-h-[2.8rem] px-2.5', props.label ?'pt-4 pb-1':'py-2.5')
+    if(props.variant === 'underlined') base.push('min-h-[2.3rem] pt-4 pb-1 pl-1')
 
     return base
 })
@@ -101,7 +101,7 @@ const labelClass = computed(() => {
     if(props.variant === 'filled' && props.modelValue) base.push('scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
     if(props.variant === 'outlined') base.push('-translate-y-4 top-4 px-2 peer-focus:px-2 peer-focus:-translate-y-4 left-1 top-4')
     if(props.variant === 'outlined' && props.modelValue) base.push('scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
-    if(props.variant === 'underlined') base.push('-translate-y-4 top-3 pl-1 peer-focus:left-0 peer-focus:-translate-y-4')
+    if(props.variant === 'underlined') base.push('-translate-y-4 top-4 pl-1 peer-focus:left-0 peer-focus:-translate-y-4')
     if(props.variant === 'underlined' && props.modelValue) base.push('scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
     if(!props.modelValue) base.push('scale-100 translate-y-0')
     return base
@@ -138,7 +138,7 @@ const clear = () => {
             :placeholder="placeholder"
             :rows="rows"
             :class="textareaClass"/>
-            <label :class="labelClass">
+            <label v-if="label" :class="labelClass">
                 {{ label }}
             </label>
         </div>
