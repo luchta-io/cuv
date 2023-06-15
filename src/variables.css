@@ -165,4 +165,6 @@
     --cuv-info-outline: var(--cuv-blue);
     --cuv-info-outline-hover: var(--cuv-blue-darken-2);
     --cuv-info-outline-focus: var(--cuv-blue-darken-2);
+
+    --cuv-measure: 60em;
 }
