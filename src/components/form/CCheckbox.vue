@@ -76,7 +76,7 @@ const iconColor = computed(() => {
 
 const iconClass = computed(() => {
     return [
-        'group w-10 h-10 rounded-full flex justify-center items-center',
+        'group w-10 h-10 rounded-full flex justify-center items-center text-xl',
         'peer-disabled:text-gray-400 peer-hover:bg-gray-50 peer-focus:bg-gray-50 peer-hover:peer-disabled:bg-transparent',
         iconDisplayStatus.value === 'blank' ? 'text-[var(--cuv-black)]' : iconColor.value,
         props.readonly ? 'peer-read-only:text-gray-500' : '',
@@ -86,7 +86,7 @@ const iconClass = computed(() => {
 
 const labelClass = computed(() => {
     const base = [
-        'text-base peer-disabled:text-gray-400',
+        'peer-disabled:text-gray-400',
     ]
     if(props.readonly) base.push('text-gray-500')
     if(isError.value) base.push('text-[var(--cuv-danger-text)]')
@@ -110,7 +110,7 @@ const indeterminateClick = () => {
 
 <template>
 <div class="relative inline-flex items-center justify-center">
-    <label class="relative text-xl w-auto break-words cursor-pointer inline-flex items-center justify-center">
+    <label class="relative w-auto break-words cursor-pointer inline-flex items-center justify-center">
         <input 
         v-model="checkboxValue" 
         v-bind="$attrs"
