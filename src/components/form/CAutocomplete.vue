@@ -247,7 +247,7 @@ watchEffect(() => {
             <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
         <div :class="$style['c-autocomplete-field__field']" class="relative w-full flex">
-            <div class="flex overflow-x-scroll w-full">
+            <div class="flex overflow-x-auto w-full">
                 <div v-if="selectionSlotDisplay" @click="toggleDropdownList" :class="selectionClass">
                     <slot name="selection" :item="selectionItem">
                         {{ typeof selectionItem === "object" ? selectionItem[itemValue] : selectionItem }}
