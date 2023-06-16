@@ -86,7 +86,7 @@ const isError = computed(() => {
 
 const fieldClass = computed(() => {
     const base = [
-        'peer relative col-start-2 flex items-center w-full appearance-none focus:outline-none focus:ring-0 opacity-100',
+        'peer relative grid items-center col-start-2 appearance-none focus:outline-none focus:ring-0 opacity-100',
     ]
     if(isError.value) base.push('border-[var(--cuv-danger-border)] focus-within:border-[var(--cuv-danger-outline-focus)]')
     if(!isError.value && props.readonly) base.push('focus-within:border-gray-900 border-gray-300') 
@@ -101,43 +101,33 @@ const fieldClass = computed(() => {
 
 const inputClass = computed(() => {
     return [
-        'peer w-full text-gray-900 focus:outline-none focus:ring-0 bg-transparent opacity-100',
+        'peer text-gray-900 focus:outline-none focus:ring-0 bg-transparent opacity-100',
         props.modelValue ? 'placeholder:opacity-0' : props.label ? 'placeholder:opacity-0 focus:placeholder:opacity-100' : 'opacity-100',
         props.label ? 'pt-4 pb-1' : '',
         props.variant === 'filled' && !props.label ? 'py-2.5' : '',
         props.variant === 'outlined' && !props.label ? 'py-2.5' : '',
-        props.variant === 'underlined' && !props.label ? 'pt-4 pb-1' : '',        
+        props.variant === 'underlined' && !props.label ? 'pt-4 pb-1' : '',   
+        !data.inputText.length && props.modelValue ? 'w-4' : 'w-full',
     ]
 })
 
 const labelClass = computed(() => {
     const base = [
-        'absolute text-sm duration-300 transform origin-[0] peer-focus:scale-75 whitespace-nowrap overflow-hidden pointer-events-none',
+        'absolute left-0 text-sm duration-300 transform origin-[0] peer-focus:scale-75 whitespace-nowrap overflow-hidden pointer-events-none',
+        '-translate-y-4 top-4 peer-focus:-translate-y-4',
+        !props.modelValue && !data.inputText
+        ? 'scale-100 translate-y-0' 
+        : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0'
     ]
     if(isError.value) base.push('text-[var(--cuv-danger-text)]')
     if(!isError.value) base.push('text-gray-500 peer-read-only:peer-focus:text-gray-900 peer-focus:text-blue-600')
 
-    if(props.variant === 'filled') base.push(
-        '-translate-y-4 top-4 peer-focus:-translate-y-4', 
-        !props.modelValue && !data.inputText
-        ? 'scale-100 translate-y-0' 
-        : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
-    if(props.variant === 'outlined') base.push(
-        '-translate-y-4 top-4 peer-focus:-translate-y-4', 
-        !props.modelValue && !data.inputText
-        ? 'scale-100 translate-y-0' 
-        : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
-    if(props.variant === 'underlined') base.push(
-        '-translate-y-4 top-4 peer-focus:left-0 peer-focus:-translate-y-4', 
-        !props.modelValue && !data.inputText
-        ? 'scale-100 translate-y-0' 
-        : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
     return base
 })
 
 const selectionClass = computed(() => {
     return [
-        'pb-1 pt-4 whitespace-nowrap',
+        'whitespace-nowrap',
         props.readonly || props.disabled ? 'text-gray-500' : 'text-gray-900',
         props.label ? 'pt-4 pb-1' : '',
         props.variant === 'filled' && !props.label ? 'py-2.5' : '',
@@ -176,6 +166,11 @@ const selectionSlotDisplay = computed(() => {
     if (props.items.length === 0) return false 
     return props.itemValue ? Object.keys(selectionItem).length : selectionItem.value!==''
 })
+
+const focus = () => {
+    if ( !inputRef.value ) return
+    inputRef.value.focus()
+}
 
 const liClass= (item:any) => {
     if(props.itemValue) return item[props.itemValue]==selectionItem.value[props.itemValue]?'bg-blue-50 text-blue-700':''
@@ -243,49 +238,51 @@ watchEffect(() => {
 
 </script>
 <template>
-<div ref="componentRef" @mouseover="data.isHover = true" @mouseleave="data.isHover = false" class="relative grid grid-cols-[auto_1fr_auto] gap-y-1">
+<div ref="componentRef" @mouseover="data.isHover = true" @mouseleave="data.isHover = false" @click="focus" class="relative grid grid-cols-[auto_1fr_auto] gap-y-1 cursor-text">
     <div v-show="prependIcon" class="text-lg col-start-1 my-auto pt-1.5 pr-1">
         <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
     </div>
-    <div :class="fieldClass" ref="fieldEl">
-        <div v-show="prependInnerIcon" class="my-auto pt-2 pr-2 text-lg">
+    <div :class="[fieldClass, $style['c-autocomplete-field']]" ref="fieldEl" :style="{width: `${fieldEl?.clientWidth}px`}">
+        <div v-show="prependInnerIcon" :class="$style['c-autocomplete-field__prepend']" class="my-auto pt-2 pr-2 text-lg">
             <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
-        <div class="relative w-full flex">
-            <div v-if="selectionSlotDisplay" @click="toggleDropdownList" :class="selectionClass">
-                <slot name="selection" :item="selectionItem">
-                    {{ typeof selectionItem === "object" ? selectionItem[itemValue] : selectionItem }}
-                </slot>
+        <div :class="$style['c-autocomplete-field__field']" class="relative w-full flex">
+            <div class="flex overflow-x-scroll w-full">
+                <div v-if="selectionSlotDisplay" @click="toggleDropdownList" :class="selectionClass">
+                    <slot name="selection" :item="selectionItem">
+                        {{ typeof selectionItem === "object" ? selectionItem[itemValue] : selectionItem }}
+                    </slot>
+                </div>
+                <input
+                    v-model="data.inputText"
+                    v-bind="$attrs"
+                    @focus="openDropdownList"
+                    @blur="closeDropdownList"
+                    @keyup.delete="clear"
+                    type="text"
+                    :id="id"
+                    :name="name"
+                    :readonly="readonly"
+                    :disabled="disabled"
+                    :placeholder="placeholder"
+                    :class="inputClass"
+                    autocomplete="off"
+                    ref="inputRef"
+                />
+                <label
+                    :class="labelClass"
+                    >
+                    {{ label }}
+                </label>
             </div>
-            <input
-                v-model="data.inputText"
-                v-bind="$attrs"
-                @focus="openDropdownList"
-                @blur="closeDropdownList"
-                @keyup.delete="clear"
-                type="text"
-                :id="id"
-                :name="name"
-                :readonly="readonly"
-                :disabled="disabled"
-                :placeholder="placeholder"
-                :class="inputClass"
-                autocomplete="off"
-                ref="inputRef"
-            />
-            <label
-                :class="labelClass"
-            >
-                {{ label }}
-            </label>
         </div>
-        <div v-show="clearIconDisplay" class="pt-2">
+        <div v-show="clearIconDisplay" :class="$style['c-autocomplete-field__clear']" class="pt-2">
             <c-svg-icon :icon="mdiClose" @click="clear" class="text-gray-500 cursor-pointer" />
         </div>
-        <div v-show="menuIconDisplay" class="pt-2">
+        <div v-show="menuIconDisplay" :class="$style['c-autocomplete-field__menu']" class="pt-2">
             <c-svg-icon :icon="data.isActive ? mdiMenuUp : mdiMenuDown" @click="toggleDropdownList" :class="isError ? 'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
-        <div v-show="appendInnerIcon" class="my-auto pt-2 pl-1 text-lg">
+        <div v-show="appendInnerIcon" :class="$style['c-autocomplete-field__append']" class="my-auto pt-2 pl-1 text-lg">
             <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
 
@@ -318,3 +315,26 @@ watchEffect(() => {
     </div>
 </Teleport>
 </template>
+
+<style module>
+.c-autocomplete-field {
+    grid-template-areas: "prepend-inner field clear menu append-inner";
+    grid-template-columns: min-content minmax(0,1fr) min-content min-content min-content;
+}
+
+.c-autocomplete-field__prepend {
+    grid-area: prepend-inner;
+}
+.c-autocomplete-field__field {
+    grid-area: field;
+}
+.c-autocomplete-field__clear {
+    grid-area: clear;
+}
+.c-autocomplete-field__menu {
+    grid-area: menu;
+}
+.c-autocomplete-field__append {
+    grid-area: append-inner;
+}
+</style>
