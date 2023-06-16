@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import CSvgIcon from '@/components/images/CSvgIcon.vue';
 import { useVariant } from '@/composables/variant';
 
@@ -30,9 +30,11 @@ const props = withDefaults(defineProps<{
     variant: 'elevated',
 })
 
+const buttonRef = ref<HTMLElement>()
+
 const buttonClass = computed(() => {
     const base = [
-        'relative inline-grid items-center justify-center',
+        'relative inline-grid items-center justify-center overflow-hidden',
         !props.disabled ? useVariant({variant: props.variant, color: props.color, hover: true, focus: true}) : 'bg-gray-100 text-gray-400 cursor-default',
         props.icon ? 'rounded-full' : 'rounded',
         fixedSize.value,
@@ -84,10 +86,33 @@ const fixedRounded = computed(() => {
     return 'rounded-none'
 })
 
+const ripple = () => {
+    if ( props.disabled ) return
+    if ( !buttonRef.value ) return
+    buttonRef.value.addEventListener('click', (e) => {
+        if ( !buttonRef.value ) return
+        const position = buttonRef.value.getBoundingClientRect()
+        const x = e.pageX - position.left
+        const y = e.pageY - position.top
+        const rippleSpan = document.createElement("span")
+        rippleSpan.classList.add('c-button-ripple')
+        rippleSpan.setAttribute("style","top:"+y+"px; left:"+x+"px;")
+        buttonRef.value.appendChild(rippleSpan)
+    
+        setTimeout(() => {
+            rippleSpan.remove()
+        }, 1200)
+    })
+}
+
+onMounted(() => {
+    ripple()
+})
+
 </script>
 
 <template>
-<button :id="id" :name="name" :class="[buttonClass, $style['c-button']]">
+<button :id="id" :name="name" ref="buttonRef" :class="[buttonClass, $style['c-button']]">
     <span :class="$style['c-button__prepend']">
         <CSvgIcon v-if="prependIcon" :icon="prependIcon"/>
     </span>

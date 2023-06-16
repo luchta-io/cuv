@@ -1,6 +1,7 @@
 import './tailwind.css'
 import './variables.css'
 import './axioms.css'
+import './ripple.css'
 
 // containment
 export {default as CButton} from "./components/containment/CButton.vue"

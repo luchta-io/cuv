@@ -1,0 +1,21 @@
+.c-button-ripple{
+    position: absolute;
+    pointer-events: none;
+    background-color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    animation: rippleEffect 1200ms 1;
+    opacity: 0;
+}
+
+@keyframes rippleEffect {
+    from {
+        transform: scale(1);
+        opacity: 0.45;
+    }
+    to {
+        transform: scale(30);
+        opacity: 0;
+    }
+}
