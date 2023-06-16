@@ -273,7 +273,7 @@ watchEffect(() => {
             <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
         <div :class="$style['c-select-field__field']" class="relative w-full flex">
-            <div class="flex overflow-x-scroll w-full">
+            <div class="flex overflow-x-auto w-full">
                 <div v-show="selectionSlotDisplay && Array.isArray(selectionItem)" @click="toggleDropdownList" :class="selectionClass">
                     <span v-for="(item, index) in selectionItem" :key="index">
                         <slot name="selection" :item="item" :index="index">
