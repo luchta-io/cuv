@@ -16,7 +16,7 @@ const data: {
 } = reactive({
     modelValue: '',
     bloodTypeList: [
-        'A型',
+        'A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型',
         'B型',
         'O型',
         'AB型',

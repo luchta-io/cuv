@@ -21,7 +21,7 @@ const string: {
 } = reactive({
     modelValue: '',
     bloodType: [
-    'A型',
+    'A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型A型',
     'B型',
     'O型',
     'AB型',
