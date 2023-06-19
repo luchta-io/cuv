@@ -112,7 +112,7 @@ onMounted(() => {
 </script>
 
 <template>
-<button :id="id" :name="name" ref="buttonRef" :class="[buttonClass, $style['c-button']]">
+<button :id="id" :name="name" ref="buttonRef" :disabled="disabled" :class="[buttonClass, $style['c-button']]">
     <span :class="$style['c-button__prepend']">
         <CSvgIcon v-if="prependIcon" :icon="prependIcon"/>
     </span>
