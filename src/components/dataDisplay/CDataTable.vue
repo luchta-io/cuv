@@ -293,7 +293,7 @@ watchEffect(() => {
             <CCluster justify="flex-end" align="center">
                 <CCluster space="0.2rem" align="center">
                     Items per page:
-                    <CSelect v-model="data.currentPerPage" @update:model-value="changePerPage" :items="perPageArray" variant="outlined" :disabled="!items.length" :class="$style.perpage"/>
+                    <CSelect v-model="data.currentPerPage" @update:model-value="changePerPage" :items="perPageArray" variant="outlined" :disabled="!items.length" class="max-w-[5rem]"/>
                 </CCluster>
                 <div>{{ startRecord }}-{{ endRecord }} of {{ totalItemsLength }}</div>
                 <CCluster>
@@ -320,9 +320,3 @@ watchEffect(() => {
     </COverlay>
 </CTable>
 </template>
-
-<style module>
-.perpage input {
-    width: 0;
-}
-</style>
