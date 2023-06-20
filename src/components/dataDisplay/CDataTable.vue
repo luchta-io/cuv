@@ -322,7 +322,7 @@ watchEffect(() => {
 </template>
 
 <style module>
-.perpage input {
-    width: 0;
+.perpage {
+    max-width: 5rem;
 }
 </style>

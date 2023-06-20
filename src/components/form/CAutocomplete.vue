@@ -300,11 +300,11 @@ watchEffect(() => {
     <div v-if="data.isActive" @mouseover="optionsMouseOver()" @mouseleave="data.isHover=false" :style="{width:optionsPosition.width, top:optionsPosition.top, left:optionsPosition.left}"  class="absolute pt-0.5 z-50 rounded peer-read-only:hidden">
         <ul ref="optionsRef" class="overflow-auto divide-y-2 divide-gray-100 rounded-b bg-white shadow-lg z-50 max-h-60">
             <template v-if="dropdownListItems.length > 0">
-                <li v-for="(item,index) in dropdownListItems" :key="index" @click.stop="selectItem(item)" :class="liClass(item)" class="py-2 px-3 min-w-full text-gray-700 cursor-pointer hover:bg-gray-100">
-                <slot name="item" :item="item" :index="index">
-                    {{ typeof item === "object" ? item[itemValue] : item }}
-                </slot>
-            </li>
+                <li v-for="(item,index) in dropdownListItems" :key="index" @click.stop="selectItem(item)" :class="liClass(item)" class="py-2 px-3 min-w-full text-gray-700 cursor-pointer whitespace-nowrap truncate hover:bg-gray-100">
+                    <slot name="item" :item="item" :index="index">
+                        {{ typeof item === "object" ? item[itemValue] : item }}
+                    </slot>
+                </li>
             </template>
             <li v-if="dropdownListItems.length === 0" @click="data.isActive=false" class="p-2 min-w-full text-xs text-gray-500">
                 <slot name="empty">
