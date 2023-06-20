@@ -268,7 +268,7 @@ watchEffect(() => {
     <div v-show="prependIcon" class="my-auto text-lg col-start-1 pt-1.5 pr-1">
         <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
     </div>
-    <div :class="[fieldClass, $style['c-select-field']]" ref="fieldEl" :style="{width: `${fieldEl?.clientWidth}px`}">
+    <div :class="[fieldClass, $style['c-select-field']]" ref="fieldEl" :style="{'min-width': `${fieldEl?.clientWidth}px`}">
         <div v-show="prependInnerIcon" :class="$style['c-select-field__prepend']" class="my-auto pt-2 pr-2 text-lg">
             <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
