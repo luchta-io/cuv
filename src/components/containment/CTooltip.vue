@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue';
+import { computed, reactive, ref, watchEffect } from 'vue';
+import { getScrollParent } from '@/composables/scroll';
 
 const props = withDefaults(defineProps<{
     disabled?: boolean
@@ -23,12 +24,23 @@ const data: {
     isActive: false,
 })
 
+const position: {
+    top: string
+    left: string
+} = reactive({
+    top: '',
+    left: '',
+})
+
+const targetRef = ref<HTMLElement>()
+
+const contentRef = ref<HTMLElement>()
+
 const isActive = computed({
     get: () => props.modelValue || data.isActive,
     set: value => {
         if ( props.disabled ) return false
         emits('update:modelValue', value)
-        console.log(value)
         data.isActive = value
     }
 })
@@ -46,20 +58,14 @@ const computedClass = computed(()=> {
         "inline-block",
         "absolute",
         "break-all",
-        isActive.value ? 'block' : 'invisible',
     ]
     return base
 })
-
-const target = ref<HTMLDivElement>()
-
-const content = ref<HTMLSpanElement>()
 
 const open = () => {
     if ( props.disabled ) return 
     emits('update:modelValue', true)
     isActive.value = true
-    console.log('open', isActive.value)
 }
 
 const close = () => {
@@ -69,55 +75,71 @@ const close = () => {
 }
 
 const tooltipHeight = computed(() => {
-    const tooltipElement = content.value
+    const tooltipElement = contentRef.value
     if ( !tooltipElement ) return 0
     return tooltipElement.clientHeight
 })
 
 const tooltipWidth = computed(() => {
-    const tooltipElement = content.value
+    const tooltipElement = contentRef.value
     if ( !tooltipElement ) return 0
     return tooltipElement.clientWidth
 })
 
-const positionLeft = () => {
-    const targetElement = target.value
-    if ( !targetElement ) return
-    const clientRect = targetElement.getBoundingClientRect()
+const getPositionLeft = () => {
+    if ( typeof window == 'undefined' ) return
+    if ( !targetRef.value ) return
+    const clientRect = targetRef.value.getBoundingClientRect()
     const x = clientRect.left
-    const elementWidth = targetElement.clientWidth
-    if ( props.location === 'start' ) return x - tooltipWidth.value - 8 + 'px'
-    if ( props.location === 'end' ) return x + elementWidth + 8 + 'px'
-    return x + (elementWidth/2 - tooltipWidth.value/2) + 'px'
+    const elementWidth = targetRef.value.clientWidth
+    if ( props.location == 'start' ) return position.left = x - tooltipWidth.value - 8 + 'px'
+    if ( props.location == 'end' ) return position.left = x + elementWidth + 8 + 'px'
+    position.left = x + (elementWidth/2 - tooltipWidth.value/2) + 'px'
+    return
 }
 
-const positionTop = () => {
-    const targetElement = target.value
-    if ( !targetElement ) return
-    const clientRect = targetElement.getBoundingClientRect()
+const getPositionTop = () => {
+    if ( typeof window == 'undefined' ) return
+    if ( !targetRef.value ) return
+    const clientRect = targetRef.value.getBoundingClientRect()
     const y = clientRect.top
-    const elementHeight = targetElement.clientHeight
-    if ( props.location === 'top' ) return y - tooltipHeight.value - 8 + 'px'
-    if ( props.location === 'bottom' ) return y + elementHeight + 8 + 'px'
-    return y + (elementHeight/2 - tooltipHeight.value/2) + 'px'
+    const elementHeight = targetRef.value.clientHeight
+    if ( props.location == 'top' ) return position.top = y - tooltipHeight.value + window.scrollY - 8 + 'px'
+    if ( props.location == 'bottom' ) return position.top = y + elementHeight + window.scrollY + 8 + 'px'
+    position.top = y + elementHeight/2 - tooltipHeight.value/2 + window.scrollY + 'px'
+    return
 }
+
+watchEffect(() => {
+    if ( isActive.value && data.isActive ) {
+        getPositionLeft()
+        getPositionTop()
+        const scrollParent = getScrollParent(targetRef.value)
+        scrollParent.onscroll = () => {
+            isActive.value = false
+        }
+    }
+})
+
 </script>
 <template>
 <div :id="id" class="relative inline-flex">
-    <div
-    ref="target"
+    <span
+    ref="targetRef"
     @mouseenter="open"
     @mouseleave="close"
     @focus.capture="open"
     @blur.capture="close"
+    class="inline-flex"
     >
         <slot name="activator"/>
-    </div>
+    </span>
     <Teleport to="body">
         <span 
-        ref="content"
+        v-if="isActive"
+        ref="contentRef"
         :class="computedClass" 
-        :style="{left: positionLeft(), top: positionTop()}">
+        :style="{left: position.left, top: position.top}">
             <slot>
                 {{text}}
             </slot>
