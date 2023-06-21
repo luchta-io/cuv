@@ -8,6 +8,7 @@ div,
 header,
 nav,
 main,
+table,
 footer {
     max-width: none;
 }
