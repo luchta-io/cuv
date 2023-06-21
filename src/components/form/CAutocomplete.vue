@@ -217,8 +217,8 @@ const optionClass = () => {
     if ( typeof window == 'undefined' ) return
     if ( !optionsRef.value ) return
     const allElementHeight = fieldEl.value.getBoundingClientRect().top + fieldEl.value.clientHeight + optionsRef.value.clientHeight
-    if ( allElementHeight >= window.innerHeight ) optionsPosition.top = fieldEl.value.getBoundingClientRect().top - optionsRef.value.clientHeight - 10 + 'px'
-    else optionsPosition.top = fieldEl.value.getBoundingClientRect().top + fieldEl.value.clientHeight + 1 + 'px'
+    if ( allElementHeight >= window.innerHeight ) optionsPosition.top = fieldEl.value.getBoundingClientRect().top - optionsRef.value.clientHeight + window.scrollY - 10 + 'px'
+    else optionsPosition.top = fieldEl.value.getBoundingClientRect().top + fieldEl.value.clientHeight + window.scrollY + 1 + 'px'
     optionsPosition.left = fieldEl.value.getBoundingClientRect().left+'px'
     optionsPosition.width = fieldEl.value.clientWidth+'px'
 }
