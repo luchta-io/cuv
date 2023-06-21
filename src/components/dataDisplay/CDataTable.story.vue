@@ -7,6 +7,7 @@ import CSheet from '@/components/containment/CSheet.vue';
 import CCluster from '@/components/layout/CCluster.vue';
 import CTextField from '@/components/form/CTextField.vue';
 import CBox from '@/components/layout/CBox.vue';
+import CChip from '@/components/containment/CChip.vue'
 
 type OptionsType = {
     page: number,
@@ -397,6 +398,15 @@ const desserts = [
     },
 ]
 
+const setGroupColor = (groupName: string) => {
+    if ( groupName == '営業部' ) return 'link'
+    if ( groupName == '採用部' ) return 'danger'
+    if ( groupName == '経営企画部' ) return 'success'
+    if ( groupName == '総務部' ) return 'info'
+    if ( groupName == '人事部' ) return 'primary'
+    return 'dark'    
+}
+
 const FakeAPI = {
     async fetch ({page, itemsPerPage, search}:OptionsType) {
         return new Promise(resolve => {
@@ -416,7 +426,6 @@ const FakeAPI = {
                     resolve({ items: paginated, total: newArray.length })
                     return
                 }
-
                 const paginated = items.slice(start, end)
                 resolve({ items: paginated, total: items.length })
             }, 500)
@@ -481,12 +490,10 @@ onMounted(() => {
         :items="custom.nameList"
         @click:row="logEvent('click:row', $event)"
         >
-            <template v-slot:[`item.gender`]="{item}">
-                <CCluster justify="center">
-                    <CSheet :color="item==='男'?'link':'danger'" rounded="large" class="w-fit">
-                        <p class="text-white px-2">{{ item }}</p>
-                    </CSheet>
-                </CCluster>
+            <template v-slot:[`item.group`]="{item}">
+                <CChip :color="setGroupColor(item)" size="small">
+                    {{ item }}
+                </CChip>
             </template>
         </CDataTable>
     </Variant>
