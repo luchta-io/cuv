@@ -95,16 +95,16 @@ export const useVariant = ({variant, color, hover, focus}:{variant:VarianType; c
     })
 
     const outlineColor = computed(() => {
-        if ( color === 'white' ) return 'outline outline-[var(--cuv-white)]'
-        if ( color === 'black' ) return 'outline outline-[var(--cuv-black)]'
-        if ( color === 'light' ) return 'outline outline-[var(--cuv-light-outline)]'
-        if ( color === 'dark' )  return 'outline outline-[var(--cuv-dark-outline)]'
-        if ( color === 'primary' ) return 'outline outline-[var(--cuv-primary-outline)]'
-        if ( color === 'link' ) return 'outline outline-[var(--cuv-link-outline)]'
-        if ( color === 'success' ) return 'outline outline-[var(--cuv-success-outline)]'
-        if ( color === 'danger' ) return 'outline outline-[var(--cuv-danger-outline)]'
-        if ( color === 'warning' ) return 'outline outline-[var(--cuv-warning-outline)]'
-        if ( color === 'info' ) return 'outline outline-[var(--cuv-info-outline)]'
+        if ( color === 'white' ) return 'outline-[var(--cuv-white)]'
+        if ( color === 'black' ) return 'outline-[var(--cuv-black)]'
+        if ( color === 'light' ) return 'outline-[var(--cuv-light-outline)]'
+        if ( color === 'dark' )  return 'outline-[var(--cuv-dark-outline)]'
+        if ( color === 'primary' ) return 'outline-[var(--cuv-primary-outline)]'
+        if ( color === 'link' ) return 'outline-[var(--cuv-link-outline)]'
+        if ( color === 'success' ) return 'outline-[var(--cuv-success-outline)]'
+        if ( color === 'danger' ) return 'outline-[var(--cuv-danger-outline)]'
+        if ( color === 'warning' ) return 'outline-[var(--cuv-warning-outline)]'
+        if ( color === 'info' ) return 'outline-[var(--cuv-info-outline)]'
         return 'outline-inherit'
     })
     
@@ -188,6 +188,7 @@ export const useVariant = ({variant, color, hover, focus}:{variant:VarianType; c
         focus ? focusBackgroundLightColor.value : '',
     )
     if ( variant === 'outlined' ) base.push(
+        'outline outline-1',
         outlineColor.value, 
         textColor.value,
         hover ? [hoverBackgroundLightColor.value, hoverOutlineColor.value] : '',
