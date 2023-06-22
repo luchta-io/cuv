@@ -87,7 +87,6 @@ const fixedRounded = computed(() => {
 })
 
 const ripple = () => {
-    if ( props.disabled ) return
     if ( !buttonRef.value ) return
     buttonRef.value.addEventListener('click', (e) => {
         if ( !buttonRef.value ) return
