@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
+import { mdiPlus, mdiMinus } from '@mdi/js';
 import CSwitcher from '@/components/layout/CSwitcher.vue';
 import CBox from '@/components/layout/CBox.vue';
 import CButton from '@/components/containment/CButton.vue';
+import CCluster from '@/components/layout/CCluster.vue'
 
 const data: {
     threshold: string
@@ -47,10 +49,12 @@ const data: {
         </Variant>
         <Variant title="limit" auto-props-disabled>
             <c-box>
-                BOXの数：
-                <c-button @click="data.boxes--">-</c-button>
-                {{ data.boxes }}
-                <c-button @click="data.boxes++">+</c-button>
+                <CCluster align="center">
+                    BOXの数：
+                    <c-button @click="data.boxes--" :icon="mdiMinus" size="x-small" :disabled="data.boxes==1"/>
+                    {{ data.boxes }}
+                    <c-button @click="data.boxes++" :icon="mdiPlus" size="x-small"/>
+                </CCluster>
             </c-box>
             <c-switcher
                 :limit="data.limit"
