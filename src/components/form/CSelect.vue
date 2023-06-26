@@ -98,8 +98,7 @@ const fieldClass = computed(() => {
         'peer relative grid col-start-2 items-center w-full appearance-none focus:outline-none focus:ring-0 opacity-100',
     ]
     if(isError.value) base.push('border-[var(--cuv-danger-border)] focus-within:border-[var(--cuv-danger-outline-focus)]')
-    if(!isError.value && props.readonly) base.push('focus-within:border-gray-900 border-gray-300') 
-    if(!isError.value && !props.readonly) base.push('focus-within:border-blue-600 border-gray-300')
+    if(!isError.value) base.push('focus-within:border-blue-600 border-gray-300')
     if(props.variant === 'filled') base.push('min-h-[2.7rem] rounded-t-lg rounded-b-none px-2.5 bg-gray-50 border-0 border-b-2')
     if(props.variant === 'outlined') base.push('min-h-[2.8rem] px-2.5 bg-transparent rounded-lg border')
     if(props.variant === 'underlined') base.push('min-h-[2.3rem] rounded-none px-0 bg-transparent border-0 border-b-2')
@@ -130,7 +129,7 @@ const labelClass = computed(() => {
     ]
     if(isError.value ) base.push('text-[var(--cuv-danger-text)]')
     if(!isError.value ) base.push('text-gray-500 peer-focus:text-blue-600')
-    if(props.readonly) base.push(!props.modelValue || !props.modelValue.length ? 'peer-focus:translate-y-0 peer-focus:!scale-100 peer-focus:text-gray-900' : 'peer-focus:text-gray-900')
+    // if(props.readonly) base.push(!props.modelValue || !props.modelValue.length ? 'peer-focus:translate-y-0 peer-focus:!scale-100 peer-focus:text-gray-900' : 'peer-focus:text-gray-900')
 
     return base
 })
@@ -142,7 +141,7 @@ const selectionClass = computed(() => {
         props.variant === 'filled' && !props.label ? 'py-2.5' : '',
         props.variant === 'outlined' && !props.label ? 'py-2.5' : '',
         props.variant === 'underlined' && !props.label ? 'pt-4 pb-1' : '',        
-        props.readonly || props.disabled ? 'text-gray-500' : 'text-gray-900',
+        props.disabled ? 'text-gray-500' : 'text-gray-900',
     ]
 })
 

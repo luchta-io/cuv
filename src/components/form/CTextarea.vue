@@ -68,8 +68,7 @@ const fieldClass = computed(() => {
         'group peer col-start-2 flex items-start w-full',
     ]
     if(isError.value) base.push('border-[var(--cuv-danger-border)] focus-within:border-[var(--cuv-danger-outline-focus)]' )
-    if(!isError.value && props.readonly) base.push('focus-within:border-gray-900')
-    if(!isError.value && !props.readonly) base.push('border-gray-300 focus-within:border-blue-600')
+    if(!isError.value) base.push('border-gray-300 focus-within:border-blue-600')
     if(props.variant === 'filled') base.push('rounded-t-lg rounded-b-none bg-gray-50 border-0 border-b-2')
     if(props.variant === 'outlined') base.push('bg-transparent rounded-lg border')
     if(props.variant === 'underlined') base.push('rounded-none bg-transparent border-0 border-b-2')
@@ -79,7 +78,7 @@ const fieldClass = computed(() => {
 
 const textareaClass = computed(() => {
     const base = [
-        'peer block w-full appearance-none bg-transparent focus:outline-none focus:ring-0 disabled:text-gray-500 read-only:text-gray-500 opacity-100',
+        'peer block w-full appearance-none bg-transparent focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100',
     ]
     if(!props.label) base.push('placeholder:opacity-100')
     if(props.label && !props.modelValue) base.push('placeholder:opacity-0 focus:placeholder:opacity-100')
@@ -96,7 +95,7 @@ const labelClass = computed(() => {
         'absolute text-sm duration-300 transform origin-[0] peer-focus:scale-75 whitespace-nowrap overflow-hidden pointer-events-none',
     ]
     if(isError.value) base.push('text-[var(--cuv-danger-text)]')
-    if(!isError.value) base.push('text-gray-500 peer-read-only:peer-focus:text-gray-900 peer-focus:text-blue-600')
+    if(!isError.value) base.push('text-gray-500 peer-focus:text-blue-600')
     if(props.variant === 'filled') base.push('-translate-y-4 top-4 left-2.5 peer-focus:-translate-y-4')
     if(props.variant === 'filled' && props.modelValue) base.push('scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
     if(props.variant === 'outlined') base.push('-translate-y-4 top-4 px-2 peer-focus:px-2 peer-focus:-translate-y-4 left-1 top-4')

@@ -47,17 +47,21 @@ const indeterminate: {
 const disabled: {
     modelValue: boolean
     disabled: boolean
+    color: 'white' | 'black' | 'light' | 'dark' | 'primary' | 'link' | 'success' | 'danger' | 'warning' | 'info'
 } = reactive({
     modelValue: false,
     disabled: true,
+    color: 'black',
 })
 
 const readonly: {
     modelValue: boolean
     readonly: boolean
+    color: 'white' | 'black' | 'light' | 'dark' | 'primary' | 'link' | 'success' | 'danger' | 'warning' | 'info'
 } = reactive({
     modelValue: false,
     readonly: true,
+    color: 'black',
 })
 
 const error: {
@@ -172,9 +176,26 @@ const error: {
         <c-checkbox
             v-model="disabled.modelValue"
             label="disabled"
+            :color="disabled.color"
             :disabled="disabled.disabled"
         />
         <template #controls>
+            <HstSelect
+                v-model="disabled.color"
+                title="color"
+                :options="[
+                            {value: 'white', label: 'white'},
+                            {value: 'black', label: 'black'},
+                            {value: 'light', label: 'light'},
+                            {value: 'dark', label: 'dark'},
+                            {value: 'primary', label: 'primary'},
+                            {value: 'link', label: 'link'},
+                            {value: 'success', label: 'success'},
+                            {value: 'danger', label: 'danger'},
+                            {value: 'warning', label: 'warning'},
+                            {value: 'info', label: 'info'},
+                        ]"
+            />
             <HstCheckbox v-model="disabled.disabled" title="disabled"/>
         </template>
     </Variant>
@@ -182,9 +203,26 @@ const error: {
         <c-checkbox
             v-model="readonly.modelValue"
             label="readonly"
+            :color="readonly.color"
             :readonly="readonly.readonly"
         />
         <template #controls>
+            <HstSelect
+                v-model="readonly.color"
+                title="color"
+                :options="[
+                            {value: 'white', label: 'white'},
+                            {value: 'black', label: 'black'},
+                            {value: 'light', label: 'light'},
+                            {value: 'dark', label: 'dark'},
+                            {value: 'primary', label: 'primary'},
+                            {value: 'link', label: 'link'},
+                            {value: 'success', label: 'success'},
+                            {value: 'danger', label: 'danger'},
+                            {value: 'warning', label: 'warning'},
+                            {value: 'info', label: 'info'},
+                        ]"
+            />
             <HstCheckbox v-model="readonly.readonly" title="readonly"/>
         </template>
     </Variant>
