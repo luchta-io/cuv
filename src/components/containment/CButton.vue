@@ -86,18 +86,32 @@ const fixedRounded = computed(() => {
     return 'rounded-none'
 })
 
+const rippleBackgroundColor = () => {
+    if ( props.color == 'white' ) return 'black'
+    if ( props.color == 'light' ) return 'black'
+    if ( props.variant == 'tonal' ) return 'black'
+    return 'white'
+}
+
 const ripple = () => {
     if ( !buttonRef.value ) return
     buttonRef.value.addEventListener('click', (e) => {
         if ( !buttonRef.value ) return
-        const position = buttonRef.value.getBoundingClientRect()
-        const x = e.pageX - position.left
-        const y = e.pageY - position.top
+        let x = 0
+        let y = 0
+        if ( e.pageX==0 || e.pageY==0 ) {
+            x = buttonRef.value.clientWidth / 2 - 8
+            y = buttonRef.value.clientHeight / 2 - 10
+        }
+        else {
+            const position = buttonRef.value.getBoundingClientRect()
+            x = e.pageX - position.left
+            y = e.pageY - position.top
+        }
         const rippleSpan = document.createElement("span")
         rippleSpan.classList.add('c-button-ripple')
-        rippleSpan.setAttribute("style","top:"+y+"px; left:"+x+"px;")
+        rippleSpan.setAttribute("style","top:"+y+"px; left:"+x+"px; background-color:"+rippleBackgroundColor())
         buttonRef.value.appendChild(rippleSpan)
-    
         setTimeout(() => {
             rippleSpan.remove()
         }, 1200)
