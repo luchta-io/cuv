@@ -129,7 +129,6 @@ const labelClass = computed(() => {
     ]
     if(isError.value ) base.push('text-[var(--cuv-danger-text)]')
     if(!isError.value ) base.push('text-gray-500 peer-focus:text-blue-600')
-    // if(props.readonly) base.push(!props.modelValue || !props.modelValue.length ? 'peer-focus:translate-y-0 peer-focus:!scale-100 peer-focus:text-gray-900' : 'peer-focus:text-gray-900')
 
     return base
 })
