@@ -79,7 +79,6 @@ const iconClass = computed(() => {
         'group w-10 h-10 rounded-full flex justify-center items-center text-xl',
         'peer-disabled:text-gray-400 peer-hover:bg-gray-50 peer-focus:bg-gray-50 peer-hover:peer-disabled:bg-transparent',
         iconDisplayStatus.value === 'blank' ? 'text-[var(--cuv-black)]' : iconColor.value,
-        props.readonly ? 'peer-read-only:text-gray-500' : '',
         isError.value ? 'text-[var(--cuv-danger-text)]' : '',
     ]
 })
@@ -88,9 +87,8 @@ const labelClass = computed(() => {
     const base = [
         'peer-disabled:text-gray-400',
     ]
-    if(props.readonly) base.push('text-gray-500')
     if(isError.value) base.push('text-[var(--cuv-danger-text)]')
-    if(!props.readonly && !isError.value) base.push('text-[var(--cuv-black)]')
+    if(!isError.value) base.push('text-[var(--cuv-black)]')
 
     return base
 })

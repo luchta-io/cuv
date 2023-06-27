@@ -84,20 +84,24 @@ const disabled : {
     modelValue: string
     label: string
     variant: 'filled'|'outlined'|'underlined'
+    disabled: boolean
 } = reactive({
     modelValue: '吾輩は猫である',
     label: '夏目漱石',
     variant: 'filled',
+    disabled: true,
 })
 
 const readonly : {
     modelValue: string
     label: string
     variant: 'filled'|'outlined'|'underlined'
+    readonly: boolean
 } = reactive({
     modelValue: 'セロ弾きのゴーシュ',
     label: '宮沢賢治',
     variant: 'filled',
+    readonly: true,
 })
 
 const error : {
@@ -280,10 +284,14 @@ const error : {
                 v-model="disabled.modelValue"
                 :label="disabled.label"
                 :variant="disabled.variant"
-                disabled
+                :disabled="disabled.disabled"
             />
         </c-box>
         <template #controls>
+            <HstCheckbox
+                v-model="disabled.disabled"
+                title="disabled"
+            />
             <HstSelect
             v-model="disabled.variant"
             title="variant"
@@ -302,10 +310,14 @@ const error : {
                 v-model="readonly.modelValue"
                 :label="readonly.label"
                 :variant="readonly.variant"
-                readonly
+                :readonly="readonly.readonly"
             />
         </c-box>
         <template #controls>
+            <HstCheckbox
+                v-model="readonly.readonly"
+                title="readonly"
+            />
             <HstSelect
             v-model="readonly.variant"
             title="variant"

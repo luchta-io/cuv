@@ -89,8 +89,7 @@ const fieldClass = computed(() => {
         'peer relative grid items-center col-start-2 appearance-none focus:outline-none focus:ring-0 opacity-100',
     ]
     if(isError.value) base.push('border-[var(--cuv-danger-border)] focus-within:border-[var(--cuv-danger-outline-focus)]')
-    if(!isError.value && props.readonly) base.push('focus-within:border-gray-900 border-gray-300') 
-    if(!isError.value && !props.readonly) base.push('focus-within:border-blue-600 border-gray-300')
+    if(!isError.value) base.push('focus-within:border-blue-600 border-gray-300')
 
     if(props.variant === 'filled') base.push('rounded-t-lg rounded-b-none px-2.5 bg-gray-50 border-0 border-b-2')
     if(props.variant === 'outlined') base.push('px-2.5 bg-transparent rounded-lg border')
@@ -120,7 +119,7 @@ const labelClass = computed(() => {
         : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0'
     ]
     if(isError.value) base.push('text-[var(--cuv-danger-text)]')
-    if(!isError.value) base.push('text-gray-500 peer-read-only:peer-focus:text-gray-900 peer-focus:text-blue-600')
+    if(!isError.value) base.push('text-gray-500 peer-focus:text-blue-600')
 
     return base
 })
@@ -128,7 +127,7 @@ const labelClass = computed(() => {
 const selectionClass = computed(() => {
     return [
         'whitespace-nowrap',
-        props.readonly || props.disabled ? 'text-gray-500' : 'text-gray-900',
+        props.disabled ? 'text-gray-500' : 'text-gray-900',
         props.label ? 'pt-4 pb-1' : '',
         props.variant === 'filled' && !props.label ? 'py-2.5' : '',
         props.variant === 'outlined' && !props.label ? 'py-2.5' : '',
