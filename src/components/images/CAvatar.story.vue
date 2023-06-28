@@ -171,10 +171,20 @@ const icon = computed(() => {
 | --- | --- | --- | --- |
 | color | 'white' \| 'black' \| 'light' \| 'dark' \| 'primary' \| 'link' \| 'success' \| 'danger' \| 'warning' \| 'info' | undefined | 色を指定します |
 | icon | string | undefined | iconのpathを指定します |
-| image | string | undefined | 画像のsrcに渡すpathを指定します |
+| image | string | undefined | 画像ファイルをimportしてモジュール名を指定することでコンポーネントに画像を適用します*1 |
 | rounded | 'none' \| 'small' \| 'medium' \| 'large' \| 'x-large' \| 'circle' | 'circle' | コンポーネントの`border-radius`を指定します |
 | size | 'x-small' \| 'small' \| 'medium' \| 'large' \| 'x-large' | "medium" | サイズを指定します |
 | variant | 'text' \| 'flat' \| 'elevated' \| 'tonal' \| 'outlined' \| 'plain' | 'flat' | コンポーネントに個別のスタイルを適用します |
+
+#### *1 imageプロパティを使用するときの例
+```
+<script setup lang="ts">
+import imgUrl from '@/assets/sample_Parakeet.png'
+</script>
+<template>
+    <CAvatar :image="imgUrl"/>
+</template>>
+```
 
 ## Slots
 
