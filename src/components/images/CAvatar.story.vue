@@ -6,6 +6,7 @@ import CCluster from "@/components/layout/CCluster.vue";
 import CStack from "@/components/layout/CStack.vue";
 import CSvgIcon from "@/components/images/CSvgIcon.vue";
 import CBox from "@/components/layout/CBox.vue";
+import imgUrl from '@/assets/sample_Parakeet.png'
 
 const data: {
     isIcon: boolean
@@ -24,7 +25,7 @@ const data: {
 })
 
 const image = computed(() => {
-    return data.isImage ? '/cuv/src/assets/sample_Parakeet.png' : undefined
+    return data.isImage ? imgUrl : undefined
 })
 
 const icon = computed(() => {
@@ -139,13 +140,18 @@ const icon = computed(() => {
             </CAvatar>
         </CCluster>
     </Variant>
+    <Variant title="画像" auto-props-disabled>
+        <CCluster justify="center">
+            <CAvatar :image="imgUrl"/>
+        </CCluster>
+    </Variant>
     <Variant title="Slot" auto-props-disabled>
         <CCluster justify="space-around">
             <CAvatar color="primary">
                 <CSvgIcon :icon="mdiAirplane"/>
             </CAvatar>
             <CAvatar color="light">
-                <img src="/cuv/src/assets/sample_cat.png"/>
+                <img src="@/assets/sample_cat.png"/>
             </CAvatar>
             <CAvatar color="warning">
                 CUV
