@@ -11,6 +11,7 @@ import CCover from "@/components/layout/CCover.vue";
 import CSheet from "@/components/containment/CSheet.vue";
 import COverlay from "@/components/containment/COverlay.vue";
 import CProgress from "@/components/feedback/CProgress.vue";
+import CAlert from "@/components/feedback/CAlert.vue";
 
 const input = reactive({
   email: '',
@@ -104,13 +105,11 @@ const doLogin = async () => {
                     <CCluster justify="center">
                       <img src="https://placehold.jp/100x100.png"/>
                     </CCluster>
-                    <CSheet v-if="failed.length" color="danger">
-                      <CBox padding="small">
-                        <div v-for="(msg, index) of failed" :key="index" class="text-white">
-                          {{ msg }}
-                        </div>
-                      </CBox>
-                    </CSheet>
+                    <CAlert v-if="failed.length" type="error" variant="tonal" density="comfortable">
+                      <div v-for="(msg, index) of failed" :key="index" class="text-sm">
+                        {{ msg }}
+                      </div>
+                    </CAlert>
                     <CTextField type="email"
                                 v-model="input.email"
                                 label="email"
