@@ -290,7 +290,7 @@ watchEffect(() => {
     </slot>
     <template #bottom>
         <slot name="bottom" :page="data.currentPage" :itemsPerPage="data.currentPerPage" :allSelected="data.isAllChecked" :select="data.selectItems" :items="displayItems" :headers="headers">
-            <CCluster justify="flex-end" align="center">
+            <CCluster justify="flex-end" align="center" class="px-4">
                 <CCluster space="0.2rem" align="center">
                     Items per page:
                     <CSelect v-model="data.currentPerPage" @update:model-value="changePerPage" :items="perPageArray" variant="outlined" :disabled="!items.length" class="max-w-[5rem]"/>
