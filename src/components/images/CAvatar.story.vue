@@ -6,6 +6,7 @@ import CCluster from "@/components/layout/CCluster.vue";
 import CStack from "@/components/layout/CStack.vue";
 import CSvgIcon from "@/components/images/CSvgIcon.vue";
 import CBox from "@/components/layout/CBox.vue";
+import imgUrl from '@/assets/sample_Parakeet.png'
 
 const data: {
     isIcon: boolean
@@ -24,7 +25,7 @@ const data: {
 })
 
 const image = computed(() => {
-    return data.isImage ? '/cuv/src/assets/sample_Parakeet.png' : undefined
+    return data.isImage ? imgUrl : undefined
 })
 
 const icon = computed(() => {
@@ -139,13 +140,18 @@ const icon = computed(() => {
             </CAvatar>
         </CCluster>
     </Variant>
+    <Variant title="画像" auto-props-disabled>
+        <CCluster justify="center">
+            <CAvatar :image="imgUrl"/>
+        </CCluster>
+    </Variant>
     <Variant title="Slot" auto-props-disabled>
         <CCluster justify="space-around">
             <CAvatar color="primary">
                 <CSvgIcon :icon="mdiAirplane"/>
             </CAvatar>
             <CAvatar color="light">
-                <img src="/cuv/src/assets/sample_cat.png"/>
+                <img src="@/assets/sample_cat.png"/>
             </CAvatar>
             <CAvatar color="warning">
                 CUV
@@ -165,10 +171,22 @@ const icon = computed(() => {
 | --- | --- | --- | --- |
 | color | 'white' \| 'black' \| 'light' \| 'dark' \| 'primary' \| 'link' \| 'success' \| 'danger' \| 'warning' \| 'info' | undefined | 色を指定します |
 | icon | string | undefined | iconのpathを指定します |
-| image | string | undefined | 画像のsrcに渡すpathを指定します |
+| image | string | undefined | 画像のsrcに渡すpathを指定します*1 |
 | rounded | 'none' \| 'small' \| 'medium' \| 'large' \| 'x-large' \| 'circle' | 'circle' | コンポーネントの`border-radius`を指定します |
 | size | 'x-small' \| 'small' \| 'medium' \| 'large' \| 'x-large' | "medium" | サイズを指定します |
 | variant | 'text' \| 'flat' \| 'elevated' \| 'tonal' \| 'outlined' \| 'plain' | 'flat' | コンポーネントに個別のスタイルを適用します |
+
+#### *1
+バンドラにviteを利用している場合、以下の例のように、画像ファイルをimportしそのモジュール名を指定することで、viteによって解決されたpathを渡すことができます
+refs. https://ja.vitejs.dev/guide/assets.html#importing-asset-as-url
+```
+<script setup lang="ts">
+import imgUrl from '@/assets/sample.png'
+</script>
+<template>
+    <CAvatar :image="imgUrl"/>
+</template>>
+```
 
 ## Slots
 
