@@ -177,7 +177,7 @@ const icon = computed(() => {
 | variant | 'text' \| 'flat' \| 'elevated' \| 'tonal' \| 'outlined' \| 'plain' | 'flat' | コンポーネントに個別のスタイルを適用します |
 
 #### *1
-画像ファイルをimportしてモジュール名を指定することでコンポーネントに画像を適用します
+バンドラにviteを利用している場合、以下の例のように、画像ファイルをimportしそのモジュール名を指定することで、viteによって解決されたpathを渡すことができます
 refs. https://ja.vitejs.dev/guide/assets.html#importing-asset-as-url
 ```
 <script setup lang="ts">
