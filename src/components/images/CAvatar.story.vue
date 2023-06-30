@@ -178,7 +178,7 @@ const icon = computed(() => {
 
 #### *1
 画像ファイルをimportしてモジュール名を指定することでコンポーネントに画像を適用します
-https://ja.vitejs.dev/guide/assets.html#importing-asset-as-url
+refs. https://ja.vitejs.dev/guide/assets.html#importing-asset-as-url
 ```
 <script setup lang="ts">
 import imgUrl from '@/assets/sample.png'
