@@ -14,7 +14,6 @@ const props = withDefaults(defineProps<{
     density?:'default' | 'comfortable' | 'compact'
     disabled?: boolean
     elevation?: 'small'|'medium'|'large'
-    height?: string
     icon?: string
     id?:string
     name?:string
@@ -58,7 +57,6 @@ const fixedSize = computed(() => {
 })
 
 const fixedHeight = computed(() => {
-    if ( props.height ) return props.height
     let height = 1.25
     const base = 1.25
     if ( props.size == 'small' ) height = base + 0.5

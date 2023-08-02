@@ -230,7 +230,6 @@ const data: {
 | density | 'default' \| 'comfortable' \| 'compact' | 'default' | コンポーネントが使用する垂直方向の高さを調整します |
 | disabled | boolean | false | 非活性にする場合は指定します |
 | elevation | 'small' \| 'medium' \| 'large' | undefined | 影をつける場合に指定します |
-| height | string | undefined | コンポーネントの高さを指定します |
 | icon | string | undefined | iconを指定します |
 | id | string | undefined | idを指定します |
 | name | string | undefined | nameを指定します |
