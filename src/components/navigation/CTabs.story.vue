@@ -38,7 +38,6 @@ const data: {
   density:'default' | 'comfortable' | 'compact'
   disabled: boolean
   grow: boolean
-  items: Array<string>
   modelValue: string
 } = reactive({
   alignTabs: 'start',
@@ -47,8 +46,7 @@ const data: {
   density:'default',
   disabled: false,
   grow: false,
-  items: number,
-  modelValue: 'one'
+  modelValue: 'ランキング'
 })
 
 const custom: {
@@ -164,7 +162,7 @@ const disabled: {
           />
           <HstCheckbox v-model="data.disabled" title="disabled"/>
           <HstCheckbox v-model="data.grow" title="grow"/>
-          <HstJson v-model="data.items" title="items"/>
+          <HstJson v-model="news" title="items"/>
       </template>
     </Variant>
     <Variant title="カスタム" auto-props-disabled>
@@ -246,7 +244,7 @@ const disabled: {
     <Variant title="density" auto-props-disabled>
       <CBox>
         <CStack space="0.5rem">
-          <div>compact</div>
+          <div class="font-semibold text-gray-700">compact</div>
           <CTabs 
           v-model="grow.modelValue"
           :items="number"
@@ -258,7 +256,7 @@ const disabled: {
       </CBox>
       <CBox>
         <CStack space="0.5rem">
-          <div>comfortable</div>
+          <div class="font-semibold text-gray-700">comfortable</div>
           <CTabs 
           v-model="grow.modelValue"
           :items="number"
