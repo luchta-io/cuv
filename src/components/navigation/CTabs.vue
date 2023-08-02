@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref, useCssModule } from 'vue';
+import { computed, onMounted, reactive, ref, useCssModule, watch } from 'vue';
 import { useVariant } from '@/composables/variant';
 import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 import CTab from '@/components/navigation/CTab.vue';
@@ -68,6 +68,7 @@ const activeTabName = computed({
 const tabsClass = computed(() => {
     const base = [
         'flex overflow-hidden',
+        'border-b border-gray-300',
         useVariant({variant: 'flat', color: props.bgColor}),
         props.alignTabs === 'end' ? $style['c-tabs__align-tabs-end'] : '',
         props.alignTabs === 'center' ? $style['c-tabs__align-tabs-center'] : '',
@@ -76,9 +77,18 @@ const tabsClass = computed(() => {
     return base
 })
 
+const tabListClass = computed(() => {
+    const base = [
+        'flex relative gap-[2px]',
+        props.showArrows ? 'flex-[1_0_auto] whitespace-nowrap' : 'flex-wrap',
+    ]
+    return base
+})
+
 const prevIconClass = computed(() => {
     return [
         'flex flex-[0_1_52px] items-center justify-center min-w-[3.25rem] cursor-pointer',
+        'border-b border-gray-300 -m-[1px]',
         noPrevIcon.value ? 'cursor-default opacity-20' : ''
     ]
 })
@@ -86,6 +96,7 @@ const prevIconClass = computed(() => {
 const nextIconClass = computed(() => {
     return [
         'flex flex-[0_1_52px] items-center justify-center min-w-[3.25rem] cursor-pointer',
+        'border-b border-gray-300 -m-[1px]',
         noNextIcon.value ? 'cursor-default opacity-20' : ''
     ]
 })
@@ -154,11 +165,20 @@ const changeTabs = (e: HTMLEvent<HTMLElement>) => {
     activeTabName.value = buttonTarget.value
 }
 
-const tabsAddClickEvent = (tabs: any) => {
+watch(() => props.density, () => {
+    data.tabs.forEach((tab:any) => {
+        tab.style.height = fixedHeight.value
+    });
+})
+
+onMounted(() => {
+    if ( !tabList.value ) return
+    const tabs = tabList.value.querySelectorAll('[role="tab"]')
     data.tabs = []
     data.tabs = data.tabs.concat(Array.from(tabs))
     tabs.forEach((tab:any, index:number) => {
         tab.addEventListener("click", changeTabs);
+        tab.style.height = fixedHeight.value
         tab.setAttribute("aria-selected", false)
         tab.setAttribute("tabindex", '-1')
         if (activeTabName.value && activeTabName.value == tab.value) { 
@@ -172,12 +192,6 @@ const tabsAddClickEvent = (tabs: any) => {
             data.tabFocus = 0
         }
     });
-}
-
-onMounted(() => {
-    if ( !tabList.value ) return
-    const tabs = tabList.value.querySelectorAll('[role="tab"]')
-    tabsAddClickEvent(tabs)
     if ( tabList.value === null ) return
     tabList.value.addEventListener("keydown", (e) => {
         if (e.code === '39' || e.code === '37') {
@@ -206,7 +220,6 @@ onMounted(() => {
 <div 
 ref="tabs"
 :class="tabsClass" 
-:style="{height: fixedHeight}"
 >
     <div v-if="showArrows" @click="prev" :class="prevIconClass">
         <CSvgIcon :icon="prevIcon"/>
@@ -216,7 +229,7 @@ ref="tabs"
         ref="tabList" 
         role="tablist" 
         :style="{transform:fixedTranslateX}"
-        class="flex flex-[1_0_auto] relative whitespace-nowrap">
+        :class="tabListClass">
             <slot>
                 <CTab v-for="(item, index) in items" :key="index" :color="color" :value="item" :disabled="disabled">
                     {{ item }}

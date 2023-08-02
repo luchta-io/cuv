@@ -5,6 +5,7 @@ import CBox from "@/components/layout/CBox.vue";
 import CTabs from "@/components/navigation/CTabs.vue";
 import CTab from "@/components/navigation/CTab.vue";
 import CSheet from "@/components/containment/CSheet.vue";
+import CStack from "@/components/layout/CStack.vue";
 
 type ColorType =
     'white' | 'black' | 'light' | 'dark' | 
@@ -99,7 +100,7 @@ const disabled: {
       <CBox>
         <CTabs 
         v-model="data.modelValue"
-        :items="data.items"
+        :items="news"
         :align-tabs="data.alignTabs"
         :bg-color="data.bgColor"
         :color="data.color"
@@ -171,23 +172,22 @@ const disabled: {
         <CTabs 
         v-model="custom.modelValue"
         >
-          <CTab color="black" value="ランキング" :prepend-icon="mdiCrown">
+          <CTab color="danger" value="ランキング" :prepend-icon="mdiCrown">
             ランキング
           </CTab>
-          <CTab color="black" value="国内" :prepend-icon="mdiEarth">
+          <CTab color="link" value="国内" :prepend-icon="mdiEarth">
             国内
           </CTab>
-          <CTab color="black" value="エンタメ" :prepend-icon="mdiMicrophone">
+          <CTab color="warning" value="エンタメ" :prepend-icon="mdiMicrophone">
             エンタメ
           </CTab>
-          <CTab color="black" value="スポーツ" :prepend-icon="mdiBaseballBat">
+          <CTab color="info" value="スポーツ" :prepend-icon="mdiBaseballBat">
             スポーツ
           </CTab>
-          <CTab color="black" value="IT" :prepend-icon="mdiLaptop">
+          <CTab color="success" value="IT" :prepend-icon="mdiLaptop">
             IT
           </CTab>
         </CTabs>
-        <div class="h-[1px] bg-gray-500"></div>
         <CSheet color="light">
           <CBox padding="large" v-show="custom.modelValue === 'ランキング'">
             ランキングページ
@@ -243,6 +243,32 @@ const disabled: {
         />
       </CBox>
     </Variant>
+    <Variant title="density" auto-props-disabled>
+      <CBox>
+        <CStack space="0.5rem">
+          <div>compact</div>
+          <CTabs 
+          v-model="grow.modelValue"
+          :items="number"
+          density="compact"
+          bg-color="info"
+          color="white"
+          />
+        </CStack>
+      </CBox>
+      <CBox>
+        <CStack space="0.5rem">
+          <div>comfortable</div>
+          <CTabs 
+          v-model="grow.modelValue"
+          :items="number"
+          density="comfortable"
+          bg-color="info"
+          color="white"
+          />
+        </CStack>
+      </CBox>
+    </Variant>
     <Variant title="show-arrows" auto-props-disabled>
       <CBox>
         <CTabs 
@@ -292,7 +318,7 @@ const disabled: {
 | --- | --- | --- | --- |
 | alignTabs | 'end' \| 'start' \| 'center' | 'start' | コンポーネントの位置を指定します |
 | bgColor | colorType* | 'white' | `background-color`を指定します |
-| color | colorType | 'black' | `color`を指定します |
+| color | colorType | 'black' | 選択されているタブの`color`を指定します |
 | density | 'default' \| 'comfortable' \| 'compact' | 'default' | コンポーネントが使用する垂直方向の高さを調整します |
 | disabled | boolean | false | 非活性にする場合は指定します |
 | grow | boolean | false | 可能な範囲で全てのスペースに広がるかどうかを指定します |
@@ -306,7 +332,7 @@ const disabled: {
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | appendIcon | string | undefined | コンポーネントの右側に表示させるiconを指定します |
-| color | colorType | 'black' | `color`を指定します |
+| color | colorType | 'black' | 選択されているタブの`color`を指定します |
 | density | 'default' \| 'comfortable' \| 'compact' | 'default' | コンポーネントが使用する垂直方向の高さを調整します |
 | disabled | boolean | false | 非活性にする場合は指定します |
 | elevation | 'small' \| 'medium' \| 'large' | undefined | 影をつける場合に指定します |
