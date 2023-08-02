@@ -35,7 +35,7 @@ export const useVariant = ({variant, color, hover, focus}:{variant:VarianType; c
         if ( color === 'danger' ) return 'hover:bg-[var(--cuv-danger-background-hover)]'
         if ( color === 'warning' ) return 'hover:bg-[var(--cuv-warning-background-hover)] '
         if ( color === 'info' ) return 'hover:bg-[var(--cuv-info-background-hover)]'
-        return 'bg-inherit'
+        return 'hover:bg-inherit'
     })
     
     const focusBackgroundColor = computed(() => {
@@ -49,7 +49,7 @@ export const useVariant = ({variant, color, hover, focus}:{variant:VarianType; c
         if ( color === 'danger' ) return 'focus:bg-[var(--cuv-danger-background-focus)]'
         if ( color === 'warning' ) return 'focus:bg-[var(--cuv-warning-background-focus)] '
         if ( color === 'info' ) return 'focus:bg-[var(--cuv-info-background-focus)]'
-        return 'bg-inherit'
+        return 'focus:bg-inherit'
     })
 
     const backgroundLightColor = computed(() => {
@@ -77,7 +77,7 @@ export const useVariant = ({variant, color, hover, focus}:{variant:VarianType; c
         if ( color === 'danger' ) return 'hover:bg-[var(--cuv-red-lighten-4)]'
         if ( color === 'warning' ) return 'hover:bg-[var(--cuv-yellow-lighten-4)] '
         if ( color === 'info' ) return 'hover:bg-[var(--cuv-blue-lighten-4)]'
-        return 'bg-inherit'
+        return 'hover:bg-inherit'
     })
 
     const focusBackgroundLightColor = computed(() => {
@@ -91,7 +91,7 @@ export const useVariant = ({variant, color, hover, focus}:{variant:VarianType; c
         if ( color === 'danger' ) return 'focus:bg-[var(--cuv-red-lighten-5)]'
         if ( color === 'warning' ) return 'focus:bg-[var(--cuv-yellow-lighten-5)]'
         if ( color === 'info' ) return 'focus:bg-[var(--cuv-blue-lighten-5)]'
-        return 'bg-inherit'
+        return 'focus:bg-inherit'
     })
 
     const outlineColor = computed(() => {
@@ -119,7 +119,7 @@ export const useVariant = ({variant, color, hover, focus}:{variant:VarianType; c
         if ( color === 'danger' ) return 'hover:outline-[var(--cuv-danger-outline-hover)]'
         if ( color === 'warning' ) return 'hover:outline-[var(--cuv-warning-outline-hover)]'
         if ( color === 'info' ) return 'hover:outline-[var(--cuv-info-outline-hover)]'
-        return 'outline-inherit'
+        return 'hover:outline-inherit'
     })
     
     const focusOutlineColor = computed(() => {
@@ -133,7 +133,7 @@ export const useVariant = ({variant, color, hover, focus}:{variant:VarianType; c
         if ( color === 'danger' ) return 'focus:outline-[var(--cuv-danger-outline-focus)]'
         if ( color === 'warning' ) return 'focus:outline-[var(--cuv-warning-outline-focus)]'
         if ( color === 'info' ) return 'focus:outline-[var(--cuv-info-outline-focus)]'
-        return 'outline-inherit'
+        return 'focus:outline-inherit'
     })
     
     const textColor = computed(() => {

@@ -14,6 +14,7 @@ const props = withDefaults(defineProps<{
     density?:'default' | 'comfortable' | 'compact'
     disabled?: boolean
     elevation?: 'small'|'medium'|'large'
+    height?: string
     icon?: string
     id?:string
     name?:string
@@ -34,7 +35,7 @@ const buttonRef = ref<HTMLElement>()
 
 const buttonClass = computed(() => {
     const base = [
-        'relative inline-grid items-center justify-center overflow-hidden',
+        'relative inline-grid items-center justify-center overflow-hidden outline-none',
         !props.disabled ? useVariant({variant: props.variant, color: props.color, hover: true, focus: true}) : 'bg-gray-100 text-gray-400 cursor-default',
         props.icon ? 'rounded-full' : 'rounded',
         fixedSize.value,
@@ -57,6 +58,7 @@ const fixedSize = computed(() => {
 })
 
 const fixedHeight = computed(() => {
+    if ( props.height ) return props.height
     let height = 1.25
     const base = 1.25
     if ( props.size == 'small' ) height = base + 0.5
