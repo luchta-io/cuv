@@ -34,7 +34,7 @@ const buttonRef = ref<HTMLElement>()
 
 const buttonClass = computed(() => {
     const base = [
-        'relative inline-grid items-center justify-center overflow-hidden',
+        'relative inline-grid items-center justify-center overflow-hidden outline-none',
         !props.disabled ? useVariant({variant: props.variant, color: props.color, hover: true, focus: true}) : 'bg-gray-100 text-gray-400 cursor-default',
         props.icon ? 'rounded-full' : 'rounded',
         fixedSize.value,
