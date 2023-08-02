@@ -56,12 +56,8 @@ const colorClass = computed(() => {
 :prepend-icon="prependIcon"
 :value="value"
 variant="text"
-height="3rem"
 rounded="none"
 role="tab"
-aria-selected="false"
-tabindex="-1"
-class="tab-button"
 :class="tabClass"
 >
     <slot/>
