@@ -32,7 +32,7 @@ const number = [
 ]
 
 const data: {
-  alignTabs: 'end' | 'start' | 'center'
+  alignTabs: 'end' | 'start' | 'center' | 'title'
   bgColor: ColorType
   color: ColorType
   density:'default' | 'comfortable' | 'compact'
@@ -113,10 +113,10 @@ const disabled: {
             v-model="data.alignTabs"
             title="alignTabs"
             :options="[
-                        {value: 'title', label: 'title'},
-                        {value: 'end', label: 'end'},
                         {value: 'start', label: 'start'},
                         {value: 'center', label: 'center'},
+                        {value: 'end', label: 'end'},
+                        {value: 'title', label: 'title'},
                     ]"
         />
         <HstSelect
@@ -207,6 +207,7 @@ const disabled: {
     </Variant>
     <Variant title="alignTabs" auto-props-disabled>
       <CBox>
+        <div class="font-semibold text-gray-700 pb-1">start</div>
         <CTabs 
         v-model="alignTabs.modelValue"
         :items="number"
@@ -215,6 +216,7 @@ const disabled: {
         />
       </CBox>
       <CBox>
+        <div class="font-semibold text-gray-700 pb-1">center</div>
         <CTabs 
         v-model="alignTabs.modelValue"
         :items="number"
@@ -223,10 +225,20 @@ const disabled: {
         />
       </CBox>
       <CBox>
+        <div class="font-semibold text-gray-700 pb-1">end</div>
         <CTabs 
         v-model="alignTabs.modelValue"
         :items="number"
         align-tabs="end"
+        bg-color="light"
+        />
+      </CBox>
+      <CBox>
+        <div class="font-semibold text-gray-700 pb-1">title</div>
+        <CTabs 
+        v-model="alignTabs.modelValue"
+        :items="number"
+        align-tabs="title"
         bg-color="light"
         />
       </CBox>
@@ -314,7 +326,7 @@ const disabled: {
 ### CTabs
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| alignTabs | 'end' \| 'start' \| 'center' | 'start' | コンポーネントの位置を指定します |
+| alignTabs | 'end' \| 'start' \| 'center' \| 'title' | 'start' | コンポーネントの位置を指定します |
 | bgColor | colorType* | 'white' | `background-color`を指定します |
 | color | colorType | 'black' | 選択されているタブの`color`を指定します |
 | density | 'default' \| 'comfortable' \| 'compact' | 'default' | コンポーネントが使用する垂直方向の高さを調整します |
