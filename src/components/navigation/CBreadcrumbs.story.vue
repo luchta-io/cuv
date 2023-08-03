@@ -1,15 +1,59 @@
 <script setup lang="ts">
 import { reactive } from "vue";
+import CBreadcrumbs from "@/components/navigation/CBreadcrumbs.vue";
+
+type ColorType =
+    'white' | 'black' | 'light' | 'dark' | 
+    'primary' | 'link' |
+    'success' | 'danger' | 'warning' | 'info'
+
+const page = [
+  'Home',
+  'Doc',
+  'Breadcrumb'
+]
+
+const data: {
+  bgColor: ColorType | undefined
+  items: string[],
+  divider: string
+} = reactive({
+  bgColor: undefined,
+  items: page,
+  divider: '/',
+})
 
 </script>
 
 <template>
   <Story
-      title="Navigation / CTabs"
+      title="Navigation / CBreadcrumbs"
       :layout="{ type: 'grid', width: '100%' }"
   >
     <Variant title="基本" auto-props-disabled>
+      <CBreadcrumbs
+        :items="data.items"
+        :divider="data.divider"
+        :bg-color="data.bgColor"
+      />
       <template #controls>
+        <HstSelect
+            v-model="data.bgColor"
+            title="bgColor"
+            :options="[
+                        {value: undefined, label: 'undefined'},
+                        {value: 'white', label: 'white'},
+                        {value: 'black', label: 'black'},
+                        {value: 'light', label: 'light'},
+                        {value: 'dark', label: 'dark'},
+                        {value: 'primary', label: 'primary'},
+                        {value: 'link', label: 'link'},
+                        {value: 'success', label: 'success'},
+                        {value: 'danger', label: 'danger'},
+                        {value: 'warning', label: 'warning'},
+                        {value: 'info', label: 'info'},
+                    ]"
+        />
       </template>
     </Variant>
   </Story>
