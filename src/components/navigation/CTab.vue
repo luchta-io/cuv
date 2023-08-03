@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<{
 
 const tabClass = computed(() => {
     return [
-        'border-b border-gray-300 -m-[1px] hover:bg-black/20 focus:bg-black/20 aria-selected:border-b-2',
+        'border-b border-gray-300 -m-[1px] hover:bg-black/20 focus:bg-black/20 aria-selected:border-b-[3px]',
         props.disabled ? '' : 'aria-[selected=false]:!text-current',
         colorClass.value,
     ]

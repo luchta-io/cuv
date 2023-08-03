@@ -38,3 +38,6 @@ export {default as CReel} from "./components/layout/CReel.vue"
 export {default as CSidebar} from "./components/layout/CSidebar.vue"
 export {default as CStack} from "./components/layout/CStack.vue"
 export {default as CSwitcher} from "./components/layout/CSwitcher.vue"
+//navigation
+export {default as CTabs} from "./components/navigation/CTabs.vue"
+export {default as CTab} from "./components/navigation/CTab.vue"

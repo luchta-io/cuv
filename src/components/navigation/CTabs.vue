@@ -17,7 +17,7 @@ type ColorType =
 const $style = useCssModule();
 
 const props = withDefaults(defineProps<{
-    alignTabs?: 'end' | 'start' | 'center'
+    alignTabs?: 'end' | 'start' | 'center' | 'title'
     bgColor?: ColorType
     color?: ColorType
     density?:'default' | 'comfortable' | 'compact'
@@ -72,6 +72,7 @@ const tabsClass = computed(() => {
         useVariant({variant: 'flat', color: props.bgColor}),
         props.alignTabs === 'end' ? $style['c-tabs__align-tabs-end'] : '',
         props.alignTabs === 'center' ? $style['c-tabs__align-tabs-center'] : '',
+        props.alignTabs === 'title' ? $style['c-tabs__align-tabs-title'] : '',
         props.grow ? $style['c-tabs__grow'] : '',
     ]
     return base
@@ -255,6 +256,9 @@ ref="tabs"
 }
 .c-tabs__align-tabs-end *:last-child{
     margin-inline-end: 0;
+}
+.c-tabs__align-tabs-title [role="tab"]:first-child{
+    margin-inline-start: 2.625rem;
 }
 .c-tabs__grow button{
     flex: 1 0 auto;
