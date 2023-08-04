@@ -7,7 +7,7 @@ type ColorType =
     'primary' | 'link' |
     'success' | 'danger' | 'warning' | 'info'
 
-interface itemsType {
+type ItemsType = {
     title: string
     disabled?: boolean
     href?: string
@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<{
     color?: ColorType
     density?:'default' | 'comfortable' | 'compact'
     divider?: string
-    items: (string | itemsType)[]
+    items: (string | ItemsType)[]
     rounded?: 'none' | 'small' | 'medium' | 'large' | 'x-large' | 'circle'
 }>(), {
     density: 'default',
@@ -67,29 +67,33 @@ const fixedRounded = computed(() => {
     return 'rounded-none'
 })
 
-const isTag = (item: itemsType) => {
+const getTagName = (item: ItemsType | string) => {
+    if ( typeof item === 'string' ) return 'div'
     if ( 'href' in item ) return 'a'
     if ( 'to' in item ) return 'router-link'
-    return ''
+    return 'div'
 }
 
-const formatTitle = (item: string|itemsType) => {
+const formatTitle = (item: string|ItemsType) => {
     if ( typeof item === 'string' ) return item
     return item.title
 }
 
-const disabledClass = (item: string|itemsType, index: number) => {
+const disabledClass = (item: string|ItemsType, index: number) => {
     if ( typeof item === 'string' && index === props.items.length-1 ) return 'pointer-events-none opacity-40'
     if ( typeof item === 'string' ) return ''
     if ( item.disabled ) return 'pointer-events-none opacity-40'
     return ''
 }
 
-const isDefaultItem = (item: string|itemsType) => {
-    if ( typeof item === 'string' ) return true
-    if ( 'href' in item ) return false
-    if ( 'to' in item ) return false
-    return true
+const gethrefLink = (item: string|ItemsType) => {
+    if (typeof item !== 'string' && item.href) return item.href
+    return
+}
+
+const getRouterLink = (item: string|ItemsType) => {
+    if (typeof item !== 'string' && item.to) return item.to
+    return
 }
 
 </script>
@@ -103,25 +107,11 @@ const isDefaultItem = (item: string|itemsType) => {
             </slot>
         </li>
         <li :class="[colorClass, disabledClass(item, index)]" class="items-center inline-flex px-1 text-inherit">
-            <template v-if="isDefaultItem(item)" >
+            <component :is="getTagName(item)" :href="gethrefLink(item)"  :to="getRouterLink(item)" class="hover:underline cursor-pointer">
                 <slot name="title" :item="item" :index="index">
                     {{ formatTitle(item) }}
                 </slot>
-            </template>
-            <template v-if="typeof item !== 'string' && ('href' in item)">
-                <component :is="isTag(item)" :href="item.href ? item.href : undefined" class="hover:underline">
-                    <slot name="title" :item="item" :index="index">
-                        {{ formatTitle(item) }}
-                    </slot>
-                </component>
-            </template>
-            <template v-if="typeof item !== 'string' && ('to' in item)">
-                <component :is="isTag(item)" :to="item.to ? item.to : undefined" class="hover:underline cursor-pointer">
-                    <slot name="title" :item="item" :index="index">
-                        {{ formatTitle(item) }}
-                    </slot>
-                </component>
-            </template>
+            </component>
         </li>
     </template>
 </ul>
