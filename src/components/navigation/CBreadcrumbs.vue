@@ -108,7 +108,7 @@ const getRouterLink = (item: string|ItemsType) => {
         </li>
         <li :class="[colorClass, disabledClass(item, index)]" class="items-center inline-flex px-1 text-inherit">
             <component :is="getTagName(item)" :href="gethrefLink(item)"  :to="getRouterLink(item)" class="hover:underline cursor-pointer">
-                <slot name="title" :item="item" :index="index">
+                <slot name="title" :item="(item as any)" :index="index">
                     {{ formatTitle(item) }}
                 </slot>
             </component>

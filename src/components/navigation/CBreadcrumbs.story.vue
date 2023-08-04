@@ -185,7 +185,7 @@ const data: {
       :items="pageStringList"
     >
       <template v-slot:title="{ item }">
-        {{ typeof item === 'string' ? item.toUpperCase() : '' }}
+        {{ item.toUpperCase() }}
       </template>
     </CBreadcrumbs>
   </Variant>
