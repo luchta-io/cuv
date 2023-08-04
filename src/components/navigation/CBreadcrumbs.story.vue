@@ -9,7 +9,7 @@ type ColorType =
   'primary' | 'link' |
   'success' | 'danger' | 'warning' | 'info'
 
-interface itemsType {
+type ItemsType = {
   title: string,
   disabled?: boolean,
   href?: string
@@ -60,7 +60,7 @@ const pageObjectRouterLinkList = [
 const data: {
   bgColor: ColorType | undefined
   color: ColorType | undefined
-  items: (string | itemsType)[],
+  items: (string | ItemsType)[],
   density: 'default' | 'comfortable' | 'compact'
   divider: string
   rounded: 'none' | 'small' | 'medium' | 'large' | 'x-large' | 'circle'
@@ -185,7 +185,7 @@ const data: {
       :items="pageStringList"
     >
       <template v-slot:title="{ item }">
-        {{ item.toUpperCase() }}
+        {{ typeof item === 'string' ? item.toUpperCase() : '' }}
       </template>
     </CBreadcrumbs>
   </Variant>
@@ -198,29 +198,33 @@ const data: {
 ユーザーが今WEBサイト上のどこにいるのかを伝えることが可能な、階層順のリストコンポーネントです。またはパンくずリストとも呼ばれます。
 
 ## Props
-*1 colorType = 'white' \| 'black' \| 'light' \| 'dark' \| 'primary' \| 'link' \| 'success' \| 'danger' \| 'warning' \| 'info'
-*2 itemType = {
-  title: string
-  disabled?: boolean
-  href?: string
-  to?: string
-}
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| bgColor | colorType* | undefined | `background-color`を指定します |
-| color | colorType* | undefined | titleの`color`を指定します |
+| bgColor | ColorType*1 | undefined | `background-color`を指定します |
+| color | ColorType*1 | undefined | titleの`color`を指定します |
 | density | 'default' \| 'comfortable' \| 'compact' | 'default' | コンポーネントが使用する垂直方向の高さを調整します |
 | divider | string | '/' | 階層を区切る文字列を指定します |
-| items | (string \| itemsType)[] | undefined | Breadcrumbsを自動生成するために使用される文字列またはオブジェクトの配列を渡します |
+| items | (string \| ItemsType*2)[] | undefined | Breadcrumbsを自動生成するために使用される文字列またはオブジェクトの配列を渡します*3 |
 | rounded | 'none' \| 'small' \| 'medium' \| 'large' \| 'x-large' \| 'circle' | 'none' | コンポーネントの`border-radius`を指定します |
+
+* *1 : ColorType = `'white' \| 'black' \| 'light' \| 'dark' \| 'primary' \| 'link' \| 'success' \| 'danger' \| 'warning' \| 'info'`
+* *2 : ItemsType = `{
+  title: string;
+  disabled?: boolean;
+  href?: string;
+  to?: string;
+}`
+* *3 : リンクを使用する場合
+  * aタグ = itemsオブジェクトに、hrefを追加することで、リンクを渡すことができます
+  * router-linkタグ = itemsオブジェクトに、toを追加することで、リンクを渡すことができます
 
 ## Slots
 
 | Name | Props (if scoped) | Description |
 | --- | --- | --- |
-| title | `{index: number, item: string\|itemType}` | title部分に表示するコンテンツを表示します |
-| divider | `{index: number, item: string\|itemType}` | パンくずの区切り部分に表示するコンテンツを表示します |
+| title | `{index: number, item: string\|ItemsType}` | title部分に表示するコンテンツを表示します |
+| divider | `{index: number, item: string\|ItemsType}` | パンくずの区切り部分に表示するコンテンツを表示します |
 
 ## Events
 
