@@ -92,7 +92,6 @@ const isDefaultItem = (item: string|itemsType) => {
     return true
 }
 
-
 </script>
 
 <template>

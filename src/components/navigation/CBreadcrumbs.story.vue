@@ -5,16 +5,15 @@ import CBreadcrumbs from "@/components/navigation/CBreadcrumbs.vue";
 import CSvgIcon from "@/components/images/CSvgIcon.vue";
 
 type ColorType =
-    'white' | 'black' | 'light' | 'dark' | 
-    'primary' | 'link' |
-    'success' | 'danger' | 'warning' | 'info'
+  'white' | 'black' | 'light' | 'dark' | 
+  'primary' | 'link' |
+  'success' | 'danger' | 'warning' | 'info'
 
-  interface itemsType {
-    title: string,
-    disabled?: boolean,
-    href?: string
+interface itemsType {
+  title: string,
+  disabled?: boolean,
+  href?: string
 }
-
 
 const pageStringList = [
   'Home',
@@ -23,7 +22,7 @@ const pageStringList = [
 ]
 
 const pageObjectList = [
-{
+  {
     title: 'Home',
     disabled: false,
     href: 'link_home'
@@ -41,7 +40,7 @@ const pageObjectList = [
 ]
 
 const pageObjectRouterLinkList = [
-{
+  {
     title: 'Home',
     disabled: false,
     to: 'link_home'
@@ -77,126 +76,126 @@ const data: {
 </script>
 
 <template>
-  <Story
-      title="Navigation / CBreadcrumbs"
-      :layout="{ type: 'grid', width: '100%' }"
-  >
+<Story
+  title="Navigation / CBreadcrumbs"
+  :layout="{ type: 'grid', width: '100%' }"
+>
   <Variant title="基本" auto-props-disabled>
-      <CBreadcrumbs
-        :bg-color="data.bgColor"
-        :color="data.color"
-        :density="data.density"
-        :divider="data.divider"
-        :items="data.items"
-        :rounded="data.rounded"
-      />
-      <template #controls>
-        <HstSelect
-            v-model="data.bgColor"
-            title="bgColor"
-            :options="[
-                        {value: undefined, label: 'undefined'},
-                        {value: 'white', label: 'white'},
-                        {value: 'black', label: 'black'},
-                        {value: 'light', label: 'light'},
-                        {value: 'dark', label: 'dark'},
-                        {value: 'primary', label: 'primary'},
-                        {value: 'link', label: 'link'},
-                        {value: 'success', label: 'success'},
-                        {value: 'danger', label: 'danger'},
-                        {value: 'warning', label: 'warning'},
-                        {value: 'info', label: 'info'},
-                    ]"
-        />
-        <HstSelect
-            v-model="data.color"
-            title="color"
-            :options="[
-                        {value: undefined, label: 'undefined'},
-                        {value: 'white', label: 'white'},
-                        {value: 'black', label: 'black'},
-                        {value: 'light', label: 'light'},
-                        {value: 'dark', label: 'dark'},
-                        {value: 'primary', label: 'primary'},
-                        {value: 'link', label: 'link'},
-                        {value: 'success', label: 'success'},
-                        {value: 'danger', label: 'danger'},
-                        {value: 'warning', label: 'warning'},
-                        {value: 'info', label: 'info'},
-                    ]"
-        />
-        <HstSelect
-          v-model="data.density"
-          title="density"
+    <CBreadcrumbs
+      :bg-color="data.bgColor"
+      :color="data.color"
+      :density="data.density"
+      :divider="data.divider"
+      :items="data.items"
+      :rounded="data.rounded"
+    />
+    <template #controls>
+      <HstSelect
+          v-model="data.bgColor"
+          title="bgColor"
           :options="[
-                      {value: 'default', label: 'default'},
-                      {value: 'comfortable', label: 'comfortable'},
-                      {value: 'compact', label: 'compact'},
+                      {value: undefined, label: 'undefined'},
+                      {value: 'white', label: 'white'},
+                      {value: 'black', label: 'black'},
+                      {value: 'light', label: 'light'},
+                      {value: 'dark', label: 'dark'},
+                      {value: 'primary', label: 'primary'},
+                      {value: 'link', label: 'link'},
+                      {value: 'success', label: 'success'},
+                      {value: 'danger', label: 'danger'},
+                      {value: 'warning', label: 'warning'},
+                      {value: 'info', label: 'info'},
                   ]"
-          />
-        <HstText v-model="data.divider" title="divider"/>
-        <HstSelect
-            v-model="data.rounded"
-            title="rounded"
-            :options="[
-                        {value: 'none', label: 'none'},
-                        {value: 'small', label: 'small'},
-                        {value: 'medium', label: 'medium'},
-                        {value: 'large', label: 'large'},
-                        {value: 'x-large', label: 'x-large'},
-                        {value: 'circle', label: 'circle'},
-                    ]"
+      />
+      <HstSelect
+          v-model="data.color"
+          title="color"
+          :options="[
+                      {value: undefined, label: 'undefined'},
+                      {value: 'white', label: 'white'},
+                      {value: 'black', label: 'black'},
+                      {value: 'light', label: 'light'},
+                      {value: 'dark', label: 'dark'},
+                      {value: 'primary', label: 'primary'},
+                      {value: 'link', label: 'link'},
+                      {value: 'success', label: 'success'},
+                      {value: 'danger', label: 'danger'},
+                      {value: 'warning', label: 'warning'},
+                      {value: 'info', label: 'info'},
+                  ]"
+      />
+      <HstSelect
+        v-model="data.density"
+        title="density"
+        :options="[
+                    {value: 'default', label: 'default'},
+                    {value: 'comfortable', label: 'comfortable'},
+                    {value: 'compact', label: 'compact'},
+                ]"
         />
-        <HstJson v-model="data.items" title="items"/>
+      <HstText v-model="data.divider" title="divider"/>
+      <HstSelect
+          v-model="data.rounded"
+          title="rounded"
+          :options="[
+                      {value: 'none', label: 'none'},
+                      {value: 'small', label: 'small'},
+                      {value: 'medium', label: 'medium'},
+                      {value: 'large', label: 'large'},
+                      {value: 'x-large', label: 'x-large'},
+                      {value: 'circle', label: 'circle'},
+                  ]"
+      />
+      <HstJson v-model="data.items" title="items"/>
+    </template>
+  </Variant>
+  <Variant title="router-link" auto-props-disabled>
+    <CBreadcrumbs
+      :items="pageObjectRouterLinkList"
+    />
+  </Variant>
+  <Variant title="Props Divider" auto-props-disabled>
+    <CBreadcrumbs
+      :items="pageStringList"
+      divider="-"
+    />
+    <CBreadcrumbs
+      :items="pageStringList"
+      divider="."
+    />
+  </Variant>
+  <Variant title="Slots Divider" auto-props-disabled>
+    <CBreadcrumbs
+      :items="pageStringList"
+    >
+      <template #divider>
+        <CSvgIcon :icon="mdiArrowRight"/>
       </template>
-    </Variant>
-    <Variant title="router-link" auto-props-disabled>
-      <CBreadcrumbs
-        :items="pageObjectRouterLinkList"
-      />
-    </Variant>
-    <Variant title="Props Divider" auto-props-disabled>
-      <CBreadcrumbs
-        :items="pageStringList"
-        divider="-"
-      />
-      <CBreadcrumbs
-        :items="pageStringList"
-        divider="."
-      />
-    </Variant>
-    <Variant title="Slots Divider" auto-props-disabled>
-      <CBreadcrumbs
-        :items="pageStringList"
-      >
-        <template #divider>
-          <CSvgIcon :icon="mdiArrowRight"/>
-        </template>
-      </CBreadcrumbs>
-      <CBreadcrumbs
-        :items="pageStringList"
-      >
-        <template #divider>
-          <CSvgIcon :icon="mdiChevronRight"/>
-        </template>
-      </CBreadcrumbs>
-    </Variant>
-    <Variant title="Slots Title" auto-props-disabled>
-      <CBreadcrumbs
-        :items="pageStringList"
-      >
-        <template v-slot:title="{ item }">
-          {{ item.toUpperCase() }}
-        </template>
-      </CBreadcrumbs>
-    </Variant>
-  </Story>
+    </CBreadcrumbs>
+    <CBreadcrumbs
+      :items="pageStringList"
+    >
+      <template #divider>
+        <CSvgIcon :icon="mdiChevronRight"/>
+      </template>
+    </CBreadcrumbs>
+  </Variant>
+  <Variant title="Slots Title" auto-props-disabled>
+    <CBreadcrumbs
+      :items="pageStringList"
+    >
+      <template v-slot:title="{ item }">
+        {{ item.toUpperCase() }}
+      </template>
+    </CBreadcrumbs>
+  </Variant>
+</Story>
 </template>
 
 <docs lang="md">
 # CBreadcrumbs
 
-ユーザーが今WEBサイト上のどこにいるのかを伝えることができる、階層順のリストコンポーネントです。またはパンくずリストとも呼ばれます。
+ユーザーが今WEBサイト上のどこにいるのかを伝えることが可能な、階層順のリストコンポーネントです。またはパンくずリストとも呼ばれます。
 
 ## Props
 *1 colorType = 'white' \| 'black' \| 'light' \| 'dark' \| 'primary' \| 'link' \| 'success' \| 'danger' \| 'warning' \| 'info'
@@ -225,7 +224,6 @@ const data: {
 
 ## Events
 
-### CTabs
 | Name | Parameters | Description |
 | --- | --- | --- |
 | - | - | このコンポーネント独自のイベントはありません |
