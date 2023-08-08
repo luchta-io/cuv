@@ -9,16 +9,12 @@ const data: {
     color: 'white' | 'black' | 'light' | 'dark' | 'primary' | 'link' | 'success' | 'danger' | 'warning' | 'info'
     height: string|undefined
     position: 'relative' | 'absolute' | 'static' | 'fixed' | 'sticky'|undefined
-    rounded: 'small'|'medium'|'large'|undefined
-    tag: string
     width: string|undefined
 } = reactive({
     border: false,
     color: 'light',
     height: '200px',
     position: undefined,
-    rounded: undefined,
-    tag: 'div',
     width: '200px', 
 })
 </script>
@@ -35,6 +31,7 @@ const data: {
                 :border="data.border"
                 :color="data.color"
                 :height="data.height"
+                :position="data.position"
                 :width="data.width">
                 </c-sheet>
             </c-cluster>
@@ -57,8 +54,20 @@ const data: {
                         {value: 'info', label: 'info'},
                     ]"
             />
-            <HstText v-model="data.width" title="width"/>
             <HstText v-model="data.height" title="height"/>
+            <HstSelect
+                v-model="data.position"
+                title="position"
+                :options="[
+                            {value: undefined, label: 'undefined'},
+                            {value: 'relative', label: 'relative'},
+                            {value: 'absolute', label: 'absolute'},
+                            {value: 'static', label: 'static'},
+                            {value: 'fixed', label: 'fixed'},
+                            {value: 'sticky', label: 'sticky'},
+                        ]"
+            />
+            <HstText v-model="data.width" title="width"/>
         </template>
     </Variant>
     <Variant title="elevation" auto-props-disabled>
@@ -90,6 +99,12 @@ const data: {
             <c-cluster justify="space-around">
                 <c-sheet
                 color="dark"
+                rounded="none"
+                height="100px"
+                width="100px">
+                </c-sheet>
+                <c-sheet
+                color="dark"
                 rounded="small"
                 height="100px"
                 width="100px">
@@ -103,6 +118,18 @@ const data: {
                 <c-sheet
                 color="dark"
                 rounded="large"
+                height="100px"
+                width="100px">
+                </c-sheet>
+                <c-sheet
+                color="dark"
+                rounded="x-large"
+                height="100px"
+                width="100px">
+                </c-sheet>
+                <c-sheet
+                color="dark"
+                rounded="circle"
                 height="100px"
                 width="100px">
                 </c-sheet>
@@ -122,17 +149,17 @@ const data: {
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | border | boolean | false | colorが指定されている場合、背景色を無効にして指定されたcolorのborderを有効にします |
-| color | 'white' / 'black' / 'light' / 'dark' / 'primary' / 'link' / 'success' / 'danger' / 'warning' / 'info' | undefined | 色を指定します |
-| elevation | 'small' / 'medium' / 'large' | undefined | 影をつける場合に指定します |
-| height | string / number | undefined | コンポーネントの高さ(height)を指定できます |
-| maxHeight | string / number | undefined | コンポーネントのmax-heightを指定できます |
-| maxWidth | string / number | undefined | コンポーネントのmax-widthを指定できます |
-| minHeight | string / number | undefined | コンポーネントのmin-heightを指定できます |
-| minWidth | string / number | undefined | コンポーネントのmin-widthを指定できます |
-| position | 'relative' / 'absolute' / 'static' / 'fixed' / 'sticky' | undefined | styleのpositionを指定できます |
-| rounded | 'small' / 'medium' / 'large' | undefined | コンポーネントの角を丸める場合に指定できます |
+| color | 'white' \| 'black' \| 'light' \| 'dark' \| 'primary' \| 'link' \| 'success' \| 'danger' \| 'warning' \| 'info' | undefined | 色を指定します |
+| elevation | 'small' \| 'medium' \| 'large' | undefined | 影をつける場合に指定します |
+| height | string \| number | undefined | コンポーネントの高さ(height)を指定できます |
+| maxHeight | string \| number | undefined | コンポーネントのmax-heightを指定できます |
+| maxWidth | string \| number | undefined | コンポーネントのmax-widthを指定できます |
+| minHeight | string \| number | undefined | コンポーネントのmin-heightを指定できます |
+| minWidth | string \| number | undefined | コンポーネントのmin-widthを指定できます |
+| position | 'relative' \| 'absolute' \| 'static' \| 'fixed' \| 'sticky' | undefined | styleのpositionを指定できます |
+| rounded | 'none' \| 'small' \| 'medium' \| 'large' \| 'x-large' \| 'circle' | 'circle' | コンポーネントの`border-radius`を指定します |
 | tag | string | 'div' | コンポーネントのタグを指定できます |
-| width | string / number | undefined | コンポーネントの幅(width)を指定できます |
+| width | string \| number | undefined | コンポーネントの幅(width)を指定できます |
 
 ## Slots
 
