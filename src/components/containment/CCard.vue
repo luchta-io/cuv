@@ -105,14 +105,12 @@ const isLoad = computed({
 })
 
 const ripple = () => {
-    console.log(cardRef.value)
     if ( !props.ripple ) return
     if ( !cardRef.value ) return
     useRipple(cardRef.value)
 }
 
 onMounted(() => {
-    // console.log(props.ripple)
     ripple()
 })
 
