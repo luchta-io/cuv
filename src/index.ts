@@ -5,6 +5,7 @@ import './ripple.css'
 
 // containment
 export {default as CButton} from "./components/containment/CButton.vue"
+export {default as CCard} from "./components/containment/CCard.vue"
 export {default as CChip} from "./components/containment/CChip.vue"
 export {default as CDialog} from "./components/containment/CDialog.vue"
 export {default as COverlay} from "./components/containment/COverlay.vue"
@@ -41,3 +42,4 @@ export {default as CSwitcher} from "./components/layout/CSwitcher.vue"
 //navigation
 export {default as CTabs} from "./components/navigation/CTabs.vue"
 export {default as CTab} from "./components/navigation/CTab.vue"
+export {default as CBreadcrumbs} from "./components/navigation/CBreadcrumbs.vue"
