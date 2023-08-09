@@ -13,7 +13,7 @@ export const useRipple = (target: HTMLElement) => {
             y = e.pageY - position.top
         }
         const rippleSpan = document.createElement("span")
-        rippleSpan.classList.add('c-button-ripple')
+        rippleSpan.classList.add('c-ripple')
         rippleSpan.setAttribute("style","top:"+y+"px; left:"+x+"px; background-color:"+getRippleColor(window.getComputedStyle(target).backgroundColor))
         target.appendChild(rippleSpan)
         setTimeout(() => {
