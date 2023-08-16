@@ -4,6 +4,8 @@ import { logEvent } from 'histoire/client'
 import CDialog from "@/components/containment/CDialog.vue";
 import CButton from "@/components/containment/CButton.vue";
 import CBox from "@/components/layout/CBox.vue";
+import CCluster from "@/components/layout/CCluster.vue"
+import CCard from "@/components/containment/CCard.vue"
 
 const data: {
     isActive: boolean;
@@ -28,11 +30,19 @@ const longData: {
 } = reactive({
     isLongActive: false,
 })
+
+const custom: {
+    isActive: boolean;
+} = reactive({
+    isActive: false,
+})
 </script>
 <template>
-    <Story title="Containment / CDialog" :layout="{ type: 'grid', width: 200 }">
+    <Story title="Containment / CDialog" :layout="{ type: 'grid', width: '100%' }">
         <Variant title="基本" auto-props-disabled>
-            <c-button @click="data.isActive = true">ダイアログを表示</c-button>
+            <CCluster justify="center">
+                <c-button @click="data.isActive = true">ダイアログを表示</c-button>
+            </CCluster>
             <c-dialog
                 v-model="data.isActive"
                 :size="data.size"
@@ -44,7 +54,9 @@ const longData: {
             </c-dialog>
         </Variant>
         <Variant title="重なったコンテンツ" auto-props-disabled>
-            <c-button @click="stackData.isParentActive = true">ダイアログを表示</c-button>
+            <CCluster justify="center">
+                <c-button @click="stackData.isParentActive = true">ダイアログを表示</c-button>
+            </CCluster>
             <c-dialog
                 v-model="stackData.isParentActive"
                 :size="data.size"
@@ -76,9 +88,11 @@ const longData: {
             </c-dialog>
         </Variant>
         <Variant title="長いコンテンツ" auto-props-disabled>
-            <c-button @click="longData.isLongActive = true"
-                >長いコンテンツを表示</c-button
-            >
+            <CCluster justify="center">
+                <c-button @click="longData.isLongActive = true">
+                    長いコンテンツを表示
+                </c-button>
+            </CCluster>
             <c-dialog
                 v-model="longData.isLongActive"
                 :size="data.size"
@@ -146,6 +160,31 @@ const longData: {
                 </c-box>
             </c-dialog>
         </Variant>
+        <Variant title="カスタム" auto-props-disabled>
+            <CCluster justify="center">
+                <c-button @click="custom.isActive = true">カスタムダイアログを表示</c-button>
+            </CCluster>
+            <c-dialog
+                v-model="custom.isActive"
+                :size="data.size"
+                @close="logEvent('close', $event)"
+            >
+                <template #content>
+                    <CCard title="セロ弾きのゴーシュ" subtitle="宮沢賢治" variant="tonal" color="primary">
+                        <template #text>
+                            狸はかっこうの心配顔げへロマチックシューマンが弾い外ました。またぎっしり上手ませでってかっこうだまし。気の毒なましのたもたいやのどの愉快らのっきりをはばたばた同じたなて、何ばかりゴーシュをひけられのだだ。あるすぎおまえも小屋にひどくたてさっきの狸の舌手が済む第一ジャズらのかっこうを弾くて行っだます。虫もこんどおこっからいです。
+                        </template>
+                        <template #actions>
+                            <CCluster justify="flex-end" class="w-full">
+                                <CButton @click="custom.isActive = false" color="primary">
+                                    閉じる
+                                </CButton>
+                            </CCluster>
+                        </template>
+                    </CCard>
+                </template>
+            </c-dialog>
+        </Variant>
         <template #controls>
         <HstSelect
             v-model="data.size"
@@ -175,7 +214,8 @@ const longData: {
 
 | Name | Props (if scoped) | Description |
 | --- | --- | --- |
-| default | - | ダイアログに表示するコンテンツを指定します |
+| default | - | ダイアログに表示する白いカードの中のコンテンツを指定します |
+| content | - | ダイアログに表示するコンテンツを指定します |
 
 ## Events
 
