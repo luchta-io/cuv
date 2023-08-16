@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive } from 'vue';
+import { onMounted, reactive } from 'vue';
 import { logEvent } from 'histoire/client'
 import { mdiMagnify } from '@mdi/js';
 import CDataTable from '@/components/dataDisplay/CDataTable.vue';
