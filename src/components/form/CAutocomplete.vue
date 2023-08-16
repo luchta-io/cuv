@@ -134,6 +134,22 @@ const selectionClass = computed(() => {
     ]
 })
 
+const clearIconClass = computed(() => {
+    const base = ['pl-2']
+    if ( props.variant === 'filled' ) base.push(props.label ? 'pt-2' : '')
+    if ( props.variant === 'outlined' ) base.push(props.label ? 'pt-2' : '')
+    if ( props.variant === 'underlined' ) base.push('pt-3')
+    return base
+})
+
+const menuIconClass = computed(() => {
+    const base = []
+    if ( props.variant === 'filled' ) base.push(props.label ? 'pt-2' : '')
+    if ( props.variant === 'outlined' ) base.push(props.label ? 'pt-2' : '')
+    if ( props.variant === 'underlined' ) base.push('pt-3')
+    return base
+})
+
 const dropdownListItems = computed(() => {
     if (!props.items) return []
     if (!data.inputText) return props.items
@@ -274,10 +290,10 @@ watchEffect(() => {
                 </label>
             </div>
         </div>
-        <div v-show="clearIconDisplay" :class="$style['c-autocomplete-field__clear']" class="pt-2">
+        <div v-show="clearIconDisplay" :class="[$style['c-autocomplete-field__clear'], clearIconClass]">
             <c-svg-icon :icon="mdiClose" @click="clear" class="text-gray-500 cursor-pointer" />
         </div>
-        <div v-show="menuIconDisplay" :class="$style['c-autocomplete-field__menu']" class="pt-2">
+        <div v-show="menuIconDisplay" :class="[$style['c-autocomplete-field__menu'], menuIconClass]">
             <c-svg-icon :icon="data.isActive ? mdiMenuUp : mdiMenuDown" @click="toggleDropdownList" :class="isError ? 'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
         <div v-show="appendInnerIcon" :class="$style['c-autocomplete-field__append']" class="my-auto pt-2 pl-1 text-lg">

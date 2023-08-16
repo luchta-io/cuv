@@ -105,6 +105,14 @@ const labelClass = computed(() => {
     return base
 })
 
+const clearIconClass = computed(() => {
+    const base = ['pl-2']
+    if ( props.variant === 'filled' ) base.push(props.label ? 'pt-2' : '')
+    if ( props.variant === 'outlined' ) base.push(props.label ? 'pt-2' : '')
+    if ( props.variant === 'underlined' ) base.push('pt-3')
+    return base
+})
+
 const clearIconDisplay = computed(() => {
     if(!props.clearable) return false
     if(props.readonly) return false
@@ -145,7 +153,7 @@ const clear = () => {
                 {{ label }}
             </label>
         </div>
-        <div v-show="clearIconDisplay" class="pt-2">
+        <div v-show="clearIconDisplay" :class="clearIconClass">
             <c-svg-icon :icon="mdiClose" @click="clear" class="text-gray-500 cursor-pointer" />
         </div>
         <div v-show="appendInnerIcon" class="my-auto pt-2 pl-1 text-lg">

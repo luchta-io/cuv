@@ -240,6 +240,7 @@ const error : {
                     :variant="icons.variant"
                     :prepend-icon="mdiComment"
                     @click:prepend="logEvent('fire click:prepend', $event)"
+                    clearable
                 />
                 <c-text-field 
                     v-model="icons.modelValue"
@@ -247,6 +248,7 @@ const error : {
                     :variant="icons.variant"
                     :append-icon="mdiComment"
                     @click:append="logEvent('fire click:append', $event)"
+                    clearable
                 />
                 <c-text-field 
                     v-model="icons.modelValue"
@@ -254,6 +256,7 @@ const error : {
                     :variant="icons.variant"
                     :prepend-inner-icon="mdiComment"
                     @click:prepend-inner="logEvent('fire click:prepend-inner', $event)"
+                    clearable
                 />
                 <c-text-field 
                     v-model="icons.modelValue"
