@@ -300,6 +300,25 @@ const checkable: {
     itemSelectable: 'key'
 })
 
+const checkableFunction: {
+    headers: HeaderType[]
+    selectItems: string[]
+} = reactive({
+    headers: [
+    {
+        title: 'デザート (100g)',
+        key: 'name',
+        align: 'start',
+    },
+    { title: 'カロリー', key: 'calories', align: 'end' },
+    { title: '脂質 (g)', key: 'fat', align: 'end' },
+    { title: '炭水化物 (g)', key: 'carbs', align: 'end' },
+    { title: 'タンパク質 (g)', key: 'protein', align: 'end' },
+    { title: '鉄分 (%)', key: 'iron', align: 'end' },
+    ],
+    selectItems: [],
+})
+
 const search: {
     nameList: NameListType[]
     headers: HeaderType[]
@@ -505,11 +524,6 @@ const filterOnlyCapsText =  (value:string, query: string) => {
         value.toString().toLocaleUpperCase().indexOf(query) !== -1
 }
 
-const itemSelectableValue = computed(() => {
-    if ( checkable.itemSelectable === 'key' ) return 'selectable'
-    return ((item:any) => item.group === '総務部')
-})
-
 onMounted(() => {
     loadItems({page:1, itemsPerPage:severSide.itemsPerPage})
 })
@@ -557,33 +571,29 @@ onMounted(() => {
         @click:row="logEvent('click:row', $event)"
         ></CDataTable>
     </Variant>
-    <Variant title="選択可能な行" auto-props-disabled>
+    <Variant title="選択可能な行(文字列を渡した場合)" auto-props-disabled>
         <div>選択された行のID： {{ checkable.selectItems }}</div>
         <CDataTable
         v-model="checkable.selectItems"
         :headers="checkable.headers"
         :items="checkable.nameList"
         item-value="id"
-        :item-selectable="itemSelectableValue"
+        item-selectable="selectable"
         show-select
         @click:row="logEvent('click:row', $event)"
         ></CDataTable>
-        <template #controls>
-            <HstRadio
-                v-model="checkable.itemSelectable"
-                title="item-selectable"
-                :options="[
-                    {
-                    label: 'key指定(selectableがtrueの時)',
-                    value: 'key',
-                    },
-                    {
-                    label: '関数指定(総務部のみ可)',
-                    value: 'function',
-                    },
-                ]"
-                />
-    </template>
+    </Variant>
+    <Variant title="選択可能な行(関数指定)" auto-props-disabled>
+        <div>選択された行のID： {{ checkableFunction.selectItems }}</div>
+        <CDataTable
+        v-model="checkableFunction.selectItems"
+        :headers="checkableFunction.headers"
+        :items="desserts"
+        item-value="name"
+        :item-selectable="(item:any) => item.calories > 300"
+        show-select
+        @click:row="logEvent('click:row', $event)"
+        ></CDataTable>
     </Variant>
     <Variant title="絞り込み" auto-props-disabled>
         <CDataTable
@@ -679,7 +689,7 @@ onMounted(() => {
 | height | string | 'auto' | table全体の高さを指定します |
 | hover | boolean | false | trをhoverした時に背景色をつける際は指定します |
 | items | any[] | [] | 子コンポーネントを自動生成するために使用される文字列またはオブジェクトの配列 |
-| itemSelectable | boolean \| string \| ((item:any) => boolean) | undefined | 項目を選択可能にするかどうかを制御したい場合、項目のプロパティや関数により指定することができます |
+| itemSelectable | string \| ((item:any) => boolean) | undefined | 項目を選択可能にするかどうかを制御したい場合、項目のプロパティや関数により指定することができます |
 | itemsLength | number | undefined | APIから一部の表示データを取得して表示する場合は、総件数を渡します |
 | itemsPerPage | number | 10 | 最初に指定したい表示件数 |
 | itemsPerPageOptions | Array<string/number> | [] | 表示件数の選択肢の配列 |
