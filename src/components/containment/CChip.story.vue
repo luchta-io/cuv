@@ -7,6 +7,7 @@ import CCluster from "@/components/layout/CCluster.vue";
 import CSvgIcon from "@/components/images/CSvgIcon.vue";
 import CAvatar from "@/components/images/CAvatar.vue";
 import CChip from "@/components/containment/CChip.vue";
+import imgUrl from '@/assets/sample_cat.png'
 
 const data: {
     closable: boolean
@@ -176,7 +177,7 @@ const closable: {
             <CChip>
                 <template #prepend>
                     <CAvatar>
-                        <img src="/cuv/src/assets/sample_cat.png"/>
+                        <img :src="imgUrl"/>
                     </CAvatar>
                 </template>
                 今日の猫ニュース
