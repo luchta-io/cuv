@@ -679,7 +679,7 @@ onMounted(() => {
 | height | string | 'auto' | table全体の高さを指定します |
 | hover | boolean | false | trをhoverした時に背景色をつける際は指定します |
 | items | any[] | [] | 子コンポーネントを自動生成するために使用される文字列またはオブジェクトの配列 |
-| itemSelectable | boolean \| string \| ((item:any) => any) | undefined | 項目を選択可能にするかどうかを制御したい場合、項目のプロパティや関数により指定することができます |
+| itemSelectable | boolean \| string \| ((item:any) => boolean) | undefined | 項目を選択可能にするかどうかを制御したい場合、項目のプロパティや関数により指定することができます |
 | itemsLength | number | undefined | APIから一部の表示データを取得して表示する場合は、総件数を渡します |
 | itemsPerPage | number | 10 | 最初に指定したい表示件数 |
 | itemsPerPageOptions | Array<string/number> | [] | 表示件数の選択肢の配列 |

@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<{
     height?: string
     hover?: boolean
     items: any[]
-    itemSelectable?: boolean | string | ((item:any) => any)
+    itemSelectable?: boolean | string | ((item:any) => boolean)
     itemsLength?: number
     itemsPerPage?: number
     itemsPerPageOptions?: Array<string|number>
