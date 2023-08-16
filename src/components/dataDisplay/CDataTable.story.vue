@@ -34,192 +34,224 @@ const nameList = [
         name: '田中太郎',
         date: '2021/01/01 10:00',
         group: '営業部',
+        selectable: false,
     },
     {
         id:'002',
         name: '鈴木仁美',
         date: '2021/02/01 12:00',
         group: '総務部',
+        selectable: true,
     },
     {
         id:'003',
         name: '赤坂三郎',
         date: '2021/05/01 10:30',
         group: '人事部',
+        selectable: false,
     },
     {
         id:'004',
         name: '目黒四郎',
         date: '2023/01/01 10:01',
         group: '営業部',
+        selectable: true,
     },
     {
         id:'005',
         name: '池袋五子',
         date: '2021/03/01 11:00',
         group: '総務部',
+        selectable: true,
     },
     {
         id:'006',
         name: '新宿六郎',
         date: '2022/04/01 12:00',
         group: '経営企画部',
+        selectable: false,
     },
     {
         id:'007',
         name: '大崎七子',
         date: '2021/01/01 16:30',
         group: '人事部',
+        selectable: true,
     },
     {
         id:'008',
         name: '神田八子',
         date: '2021/01/01 10:10',
         group: '総務部',
+        selectable: true,
     },
     {
         id:'009',
         name: '池袋九太郎',
         date: '2021/01/01 10:12',
         group: '人事部',
+        selectable: true,
     },
     {
         id:'010',
         name: '大久保十蔵',
         date: '2021/04/01 10:11',
         group: '営業部',
+        selectable: false,
     },
     {
         id:'011',
         name: '田中太郎',
         date: '2023/01/01 10:35',
         group: '経営企画部',
+        selectable: true,
     },
     {
         id:'012',
         name: '鈴木仁美',
         date: '2009/01/01 14:00',
         group: '総務部',
+        selectable: false,
     },
     {
         id:'013',
         name: '赤坂三郎',
         date: '2021/01/01 16:00',
         group: '営業部',
+        selectable: true,
     },
     {
         id:'014',
         name: '目黒四郎',
         date: '2014/01/01 17:00',
         group: '営業部',
+        selectable: true,
     },
     {
         id:'015',
         name: '池袋五子',
         date: '2020/01/01 15:00',
         group: '総務部',
+        selectable: true,
     },
     {
         id:'016',
         name: '新宿六郎',
         date: '2021/04/01 10:34',
         group: '営業部',
+        selectable: true,
     },
     {
         id:'017',
         name: '大崎七子',
         date: '2020/04/01 10:56',
         group: '総務部',
+        selectable: false,
     },
     {
         id:'018',
         name: '神田八子',
         date: '2019/04/01 11:30',
         group: '総務部',
+        selectable: true,
     },
     {
         id:'019',
         name: '池袋九太郎',
         date: '2021/01/01 10:40',
         group: '営業部',
+        selectable: true,
     },
     {
         id:'020',
         name: '大久保十蔵',
         date: '2018/01/01 10:44',
         group: '営業部',
+        selectable: true,
     },
     {
         id:'021',
         name: '田中太郎',
         date: '2018/01/01 10:47',
         group: '営業部',
+        selectable: true,
     },
     {
         id:'022',
         name: '鈴木仁美',
         date: '2017/01/01 10:51',
         group: '採用部',
+        selectable: true,
     },
     {
         id:'023',
         name: '赤坂三郎',
         date: '2023/01/01 10:52',
         group: '営業部',
+        selectable: true,
     },
     {
         id:'024',
         name: '目黒四郎',
         date: '2023/01/01 10:54',
         group: '経営企画部',
+        selectable: true,
     },
     {
         id:'025',
         name: '池袋五子',
         date: '2019/04/01 10:58',
         group: '総務部',
+        selectable: false,
     },
     {
         id:'026',
         name: '新宿六郎',
         date: '2020/01/03 15:03',
         group: '営業部',
+        selectable: true,
     },
     {
         id:'027',
         name: '大崎七子',
         date: '2021/04/01 10:11',
         group: '総務部',
+        selectable: true,
     },
     {
         id:'028',
         name: '神田八子',
         date: '2021/01/01 10:12',
         group: '採用部',
+        selectable: true,
     },
     {
         id:'029',
         name: '池袋九太郎',
         date: '2021/01/03 10:34',
         group: '経営企画部',
+        selectable: true,
     },
     {
         id:'030',
         name: '大久保十蔵',
         date: '2022/01/04 10:00',
         group: '営業部',
+        selectable: false,
     },
     {
         id:'031',
         name: '田中太郎',
         date: '2022/01/05 10:00',
         group: '採用部',
+        selectable: true,
     },
     {
         id:'032',
         name: '鈴木仁美',
         date: '2021/12/01 10:00',
         group: '総務部',
+        selectable: false,
     },
 ]
 
@@ -253,6 +285,37 @@ const checked: {
 } = reactive({
     nameList: nameList,
     headers: nameListHeaders,
+    selectItems: [],
+})
+
+const checkable: {
+    nameList: NameListType[]
+    headers: HeaderType[]
+    selectItems: string[]
+    itemSelectable: string
+} = reactive({
+    nameList: nameList,
+    headers: nameListHeaders,
+    selectItems: [],
+    itemSelectable: 'key'
+})
+
+const checkableFunction: {
+    headers: HeaderType[]
+    selectItems: string[]
+} = reactive({
+    headers: [
+    {
+        title: 'デザート (100g)',
+        key: 'name',
+        align: 'start',
+    },
+    { title: 'カロリー', key: 'calories', align: 'end' },
+    { title: '脂質 (g)', key: 'fat', align: 'end' },
+    { title: '炭水化物 (g)', key: 'carbs', align: 'end' },
+    { title: 'タンパク質 (g)', key: 'protein', align: 'end' },
+    { title: '鉄分 (%)', key: 'iron', align: 'end' },
+    ],
     selectItems: [],
 })
 
@@ -508,6 +571,30 @@ onMounted(() => {
         @click:row="logEvent('click:row', $event)"
         ></CDataTable>
     </Variant>
+    <Variant title="選択可能な行(文字列を渡した場合)" auto-props-disabled>
+        <div>選択された行のID： {{ checkable.selectItems }}</div>
+        <CDataTable
+        v-model="checkable.selectItems"
+        :headers="checkable.headers"
+        :items="checkable.nameList"
+        item-value="id"
+        item-selectable="selectable"
+        show-select
+        @click:row="logEvent('click:row', $event)"
+        ></CDataTable>
+    </Variant>
+    <Variant title="選択可能な行(関数指定)" auto-props-disabled>
+        <div>選択された行のID： {{ checkableFunction.selectItems }}</div>
+        <CDataTable
+        v-model="checkableFunction.selectItems"
+        :headers="checkableFunction.headers"
+        :items="desserts"
+        item-value="name"
+        :item-selectable="(item:any) => item.calories > 300"
+        show-select
+        @click:row="logEvent('click:row', $event)"
+        ></CDataTable>
+    </Variant>
     <Variant title="絞り込み" auto-props-disabled>
         <CDataTable
         :headers="search.headers"
@@ -602,6 +689,7 @@ onMounted(() => {
 | height | string | 'auto' | table全体の高さを指定します |
 | hover | boolean | false | trをhoverした時に背景色をつける際は指定します |
 | items | any[] | [] | 子コンポーネントを自動生成するために使用される文字列またはオブジェクトの配列 |
+| itemSelectable | string \| ((item:any) => boolean) | undefined | 項目を選択可能にするかどうかを制御したい場合、項目のプロパティや関数により指定することができます |
 | itemsLength | number | undefined | APIから一部の表示データを取得して表示する場合は、総件数を渡します |
 | itemsPerPage | number | 10 | 最初に指定したい表示件数 |
 | itemsPerPageOptions | Array<string/number> | [] | 表示件数の選択肢の配列 |

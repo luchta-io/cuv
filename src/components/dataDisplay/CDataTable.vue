@@ -33,6 +33,7 @@ const props = withDefaults(defineProps<{
     height?: string
     hover?: boolean
     items: any[]
+    itemSelectable?: string | ((item:any) => boolean)
     itemsLength?: number
     itemsPerPage?: number
     itemsPerPageOptions?: Array<string|number>
@@ -195,7 +196,7 @@ const headerAlign = (align?: 'start' | 'end') => {
 
 const changeAllSelect = () => {
     data.selectItems = []
-    if(data.isAllChecked) data.selectItems.push(...props.items.map(x => x[props.itemValue]))
+    if(data.isAllChecked) data.selectItems.push(...props.items.filter(item => isSelectItem(item)).map(x => x[props.itemValue]))
     changeCheckbox()
     return
 }
@@ -231,8 +232,16 @@ const changePerPage = () => {
     return
 }
 
+const isSelectItem = (item: any) => {
+    if ( !props.itemSelectable ) return true
+    if ( typeof props.itemSelectable === 'boolean'  ) return props.itemSelectable
+    if ( typeof props.itemSelectable === 'string'  ) return item[props.itemSelectable]
+    return props.itemSelectable(item)
+}
+
 watchEffect(() => {
-    if(data.selectItems.length !== props.items.length) data.isAllChecked = false
+    if(data.selectItems.length !== props.items.filter(item => isSelectItem(item)).length) data.isAllChecked = false
+    if(data.selectItems.length === props.items.filter(item => isSelectItem(item)).length) data.isAllChecked = true
 })
 
 </script>
@@ -266,7 +275,7 @@ watchEffect(() => {
             <slot name="tbody" :page="data.currentPage" :itemsPerPage="data.currentPerPage" :allSelected="data.isAllChecked" :select="data.selectItems" :items="displayItems" :headers="headers">
                 <tr v-for="(item, index) in  displayItems" :key="index">
                     <td v-show="showSelect" class="text-center">
-                        <CCheckbox v-model="data.selectItems" :value="item[itemValue]" @change="changeCheckbox" />
+                        <CCheckbox v-model="data.selectItems" :value="item[itemValue]" @change="changeCheckbox" :disabled="!isSelectItem(item)" />
                     </td>
                     <td v-for="(header, index) in headers" :key="index" @click="emits('click:row', item[itemValue])" :class="headerAlign(header.align)">
                         <slot :name="[`item.${header.key}`]" :item="item[header.key]" :index="index">
