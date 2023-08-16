@@ -112,12 +112,11 @@ const inputClass = computed(() => {
 
 const labelClass = computed(() => {
     const base = [
-        'absolute left-0 text-sm duration-300 transform origin-[0] peer-focus:scale-75 whitespace-nowrap overflow-hidden pointer-events-none',
-        '-translate-y-4 top-4 peer-focus:-translate-y-4',
-        !props.modelValue && !data.inputText
-        ? 'scale-100 translate-y-0' 
-        : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0'
+        'absolute left-0 text-sm duration-300 transform origin-[0] whitespace-nowrap overflow-hidden pointer-events-none',
+        'peer-focus:scale-75 -translate-y-4 top-4 peer-focus:-translate-y-4',
     ]
+    if (!props.modelValue && !data.inputText) base.push('scale-100 translate-y-0')
+    if (props.modelValue || data.inputText) base.push('scale-75')
     if(isError.value) base.push('text-[var(--cuv-danger-text)]')
     if(!isError.value) base.push('text-gray-500 peer-focus:text-blue-600')
 
