@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<{
     height?: string
     hover?: boolean
     items: any[]
-    itemSelectable?: string | ((item:any) => any)
+    itemSelectable?: boolean | string | ((item:any) => any)
     itemsLength?: number
     itemsPerPage?: number
     itemsPerPageOptions?: Array<string|number>
@@ -234,6 +234,7 @@ const changePerPage = () => {
 
 const isSelectItem = (item: any) => {
     if ( !props.itemSelectable ) return true
+    if ( typeof props.itemSelectable === 'boolean'  ) return props.itemSelectable
     if ( typeof props.itemSelectable === 'string'  ) return item[props.itemSelectable]
     return props.itemSelectable(item)
 }
