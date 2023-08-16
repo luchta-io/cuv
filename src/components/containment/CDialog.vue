@@ -43,12 +43,17 @@ watchEffect(() => {
 v-if="modelValue" 
 @click.self="close"
 class="fixed top-0 left-0 z-50 inset-0 bg-gray-400/50 max-h-screen"
->
-    <div 
+>  
+    <div
     :class="maxWidthClass"
-    class="bg-white fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-full max-h-[90vh] sm:max-h-screen overflow-auto" 
-    >             
-        <slot/>
+    class="fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-full max-h-[90vh] sm:max-h-screen overflow-auto p-2">
+        <slot name="content">
+            <div 
+            class="bg-white" 
+            >             
+                <slot/>
+            </div>
+        </slot>
     </div>
 </div>
 </template>
