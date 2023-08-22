@@ -64,5 +64,8 @@
   "volta": {
     "node": "18.13.0",
     "npm": "9.2.0"
+  },
+  "dependencies": {
+    "@vuepic/vue-datepicker": "^6.0.1"
   }
 }
