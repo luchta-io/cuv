@@ -1,88 +1,83 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watchEffect } from 'vue'
-import { getScrollParent } from '@/composables/scroll';
+import { computed, reactive, ref } from 'vue'
 import { mdiCalendar, mdiClose } from '@mdi/js';
 import { ja } from 'date-fns/locale';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
+import type { DatePickerInstance } from "@vuepic/vue-datepicker"
 import CSvgIcon from '@/components/images/CSvgIcon.vue';
 
-type FormatterType = {
-    date?: string,
-    month?: string,
-}
-
 const props = withDefaults(defineProps<{
-    modelValue?: any
-    label?: string
-    variant?: 'filled'|'outlined'|'underlined'
-    id?: string
-    name?: string
-    readonly?: boolean
+    appendIcon?: string
+    appendInnerIcon?: string
+    autoApply?: boolean
+    cancelText?: string
+    clearable?: boolean
     disabled?: boolean
+    disabledDates?: Date[] | string[] | ((date: Date) => boolean)
+    enableSeconds?: boolean
+    enableTimePicker?: boolean
     error?: boolean
     errorMessage?: string|string[]
+    format?: string|((params: Date) => string)
+    id?: string
+    label?: string
     maxErrors?: string|number
-    clearable?: boolean
+    modelValue?: any
+    monthPicker?: boolean
+    multiDates?: boolean
+    name?: string
     placeholder?: string
     prependIcon?: string
-    appendIcon?: string
     prependInnerIcon?: string
-    appendInnerIcon?: string
-    formatter?: FormatterType
-    autoApply?: boolean
-    disableDate?: (date: any) => any
-    applyButtonText?: string
-    multiDates?: boolean
-    monthPicker?: boolean
+    readonly?: boolean
+    selectText?: string
+    textInput?: boolean
     timePicker?: boolean
+    timezone?: string
+    variant?: 'filled'|'outlined'|'underlined'
+    weekStart?: number | string
     yearPicker?: boolean
-    // timezone?: string
 }>(), {
-    modelValue: '',
-    label: '',
-    variant: 'filled',
-    readonly: false,
+    autoApply: true,
+    clearable: false,
     disabled:false,
+    enableSeconds: false,
+    enableTimePicker: true,
     error: false,
     errorMessage: '',
-    clearable: false,
+    label: '',
+    modelValue: '',
+    monthPicker: false,
+    multiDates: false,
     placeholder: '',
     prependInnerIcon: mdiCalendar,
-    autoApply: true,
-    applyButtonText: '選択',
-    multiDates: false,
-    monthPicker: false,
+    readonly: false,
+    textInput: true,
     timePicker: false,
+    timezone: 'Asia/Tokyo',
+    variant: 'filled',
+    weekStart: 1,
     yearPicker: false,
-    // timezone: 'Pacific/Midway'
-
 })
 
 const emits = defineEmits<{
     (e: 'update:modelValue', value: any): void
     (e: 'click:append'): void
     (e: 'click:prepend'): void
+    (e: 'click:appendInner'): void
+    (e: 'click:prependInner'): void
 }>()
 
 const componentRef = ref<HTMLElement>()
 const fieldEl = ref<HTMLElement>()
+const datepickerRef = ref<DatePickerInstance>()
 const inputRef = ref<HTMLElement>()
 
 const data: {
-    isActive: boolean
-    isHover: boolean
-    position: {
-        top: string
-        left: string
-    }
+    isFocus: boolean
 } = reactive({
-    isActive: false,
-    isHover: false,
-    position: {
-        top: '',
-        left: '',
-    },
+    isFocus: false,
 })
 
 const dateValue = computed({
@@ -91,14 +86,6 @@ const dateValue = computed({
         emits('update:modelValue', value)
     }
 })
-
-// const setFormatter = computed(() => {
-//     if ( props.formatter ) return props.formatter
-//     return {
-//         date: 'YYYY-MM-DD HH:mm:ss',
-//         month: 'MMM'
-//     }
-// })
 
 const formatedErrorMessage = computed(() => {
     const max = Number(props.maxErrors)
@@ -131,7 +118,7 @@ const fieldClass = computed(() => {
 
 const inputClass = computed(() => {
     return [
-        'peer text-gray-900 focus:outline-none focus:ring-0 bg-transparent opacity-100 disabled:text-gray-500',
+        'peer text-gray-900 focus:outline-none focus:ring-0 bg-transparent opacity-100 disabled:text-gray-500 w-full',
         props.modelValue ? 'placeholder:opacity-0' : props.label ? 'placeholder:opacity-0 focus:placeholder:opacity-100' : 'opacity-100',
         props.label ? 'pt-4 pb-1' : '',
         props.variant === 'filled' && !props.label ? 'py-2.5' : '',
@@ -144,28 +131,30 @@ const inputClass = computed(() => {
 const labelClass = computed(() => {
     const base = [
         'absolute left-0 text-sm duration-300 transform origin-[0] whitespace-nowrap overflow-hidden pointer-events-none',
-        'peer-focus:scale-75 -translate-y-4 top-4 peer-focus:-translate-y-4',
+        'top-3'
     ]
-    if (!props.modelValue) base.push('scale-100 translate-y-0')
-    if (props.modelValue) base.push('scale-75')
-    if(isError.value) base.push('text-[var(--cuv-danger-text)]')
-    if(!isError.value) base.push('text-gray-500 peer-focus:text-blue-600')
+    if (!props.modelValue && data.isFocus) base.push('scale-75 -translate-y-3')
+    if (!props.modelValue && !data.isFocus) base.push('scale-100 translate-y-0')
+    if (props.modelValue) base.push('scale-75 -translate-y-3')
+    if (isError.value) base.push('text-[var(--cuv-danger-text)]')
+    if (!isError.value && !data.isFocus) base.push('text-gray-500')
+    if (!isError.value && data.isFocus) base.push('text-blue-600')
 
     return base
 })
 
 const iconClass = computed(() => {
     const base = []
-    if ( props.variant === 'filled' ) base.push(props.label ? 'pt-1.5' : '')
-    if ( props.variant === 'outlined' ) base.push(props.label ? 'pt-1.5' : '')
+    if ( props.variant === 'filled' ) base.push('pt-0')
+    if ( props.variant === 'outlined' ) base.push('pt-0')
     if ( props.variant === 'underlined' ) base.push('pt-3')
     return base
 })
 
 const innerIconClass = computed(() => {
     const base = []
-    if ( props.variant === 'filled' ) base.push(props.label ? 'pt-2' : '')
-    if ( props.variant === 'outlined' ) base.push(props.label ? 'pt-2' : '')
+    if ( props.variant === 'filled' ) base.push('pt-0')
+    if ( props.variant === 'outlined' ) base.push('pt-0')
     if ( props.variant === 'underlined' ) base.push('pt-3')
     return base
 })
@@ -185,93 +174,96 @@ const clearIconDisplay = computed(() => {
     return props.modelValue 
 })
 
+const getWeekStart = computed(():any => {
+    if (props.weekStart) return props.weekStart
+    return 1
+})
+
+const getFormat = computed(():any => {
+    if (props.format) return props.format
+    return undefined
+})
+
 const focus = () => {
-    if ( !inputRef.value ) return
+    data.isFocus = true
+    if (!inputRef.value) return
     inputRef.value.focus()
 }
 
-const openCalendar = () => {
-    if(props.readonly) return 
-    if(props.disabled) return
-    data.isActive = true
-}
-
-const closeCalendar = () => {
-    if (data.isHover) return
-    data.isActive = false
-}
-
-const calendarMouseOver = () => {
-    data.isHover = true
-    if ( !inputRef.value ) return
-    inputRef.value.focus()
+const blur = () => {
+    data.isFocus = false
 }
 
 const clear = () => {
     if(dateValue.value) dateValue.value = ''
+    data.isFocus = false
 }
 
-const getPositionLeft = () => {
-    if ( typeof window == 'undefined' ) return
-    if ( !fieldEl.value ) return
-    const clientRect = fieldEl.value.getBoundingClientRect()
-    const x = clientRect.left
-    return data.position.left = x + 'px'
+const clickPrependInnerIcon = () => {
+    emits('click:prependInner')
+    focus()
+    if (!datepickerRef.value) return
+    datepickerRef.value.openMenu()
 }
-
-const getPositionTop = () => {
-    if ( typeof window == 'undefined' ) return
-    if ( !fieldEl.value ) return
-    const clientRect = fieldEl.value.getBoundingClientRect()
-    const y = clientRect.top
-    const elementHeight = fieldEl.value.clientHeight
-    const allElementHeight = y + elementHeight + 400
-    if ( allElementHeight >= window.innerHeight ) data.position.top = y - 400 + window.scrollY - 10 + 'px'
-    else data.position.top = y + elementHeight + window.scrollY + 1 + 'px'
-}
-
-watchEffect(() => {
-    if ( data.isActive ) {
-        getPositionLeft()
-        getPositionTop()
-        const scrollParent = getScrollParent(componentRef.value)
-        scrollParent.onscroll = () => {
-            data.isActive = false
-            if ( !inputRef.value ) return
-            inputRef.value.blur()
-        }
-    }
-})
-const date = ref();
 </script>
 
 <template>
-    <VueDatePicker v-model="date"></VueDatePicker>
-<div ref="componentRef" @mouseover="data.isHover = true" @mouseleave="data.isHover = false" @click="focus" class="relative grid grid-cols-[auto_1fr_auto] gap-y-1 cursor-text">
+<div ref="componentRef" class="relative grid grid-cols-[auto_1fr_auto] gap-y-1 cursor-text">
     <div v-show="prependIcon" :class="iconClass" class="text-lg col-start-1 my-auto pr-1">
         <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
     </div>
     <div :class="[fieldClass, $style['c-datepicker-field']]" ref="fieldEl">
         <div v-show="prependInnerIcon" :class="[$style['c-datepicker-field__prepend'], innerIconClass]" class="my-auto pr-2 text-lg">
-            <CSvgIcon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
+            <CSvgIcon :icon="prependInnerIcon" @click="clickPrependInnerIcon" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
         <div :class="$style['c-datepicker-field__field']" class="relative w-full flex">
             <div class="flex overflow-x-auto w-full">
-                <input
-                    v-model="dateValue"
-                    v-bind="$attrs"
-                    @focus="openCalendar"
-                    @blur="closeCalendar"
-                    type="text"
-                    :id="id"
-                    :name="name"
-                    :readonly="readonly"
-                    :disabled="disabled"
-                    :placeholder="placeholder"
-                    :class="inputClass"
-                    autocomplete="off"
-                    ref="inputRef"
-                />
+                <VueDatePicker 
+                :model-value="modelValue"
+                @update:model-value="emits('update:modelValue', $event)"
+                :auto-apply="autoApply"
+                :format-locale="ja"
+                :multi-dates="multiDates"
+                :year-picker="yearPicker"
+                :month-picker="monthPicker"
+                :time-picker="timePicker"
+                :enable-time-picker="enableTimePicker"
+                :enable-seconds="enableSeconds"
+                :readonly="readonly"
+                :disabled="disabled"
+                :placeholder="placeholder"
+                :format="getFormat"
+                :text-input="textInput"
+                :disabled-dates="disabledDates"
+                :week-start="getWeekStart"
+                :timezone="timezone"
+                :select-text="selectText"
+                :cancel-text="cancelText"
+                :teleport="true"
+                :clearable="false"
+                hide-input-icon
+                ref="datepickerRef"
+                :menu-class-name="$style['c-datepicker-field__menu']"
+                >
+                    <template #dp-input="{ value, onInput, onEnter, onTab }">
+                        <input 
+                        :value="value"
+                        @input="onInput"
+                        @focus="focus"
+                        @blur="blur"
+                        @keydown.enter="onEnter"
+                        @keydown.tab="onTab"
+                        :id="id"
+                        :name="name"
+                        :readonly="readonly"
+                        :disabled="disabled"
+                        :placeholder="placeholder"
+                        :class="inputClass"
+                        autocomplete="off"
+                        ref="inputRef"
+                        />
+                    </template>
+                </VueDatePicker>
                 <label
                     :class="labelClass"
                     >
@@ -295,41 +287,12 @@ const date = ref();
         </p>
     </div>
 </div>
-<Teleport to="body">
-    <div v-if="data.isActive" @mouseover="calendarMouseOver()" @mouseleave="data.isHover=false" :style="{ top:data.position.top, left:data.position.left}"  class="absolute pt-0.5 z-50 rounded peer-read-only:hidden">
-        <!-- <vue-tailwind-datepicker 
-        :model-value="modelValue"
-        @update:model-value="emits('update:modelValue', $event)"
-        @select:month="selectMonth"
-        :formatter="setFormatter"
-        i18n="ja"
-        no-input 
-        as-single
-        :auto-apply="autoApply"
-        :disable-date="disableDate"
-        :options="getOptions"
-        /> -->
-        <VueDatePicker 
-        :model-value="modelValue"
-        @update:model-value="emits('update:modelValue', $event)"
-        :auto-apply="autoApply"
-        :format-locale="ja"
-        :multi-dates="multiDates"
-        :year-picker="yearPicker"
-        :month-picker="monthPicker"
-        :time-picker="timePicker"
-        inline 
-        />
-    </div>
-</Teleport>
-
 </template>
 <style module>
 .c-datepicker-field {
-    grid-template-areas: "prepend-inner field clear menu append-inner";
+    grid-template-areas: "prepend-inner field clear append-inner";
     grid-template-columns: min-content minmax(0,1fr) min-content min-content min-content;
 }
-
 .c-datepicker-field__prepend {
     grid-area: prepend-inner;
 }
@@ -340,7 +303,7 @@ const date = ref();
     grid-area: clear;
 }
 .c-datepicker-field__menu {
-    grid-area: menu;
+    white-space: nowrap;
 }
 .c-datepicker-field__append {
     grid-area: append-inner;
