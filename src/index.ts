@@ -20,6 +20,7 @@ export {default as CProgress} from "./components/feedback/CProgress.vue"
 // form
 export {default as CAutocomplete} from "./components/form/CAutocomplete.vue"
 export {default as CCheckbox} from "./components/form/CCheckbox.vue"
+export {default as CDatepicker} from "./components/form/CDatepicker.vue"
 export {default as CSelect} from "./components/form/CSelect.vue"
 export {default as CTextarea} from "./components/form/CTextarea.vue"
 export {default as CTextField} from "./components/form/CTextField.vue"
