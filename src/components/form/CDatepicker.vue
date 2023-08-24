@@ -301,7 +301,7 @@ const clickPrependInnerIcon = () => {
                                 @keydown.tab="onTab"
                                 :id="id"
                                 :name="name"
-                                :readonly="!props.textInput"
+                                :readonly="!textInput || readonly"
                                 :disabled="disabled"
                                 :placeholder="placeholder"
                                 :class="inputClass"
