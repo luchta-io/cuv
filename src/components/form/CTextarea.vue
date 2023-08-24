@@ -65,12 +65,12 @@ const isError = computed(() => {
 
 const fieldClass = computed(() => {
     const base = [
-        'group peer col-start-2 flex items-start w-full',
+        'group peer col-start-2 flex items-start w-full ',
     ]
     if(isError.value) base.push('border-[var(--cuv-danger-border)] focus-within:border-[var(--cuv-danger-outline-focus)]' )
     if(!isError.value) base.push('border-gray-300 focus-within:border-blue-600')
-    if(props.variant === 'filled') base.push('rounded-t-lg rounded-b-none bg-gray-50 border-0 border-b-2')
-    if(props.variant === 'outlined') base.push('bg-transparent rounded-lg border')
+    if(props.variant === 'filled') base.push('rounded-t-lg rounded-b-none bg-gray-50 border-0 border-b-2 px-2.5')
+    if(props.variant === 'outlined') base.push('bg-transparent rounded-lg border px-2.5')
     if(props.variant === 'underlined') base.push('rounded-none bg-transparent border-0 border-b-2')
 
     return base
@@ -83,9 +83,9 @@ const textareaClass = computed(() => {
     if(!props.label) base.push('placeholder:opacity-100')
     if(props.label && !props.modelValue) base.push('placeholder:opacity-0 focus:placeholder:opacity-100')
     if(props.label && props.modelValue) base.push('placeholder:opacity-0')
-    if(props.variant === 'filled') base.push('min-h-[2.7rem] px-2.5 ', props.label ?'pt-4 pb-1':'py-2.5')
-    if(props.variant === 'outlined') base.push('min-h-[2.8rem] px-2.5', props.label ?'pt-4 pb-1':'py-2.5')
-    if(props.variant === 'underlined') base.push('min-h-[2.3rem] pt-4 pb-1 pl-1')
+    if(props.variant === 'filled') base.push('min-h-[2.7rem]', props.label ?'pt-4 pb-1':'py-2.5')
+    if(props.variant === 'outlined') base.push('min-h-[2.8rem]', props.label ?'pt-4 pb-1':'py-2.5')
+    if(props.variant === 'underlined') base.push('min-h-[2.3rem] pt-4 pb-1')
 
     return base
 })
@@ -96,13 +96,21 @@ const labelClass = computed(() => {
     ]
     if(isError.value) base.push('text-[var(--cuv-danger-text)]')
     if(!isError.value) base.push('text-gray-500 peer-focus:text-blue-600')
-    if(props.variant === 'filled') base.push('-translate-y-4 top-4 left-2.5 peer-focus:-translate-y-4')
-    if(props.variant === 'filled' && props.modelValue) base.push('scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
-    if(props.variant === 'outlined') base.push('-translate-y-4 top-4 px-2 peer-focus:px-2 peer-focus:-translate-y-4 left-1 top-4')
-    if(props.variant === 'outlined' && props.modelValue) base.push('scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
-    if(props.variant === 'underlined') base.push('-translate-y-4 top-4 pl-1 peer-focus:left-0 peer-focus:-translate-y-4')
-    if(props.variant === 'underlined' && props.modelValue) base.push('scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
+    if(props.variant === 'filled' && !props.modelValue) base.push('-translate-y-0 top-3 peer-focus:-translate-y-3')
+    if(props.variant === 'filled' && props.modelValue) base.push('scale-75 -translate-y-3 top-3 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
+    if(props.variant === 'outlined' && !props.modelValue) base.push('-translate-y-0 top-3 peer-focus:-translate-y-3')
+    if(props.variant === 'outlined' && props.modelValue) base.push('scale-75 -translate-y-3 top-3 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
+    if(props.variant === 'underlined' && !props.modelValue) base.push('-translate-y-4 top-4 peer-focus:-translate-y-4')
+    if(props.variant === 'underlined' && props.modelValue) base.push('scale-75 -translate-y-4 top-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
     if(!props.modelValue) base.push('scale-100 translate-y-0')
+    return base
+})
+
+const iconClass = computed(() => {
+    const base = []
+    if ( props.variant === 'filled' ) base.push('pt-0')
+    if ( props.variant === 'outlined' ) base.push('pt-0')
+    if ( props.variant === 'underlined' ) base.push('pt-3')
     return base
 })
 
@@ -119,11 +127,11 @@ const clear = () => {
 
 <template>
 <div class="grid grid-cols-[auto_1fr_auto] gap-y-1">
-    <div v-show="prependIcon" class="text-lg col-start-1 pt-4 pr-1">
+    <div v-show="prependIcon" :class="iconClass" class="text-lg col-start-1 pr-1 my-auto">
         <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
     </div>
     <div :class="fieldClass">
-        <div v-show="prependInnerIcon" class="pl-2 pt-4 text-lg">
+        <div v-show="prependInnerIcon" :class="iconClass" class="my-auto pr-2 text-lg">
             <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
         <div class="relative w-full">
@@ -144,11 +152,11 @@ const clear = () => {
         <div class="pt-1 pr-1 self-start">
             <c-svg-icon v-show="clearIconDisplay" :icon="mdiClose" @click="clear" class="text-gray-500 peer-disabled:hidden peer-read-only:hidden cursor-pointer" />
         </div>
-        <div v-show="appendInnerIcon" class="px-2 pt-4 text-lg">
+        <div v-show="appendInnerIcon" :class="iconClass" class="my-auto pl-2 text-lg">
             <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
     </div>
-    <div v-show="appendIcon" class="text-lg col-start-3 pt-4 pl-1">
+    <div v-show="appendIcon" :class="iconClass" class="text-lg col-start-3 pl-1 my-auto">
         <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
     </div>
     <div v-show="isError" class="text-xs text-[var(--cuv-danger-text)] col-start-2">
