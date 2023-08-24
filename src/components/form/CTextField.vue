@@ -90,18 +90,26 @@ const inputClass = computed(() => {
 
 const labelClass = computed(() => {
     const base = [
-        'absolute text-sm duration-300 transform origin-[0] peer-focus:scale-75 whitespace-nowrap overflow-hidden pointer-events-none',
+        'absolute left-0 text-sm duration-300 transform origin-[0] peer-focus:scale-75 whitespace-nowrap overflow-hidden pointer-events-none',
     ]
     if(isError.value) base.push('text-[var(--cuv-danger-text)]')
     if(!isError.value) base.push('text-gray-500 peer-focus:text-blue-600')
-    if(props.variant === 'filled') base.push('-translate-y-4 top-4 left-0 peer-focus:-translate-y-4',)
-    if(props.variant === 'filled' && props.modelValue) base.push('scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
-    if(props.variant === 'outlined') base.push('-translate-y-4 top-4 left-0 peer-focus:-translate-y-4')
-    if(props.variant === 'outlined' && props.modelValue) base.push('scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
-    if(props.variant === 'underlined') base.push('-translate-y-4 top-4 left-0 peer-focus:left-0 peer-focus:-translate-y-4')
-    if(props.variant === 'underlined' && props.modelValue) base.push('scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
+    if(props.variant === 'filled' && !props.modelValue) base.push('-translate-y-0 top-3 peer-focus:-translate-y-3',)
+    if(props.variant === 'filled' && props.modelValue) base.push('scale-75 -translate-y-3 top-3 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
+    if(props.variant === 'outlined' && !props.modelValue) base.push('-translate-y-0 top-3 peer-focus:-translate-y-3')
+    if(props.variant === 'outlined' && props.modelValue) base.push('scale-75 -translate-y-3 top-3 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
+    if(props.variant === 'underlined' && !props.modelValue) base.push('-translate-y-0 top-4 peer-focus:-translate-y-4')
+    if(props.variant === 'underlined' && props.modelValue) base.push('scale-75 -translate-y-4 top-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0')
     if(!props.modelValue) base.push('scale-100 translate-y-0')
     
+    return base
+})
+
+const iconClass = computed(() => {
+    const base = []
+    if ( props.variant === 'filled' ) base.push('pt-0')
+    if ( props.variant === 'outlined' ) base.push('pt-0')
+    if ( props.variant === 'underlined' ) base.push('pt-3')
     return base
 })
 
@@ -128,11 +136,11 @@ const clear = () => {
 
 <template>
 <div class="relative w-auto grid grid-cols-[auto_1fr_auto] gap-y-1">
-    <div v-show="prependIcon" class="my-auto text-lg col-start-1 pt-1.5 pr-1">
+    <div v-show="prependIcon" :class="iconClass" class="my-auto text-lg col-start-1 pr-1">
         <c-svg-icon @click="$emit('click:prepend')" :icon="prependIcon" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
     </div>
     <div :class="fieldClass">
-        <div v-show="prependInnerIcon" class="my-auto pt-2 pr-2 text-lg">
+        <div v-show="prependInnerIcon" :class="iconClass" class="my-auto pr-2 text-lg">
             <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
         <div class="relative w-full">
@@ -156,12 +164,11 @@ const clear = () => {
         <div v-show="clearIconDisplay" :class="clearIconClass">
             <c-svg-icon :icon="mdiClose" @click="clear" class="text-gray-500 cursor-pointer" />
         </div>
-        <div v-show="appendInnerIcon" class="my-auto pt-2 pl-1 text-lg">
+        <div v-show="appendInnerIcon" :class="iconClass" class="my-auto pl-1 text-lg">
             <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
-
     </div>
-    <div v-show="appendIcon" class="my-auto text-lg col-start-3 pt-1.5 pl-1">
+    <div v-show="appendIcon" :class="iconClass" class="my-auto text-lg col-start-3 pl-1">
         <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class=" cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
     </div>
     <div v-show="isError" class="text-xs text-[var(--cuv-danger-text)] col-start-2">
