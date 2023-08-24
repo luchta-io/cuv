@@ -132,14 +132,6 @@ const iconClass = computed(() => {
     return base
 })
 
-const innerIconClass = computed(() => {
-    const base = []
-    if ( props.variant === 'filled' ) base.push('pt-0')
-    if ( props.variant === 'outlined' ) base.push('pt-0')
-    if ( props.variant === 'underlined' ) base.push('pt-3')
-    return base
-})
-
 const selectionClass = computed(() => {
     return [
         'whitespace-nowrap',
@@ -274,7 +266,7 @@ watchEffect(() => {
         <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
     </div>
     <div :class="[fieldClass, $style['c-autocomplete-field']]" ref="fieldEl" :style="{'min-width': `${fieldEl?.clientWidth}px`}">
-        <div v-show="prependInnerIcon" :class="[$style['c-autocomplete-field__prepend'], innerIconClass]" class="my-auto pr-2 text-lg">
+        <div v-show="prependInnerIcon" :class="[$style['c-autocomplete-field__prepend'], iconClass]" class="my-auto pr-2 text-lg">
             <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
         <div :class="$style['c-autocomplete-field__field']" class="relative w-full flex">
@@ -313,7 +305,7 @@ watchEffect(() => {
         <div v-show="menuIconDisplay" :class="[$style['c-autocomplete-field__menu'], menuIconClass]">
             <c-svg-icon :icon="data.isActive ? mdiMenuUp : mdiMenuDown" @click="toggleDropdownList" :class="isError ? 'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
-        <div v-show="appendInnerIcon" :class="[$style['c-autocomplete-field__append'], innerIconClass]" class="my-auto pl-1 text-lg">
+        <div v-show="appendInnerIcon" :class="[$style['c-autocomplete-field__append'], iconClass]" class="my-auto pl-1 text-lg">
             <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
     </div>

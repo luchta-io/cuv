@@ -121,11 +121,12 @@ const inputClass = computed(() => {
 
 const labelClass = computed(() => {
     const base = [
-        'absolute left-0 text-sm duration-300 transform origin-[0] peer-focus:scale-75 whitespace-nowrap overflow-hidden pointer-events-none',
-        '-translate-y-4 top-4 peer-focus:-translate-y-4',
+        'absolute left-0 text-sm duration-300 transform origin-[0] whitespace-nowrap overflow-hidden pointer-events-none',
+        'peer-focus:scale-75 peer-focus:-translate-y-3',
+        props.variant === 'underlined' && (!props.modelValue || !props.modelValue.length) ? 'top-4' : 'top-3',
         !props.modelValue || !props.modelValue.length 
         ? 'scale-100 translate-y-0' 
-        : props.placeholder ? 'scale-75' : 'scale-75 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0'
+        : props.placeholder ? 'scale-75 -translate-y-3' : 'scale-75 -translate-y-3 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0'
     ]
     if(isError.value ) base.push('text-[var(--cuv-danger-text)]')
     if(!isError.value ) base.push('text-gray-500 peer-focus:text-blue-600')
@@ -142,6 +143,14 @@ const selectionClass = computed(() => {
         props.variant === 'underlined' && !props.label ? 'pt-4 pb-1' : '',        
         props.disabled ? 'text-gray-500' : 'text-gray-900',
     ]
+})
+
+const iconClass = computed(() => {
+    const base = []
+    if ( props.variant === 'filled' ) base.push('pt-0')
+    if ( props.variant === 'outlined' ) base.push('pt-0')
+    if ( props.variant === 'underlined' ) base.push('pt-3')
+    return base
 })
 
 const clearIconClass = computed(() => {
@@ -279,11 +288,11 @@ watchEffect(() => {
 
 <template>
 <div ref="componentRef" @mouseover="data.isHover = true" @mouseleave="data.isHover = false" class="relative w-auto grid grid-cols-[auto_1fr_auto] gap-y-1 cursor-pointer">
-    <div v-show="prependIcon" class="my-auto text-lg col-start-1 pt-1.5 pr-1">
+    <div v-show="prependIcon" :class="iconClass" class="my-auto text-lg col-start-1 pr-1">
         <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
     </div>
     <div :class="[fieldClass, $style['c-select-field']]" ref="fieldEl" :style="{'min-width': `${fieldEl?.clientWidth}px`}">
-        <div v-show="prependInnerIcon" :class="$style['c-select-field__prepend']" class="my-auto pt-2 pr-2 text-lg">
+        <div v-show="prependInnerIcon" :class="[$style['c-select-field__prepend'], iconClass]" class="my-auto pr-2 text-lg">
             <c-svg-icon :icon="prependInnerIcon" @click="$emit('click:prependInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
         <div :class="$style['c-select-field__field']" class="relative w-full flex">
@@ -327,11 +336,11 @@ watchEffect(() => {
         <div v-show="menuIconDisplay" :class="[$style['c-select-field__menu'], menuIconClass]">
             <c-svg-icon :icon="data.isActive ? mdiMenuUp : mdiMenuDown" @click="toggleDropdownList" :class="isError ? 'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
-        <div v-show="appendInnerIcon" :class="$style['c-select-field__append']" class="my-auto pt-2 pl-1 text-lg">
+        <div v-show="appendInnerIcon" :class="[$style['c-select-field__append'], iconClass]" class="my-auto pl-1 text-lg">
             <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
     </div>
-    <div v-show="appendIcon" class="my-auto text-lg col-start-3 pt-1.5 pl-1">
+    <div v-show="appendIcon" :class="iconClass" class="my-auto text-lg col-start-3 pl-1">
         <c-svg-icon :icon="appendIcon" @click="$emit('click:append')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
     </div>
     <div v-if="isError" class="text-xs text-[var(--cuv-danger-text)] pt-1 col-start-2">
