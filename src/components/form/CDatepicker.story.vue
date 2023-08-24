@@ -28,7 +28,7 @@ const data: {
     clearable: true,
     disabled: false,
     enableSeconds: false,
-    enableTimePicker: true,
+    enableTimePicker: false,
     label: 'ラベル',
     modelValue: undefined,
     multiDates: false,
@@ -78,7 +78,7 @@ const multi: {
     modelValue: any
     variant: 'filled'|'outlined'|'underlined'
 } = reactive({
-    modelValue: [new Date()],
+    modelValue: [new Date(), new Date(2023,8,12)],
     variant: 'filled',
 })
 
@@ -141,7 +141,7 @@ const error: {
 })
 
 const dDate = (date:Date) => {
-    return date < new Date();
+    return date <= new Date();
 }
 
 const format = (date: Date) => {
@@ -200,6 +200,7 @@ const format = (date: Date) => {
                 {value: 'underlined', label: 'underlined'},
             ]"
             />
+            <HstCheckbox v-model="data.textInput" title="textInput"/>
             <HstText v-model="data.weekStart" title="weekStart"/>      
         </template>    
     </Variant>  
@@ -221,7 +222,7 @@ const format = (date: Date) => {
     </Variant>  
     <Variant title="Time Picker" auto-props-disabled>
         <CBox>
-            <CDatepicker v-model="timePicker.modelValue" :variant="timePicker.variant" :prepend-inner-icon="mdiClock" time-picker/>
+            <CDatepicker v-model="timePicker.modelValue" :variant="timePicker.variant" :prepend-inner-icon="mdiClock" format="HH:mm" time-picker/>
         </CBox>
         <template #controls>
             <HstSelect
@@ -259,7 +260,7 @@ const format = (date: Date) => {
     </Variant>  
     <Variant title="複数選択" auto-props-disabled>
         <CBox>
-            <CDatepicker v-model="multi.modelValue" :variant="multi.variant" :auto-apply="false" select-text="選択" cancel-text="キャンセル" multi-dates/>
+            <CDatepicker v-model="multi.modelValue" :variant="multi.variant" :auto-apply="false" select-text="選択" cancel-text="キャンセル" label="ラベル" multi-dates clearable :text-input="false"/>
         </CBox>
         <template #controls>
             <HstSelect
@@ -394,10 +395,10 @@ const format = (date: Date) => {
 | disabled | boolean | false | 非活性にする場合は指定します |
 | disabledDates | Date[] \| string[] \| (date: Date) => boolean | undefined | 特定の日付を無効にする場合は指定します |
 | enableSeconds | boolean | false | タイムピッカーで秒を有効にする場合は指定します |
-| enableTimePicker | boolean | true | タイムピッカーを有効にする場合は指定します |
+| enableTimePicker | boolean | false | タイムピッカーを有効にする場合は指定します |
 | error | boolean | false | コンポーネントをエラー状態にする場合は指定します |
 | errorMessage | string/string[] | '' | コンポーネントをエラー状態にし、表示するメッセージを指定します|
-| format | string\|((params: Date) => string) | undefined | フォーマット(日付の形式)を指定します。[詳細](https://vue3datepicker.com/props/formatting/#format) |
+| format | string\|((params: Date) => string) | 'yyyy-MM-dd' | フォーマット(日付の形式)を指定します。[詳細](https://vue3datepicker.com/props/formatting/#format) |
 | id | string | undefined | idを指定します |
 | label | string | '' | ラベルに設定するテキストを指定します |
 | maxErrors | string\|number | undefined | 表示するエラーメッセージの数を制限します |
@@ -421,7 +422,7 @@ const format = (date: Date) => {
 
 | Name | Props (if scoped) | Description |
 | --- | --- | --- |
-| - | - | このコンポーネント独自のSlotはありません |
+| input | - | 日付等を表示するinput部分の表示方法を変更できます |
 
 ## Events
 

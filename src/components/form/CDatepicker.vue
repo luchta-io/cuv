@@ -6,6 +6,7 @@ import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 import type { DatePickerInstance } from "@vuepic/vue-datepicker"
 import CSvgIcon from '@/components/images/CSvgIcon.vue';
+import CChip from "@/components/containment/CChip.vue";
 
 const props = withDefaults(defineProps<{
     appendIcon?: string
@@ -43,9 +44,10 @@ const props = withDefaults(defineProps<{
     clearable: false,
     disabled:false,
     enableSeconds: false,
-    enableTimePicker: true,
+    enableTimePicker: false,
     error: false,
     errorMessage: '',
+    format: 'yyyy-MM-dd',
     label: '',
     modelValue: '',
     monthPicker: false,
@@ -108,30 +110,38 @@ const fieldClass = computed(() => {
     ]
     if(isError.value) base.push('border-[var(--cuv-danger-border)] focus-within:border-[var(--cuv-danger-outline-focus)]')
     if(!isError.value) base.push('focus-within:border-blue-600 border-gray-300')
+    if(data.isFocus && !isError.value) base.push('border-blue-600')
 
-    if(props.variant === 'filled') base.push('rounded-t-lg rounded-b-none px-2.5 bg-gray-50 border-0 border-b-2')
-    if(props.variant === 'outlined') base.push('px-2.5 bg-transparent rounded-lg border')
-    if(props.variant === 'underlined') base.push('rounded-none px-0 bg-transparent border-0 border-b-2')
+    if(props.variant === 'filled') base.push('min-h-[2.7rem] rounded-t-lg rounded-b-none px-2.5 bg-gray-50 border-0 border-b-2')
+    if(props.variant === 'outlined') base.push('min-h-[2.8rem] px-2.5 bg-transparent rounded-lg border')
+    if(props.variant === 'underlined') base.push('min-h-[2.3rem] rounded-none px-0 bg-transparent border-0 border-b-2')
 
     return base
+})
+
+const inputContainerClass = computed(() => {
+    return [
+        'flex flex-nowrap',
+        props.variant === 'filled' && !props.label ? 'py-2.5' : '',
+        props.variant === 'outlined' && !props.label ? 'py-2.5' : '',
+        props.variant === 'underlined' && !props.label ? 'pt-4 pb-1' : '',   
+    ]
 })
 
 const inputClass = computed(() => {
     return [
         'peer text-gray-900 focus:outline-none focus:ring-0 bg-transparent opacity-100 disabled:text-gray-500 w-full',
+        'flex flex-nowrap',
         props.modelValue ? 'placeholder:opacity-0' : props.label ? 'placeholder:opacity-0 focus:placeholder:opacity-100' : 'opacity-100',
         props.label ? 'pt-4 pb-1' : '',
-        props.variant === 'filled' && !props.label ? 'py-2.5' : '',
-        props.variant === 'outlined' && !props.label ? 'py-2.5' : '',
-        props.variant === 'underlined' && !props.label ? 'pt-4 pb-1' : '',   
-        !dateValue.value.length && props.modelValue ? 'w-4' : 'w-full',
+        dateValue.value !== '' && props.modelValue ? 'w-4' : 'w-full',
     ]
 })
 
 const labelClass = computed(() => {
     const base = [
         'absolute left-0 text-sm duration-300 transform origin-[0] whitespace-nowrap overflow-hidden pointer-events-none',
-        'top-3'
+        props.variant === 'underlined' && !props.modelValue ? 'top-4' : 'top-3'
     ]
     if (!props.modelValue && data.isFocus) base.push('scale-75 -translate-y-3')
     if (!props.modelValue && !data.isFocus) base.push('scale-100 translate-y-0')
@@ -186,8 +196,6 @@ const getFormat = computed(():any => {
 
 const focus = () => {
     data.isFocus = true
-    if (!inputRef.value) return
-    inputRef.value.focus()
 }
 
 const blur = () => {
@@ -199,9 +207,34 @@ const clear = () => {
     data.isFocus = false
 }
 
+const opened = () => {
+    focus()
+    inputFocus()
+}
+
+const closed = () => {
+    blur()
+    inputBlur()
+}
+
+const datepickerBlur = () => {
+    blur()
+}
+
+const inputFocus = () => {
+    if (!inputRef.value) return
+    inputRef.value.focus()
+}
+
+const inputBlur = () => {
+    if (!inputRef.value) return
+    inputRef.value.blur()
+}
+
 const clickPrependInnerIcon = () => {
     emits('click:prependInner')
     focus()
+    inputFocus()
     if (!datepickerRef.value) return
     datepickerRef.value.openMenu()
 }
@@ -221,6 +254,9 @@ const clickPrependInnerIcon = () => {
                 <VueDatePicker 
                 :model-value="modelValue"
                 @update:model-value="emits('update:modelValue', $event)"
+                @blur="datepickerBlur"
+                @open="opened"
+                @closed="closed"
                 :auto-apply="autoApply"
                 :format-locale="ja"
                 :multi-dates="multiDates"
@@ -246,22 +282,34 @@ const clickPrependInnerIcon = () => {
                 :menu-class-name="$style['c-datepicker-field__menu']"
                 >
                     <template #dp-input="{ value, onInput, onEnter, onTab }">
-                        <input 
-                        :value="value"
-                        @input="onInput"
-                        @focus="focus"
-                        @blur="blur"
-                        @keydown.enter="onEnter"
-                        @keydown.tab="onTab"
-                        :id="id"
-                        :name="name"
-                        :readonly="readonly"
-                        :disabled="disabled"
-                        :placeholder="placeholder"
-                        :class="inputClass"
-                        autocomplete="off"
-                        ref="inputRef"
-                        />
+                        <div :class="inputContainerClass">
+                            <slot name="input" :value="value" :onInput="onInput" :onEnter="onEnter" :onTab="onTab">
+                                <div v-if="!textInput && !multiDates" :class="inputClass">
+                                    {{ value }}
+                                </div>
+                                <div v-show="!textInput && multiDates && value !== ''" :class="inputClass" class="flex gap-2" >
+                                    <CChip v-for="item in value.split('; ')" :key="item" color="dark" density="comfortable">
+                                        {{ item }}
+                                    </CChip>
+                                </div>
+                                <input 
+                                :value="textInput ? value : ''"
+                                @input="onInput"
+                                @focus="focus"
+                                @blur="blur"
+                                @keydown.enter="onEnter"
+                                @keydown.tab="onTab"
+                                :id="id"
+                                :name="name"
+                                :readonly="!props.textInput"
+                                :disabled="disabled"
+                                :placeholder="placeholder"
+                                :class="inputClass"
+                                autocomplete="off"
+                                ref="inputRef"
+                                >
+                            </slot>
+                        </div>
                     </template>
                 </VueDatePicker>
                 <label
