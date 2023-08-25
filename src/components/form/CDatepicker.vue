@@ -161,14 +161,6 @@ const iconClass = computed(() => {
     return base
 })
 
-const innerIconClass = computed(() => {
-    const base = []
-    if ( props.variant === 'filled' ) base.push('pt-0')
-    if ( props.variant === 'outlined' ) base.push('pt-0')
-    if ( props.variant === 'underlined' ) base.push('pt-3')
-    return base
-})
-
 const clearIconClass = computed(() => {
     const base = ['pl-2']
     if ( props.variant === 'filled' ) base.push(props.label ? 'pt-2' : '')
@@ -246,7 +238,7 @@ const clickPrependInnerIcon = () => {
         <c-svg-icon :icon="prependIcon" @click="$emit('click:prepend')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
     </div>
     <div :class="[fieldClass, $style['c-datepicker-field']]" ref="fieldEl">
-        <div v-show="prependInnerIcon" :class="[$style['c-datepicker-field__prepend'], innerIconClass]" class="my-auto pr-2 text-lg">
+        <div v-show="prependInnerIcon" :class="[$style['c-datepicker-field__prepend'], iconClass]" class="my-auto pr-2 text-lg">
             <CSvgIcon :icon="prependInnerIcon" @click="clickPrependInnerIcon" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
         <div :class="$style['c-datepicker-field__field']" class="relative w-full flex">
@@ -322,7 +314,7 @@ const clickPrependInnerIcon = () => {
         <div v-show="clearIconDisplay" :class="[$style['c-datepicker-field__clear'], clearIconClass]">
             <c-svg-icon :icon="mdiClose" @click="clear" class="text-gray-500 cursor-pointer" />
         </div>
-        <div v-show="appendInnerIcon" :class="[$style['c-datepicker-field__append'], innerIconClass]" class="my-auto pl-1 text-lg">
+        <div v-show="appendInnerIcon" :class="[$style['c-datepicker-field__append'], iconClass]" class="my-auto pl-1 text-lg">
             <c-svg-icon :icon="appendInnerIcon" @click="$emit('click:appendInner')" size="medium" class="cursor-pointer" :class="error?'text-[var(--cuv-danger-text)]':'text-gray-500'"/>
         </div>
     </div>
