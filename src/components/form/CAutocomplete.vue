@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { computed, reactive,  ref,  watchEffect } from 'vue'
+import { computed, reactive,  ref,  useSlots,  watchEffect } from 'vue'
 import { getScrollParent } from '@/composables/scroll';
 import { mdiMenuDown, mdiMenuUp, mdiClose } from '@mdi/js';
 import CSvgIcon from '@/components/images/CSvgIcon.vue';
+
+const slots = useSlots()
 
 const props = withDefaults(defineProps<{
     modelValue: any
@@ -101,11 +103,11 @@ const fieldClass = computed(() => {
 const inputClass = computed(() => {
     return [
         'peer text-gray-900 focus:outline-none focus:ring-0 bg-transparent opacity-100',
-        props.modelValue ? 'placeholder:opacity-0' : props.label ? 'placeholder:opacity-0 focus:placeholder:opacity-100' : 'opacity-100',
-        props.label ? 'pt-4 pb-1' : '',
-        props.variant === 'filled' && !props.label ? 'py-2.5' : '',
-        props.variant === 'outlined' && !props.label ? 'py-2.5' : '',
-        props.variant === 'underlined' && !props.label ? 'pt-4 pb-1' : '',   
+        props.modelValue ? 'placeholder:opacity-0' : props.label || slots.label ? 'placeholder:opacity-0 focus:placeholder:opacity-100' : 'opacity-100',
+        props.label || slots.label ? 'pt-4 pb-1' : '',
+        props.variant === 'filled' && !props.label && !slots.label ? 'py-2.5' : '',
+        props.variant === 'outlined' && !props.label && !slots.label  ? 'py-2.5' : '',
+        props.variant === 'underlined' && !props.label && !slots.label ? 'pt-4 pb-1' : '',   
         !data.inputText.length && props.modelValue ? 'w-4' : 'w-full',
     ]
 })
@@ -136,25 +138,25 @@ const selectionClass = computed(() => {
     return [
         'whitespace-nowrap',
         props.disabled ? 'text-gray-500' : 'text-gray-900',
-        props.label ? 'pt-4 pb-1' : '',
-        props.variant === 'filled' && !props.label ? 'py-2.5' : '',
-        props.variant === 'outlined' && !props.label ? 'py-2.5' : '',
-        props.variant === 'underlined' && !props.label ? 'pt-4 pb-1' : '',        
+        props.label || slots.label ? 'pt-4 pb-1' : '',
+        props.variant === 'filled' && !props.label && !slots.label ? 'py-2.5' : '',
+        props.variant === 'outlined' && !props.label && !slots.label ? 'py-2.5' : '',
+        props.variant === 'underlined' && !props.label && !slots.label ? 'pt-4 pb-1' : '',        
     ]
 })
 
 const clearIconClass = computed(() => {
     const base = ['pl-2']
-    if ( props.variant === 'filled' ) base.push(props.label ? 'pt-2' : '')
-    if ( props.variant === 'outlined' ) base.push(props.label ? 'pt-2' : '')
+    if ( props.variant === 'filled' ) base.push(props.label || slots.label ? 'pt-2' : '')
+    if ( props.variant === 'outlined' ) base.push(props.label || slots.label ? 'pt-2' : '')
     if ( props.variant === 'underlined' ) base.push('pt-3')
     return base
 })
 
 const menuIconClass = computed(() => {
     const base = []
-    if ( props.variant === 'filled' ) base.push(props.label ? 'pt-2' : '')
-    if ( props.variant === 'outlined' ) base.push(props.label ? 'pt-2' : '')
+    if ( props.variant === 'filled' ) base.push(props.label || slots.label ? 'pt-2' : '')
+    if ( props.variant === 'outlined' ) base.push(props.label || slots.label ? 'pt-2' : '')
     if ( props.variant === 'underlined' ) base.push('pt-3')
     return base
 })
@@ -295,7 +297,9 @@ watchEffect(() => {
                 <label
                     :class="labelClass"
                     >
-                    {{ label }}
+                    <slot name="label">
+                        {{ label }}
+                    </slot>
                 </label>
             </div>
         </div>

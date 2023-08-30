@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
+import { computed, reactive, ref, useSlots } from 'vue'
 import { mdiCalendar, mdiClose } from '@mdi/js';
 import { ja } from 'date-fns/locale';
 import VueDatePicker from '@vuepic/vue-datepicker';
@@ -7,6 +7,8 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import type { DatePickerInstance } from "@vuepic/vue-datepicker"
 import CSvgIcon from '@/components/images/CSvgIcon.vue';
 import CChip from "@/components/containment/CChip.vue";
+
+const slots = useSlots()
 
 const props = withDefaults(defineProps<{
     appendIcon?: string
@@ -122,9 +124,9 @@ const fieldClass = computed(() => {
 const inputContainerClass = computed(() => {
     return [
         'flex flex-nowrap',
-        props.variant === 'filled' && !props.label ? 'py-2.5' : '',
-        props.variant === 'outlined' && !props.label ? 'py-2.5' : '',
-        props.variant === 'underlined' && !props.label ? 'pt-4 pb-1' : '',   
+        props.variant === 'filled' && !props.label && !slots.label ? 'py-2.5' : '',
+        props.variant === 'outlined' && !props.label && !slots.label ? 'py-2.5' : '',
+        props.variant === 'underlined' && !props.label && !slots.label ? 'pt-4 pb-1' : '',   
     ]
 })
 
@@ -132,8 +134,8 @@ const inputClass = computed(() => {
     return [
         'peer text-gray-900 focus:outline-none focus:ring-0 bg-transparent opacity-100 disabled:text-gray-500 w-full',
         'flex flex-nowrap',
-        props.modelValue ? 'placeholder:opacity-0' : props.label ? 'placeholder:opacity-0 focus:placeholder:opacity-100' : 'opacity-100',
-        props.label ? 'pt-4 pb-1' : '',
+        props.modelValue ? 'placeholder:opacity-0' : props.label || slots.label ? 'placeholder:opacity-0 focus:placeholder:opacity-100' : 'opacity-100',
+        props.label || slots.label ? 'pt-4 pb-1' : '',
         dateValue.value !== '' && props.modelValue ? 'w-4' : 'w-full',
     ]
 })
@@ -163,8 +165,8 @@ const iconClass = computed(() => {
 
 const clearIconClass = computed(() => {
     const base = ['pl-2']
-    if ( props.variant === 'filled' ) base.push(props.label ? 'pt-2' : '')
-    if ( props.variant === 'outlined' ) base.push(props.label ? 'pt-2' : '')
+    if ( props.variant === 'filled' ) base.push(props.label || slots.label ? 'pt-2' : '')
+    if ( props.variant === 'outlined' ) base.push(props.label || slots.label ? 'pt-2' : '')
     if ( props.variant === 'underlined' ) base.push('pt-3')
     return base
 })
@@ -307,7 +309,9 @@ const clickPrependInnerIcon = () => {
                 <label
                     :class="labelClass"
                     >
-                    {{ label }}
+                    <slot name="label">
+                        {{ label }}
+                    </slot>
                 </label>
             </div>
         </div>

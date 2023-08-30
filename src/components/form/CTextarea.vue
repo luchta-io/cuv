@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import {computed} from 'vue';
+import {computed, useSlots} from 'vue';
 import { mdiClose } from '@mdi/js';
 import CSvgIcon from '@/components/images/CSvgIcon.vue';
+
+const slots = useSlots()
 
 const props = withDefaults(defineProps<{
     modelValue: any
@@ -80,11 +82,11 @@ const textareaClass = computed(() => {
     const base = [
         'peer block w-full appearance-none bg-transparent focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100',
     ]
-    if(!props.label) base.push('placeholder:opacity-100')
-    if(props.label && !props.modelValue) base.push('placeholder:opacity-0 focus:placeholder:opacity-100')
-    if(props.label && props.modelValue) base.push('placeholder:opacity-0')
-    if(props.variant === 'filled') base.push('min-h-[2.7rem]', props.label ?'pt-4 pb-1':'py-2.5')
-    if(props.variant === 'outlined') base.push('min-h-[2.8rem]', props.label ?'pt-4 pb-1':'py-2.5')
+    if(!props.label && !slots.label) base.push('placeholder:opacity-100')
+    if((props.label || slots.label) && !props.modelValue) base.push('placeholder:opacity-0 focus:placeholder:opacity-100')
+    if((props.label || slots.label) && props.modelValue) base.push('placeholder:opacity-0')
+    if(props.variant === 'filled') base.push('min-h-[2.7rem]', props.label || slots.label ?'pt-4 pb-1':'py-2.5')
+    if(props.variant === 'outlined') base.push('min-h-[2.8rem]', props.label || slots.label ?'pt-4 pb-1':'py-2.5')
     if(props.variant === 'underlined') base.push('min-h-[2.3rem] pt-4 pb-1')
 
     return base
@@ -145,8 +147,10 @@ const clear = () => {
             :placeholder="placeholder"
             :rows="rows"
             :class="textareaClass"/>
-            <label v-if="label" :class="labelClass">
-                {{ label }}
+            <label :class="labelClass">
+                <slot name="label">
+                    {{ label }}
+                </slot>
             </label>
         </div>
         <div class="pt-1 pr-1 self-start">

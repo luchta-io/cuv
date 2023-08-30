@@ -396,7 +396,7 @@ const error : {
 
 | Name | Props (if scoped) | Description |
 | --- | --- | --- |
-| - | - | このコンポーネント独自のSlotはありません |
+| label | - | ラベルの表示方法をカスタムします |
 
 ## Events
 
