@@ -423,6 +423,7 @@ const format = (date: Date) => {
 | Name | Props (if scoped) | Description |
 | --- | --- | --- |
 | input | - | 日付等を表示するinput部分の表示方法を変更できます |
+| label | - | ラベルの表示方法をカスタムします |
 
 ## Events
 

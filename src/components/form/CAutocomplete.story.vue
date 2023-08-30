@@ -500,6 +500,7 @@ const objectArrayFilter = (item:nameListType, searchText:string) => {
 | empty |  | ドロップダウンリストに一件も表示されない時に使用します |
 | item | item/index | ドロップダウンリストの各項目の表示方法をカスタムできます |
 | selection | item | 選択された値の表示方法をカスタムできます |
+| label | - | ラベルの表示方法をカスタムします |
 
 ## Events
 
