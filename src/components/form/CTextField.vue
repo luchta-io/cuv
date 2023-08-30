@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import {computed} from 'vue';
+import {computed, useSlots} from 'vue';
 import { mdiClose } from '@mdi/js';
 import CSvgIcon from '@/components/images/CSvgIcon.vue';
+
+const slots = useSlots()
 
 const props = withDefaults(defineProps<{
     modelValue: string
@@ -78,13 +80,13 @@ const inputClass = computed(() => {
     const base = [
         'peer w-full appearance-none text-gray-900 focus:outline-none focus:ring-0 disabled:text-gray-500 opacity-100 bg-transparent',
     ]
-    if(!props.label) base.push('placeholder:opacity-100')
-    if(props.label && !props.modelValue) base.push('pt-4 pb-1 placeholder:opacity-0 focus:placeholder:opacity-100')
-    if(props.label && props.modelValue) base.push('pt-4 pb-1 placeholder:opacity-0')
+    if(!props.label && !slots.label) base.push('placeholder:opacity-100')
+    if((props.label || slots.label) && !props.modelValue) base.push('pt-4 pb-1 placeholder:opacity-0 focus:placeholder:opacity-100')
+    if((props.label || slots.label) && props.modelValue) base.push('pt-4 pb-1 placeholder:opacity-0')
 
-    if(props.variant === 'filled' && !props.label) base.push('py-2.5')
-    if(props.variant === 'outlined' && !props.label) base.push('py-2.5')
-    if(props.variant === 'underlined' && !props.label) base.push('pt-4 pb-1')
+    if(props.variant === 'filled' && !props.label && !slots.label) base.push('py-2.5')
+    if(props.variant === 'outlined' && !props.label && !slots.label) base.push('py-2.5')
+    if(props.variant === 'underlined' && !props.label && !slots.label) base.push('pt-4 pb-1')
     return base
 })
 
@@ -115,8 +117,8 @@ const iconClass = computed(() => {
 
 const clearIconClass = computed(() => {
     const base = ['pl-2']
-    if ( props.variant === 'filled' ) base.push(props.label ? 'pt-2' : '')
-    if ( props.variant === 'outlined' ) base.push(props.label ? 'pt-2' : '')
+    if ( props.variant === 'filled' ) base.push(props.label || slots.label ? 'pt-2' : '')
+    if ( props.variant === 'outlined' ) base.push(props.label || slots.label ? 'pt-2' : '')
     if ( props.variant === 'underlined' ) base.push('pt-3')
     return base
 })
@@ -158,7 +160,9 @@ const clear = () => {
             <label 
                 :class="labelClass"
             >
-                {{ label }}
+                <slot name="label">
+                    {{ label }}
+                </slot>
             </label>
         </div>
         <div v-show="clearIconDisplay" :class="clearIconClass">
