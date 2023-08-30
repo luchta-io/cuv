@@ -525,6 +525,7 @@ const customToggle = () => {
 | item | item/index| ドロップダウンリストの各項目の表示方法をカスタムできます |
 | prependItem |  | ドロップダウンリストの先頭に追加する表示項目を指定します |
 | selection | item / index| 選択された値の表示方法をカスタムできます |
+| label | - | ラベルの表示方法をカスタムします |
 
 ## Events
 

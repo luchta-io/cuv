@@ -111,10 +111,10 @@ const inputClass = computed(() => {
         'peer w-full focus:outline-none bg-transparent cursor-pointer',
     ]
     if(props.modelValue || Array.isArray(props.modelValue)) base.push('placeholder:opacity-0')
-    if(!props.label && (!props.modelValue || !props.modelValue.length)) base.push('placeholder:opacity-100')
-    if(props.label && (!props.modelValue || !props.modelValue.length)) base.push('placeholder:opacity-0 focus:placeholder:opacity-100')
-    if(props.variant === 'filled') base.push( props.label ? 'pt-4 pb-1' : 'py-2.5')
-    if(props.variant === 'outlined') base.push(props.label ? 'pt-4 pb-1' : 'py-2.5')
+    if(!props.label && !slots.label && (!props.modelValue || !props.modelValue.length)) base.push('placeholder:opacity-100')
+    if((props.label || slots.label) && (!props.modelValue || !props.modelValue.length)) base.push('placeholder:opacity-0 focus:placeholder:opacity-100')
+    if(props.variant === 'filled') base.push(props.label || slots.label ? 'pt-4 pb-1' : 'py-2.5')
+    if(props.variant === 'outlined') base.push(props.label || slots.label ? 'pt-4 pb-1' : 'py-2.5')
     if(props.variant === 'underlined') base.push('pt-4 pb-1')
     return base
 })
@@ -137,10 +137,10 @@ const labelClass = computed(() => {
 const selectionClass = computed(() => {
     return [
         'whitespace-nowrap',
-        props.label ? 'pt-4 pb-1' : '',
-        props.variant === 'filled' && !props.label ? 'py-2.5' : '',
-        props.variant === 'outlined' && !props.label ? 'py-2.5' : '',
-        props.variant === 'underlined' && !props.label ? 'pt-4 pb-1' : '',        
+        props.label || slots.label ? 'pt-4 pb-1' : '',
+        props.variant === 'filled' && !props.label && !slots.label ? 'py-2.5' : '',
+        props.variant === 'outlined' && !props.label && !slots.label ? 'py-2.5' : '',
+        props.variant === 'underlined' && !props.label && !slots.label ? 'pt-4 pb-1' : '',        
         props.disabled ? 'text-gray-500' : 'text-gray-900',
     ]
 })
@@ -155,16 +155,16 @@ const iconClass = computed(() => {
 
 const clearIconClass = computed(() => {
     const base = ['pl-2']
-    if ( props.variant === 'filled' ) base.push(props.label ? 'pt-2' : '')
-    if ( props.variant === 'outlined' ) base.push(props.label ? 'pt-2' : '')
+    if ( props.variant === 'filled' ) base.push(props.label || slots.label ? 'pt-2' : '')
+    if ( props.variant === 'outlined' ) base.push(props.label || slots.label ? 'pt-2' : '')
     if ( props.variant === 'underlined' ) base.push('pt-3')
     return base
 })
 
 const menuIconClass = computed(() => {
     const base = []
-    if ( props.variant === 'filled' ) base.push(props.label ? 'pt-2' : '')
-    if ( props.variant === 'outlined' ) base.push(props.label ? 'pt-2' : '')
+    if ( props.variant === 'filled' ) base.push(props.label || slots.label ? 'pt-2' : '')
+    if ( props.variant === 'outlined' ) base.push(props.label || slots.label ? 'pt-2' : '')
     if ( props.variant === 'underlined' ) base.push('pt-3')
     return base
 })
@@ -326,7 +326,9 @@ watchEffect(() => {
                 <label 
                     :class="labelClass"
                 >
-                    {{ label }}
+                    <slot name="label">
+                        {{ label }}
+                    </slot>
                 </label>
             </div>
         </div>
