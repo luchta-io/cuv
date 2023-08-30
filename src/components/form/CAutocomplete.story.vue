@@ -78,6 +78,14 @@ const clearable: {
     variant: 'filled'
 })
 
+const labelslot: {
+    modelValue: string
+    variant: 'filled'|'outlined'|'underlined'
+} = reactive({
+    modelValue: '1',
+    variant: 'filled'
+})
+
 const icons: {
     modelValue: string
     label: string
@@ -240,6 +248,39 @@ const objectArrayFilter = (item:nameListType, searchText:string) => {
             />
             <HstSelect
             v-model="clearable.variant"
+            title="variant"
+            :options="[
+                {value: 'filled', label: 'filled'},
+                {value: 'outlined', label: 'outlined'},
+                {value: 'underlined', label: 'underlined'},
+            ]"
+            />
+        </template>
+    </Variant>
+    <Variant title="Label Slots" auto-props-disabled>
+        <c-box padding="large">
+            <c-autocomplete
+            v-model="labelslot.modelValue"
+            :items="object.nameList"
+            item-value="id"
+            :filter="objectArrayFilter"
+            :variant="labelslot.variant"
+            placeholder="入力"
+            >
+                <template v-slot:selection="{item}">
+                    {{ item.姓 }} {{ item.名 }}
+                </template>
+                <template v-slot:item="{item}">
+                    {{ item.姓 }} {{ item.名 }}
+                </template>
+                <template #label>
+                    氏名<span class="text-red-500">(必須)</span>
+                </template>
+            </c-autocomplete>
+        </c-box>
+        <template #controls>
+            <HstSelect
+            v-model="labelslot.variant"
             title="variant"
             :options="[
                 {value: 'filled', label: 'filled'},
