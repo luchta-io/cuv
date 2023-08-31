@@ -17,6 +17,7 @@ export {default as CTable} from "./components/dataDisplay/CTable.vue"
 // feedback
 export {default as CAlert} from "./components/feedback/CAlert.vue"
 export {default as CProgress} from "./components/feedback/CProgress.vue"
+export {default as CSnackbar} from "./components/feedback/CSnackbar.vue"
 // form
 export {default as CAutocomplete} from "./components/form/CAutocomplete.vue"
 export {default as CCheckbox} from "./components/form/CCheckbox.vue"
