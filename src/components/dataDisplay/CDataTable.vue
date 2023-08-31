@@ -281,8 +281,8 @@ watchEffect(() => {
                         <slot 
                         :name="[`item.${header.key}`]" 
                         :item="{
-                            value:item[header.key],
                             key: header.key,
+                            value:item[header.key],
                             columns: item
                             }" 
                         :index="index">
