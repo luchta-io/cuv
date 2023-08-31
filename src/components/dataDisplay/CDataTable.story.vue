@@ -706,7 +706,7 @@ onMounted(() => {
 
 | Name | Props (if scoped) | Description |
 | --- | --- | --- |
-| [`item.${header.key}`] | `{index: number, item: {value: any, key: string, raw: any}}` | 動的slotを使用して特定の列の表示をカスタムできます。`header.key`はheader項目のキー`<key>`プロパティの名前を指定します |
+| [`item.${header.key}`] | `{index: number, item: {value: any, key: string, columns: any}}` | 動的slotを使用して特定の列の表示をカスタムできます。`header.key`はheader項目のキー`<key>`プロパティの名前を指定します |
 | bottom | ItemProps* | tableの下部に表示するコンテンツを指定します |
 | default | ItemProps* | tableに表示するコンテンツを指定します |
 | tbody | ItemProps* | tbodyタグ内に表示するコンテンツを指定します |

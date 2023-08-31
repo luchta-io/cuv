@@ -283,7 +283,7 @@ watchEffect(() => {
                         :item="{
                             value:item[header.key],
                             key: header.key,
-                            raw: item
+                            columns: item
                             }" 
                         :index="index">
                             {{ item[header.key] }}
