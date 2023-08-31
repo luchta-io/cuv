@@ -277,8 +277,15 @@ watchEffect(() => {
                     <td v-show="showSelect" class="text-center">
                         <CCheckbox v-model="data.selectItems" :value="item[itemValue]" @change="changeCheckbox" :disabled="!isSelectItem(item)" />
                     </td>
-                    <td v-for="(header, index) in headers" :key="index" @click="emits('click:row', item[itemValue])" :class="headerAlign(header.align)">
-                        <slot :name="[`item.${header.key}`]" :item="item[header.key]" :index="index">
+                    <td v-for="header in headers" :key="header.key" @click="emits('click:row', item[itemValue])" :class="headerAlign(header.align)">
+                        <slot 
+                        :name="[`item.${header.key}`]" 
+                        :item="{
+                            value:item[header.key],
+                            key: header.key,
+                            raw: item
+                            }" 
+                        :index="index">
                             {{ item[header.key] }}
                         </slot>
                     </td>
