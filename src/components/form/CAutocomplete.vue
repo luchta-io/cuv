@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, reactive,  ref,  useSlots,  watchEffect } from 'vue'
-import { getScrollParent } from '@/composables/scroll';
+import { getScrollParent } from '../../composables/scroll';
 import { mdiMenuDown, mdiMenuUp, mdiClose } from '@mdi/js';
-import CSvgIcon from '@/components/images/CSvgIcon.vue';
+import CSvgIcon from '../../components/images/CSvgIcon.vue';
 
 const slots = useSlots()
 

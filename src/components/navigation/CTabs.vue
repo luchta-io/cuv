@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref, useCssModule, watch } from 'vue';
-import { useVariant } from '@/composables/variant';
+import { useVariant } from '../../composables/variant';
 import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
-import CTab from '@/components/navigation/CTab.vue';
-import CSvgIcon from '@/components/images/CSvgIcon.vue';
+import CTab from '../../components/navigation/CTab.vue';
+import CSvgIcon from '../../components/images/CSvgIcon.vue';
 
 interface HTMLEvent<T extends EventTarget> extends Event {
     target: T;

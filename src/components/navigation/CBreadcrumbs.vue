@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useVariant } from '@/composables/variant';
+import { useVariant } from '../../composables/variant';
 
 type ColorType =
     'white' | 'black' | 'light' | 'dark' | 

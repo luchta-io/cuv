@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, reactive, useCssModule } from 'vue';
-import { useVariant } from '@/composables/variant'
+import { useVariant } from '../../composables/variant'
 import { mdiClose, mdiCloseCircle, mdiAlertCircle, mdiCheckCircle } from '@mdi/js';
-import CSvgIcon from '@/components/images/CSvgIcon.vue';
+import CSvgIcon from '../../components/images/CSvgIcon.vue';
 
 const props = withDefaults(defineProps<{
     appendIcon?: string

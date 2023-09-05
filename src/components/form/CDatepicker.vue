@@ -5,8 +5,8 @@ import { ja } from 'date-fns/locale';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 import type { DatePickerInstance } from "@vuepic/vue-datepicker"
-import CSvgIcon from '@/components/images/CSvgIcon.vue';
-import CChip from "@/components/containment/CChip.vue";
+import CSvgIcon from '../../components/images/CSvgIcon.vue';
+import CChip from "../../components/containment/CChip.vue";
 
 const slots = useSlots()
 

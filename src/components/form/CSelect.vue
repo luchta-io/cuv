@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, reactive, ref, useSlots, watchEffect } from 'vue';
-import { getScrollParent } from '@/composables/scroll';
+import { getScrollParent } from '../../composables/scroll';
 import { mdiMenuDown, mdiMenuUp, mdiClose } from '@mdi/js';
-import CSvgIcon from '@/components/images/CSvgIcon.vue';
-import CCheckbox from '@/components/form/CCheckbox.vue';
-import CCluster from '@/components/layout/CCluster.vue';
+import CSvgIcon from '../../components/images/CSvgIcon.vue';
+import CCheckbox from '../../components/form/CCheckbox.vue';
+import CCluster from '../../components/layout/CCluster.vue';
 
 const slots = useSlots()
 

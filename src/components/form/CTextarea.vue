@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {computed, useSlots} from 'vue';
 import { mdiClose } from '@mdi/js';
-import CSvgIcon from '@/components/images/CSvgIcon.vue';
+import CSvgIcon from '../../components/images/CSvgIcon.vue';
 
 const slots = useSlots()
 

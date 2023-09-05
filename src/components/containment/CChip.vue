@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, reactive } from 'vue';
 import { mdiCloseCircle } from '@mdi/js';
-import { useVariant } from '@/composables/variant'
-import CSvgIcon from '@/components/images/CSvgIcon.vue';
+import { useVariant } from '../../composables/variant'
+import CSvgIcon from '../../components/images/CSvgIcon.vue';
 
 type ColorType =
     'white' | 'black' | 'light' | 'dark' | 
