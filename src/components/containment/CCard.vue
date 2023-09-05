@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import {computed, onMounted, ref, useSlots} from 'vue';
-import { useVariant } from '@/composables/variant';
-import { useRipple } from '@/composables/ripple';
-import CAvatar from '@/components/images/CAvatar.vue';
-import COverlay from '@/components/containment/COverlay.vue';
-import CProgress from '@/components/feedback/CProgress.vue';
+import { useVariant } from '../../composables/variant';
+import { useRipple } from '../../composables/ripple';
+import CAvatar from '../../components/images/CAvatar.vue';
+import COverlay from '../../components/containment/COverlay.vue';
+import CProgress from '../../components/feedback/CProgress.vue';
 
 type ColorType =
     'white' | 'black' | 'light' | 'dark' | 

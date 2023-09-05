@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useVariant } from '@/composables/variant'
-import CSvgIcon from '@/components/images/CSvgIcon.vue'
+import { useVariant } from '../../composables/variant'
+import CSvgIcon from '../../components/images/CSvgIcon.vue'
 
 type ColorType =
     'white' | 'black' | 'light' | 'dark' | 

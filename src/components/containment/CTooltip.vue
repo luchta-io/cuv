@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watchEffect } from 'vue';
-import { getScrollParent } from '@/composables/scroll';
+import { getScrollParent } from '../../composables/scroll';
 
 const props = withDefaults(defineProps<{
     disabled?: boolean

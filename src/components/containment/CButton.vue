@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import {computed, onMounted, ref} from 'vue';
-import CSvgIcon from '@/components/images/CSvgIcon.vue';
-import { useVariant } from '@/composables/variant';
-import { useRipple } from '@/composables/ripple';
+import CSvgIcon from '../../components/images/CSvgIcon.vue';
+import { useVariant } from '../../composables/variant';
+import { useRipple } from '../../composables/ripple';
 
 type ColorType =
     'white' | 'black' | 'light' | 'dark' | 

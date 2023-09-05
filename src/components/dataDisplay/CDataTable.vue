@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed, reactive, watchEffect } from 'vue';
 import { mdiPageFirst, mdiChevronLeft, mdiChevronRight, mdiPageLast } from '@mdi/js';
-import CProgress from '@/components/feedback/CProgress.vue';
-import CCluster from '@/components/layout/CCluster.vue';
-import CSelect from '@/components/form/CSelect.vue';
-import CSvgIcon from '@/components/images/CSvgIcon.vue';
-import CTable from '@/components/dataDisplay/CTable.vue';
-import CCheckbox from '@/components/form/CCheckbox.vue';
-import COverlay from '@/components/containment/COverlay.vue';
+import CProgress from '../../components/feedback/CProgress.vue';
+import CCluster from '../../components/layout/CCluster.vue';
+import CSelect from '../../components/form/CSelect.vue';
+import CSvgIcon from '../../components/images/CSvgIcon.vue';
+import CTable from '../../components/dataDisplay/CTable.vue';
+import CCheckbox from '../../components/form/CCheckbox.vue';
+import COverlay from '../../components/containment/COverlay.vue';
 
 type HeadersType = {
     key: string

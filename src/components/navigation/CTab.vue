@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import CButton from '@/components/containment/CButton.vue'
+import CButton from '../../components/containment/CButton.vue'
 
 type ColorType =
     'white' | 'black' | 'light' | 'dark' | 
