@@ -12,7 +12,8 @@
   "files": [
     "dist",
     "src/index.ts",
-    "src/components"
+    "src/components",
+    "src/composables"
   ],
   "types": "src/index.ts",
   "module": "./dist/cuv.mjs",
