@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CDatepicker',
+}
+</script>
+
 <script setup lang="ts">
 import { computed, reactive, ref, useSlots } from 'vue'
 import { mdiCalendar, mdiClose } from '@mdi/js';

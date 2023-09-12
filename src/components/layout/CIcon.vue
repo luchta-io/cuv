@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CIcon',
+}
+</script>
+
 <script setup lang="ts">
 withDefaults(defineProps<{
     space?: string;

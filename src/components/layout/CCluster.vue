@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CCluster',
+}
+</script>
+
 <script setup lang="ts">
 // refs. https://developer.mozilla.org/ja/docs/Web/CSS/justify-content
 // refs. https://developer.mozilla.org/ja/docs/Web/CSS/align-items

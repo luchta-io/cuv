@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CCard',
+}
+</script>
+
 <script setup lang="ts">
 import {computed, onMounted, ref, useSlots} from 'vue';
 import { useVariant } from '../../composables/variant';

@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CTabs',
+}
+</script>
+
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref, useCssModule, watch } from 'vue';
 import { useVariant } from '../../composables/variant';

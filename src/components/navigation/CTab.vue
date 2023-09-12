@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CTab',
+}
+</script>
+
 <script setup lang="ts">
 import { computed } from 'vue';
 import CButton from '../../components/containment/CButton.vue'

@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CTooltip',
+}
+</script>
+
 <script setup lang="ts">
 import { computed, reactive, ref, watchEffect } from 'vue';
 import { getScrollParent } from '../../composables/scroll';

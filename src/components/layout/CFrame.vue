@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CFrame',
+}
+</script>
+
 <script setup lang="ts">
 withDefaults(defineProps<{
     ratio?: string;

@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CSidebar',
+}
+</script>
+
 <script setup lang="ts">
 import { computed } from 'vue';
 

@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CStack',
+}
+</script>
+
 <script setup lang="ts">
 withDefaults(defineProps<{
   space?: string;

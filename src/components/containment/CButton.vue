@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CButton',
+}
+</script>
+
 <script setup lang="ts">
 import {computed, onMounted, ref} from 'vue';
 import CSvgIcon from '../../components/images/CSvgIcon.vue';
