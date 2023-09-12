@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CDialog',
+}
+</script>
+
 <script setup lang="ts">
 import { computed, watchEffect } from 'vue';
 
