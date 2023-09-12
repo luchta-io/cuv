@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CCheckbox',
+}
+</script>
+
 <script setup lang="ts">
 import { computed } from 'vue';
 import {mdiCheckboxMarked, mdiCheckboxBlankOutline, mdiMinusBox} from '@mdi/js'

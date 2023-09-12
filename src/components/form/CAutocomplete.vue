@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CAutocomplete',
+}
+</script>
+
 <script setup lang="ts">
 import { computed, reactive,  ref,  useSlots,  watchEffect } from 'vue'
 import { getScrollParent } from '../../composables/scroll';
