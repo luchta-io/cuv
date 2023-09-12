@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CAlert',
+}
+</script>
+
 <script setup lang="ts">
 import { computed, reactive, useCssModule } from 'vue';
 import { useVariant } from '../../composables/variant'

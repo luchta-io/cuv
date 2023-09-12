@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CSnackbar',
+}
+</script>
+
 <script setup lang="ts">
 import { computed, reactive, useSlots, watchEffect } from 'vue';
 import { useVariant } from '../../composables/variant';

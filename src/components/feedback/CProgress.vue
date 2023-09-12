@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CProgress',
+}
+</script>
+
 <script setup lang="ts">
 import { computed } from 'vue';
 
