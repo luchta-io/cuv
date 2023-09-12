@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CGrid',
+}
+</script>
+
 <script setup lang="ts">
 withDefaults(defineProps<{
     min?: string;

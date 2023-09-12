@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CCenter',
+}
+</script>
+
 <script setup lang="ts">
 withDefaults(defineProps<{
     max?: string;

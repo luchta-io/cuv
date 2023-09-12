@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CCover',
+}
+</script>
+
 <script setup lang="ts">
 withDefaults(defineProps<{
     centered?: string,

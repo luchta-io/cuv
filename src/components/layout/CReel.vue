@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CReel',
+}
+</script>
+
 <script setup lang="ts">
 withDefaults(defineProps<{
     itemWidth?: string;

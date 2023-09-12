@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CSwitcher',
+}
+</script>
+
 <script setup lang="ts">
 withDefaults(defineProps<{
     threshold?: string;
