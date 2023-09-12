@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+    name: 'CDataTable',
+}
+</script>
+
 <script setup lang="ts">
 import { computed, reactive, watchEffect } from 'vue';
 import { mdiPageFirst, mdiChevronLeft, mdiChevronRight, mdiPageLast } from '@mdi/js';
