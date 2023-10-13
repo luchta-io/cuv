@@ -8,7 +8,7 @@
   "license": "Apache-2.0",
   "homepage": "https://luchta-io.github.io/cuv/",
   "repository": "https://github.com/luchta-io/cuv",
-  "version": "1.2.0-alpha.8",
+  "version": "1.2.0-alpha.9",
   "files": [
     "dist",
     "src/index.ts",
