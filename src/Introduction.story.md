@@ -18,10 +18,10 @@ title: 'はじめに'
 * Node.js のバージョン 16.0 以上がインストールされていること
 * このライブラリ導入先のプロジェクトには、Vue.jsのバージョン 3.2 以上がインストールされていること
 
-### 1. @actier-luchta/cuvのインストール
-プロジェクトを作成後、直下にpackage.jsonが存在するディレクトリで、`@actier-luchta/cuv`のインストールを実行します
+### 1. @luchta-io/cuvのインストール
+プロジェクトを作成後、直下にpackage.jsonが存在するディレクトリで、`@luchta-io/cuv`のインストールを実行します
 ```sh
-npm install @actier-luchta/cuv
+npm install @luchta-io/cuv
 ```
 
 ### 2. @mdi/jsのインストール
@@ -35,18 +35,18 @@ npm install @mdi/js
 
 `main.ts`にこのライブラリのスタイルシートをimportします
 ```ts
-import '@actier-luchta/cuv/style'
+import '@luchta-io/cuv/style'
 ```
 
 #### Nuxtで使用する場合
 `plugins`ディレクトリの下に、`cuv.ts`ファイルを作成し、ライブラリのスタイルシートをimportします
 ```ts
-import '@actier-luchta/cuv/style'
+import '@luchta-io/cuv/style'
 
 export default defineNuxtPlugin((nuxtApp) => {
 })
 ```
 
 ### リンク
-* [リリースノート](https://github.com/actier-luchta/cuv/releases/)
-* [リポジトリ](https://github.com/actier-luchta/cuv/)
+* [リリースノート](https://github.com/luchta-io/cuv/releases/)
+* [リポジトリ](https://github.com/luchta-io/cuv/)

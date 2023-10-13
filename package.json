@@ -1,14 +1,14 @@
 {
-  "name": "@actier-luchta/cuv",
+  "name": "@luchta-io/cuv",
   "description": "Vue3向けのコンポーネントライブラリ",
   "keywords": [
     "vue",
     "component library"
   ],
   "license": "Apache-2.0",
-  "homepage": "https://actier-luchta.github.io/cuv/",
-  "repository": "https://github.com/actier-luchta/cuv",
-  "version": "1.2.0-alpha.8",
+  "homepage": "https://luchta-io.github.io/cuv/",
+  "repository": "https://github.com/luchta-io/cuv",
+  "version": "1.2.0-alpha.9",
   "files": [
     "dist",
     "src/index.ts",
