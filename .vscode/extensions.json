@@ -1,6 +1,5 @@
 {
   "recommendations": [
-    "vue.vscode-typescript-vue-plugin",
     "Vue.volar",
     "dbaeumer.vscode-eslint",
     "visualstudioexptteam.vscodeintellicode",
