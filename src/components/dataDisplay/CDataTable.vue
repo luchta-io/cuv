@@ -75,14 +75,12 @@ const emits = defineEmits<{
 
 const data: {
     isAllChecked: boolean
-    selectItems: string[]
     newItems: any[]
     searchHeaderKeys: string[]
     currentPage: number
     currentPerPage: number|string
 } = reactive({
     isAllChecked: false,
-    selectItems: [],
     newItems: [],
     searchHeaderKeys: [],
     currentPage: Number(props.page),
@@ -179,7 +177,7 @@ const isloading = computed({
 })
 
 const headerCheckboxIndeterminate = computed({
-    get: () => !data.isAllChecked ? data.selectItems.length>0 : false,
+    get: () => !data.isAllChecked ? selectItems.value.length > 0 : false,
     set: value => {
         return value
     }
@@ -201,15 +199,15 @@ const headerAlign = (align?: 'start' | 'end') => {
 }
 
 const changeAllSelect = () => {
-    data.selectItems = []
-    if(data.isAllChecked) data.selectItems.push(...props.items.filter(item => isSelectItem(item)).map(x => x[props.itemValue]))
-    changeCheckbox()
+    selectItems.value = []
+    if (data.isAllChecked) selectItems.value = props.items.filter(item => isSelectItem(item)).map(x => x[props.itemValue])
     return
 }
 
-const changeCheckbox = () => {
-    emits('update:modelValue', data.selectItems)
-}
+const selectItems = computed({
+    get: () => props.modelValue ? props.modelValue : [],
+    set: (value: any) => emits('update:modelValue', value)
+})
 
 const changePage = (direction: 'first'|'back'|'go'|'last') => {
     if (direction === 'first') data.currentPage = 1
@@ -246,27 +244,26 @@ const isSelectItem = (item: any) => {
 }
 
 watchEffect(() => {
-    if(data.selectItems.length !== props.items.filter(item => isSelectItem(item)).length) data.isAllChecked = false
-    if(data.selectItems.length === props.items.filter(item => isSelectItem(item)).length) data.isAllChecked = true
+    if (selectItems.value.length !== props.items.filter(item => isSelectItem(item)).length) data.isAllChecked = false
+    if (selectItems.value.length === props.items.filter(item => isSelectItem(item)).length) data.isAllChecked = true
 })
 
 </script>
 
 <template>
-<CTable
-    :density="density"
-    :hover="hover"
-    :fixed-header="fixedHeader"
-    :fixed-footer="fixedFooter"
-    :height="height"
->
+<CTable 
+    :density="density" 
+    :hover="hover" 
+    :fixed-header="fixedHeader" 
+    :fixed-footer="fixedFooter" 
+    :height="height">
     <template #top>
-        <slot name="top" :page="data.currentPage" :itemsPerPage="data.currentPerPage" :allSelected="data.isAllChecked" :select="data.selectItems" :items="displayItems" :headers="headers">
+        <slot name="top" :page="data.currentPage" :itemsPerPage="data.currentPerPage" :allSelected="data.isAllChecked" :select="selectItems" :items="displayItems" :headers="headers">
         </slot>
     </template>
-    <slot name="default" :page="data.currentPage" :itemsPerPage="data.currentPerPage" :allSelected="data.isAllChecked" :select="data.selectItems" :items="displayItems" :headers="headers">
+    <slot name="default" :page="data.currentPage" :itemsPerPage="data.currentPerPage" :allSelected="data.isAllChecked" :select="selectItems" :items="displayItems" :headers="headers">
         <thead>
-            <slot name="thead" :page="data.currentPage" :itemsPerPage="data.currentPerPage" :allSelected="data.isAllChecked" :select="data.selectItems" :items="displayItems" :headers="headers">
+            <slot name="thead" :page="data.currentPage" :itemsPerPage="data.currentPerPage" :allSelected="data.isAllChecked" :select="selectItems" :items="displayItems" :headers="headers">
                 <tr>
                     <th v-show="showSelect" class="text-center">
                         <CCheckbox v-model="data.isAllChecked" :indeterminate="headerCheckboxIndeterminate" @change="changeAllSelect"/>
@@ -278,10 +275,10 @@ watchEffect(() => {
             </slot>
         </thead>
         <tbody>
-            <slot name="tbody" :page="data.currentPage" :itemsPerPage="data.currentPerPage" :allSelected="data.isAllChecked" :select="data.selectItems" :items="displayItems" :headers="headers">
+            <slot name="tbody" :page="data.currentPage" :itemsPerPage="data.currentPerPage" :allSelected="data.isAllChecked" :select="selectItems" :items="displayItems" :headers="headers">
                 <tr v-for="(item, index) in  displayItems" :key="index">
                     <td v-show="showSelect" class="text-center">
-                        <CCheckbox v-model="data.selectItems" :value="item[itemValue]" @change="changeCheckbox" :disabled="!isSelectItem(item)" />
+                        <CCheckbox v-model="selectItems" :value="item[itemValue]" :disabled="!isSelectItem(item)" />
                     </td>
                     <td v-for="header in headers" :key="header.key" @click="emits('click:row', item[itemValue])" :class="headerAlign(header.align)">
                         <slot 
@@ -306,12 +303,12 @@ watchEffect(() => {
             </slot>
         </tbody>
         <tfoot>
-            <slot name="tfoot" :page="data.currentPage" :itemsPerPage="data.currentPerPage" :allSelected="data.isAllChecked" :select="data.selectItems" :items="displayItems" :headers="headers">
+            <slot name="tfoot" :page="data.currentPage" :itemsPerPage="data.currentPerPage" :allSelected="data.isAllChecked" :select="selectItems" :items="displayItems" :headers="headers">
             </slot>
         </tfoot>
     </slot>
     <template #bottom>
-        <slot name="bottom" :page="data.currentPage" :itemsPerPage="data.currentPerPage" :allSelected="data.isAllChecked" :select="data.selectItems" :items="displayItems" :headers="headers">
+        <slot name="bottom" :page="data.currentPage" :itemsPerPage="data.currentPerPage" :allSelected="data.isAllChecked" :select="selectItems" :items="displayItems" :headers="headers">
             <CCluster justify="flex-end" align="center" class="px-4">
                 <CCluster space="0.2rem" align="center">
                     Items per page:
