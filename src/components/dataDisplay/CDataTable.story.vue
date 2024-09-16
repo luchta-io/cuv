@@ -8,6 +8,7 @@ import CCluster from '@/components/layout/CCluster.vue';
 import CTextField from '@/components/form/CTextField.vue';
 import CBox from '@/components/layout/CBox.vue';
 import CChip from '@/components/containment/CChip.vue'
+import CButton from '@/components/containment/CButton.vue'
 
 type OptionsType = {
     page: number,
@@ -561,7 +562,10 @@ onMounted(() => {
         </CDataTable>
     </Variant>
     <Variant title="単数/複数選択" auto-props-disabled>
-        <div>選択された行のID： {{ checked.selectItems }}</div>
+        <CCluster align="center">
+            <div>選択された行のID： {{ checked.selectItems }}</div>
+            <CButton @click="checked.selectItems = []">クリア</CButton>
+        </CCluster>
         <CDataTable
         v-model="checked.selectItems"
         :headers="checked.headers"
