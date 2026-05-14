@@ -44,7 +44,9 @@ const props = withDefaults(defineProps<{
 const emits = defineEmits<{
     (e: 'update:modelValue', value: string): void
     (e: 'click:append'): void
+    (e: 'click:appendInner'): void
     (e: 'click:prepend'): void
+    (e: 'click:prependInner'): void
 }>()
 
 const inputValue = computed({
