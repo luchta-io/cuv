@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { mdiCrown, mdiEarth, mdiMicrophone, mdiBaseballBat, mdiLaptop, mdiArrowRightBoldBoxOutline, mdiArrowLeftBoldBoxOutline } from '@mdi/js';
 import CBox from "@/components/layout/CBox.vue";
 import CTabs from "@/components/navigation/CTabs.vue";
@@ -12,7 +12,7 @@ type ColorType =
     'primary' | 'link' |
     'success' | 'danger' | 'warning' | 'info'
 
-const news = [
+const news = ref([
   'ランキング',
   'エンタメ',
   'スポーツ',
@@ -23,7 +23,7 @@ const news = [
   'グローバル',
   '科学',
   'ライフ'
-]
+])
 
 const number = [
   'one',
